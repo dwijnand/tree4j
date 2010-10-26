@@ -28,6 +28,14 @@ public class MultimapTreeTest {
     }
 
     @Test
+    public void shouldClearTreeAfterSetRoot() {
+        tree.setRoot("first root");
+        tree.add("first root", "a child");
+        tree.setRoot("second root");
+        assertFalse(tree.contains("a child"));
+    }
+
+    @Test
     public void shouldntContainNewlyCreatedNode() {
         assertFalse(tree.contains("new node"));
     }
