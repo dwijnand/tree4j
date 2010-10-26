@@ -1,6 +1,8 @@
 package org.bitbucket.dwijnand.tree;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,6 +14,17 @@ public class MultimapTreeTest {
     @Before
     public void setUp() {
         tree = MultimapTree.create();
+    }
+
+    @Test
+    public void shouldHaveANullRootBeforeSetRoot() {
+        assertNull(tree.getRoot());
+    }
+
+    @Test
+    public void shouldHaveReturnSetRootOnGetRoot() {
+        tree.setRoot("root");
+        assertEquals("root", tree.getRoot());
     }
 
     @Test
