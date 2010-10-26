@@ -1,0 +1,8 @@
+syntax: glob
+
+# Please keep this in alphabetic order :)
+.classpath
+.project
+.settings
+bin/
+target/
