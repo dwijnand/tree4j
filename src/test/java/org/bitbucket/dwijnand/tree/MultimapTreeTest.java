@@ -16,8 +16,24 @@ public class MultimapTreeTest {
     }
 
     @Test
-    public void emptyTreeShouldntContainNewNode() {
+    public void shouldntContainNewlyCreatedNode() {
         assertFalse(tree.contains(new Node("Dale", 1)));
+    }
+
+    @Test
+    public void shouldCascadeRemove() {
+        final Node one = new Node("one", 1);
+        tree.setRoot(one);
+        final Node two = new Node("two", 2);
+        final Node three = new Node("tree", 3);
+        tree.add(one, two);
+        tree.add(one, three);
+
+        tree.remove(two);
+
+        assertFalse(tree.contains(two));
+        assertFalse(tree.getChildren(one).contains(two));
+        assertFalse(tree.contains(three));
     }
 
     private static class Node implements Comparable<Node> {
