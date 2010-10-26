@@ -42,7 +42,7 @@ public class MultimapTree<T> implements Tree<T> {
      * natural ordering of type T.
      * 
      * @param <T> the type of the nodes in the new tree
-     * @return a new {@code MultimapTree}
+     * @return a new {@link MultimapTree}
      */
     public static <T extends Comparable<T>> MultimapTree<T> create() {
         return new MultimapTree<T>(Ordering.<T> natural());
@@ -54,7 +54,7 @@ public class MultimapTree<T> implements Tree<T> {
      * 
      * @param <T> the type of the nodes in the new tree
      * @param comparator the
-     * @return a new {@code MultimapTree}
+     * @return a new {@link MultimapTree}
      * @throws NullPointerException if the specified comparator is null
      */
     public static <T> MultimapTree<T> create(final Comparator<T> comparator) {
