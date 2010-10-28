@@ -94,7 +94,7 @@ public class MultimapTree<T> implements Tree<T> {
     @Override
     public void setRoot(final T node) {
         clear();
-        root = node;
+        root = checkNotNull(node);
     }
 
     @Override
@@ -115,6 +115,7 @@ public class MultimapTree<T> implements Tree<T> {
     @Override
     public void remove(final T node) {
         if (node == root) {
+            root = null;
             clear();
             return;
         }
