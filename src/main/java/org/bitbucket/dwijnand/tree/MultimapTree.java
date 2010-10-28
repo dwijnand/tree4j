@@ -72,7 +72,7 @@ public class MultimapTree<T> implements Tree<T> {
         } else if (o == root) {
             return true;
         } else {
-            return parents.containsValue(o);
+            return parents.containsKey(o);
         }
     }
 

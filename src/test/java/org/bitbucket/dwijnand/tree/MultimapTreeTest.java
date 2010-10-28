@@ -44,7 +44,7 @@ public class MultimapTreeTest {
     public void shouldCascadeRemove() {
         tree.setRoot("one");
         tree.add("one", "two");
-        tree.add("one", "three");
+        tree.add("two", "three");
 
         tree.remove("two");
 
