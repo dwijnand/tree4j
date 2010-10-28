@@ -23,31 +23,36 @@ public class MultimapTreeTest {
     }
 
     @Test
-    public void shouldContainAddedNode() {
+    public void containsShouldReturnFalseWhenEmpty() {
+        assertFalse(tree.contains("node"));
+    }
+
+    @Test
+    public void containsShouldReturnTrueOnAddedNode() {
         tree.setRoot("root");
         tree.add("root", "node");
         assertTrue(tree.contains("node"));
     }
 
     @Test
-    public void shouldContainTheSetRoot() {
+    public void containsShouldReturnTrueForSetRoot() {
         tree.setRoot("root");
         assertTrue(tree.contains("root"));
     }
 
     @Test
-    public void shouldHaveANullRootBeforeSetRoot() {
+    public void getRootShouldReturnNullBeforeSetRoot() {
         assertNull(tree.getRoot());
     }
 
     @Test
-    public void shouldHaveReturnSetRootOnGetRoot() {
+    public void getRootShouldReturnRootAfterSetRoot() {
         tree.setRoot("root");
         assertEquals("root", tree.getRoot());
     }
 
     @Test
-    public void shouldClearTreeAfterSetRoot() {
+    public void setRootShouldClearTree() {
         tree.setRoot("first root");
         tree.add("first root", "a child");
         tree.setRoot("second root");
@@ -55,12 +60,7 @@ public class MultimapTreeTest {
     }
 
     @Test
-    public void shouldntContainNewlyCreatedNode() {
-        assertFalse(tree.contains("new node"));
-    }
-
-    @Test
-    public void shouldReturnCorrectChildren() {
+    public void getChildrenShouldReturnCorrectChildren() {
         tree.setRoot("root");
         tree.add("root", "1");
         tree.add("1", "1-1");
@@ -76,7 +76,7 @@ public class MultimapTreeTest {
     }
 
     @Test
-    public void shouldCascadeRemove() {
+    public void removeShouldCascadeRemove() {
         tree.setRoot("one");
         tree.add("one", "two");
         tree.add("two", "three");
