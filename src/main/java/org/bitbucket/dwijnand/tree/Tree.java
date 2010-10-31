@@ -67,14 +67,15 @@ public interface Tree<T> {
     /**
      * Adds the specified child node to the {@link Tree}, associated to the
      * specified parent node. Returns {@code true} if the {@link Tree} changed.
-     * If the {@link Tree} already contains the child node, returns false.
+     * If the {@link Tree} doesn't contain the parent node or already contains
+     * the child node, returns false.
      * 
      * @param parent node on which to associate the child node
      * @param child node to add
      * @return {@code true} if the {@link Tree} changed, or {@code false} if
-     *         child node was already in the {@link Tree}
+     *         {@link Tree} didn't contain the parent node or already contained
+     *         the child node
      */
-    // TODO Define what add does if the Tree doesn't contain the parent
     boolean add(T parent, T child);
 
     // Removing methods

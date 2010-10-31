@@ -101,6 +101,9 @@ public class MultimapTree<T> implements Tree<T> {
     public boolean add(final T parent, final T child) {
         checkNotNull(parent);
         checkNotNull(child);
+        if (!contains(parent)) {
+            return false;
+        }
         if (contains(child)) {
             return false;
         }

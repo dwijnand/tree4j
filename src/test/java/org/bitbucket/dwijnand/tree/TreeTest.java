@@ -90,6 +90,17 @@ public class TreeTest {
     }
 
     @Theory
+    public void addShouldReturnFalseOnInsertingOnUnknownParent(
+            final Tree<String> tree) {
+        tree.setRoot("root");
+
+        final boolean result = tree.add("unknown parent", "node");
+
+        assertFalse(result);
+        assertFalse(tree.contains("node"));
+    }
+
+    @Theory
     public void removeShouldCascadeRemove(final Tree<String> tree) {
         tree.setRoot("one");
         tree.add("one", "two");
