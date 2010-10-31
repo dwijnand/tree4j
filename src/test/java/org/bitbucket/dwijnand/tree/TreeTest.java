@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.hasItems;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
@@ -40,6 +41,21 @@ public class TreeTest {
     public void containsShouldReturnTrueForSetRoot(final Tree<String> tree) {
         tree.setRoot("root");
         assertTrue(tree.contains("root"));
+    }
+
+    @Theory
+    public void getParentShouldWorkCorrectly(final Tree<String> tree) {
+        tree.setRoot("root");
+        tree.add("root", "1");
+        tree.add("1", "1-1");
+        tree.add("1", "1-2");
+        tree.add("1", "1-3");
+        tree.add("root", "2");
+        tree.add("2", "2-1");
+
+        final String parent = tree.getParent("1-2");
+
+        assertEquals("1", parent);
     }
 
     @Theory
@@ -119,15 +135,22 @@ public class TreeTest {
 
     @Theory
     public void removeShouldCascadeRemove(final Tree<String> tree) {
-        tree.setRoot("one");
-        tree.add("one", "two");
-        tree.add("two", "three");
+        tree.setRoot("root");
+        tree.add("root", "1");
+        tree.add("root", "2");
+        tree.add("root", "3");
+        tree.add("1", "1-1");
+        tree.add("1", "1-2");
+        tree.add("2", "2-1");
 
-        tree.remove("two");
+        tree.remove("1");
 
-        assertFalse(tree.contains("two"));
-        assertFalse(tree.getChildren("one").contains("two"));
-        assertFalse(tree.contains("three"));
+        assertFalse(tree.contains("1"));
+        final Collection<String> rootChildren = tree.getChildren("root");
+        assertThat(2, is(rootChildren.size()));
+        assertFalse(rootChildren.contains("1"));
+        assertFalse(tree.contains("1-2"));
+        assertNotSame("root", tree.getParent("1"));
     }
 
 }
