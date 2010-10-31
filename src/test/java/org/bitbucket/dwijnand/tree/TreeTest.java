@@ -10,57 +10,58 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Collection;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.experimental.theories.DataPoints;
+import org.junit.experimental.theories.Theories;
+import org.junit.experimental.theories.Theory;
+import org.junit.runner.RunWith;
 
-public class MultimapTreeTest {
+@RunWith(Theories.class)
+public class TreeTest {
 
-    private Tree<String> tree;
-
-    @Before
-    public void setUp() {
-        tree = MultimapTree.create();
+    @DataPoints
+    public static Tree<?>[] data() {
+        return new Tree[] {MultimapTree.<String> create()};
     }
 
-    @Test
-    public void containsShouldReturnFalseWhenEmpty() {
+    @Theory
+    public void containsShouldReturnFalseWhenEmpty(final Tree<String> tree) {
         assertFalse(tree.contains("node"));
     }
 
-    @Test
-    public void containsShouldReturnTrueOnAddedNode() {
+    @Theory
+    public void containsShouldReturnTrueOnAddedNode(final Tree<String> tree) {
         tree.setRoot("root");
         tree.add("root", "node");
         assertTrue(tree.contains("node"));
     }
 
-    @Test
-    public void containsShouldReturnTrueForSetRoot() {
+    @Theory
+    public void containsShouldReturnTrueForSetRoot(final Tree<String> tree) {
         tree.setRoot("root");
         assertTrue(tree.contains("root"));
     }
 
-    @Test
-    public void getRootShouldReturnNullBeforeSetRoot() {
+    @Theory
+    public void getRootShouldReturnNullBeforeSetRoot(final Tree<String> tree) {
         assertNull(tree.getRoot());
     }
 
-    @Test
-    public void getRootShouldReturnRootAfterSetRoot() {
+    @Theory
+    public void getRootShouldReturnRootAfterSetRoot(final Tree<String> tree) {
         tree.setRoot("root");
         assertEquals("root", tree.getRoot());
     }
 
-    @Test
-    public void setRootShouldClearTree() {
+    @Theory
+    public void setRootShouldClearTree(final Tree<String> tree) {
         tree.setRoot("first root");
         tree.add("first root", "a child");
         tree.setRoot("second root");
         assertFalse(tree.contains("a child"));
     }
 
-    @Test
-    public void getChildrenShouldReturnCorrectChildren() {
+    @Theory
+    public void getChildrenShouldReturnCorrectChildren(final Tree<String> tree) {
         tree.setRoot("root");
         tree.add("root", "1");
         tree.add("1", "1-1");
@@ -75,8 +76,8 @@ public class MultimapTreeTest {
         assertThat(children, hasItems("1-1", "1-2", "1-3"));
     }
 
-    @Test
-    public void removeShouldCascadeRemove() {
+    @Theory
+    public void removeShouldCascadeRemove(final Tree<String> tree) {
         tree.setRoot("one");
         tree.add("one", "two");
         tree.add("two", "three");
