@@ -133,9 +133,13 @@ public class MultimapTree<T> implements Tree<T> {
         }
         checkNotNull(node);
 
-        final Collection<T> children = nodes.get(node);
-        // TODO Explain why we need to copy the children into an ImmutableList
-        for (final T child : ImmutableList.copyOf(children)) {
+        /*
+         * We make a safe copy of the children as we are recursively removing
+         * each node, and if we don't keep hold of a copy we risk running into a
+         * java.util.ConcurrentModificationException.
+         */
+        final ImmutableList<T> children = ImmutableList.copyOf(nodes.get(node));
+        for (final T child : children) {
             remove(child);
         }
 

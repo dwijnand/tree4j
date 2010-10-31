@@ -153,4 +153,14 @@ public class TreeTest {
         assertNotSame("root", tree.getParent("1"));
     }
 
+    @Theory
+    public void removeShouldNotThrowAConcurrentModificationException(
+            final Tree<String> tree) {
+        tree.setRoot("root");
+        tree.add("root", "1");
+        tree.add("1", "1-1");
+        tree.add("1", "1-2");
+
+        tree.remove("1");
+    }
 }
