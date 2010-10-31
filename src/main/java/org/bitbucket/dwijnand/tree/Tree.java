@@ -67,13 +67,14 @@ public interface Tree<T> {
     /**
      * Adds the specified child node to the {@link Tree}, associated to the
      * specified parent node. Returns {@code true} if the {@link Tree} changed.
+     * If the {@link Tree} already contains the child node, returns false.
      * 
      * @param parent node on which to associate the child node
      * @param child node to add
-     * @return {@code true} if the {@link Tree} changed
+     * @return {@code true} if the {@link Tree} changed, or {@code false} if
+     *         child node was already in the {@link Tree}
      */
     // TODO Define what add does if the Tree doesn't contain the parent
-    // TODO Define what add does if the Tree doesn't contain the child
     boolean add(T parent, T child);
 
     // Removing methods
@@ -84,11 +85,11 @@ public interface Tree<T> {
     void clear();
 
     /**
-     * Removes the specified node from the {@link Tree}.
+     * Removes the specified node from the {@link Tree}, as well as all of its
+     * children nodes.
      * 
      * @param node node to remove
      */
-    // TODO Define what remove does to the children of the node
     void remove(T node);
 
 }

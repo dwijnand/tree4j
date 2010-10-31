@@ -61,7 +61,7 @@ public class TreeTest {
     }
 
     @Theory
-    public void getChildrenShouldReturnCorrectChildren(final Tree<String> tree) {
+    public void addShouldWorkCorrectly(final Tree<String> tree) {
         tree.setRoot("root");
         tree.add("root", "1");
         tree.add("1", "1-1");
@@ -74,6 +74,19 @@ public class TreeTest {
 
         assertThat(3, is(children.size()));
         assertThat(children, hasItems("1-1", "1-2", "1-3"));
+    }
+
+    @Theory
+    public void addShouldReturnFalseOnReinsertingNode(final Tree<String> tree) {
+        tree.setRoot("root");
+        tree.add("root", "1");
+        tree.add("root", "2");
+        tree.add("1", "node");
+
+        final boolean result = tree.add("2", "node");
+
+        assertFalse(result);
+        assertTrue(tree.contains("node"));
     }
 
     @Theory
