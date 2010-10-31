@@ -139,13 +139,14 @@ public class MultimapTree<T> implements Tree<T> {
          * java.util.ConcurrentModificationException.
          */
         final ImmutableList<T> children = ImmutableList.copyOf(nodes.get(node));
-        for (final T child : children) {
-            remove(child);
-        }
 
         nodes.removeAll(node);
         nodes.get(getParent(node)).remove(node);
         parents.remove(node);
+
+        for (final T child : children) {
+            remove(child);
+        }
     }
 
     @Override
