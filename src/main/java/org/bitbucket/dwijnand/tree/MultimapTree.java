@@ -8,6 +8,8 @@ import java.util.Map;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Maps;
@@ -21,6 +23,9 @@ import com.google.common.collect.TreeMultimap;
  * @param <T> the type of the nodes in the tree
  */
 public class MultimapTree<T> implements Tree<T> {
+
+    private static final Logger LOGGER = LoggerFactory
+            .getLogger(MultimapTree.class);
 
     /**
      * The parent-children relationships of the tree.
@@ -120,6 +125,7 @@ public class MultimapTree<T> implements Tree<T> {
 
     @Override
     public void remove(final T node) {
+        LOGGER.debug("Removing {}", node);
         if (node == root) {
             root = null;
             clear();
