@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasItems;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
@@ -39,6 +40,15 @@ public class TreeTest {
     public void containsShouldReturnTrueForSetRoot(final Tree<String> tree) {
         tree.setRoot("root");
         assertTrue(tree.contains("root"));
+    }
+
+    @Theory
+    public void getChildrenShouldReturnEmptyCollectionOnUnknownNode(
+            final Tree<String> tree) {
+        final Collection<String> children = tree.getChildren("unknown node");
+
+        assertNotNull(children);
+        assertThat(0, is(children.size()));
     }
 
     @Theory

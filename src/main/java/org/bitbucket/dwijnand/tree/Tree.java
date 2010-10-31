@@ -44,7 +44,6 @@ public interface Tree<T> {
      * @param node node on which to get the children
      * @return the children of the specified node
      */
-    // TODO Define what getChildren does if the Tree doesn't contain the node
     Collection<T> getChildren(T node);
 
     /**
