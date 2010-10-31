@@ -43,6 +43,13 @@ public class TreeTest {
     }
 
     @Theory
+    public void getParentShouldReturnNullForUnknownNode(final Tree<String> tree) {
+        final String parent = tree.getParent("unknown node");
+
+        assertNull(parent);
+    }
+
+    @Theory
     public void getChildrenShouldReturnEmptyCollectionOnUnknownNode(
             final Tree<String> tree) {
         final Collection<String> children = tree.getChildren("unknown node");

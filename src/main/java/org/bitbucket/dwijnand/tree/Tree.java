@@ -28,12 +28,13 @@ public interface Tree<T> {
     boolean contains(Object node);
 
     /**
-     * Returns the parent of the specified node.
+     * Returns the parent of the specified node, or {@code null} if the
+     * {@link Tree} doesn't contain the specified node.
      * 
      * @param node node on which to get the parent
-     * @return the parent of the specified node
+     * @return the parent of the specified node, or {@code null} if the
+     *         {@link Tree} doesn't contain the specified node
      */
-    // TODO Define what getParent does if the Tree doesn't contain the node
     T getParent(T node);
 
     /**
