@@ -1,6 +1,7 @@
 syntax: glob
 
 # Please keep this in alphabetic order :)
+.checkstyle
 .classpath
 .project
 .settings

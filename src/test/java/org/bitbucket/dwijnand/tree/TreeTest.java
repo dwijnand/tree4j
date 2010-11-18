@@ -59,7 +59,8 @@ public class TreeTest {
     }
 
     @Theory
-    public void getParentShouldReturnNullForUnknownNode(final Tree<String> tree) {
+    public void getParentShouldReturnNullForUnknownNode(
+            final Tree<String> tree) {
         final String parent = tree.getParent("unknown node");
 
         assertNull(parent);

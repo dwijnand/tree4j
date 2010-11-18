@@ -22,7 +22,7 @@ import com.google.common.collect.TreeMultimap;
  * 
  * @param <T> the type of the nodes in the tree
  */
-public class MultimapTree<T> implements Tree<T> {
+public final class MultimapTree<T> implements Tree<T> {
 
     private static final Logger LOGGER = LoggerFactory
             .getLogger(MultimapTree.class);
@@ -138,7 +138,8 @@ public class MultimapTree<T> implements Tree<T> {
          * each node, and if we don't keep hold of a copy we risk running into a
          * java.util.ConcurrentModificationException.
          */
-        final ImmutableList<T> children = ImmutableList.copyOf(nodes.get(node));
+        final ImmutableList<T> children = ImmutableList.copyOf(nodes
+                .get(node));
 
         nodes.removeAll(node);
         nodes.get(getParent(node)).remove(node);
