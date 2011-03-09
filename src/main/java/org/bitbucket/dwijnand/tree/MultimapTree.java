@@ -30,7 +30,7 @@ public final class MultimapTree<T> implements Tree<T> {
     /**
      * The parent-children relationships of the tree.
      */
-    private final Multimap<T, T> nodes;
+    private final Multimap<T, T> children;
 
     /**
      * The child-parent relationships of the tree.
@@ -67,7 +67,7 @@ public final class MultimapTree<T> implements Tree<T> {
     }
 
     private MultimapTree(final Comparator<T> comparator) {
-        nodes = TreeMultimap.create(comparator, comparator);
+        children = TreeMultimap.create(comparator, comparator);
     }
 
     @Override
@@ -88,7 +88,7 @@ public final class MultimapTree<T> implements Tree<T> {
 
     @Override
     public Collection<T> getChildren(final T node) {
-        return nodes.get(checkNotNull(node));
+        return children.get(checkNotNull(node));
     }
 
     @Override
@@ -112,14 +112,14 @@ public final class MultimapTree<T> implements Tree<T> {
         if (contains(child)) {
             return false;
         }
-        nodes.put(parent, child);
+        children.put(parent, child);
         parents.put(child, parent);
         return true;
     }
 
     @Override
     public void clear() {
-        nodes.clear();
+        children.clear();
         parents.clear();
     }
 
@@ -134,15 +134,15 @@ public final class MultimapTree<T> implements Tree<T> {
             return;
         }
 
-        Collection<T> children = nodes.get(node);
+        Collection<T> nodeChildren = children.get(node);
         // A copy is required here to avoid a ConcurrentModificationException
-        children = ImmutableList.copyOf(children);
+        nodeChildren = ImmutableList.copyOf(nodeChildren);
 
-        nodes.removeAll(node);
-        nodes.get(getParent(node)).remove(node);
+        children.removeAll(node);
+        children.get(getParent(node)).remove(node);
         parents.remove(node);
 
-        for (final T child : children) {
+        for (final T child : nodeChildren) {
             remove(child);
         }
     }
