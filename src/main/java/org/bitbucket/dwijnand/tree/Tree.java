@@ -3,14 +3,14 @@ package org.bitbucket.dwijnand.tree;
 import java.util.Collection;
 
 /**
- * An object that represents a tree structure, or in graph-theory an
- * arborescence. Specifically it is an acyclic directed graph with a root node.
- * Each non-root node of the {@link Tree} has a parent and zero or more
- * children. The order of the children of each node is either natural ordering
- * or determined by a specified {@link java.util.Comparator Comparator}.
+ * A representation of a tree structure or, in graph-theory, an arborescence.
+ * Specifically it is an acyclic directed graph with a root node. Each non-root
+ * node of the {@link Tree} has a parent and zero or more children. The order of
+ * the children of each node is either natural ordering or determined by a
+ * specified {@link java.util.Comparator Comparator}.
  * <p>
  * {@link Tree} will not accept {@code null} as a node in any of its methods,
- * throwing a {@link NullPointerException} if a null is passed.
+ * throwing a {@link NullPointerException} if one is passed.
  * 
  * @param <T> the type of the nodes in the tree
  */
