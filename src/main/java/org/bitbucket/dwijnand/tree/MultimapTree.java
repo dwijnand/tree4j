@@ -35,7 +35,7 @@ public final class MultimapTree<T> implements Tree<T> {
     /**
      * The child-parent relationships of the tree.
      */
-    private final Map<T, T> parents = Maps.newHashMap();
+    private final Map<T, T> parents;
 
     /**
      * The root of the tree.
@@ -68,6 +68,7 @@ public final class MultimapTree<T> implements Tree<T> {
 
     private MultimapTree(final Comparator<T> comparator) {
         children = TreeMultimap.create(comparator, comparator);
+        parents = Maps.newHashMap();
     }
 
     @Override
