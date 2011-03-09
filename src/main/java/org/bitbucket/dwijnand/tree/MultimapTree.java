@@ -125,21 +125,18 @@ public final class MultimapTree<T> implements Tree<T> {
 
     @Override
     public void remove(final T node) {
-        LOGGER.debug("Removing {}", node);
+        checkNotNull(node);
+        LOGGER.debug("Removing node [{}]", node);
         if (node == root) {
+            // optimisation
             root = null;
             clear();
             return;
         }
-        checkNotNull(node);
 
-        /*
-         * We make a safe copy of the children as we are recursively removing
-         * each node, and if we don't keep hold of a copy we risk running into a
-         * java.util.ConcurrentModificationException.
-         */
-        final ImmutableList<T> children = ImmutableList.copyOf(nodes
-                .get(node));
+        Collection<T> children = nodes.get(node);
+        // A copy is required here to avoid a ConcurrentModificationException
+        children = ImmutableList.copyOf(children);
 
         nodes.removeAll(node);
         nodes.get(getParent(node)).remove(node);
