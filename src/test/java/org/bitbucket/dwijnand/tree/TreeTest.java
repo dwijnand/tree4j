@@ -4,7 +4,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasItems;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
@@ -71,7 +70,6 @@ public class TreeTest {
             final Tree<String> tree) {
         final Collection<String> children = tree.getChildren("unknown node");
 
-        assertNotNull(children);
         assertThat(0, is(children.size()));
     }
 
