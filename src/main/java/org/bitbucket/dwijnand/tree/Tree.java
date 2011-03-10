@@ -65,14 +65,16 @@ public interface Tree<T> {
 
     /**
      * Creates a new tree containing the new parent/child association, all the
-     * parent/child associations of this tree and the same node set as root.
+     * parent/child associations of this tree and the same node set as root,
+     * unless the tree doesn't contain the parent node, in which case it throws
+     * an {@link IllegalArgumentException}.
      * 
      * @param parent the parent node
      * @param child the child node
      * @return a new tree containing all the associations of this tree, the same
      *         node set as root and the parent/child association
+     * @throws IllegalArgumentException if tree doesn't contain parent node
      */
-    // TODO decide what add does when Tree doesn't contain parent node
     Tree<T> add(T parent, T child);
 
     // Removing methods

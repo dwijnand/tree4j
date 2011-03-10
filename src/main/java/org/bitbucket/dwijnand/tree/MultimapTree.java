@@ -1,5 +1,6 @@
 package org.bitbucket.dwijnand.tree;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Collection;
@@ -143,9 +144,9 @@ public final class MultimapTree<T> implements MutableTree<T> {
     public MultimapTree<T> added(final T parent, final T child) {
         checkNotNull(parent);
         checkNotNull(child);
-        if (!contains(parent)) {
-            return this;
-        }
+        checkArgument(contains(parent),
+                "%s does not contain parent node %s", getClass()
+                        .getSimpleName(), parent);
         if (contains(child)) {
             return this;
         }

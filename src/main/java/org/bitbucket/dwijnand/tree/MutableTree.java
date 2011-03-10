@@ -16,13 +16,14 @@ public interface MutableTree<T> extends Tree<T> {
     MutableTree<T> setRoot(T node);
 
     /**
-     * Adds a new parent/child association.
+     * Adds a new parent/child association, unless the tree doesn't contain the
+     * parent node, in which case it throws an {@link IllegalArgumentException}.
      * 
      * @param parent the parent node
      * @param child the child node
      * @return the mutable tree itself
+     * @throws IllegalArgumentException if tree doesn't contain parent node
      */
-    // TODO decide what add does when MutableTree doesn't contain parent node
     MutableTree<T> added(T parent, T child);
 
     // Removing methods

@@ -11,18 +11,26 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Collection;
 
-import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.experimental.theories.DataPoints;
 import org.junit.experimental.theories.Theories;
 import org.junit.experimental.theories.Theory;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 
 @RunWith(Theories.class)
 public class TreeTest {
 
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
+
     @DataPoints
     public static Tree<?>[] data() {
-        // Use MultimapTree, but this is already tested in MutableTreeTest
+        /*
+         * MultimapTree should be tested here as it is tested by MutableTreeTest
+         * which extends this. However returning and empty array fails the
+         * tests..
+         */
         return new Tree[] {MultimapTree.<String> create()};
     }
 
@@ -105,30 +113,27 @@ public class TreeTest {
     }
 
     @Theory
-    @Ignore("Need figure out how tree responds to reinserting a node")
-    public void addShouldReturnFalseOnReinsertingNode(Tree<String> tree) {
+    public void addShouldReturnAnIdenticalTreeOnReinsertingNode(
+            Tree<String> tree) {
         tree = tree.withRoot("root");
         tree = tree.add("root", "1").add("root", "2");
         tree = tree.add("1", "node");
 
-        tree.add("root", "1");
-        final Boolean result = null;
+        final Tree<String> newTree = tree.add("root", "1");
 
-        assertFalse(result);
-        assertTrue(tree.contains("node"));
+        assertEquals(tree, newTree);
     }
 
     @Theory
-    @Ignore("Need figure out how tree responds to inserting on unknown node")
-    public void addShouldReturnFalseOnInsertingOnUnknownParent(
+    public void addShouldThrowIllegalArgumentExceptionOnInsertingAnUnknownParent(
             Tree<String> tree) {
         tree = tree.withRoot("root");
 
-        tree.add("unknown parent", "node");
-        final Boolean result = null;
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException
+                .expectMessage("does not contain parent node unknown parent");
 
-        assertFalse(result);
-        assertFalse(tree.contains("node"));
+        tree.add("unknown parent", "node");
     }
 
     @Theory
