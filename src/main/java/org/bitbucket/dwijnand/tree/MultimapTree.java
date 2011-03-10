@@ -134,8 +134,8 @@ public final class MultimapTree<T> implements MutableTree<T> {
 
     @Override
     public MultimapTree<T> setRoot(final T node) {
-        root = checkNotNull(node);
         clear();
+        root = checkNotNull(node);
         return this;
     }
 
@@ -165,6 +165,7 @@ public final class MultimapTree<T> implements MutableTree<T> {
     public void clear() {
         children.clear();
         parents.clear();
+        root = null;
     }
 
     @Override
