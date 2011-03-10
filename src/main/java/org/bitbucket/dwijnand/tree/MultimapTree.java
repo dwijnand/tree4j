@@ -22,7 +22,7 @@ import com.google.common.collect.TreeMultimap;
  * 
  * @param <T> the type of the nodes in the tree
  */
-public final class MultimapTree<T> implements Tree<T> {
+public final class MultimapTree<T> implements MutableTree<T> {
 
     private static final Logger LOGGER = LoggerFactory
             .getLogger(MultimapTree.class);
@@ -41,6 +41,11 @@ public final class MultimapTree<T> implements Tree<T> {
      * The root of the tree.
      */
     private T root;
+
+    /**
+     * The comparator used for the ordering of the Multimap keys and values.
+     */
+    private final Comparator<T> comparator;
 
     /**
      * Creates a {@link MultimapTree} whose nodes are ordered according to the
@@ -66,9 +71,24 @@ public final class MultimapTree<T> implements Tree<T> {
         return new MultimapTree<T>(checkNotNull(comparator));
     }
 
+    // TODO add javadoc for create-copy method
+    public static <T> MultimapTree<T> create(
+            final MultimapTree<T> multimapTree) {
+        return new MultimapTree<T>(checkNotNull(multimapTree));
+    }
+
     private MultimapTree(final Comparator<T> comparator) {
+        this.comparator = comparator;
         children = TreeMultimap.create(comparator, comparator);
         parents = Maps.newHashMap();
+    }
+
+    private MultimapTree(final MultimapTree<T> multimapTree) {
+        comparator = multimapTree.comparator;
+        children = TreeMultimap.create(comparator, comparator);
+        children.putAll(multimapTree.children);
+        parents = Maps.newHashMap(multimapTree.parents);
+        root = multimapTree.root;
     }
 
     @Override
@@ -98,24 +118,40 @@ public final class MultimapTree<T> implements Tree<T> {
     }
 
     @Override
-    public void setRoot(final T node) {
-        clear();
+    public MultimapTree<T> withRoot(final T node) {
+        final T root = checkNotNull(node);
+        final MultimapTree<T> multimapTree = new MultimapTree<T>(comparator);
+        multimapTree.root = root;
+        return multimapTree;
+    };
+
+    @Override
+    public MultimapTree<T> setRoot(final T node) {
         root = checkNotNull(node);
+        clear();
+        return this;
     }
 
     @Override
-    public boolean add(final T parent, final T child) {
+    public MultimapTree<T> add(final T parent, final T child) {
+        final MultimapTree<T> multimapTree = new MultimapTree<T>(this);
+        multimapTree.added(parent, child);
+        return multimapTree;
+    };
+
+    @Override
+    public MultimapTree<T> added(final T parent, final T child) {
         checkNotNull(parent);
         checkNotNull(child);
         if (!contains(parent)) {
-            return false;
+            return this;
         }
         if (contains(child)) {
-            return false;
+            return this;
         }
         children.put(parent, child);
         parents.put(child, parent);
-        return true;
+        return this;
     }
 
     @Override
@@ -125,14 +161,21 @@ public final class MultimapTree<T> implements Tree<T> {
     }
 
     @Override
-    public void remove(final T node) {
+    public MultimapTree<T> remove(final T node) {
+        final MultimapTree<T> multimapTree = new MultimapTree<T>(this);
+        multimapTree.removed(node);
+        return multimapTree;
+    };
+
+    @Override
+    public MultimapTree<T> removed(final T node) {
         checkNotNull(node);
         LOGGER.debug("Removing node [{}]", node);
         if (node == root) {
             // optimisation
             root = null;
             clear();
-            return;
+            return this;
         }
 
         Collection<T> nodeChildren = children.get(node);
@@ -144,8 +187,10 @@ public final class MultimapTree<T> implements Tree<T> {
         parents.remove(node);
 
         for (final T child : nodeChildren) {
-            remove(child);
+            removed(child);
         }
+
+        return this;
     }
 
     @Override
