@@ -19,7 +19,7 @@ import com.google.common.collect.Ordering;
 import com.google.common.collect.TreeMultimap;
 
 /**
- * A mutable {@link Tree} backed by a {@link Multimap}.
+ * A mutable tree backed by a {@link Multimap}.
  * 
  * @param <T> the type of the nodes in the tree
  */
@@ -49,8 +49,8 @@ public final class MultimapTree<T> implements MutableTree<T> {
     private final Comparator<T> comparator;
 
     /**
-     * Creates a {@link MultimapTree} whose nodes are ordered according to the
-     * natural ordering of type T.
+     * Creates a MultimapTree whose nodes are ordered according to the natural
+     * ordering of type T.
      * 
      * @param <T> the type of the nodes in the new tree
      * @return a new {@link MultimapTree}
@@ -60,19 +60,25 @@ public final class MultimapTree<T> implements MutableTree<T> {
     }
 
     /**
-     * Creates a {@link MultimapTree} whose nodes are ordered according to the
+     * Creates a new MultimapTree whose nodes are ordered according to the
      * specified {@link Comparator}.
      * 
      * @param <T> the type of the nodes in the new tree
      * @param comparator the
-     * @return a new {@link MultimapTree}
+     * @return a new MultimapTree
      * @throws NullPointerException if the specified comparator is null
      */
     public static <T> MultimapTree<T> create(final Comparator<T> comparator) {
         return new MultimapTree<T>(checkNotNull(comparator));
     }
 
-    // TODO add javadoc for create-copy method
+    /**
+     * Creates a new MultimapTree from the specified MultimapTree.
+     * 
+     * @param <T> the type of the nodes in the new and specified tree
+     * @param multimapTree the MultimapTree
+     * @return a new MultimapTree
+     */
     public static <T> MultimapTree<T> create(
             final MultimapTree<T> multimapTree) {
         return new MultimapTree<T>(checkNotNull(multimapTree));
