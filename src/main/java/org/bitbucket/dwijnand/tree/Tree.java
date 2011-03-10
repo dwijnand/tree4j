@@ -12,7 +12,7 @@ import java.util.Collection;
  * <p>
  * Passing {@code null} where a node is expected always throws a
  * {@link NullPointerException}.
- * 
+ *
  * @param <T> the type of the nodes in the tree
  */
 public interface Tree<T> {
@@ -21,7 +21,7 @@ public interface Tree<T> {
 
     /**
      * Tests whether the specified node is in the tree.
-     * 
+     *
      * @param node the node
      * @return {@code true} if the tree contains the specified node, false
      *         otherwise.
@@ -30,7 +30,7 @@ public interface Tree<T> {
 
     /**
      * Retrieves the parent of the specified node.
-     * 
+     *
      * @param node the node on which to get the parent
      * @return the parent of the specified node, or {@code null} if the tree
      *         doesn't contain the specified node
@@ -39,7 +39,7 @@ public interface Tree<T> {
 
     /**
      * Retrieves a collection view of the children for the specified node.
-     * 
+     *
      * @param node the node on which to get the children
      * @return the children of the specified node, or an empty collection if
      *         none found
@@ -48,7 +48,7 @@ public interface Tree<T> {
 
     /**
      * Retrieves the root.
-     * 
+     *
      * @return the root, or {@code null} if no root is set
      */
     T getRoot();
@@ -57,7 +57,7 @@ public interface Tree<T> {
 
     /**
      * Creates a new tree with the specified node set as the root.
-     * 
+     *
      * @param node the node
      * @return a new tree with the specified node set as root
      */
@@ -68,7 +68,7 @@ public interface Tree<T> {
      * parent/child associations of this tree and the same node set as root,
      * unless the tree doesn't contain the parent node, in which case it throws
      * an {@link IllegalArgumentException}.
-     * 
+     *
      * @param parent the parent node
      * @param child the child node
      * @return a new tree containing all the associations of this tree, the same
@@ -82,7 +82,7 @@ public interface Tree<T> {
     /**
      * Creates a new tree without the specified node and all of its children
      * nodes.
-     * 
+     *
      * @param node the node
      * @return a new tree without the specified node and its children
      */

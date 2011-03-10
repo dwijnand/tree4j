@@ -9,8 +9,6 @@ import java.util.Map;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Maps;
@@ -20,13 +18,10 @@ import com.google.common.collect.TreeMultimap;
 
 /**
  * A mutable tree backed by a {@link Multimap}.
- * 
+ *
  * @param <T> the type of the nodes in the tree
  */
 public final class MultimapTree<T> implements MutableTree<T> {
-
-    private static final Logger LOGGER = LoggerFactory
-            .getLogger(MultimapTree.class);
 
     /**
      * The parent-children relationships of the tree.
@@ -51,7 +46,7 @@ public final class MultimapTree<T> implements MutableTree<T> {
     /**
      * Creates a MultimapTree whose nodes are ordered according to the natural
      * ordering of type T.
-     * 
+     *
      * @param <T> the type of the nodes in the new tree
      * @return a new {@link MultimapTree}
      */
@@ -62,7 +57,7 @@ public final class MultimapTree<T> implements MutableTree<T> {
     /**
      * Creates a new MultimapTree whose nodes are ordered according to the
      * specified {@link Comparator}.
-     * 
+     *
      * @param <T> the type of the nodes in the new tree
      * @param comparator the
      * @return a new MultimapTree
@@ -74,7 +69,7 @@ public final class MultimapTree<T> implements MutableTree<T> {
 
     /**
      * Creates a new MultimapTree from the specified MultimapTree.
-     * 
+     *
      * @param <T> the type of the nodes in the new and specified tree
      * @param multimapTree the MultimapTree
      * @return a new MultimapTree
@@ -178,7 +173,6 @@ public final class MultimapTree<T> implements MutableTree<T> {
     @Override
     public MultimapTree<T> removed(final T node) {
         checkNotNull(node);
-        LOGGER.debug("Removing node [{}]", node);
         if (node == root) {
             // optimisation
             root = null;

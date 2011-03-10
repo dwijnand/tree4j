@@ -2,14 +2,14 @@ package org.bitbucket.dwijnand.tree;
 
 /**
  * A mutable tree structure or arborescence.
- * 
+ *
  * @param <T> the types of the nodes in the tree
  */
 public interface MutableTree<T> extends Tree<T> {
 
     /**
      * Sets the specified node as the root and removes all existing nodes.
-     * 
+     *
      * @param node the node to set as the new root
      * @return the mutable tree itself
      */
@@ -18,7 +18,7 @@ public interface MutableTree<T> extends Tree<T> {
     /**
      * Adds a new parent/child association, unless the tree doesn't contain the
      * parent node, in which case it throws an {@link IllegalArgumentException}.
-     * 
+     *
      * @param parent the parent node
      * @param child the child node
      * @return the mutable tree itself
@@ -35,7 +35,7 @@ public interface MutableTree<T> extends Tree<T> {
 
     /**
      * Removes the specified node and all of its children nodes from the tree.
-     * 
+     *
      * @param node the node
      * @return the mutable tree itself
      */
