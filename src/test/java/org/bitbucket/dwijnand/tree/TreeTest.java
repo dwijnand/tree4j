@@ -79,7 +79,7 @@ public class TreeTest {
     }
 
     @Theory
-    public void getRootShouldReturnRootAfterSetRoot(final Tree<String> tree) {
+    public void getRootShouldReturnSetRoot(final Tree<String> tree) {
         tree.setRoot("root");
         assertEquals("root", tree.getRoot());
     }
@@ -115,7 +115,7 @@ public class TreeTest {
         tree.add("root", "2");
         tree.add("1", "node");
 
-        final boolean result = tree.add("2", "node");
+        final boolean result = tree.add("root", "1");
 
         assertFalse(result);
         assertTrue(tree.contains("node"));
