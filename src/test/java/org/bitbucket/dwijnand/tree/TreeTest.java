@@ -13,13 +13,12 @@ import java.util.Collection;
 
 import org.junit.Rule;
 import org.junit.experimental.theories.DataPoints;
+import org.junit.experimental.theories.Theories;
 import org.junit.experimental.theories.Theory;
 import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
 
-// Don't run this now, as there are no non-mutable Tree implementations. The
-// mutable Tree implementations are run from MutableTreeTest, which extends this
-// class.
-// @RunWith(Theories.class)
+@RunWith(Theories.class)
 public class TreeTest {
 
     @Rule
@@ -27,9 +26,7 @@ public class TreeTest {
 
     @DataPoints
     public static Tree<?>[] data() {
-        // This is a place-holder for when there are non-mutable Tree
-        // implementations. See comment at the beginning of the class.
-        return new Tree[] {};
+        return new ImmutableTree[] {ImmutableMultimapTree.<String> create()};
     }
 
     @Theory
