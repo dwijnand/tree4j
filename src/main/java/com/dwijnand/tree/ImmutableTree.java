@@ -3,8 +3,6 @@ package com.dwijnand.tree;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import java.util.Collection;
-
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
@@ -151,7 +149,7 @@ public class ImmutableTree<T> implements Tree<T> {
     }
 
     @Override
-    public Collection<T> getChildren(final T node) {
+    public ImmutableCollection<T> getChildren(final T node) {
         return children.get(checkNotNull(node));
     }
 
