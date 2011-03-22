@@ -1,4 +1,4 @@
-package com.dwijnand.tree;
+package com.dwijnand.tree.immutable;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -16,7 +16,7 @@ import com.google.common.collect.ImmutableMultimap;
  * 
  * @param <T> the types of the nodes in the tree
  */
-public final class ImmutableTree<T> implements Tree<T> {
+public final class MultimapTree<T> extends Tree<T> {
 
     private final Supplier<? extends ImmutableMultimap.Builder<T, T>> childrenBuilderSupplier;
 
@@ -37,7 +37,7 @@ public final class ImmutableTree<T> implements Tree<T> {
      */
     private final T root;
 
-    public static <T> ImmutableTree<T> create(
+    public static <T> MultimapTree<T> create(
             final Supplier<? extends ImmutableMultimap.Builder<T, T>> childrenBuilderSupplier,
             final Supplier<? extends ImmutableMap.Builder<T, T>> parentsBuilderSupplier) {
         checkNotNull(childrenBuilderSupplier);
@@ -50,7 +50,7 @@ public final class ImmutableTree<T> implements Tree<T> {
                 childrenBuilder, parentsBuilder, null);
     }
 
-    private static <T> ImmutableTree<T> create(
+    private static <T> MultimapTree<T> create(
             final Supplier<? extends ImmutableMultimap.Builder<T, T>> childrenBuilderSupplier,
             final Supplier<? extends ImmutableMap.Builder<T, T>> parentsBuilderSupplier,
             final T root) {
@@ -69,8 +69,8 @@ public final class ImmutableTree<T> implements Tree<T> {
      * @param immutableTree the ImmutableTree
      * @return a new ImmutableTree
      */
-    public static <T> ImmutableTree<T> copyOf(
-            final ImmutableTree<T> immutableTree) {
+    public static <T> MultimapTree<T> copyOf(
+            final MultimapTree<T> immutableTree) {
 
         checkNotNull(immutableTree);
 
@@ -90,17 +90,17 @@ public final class ImmutableTree<T> implements Tree<T> {
                 childrenBuilder, parentsBuilder, root);
     }
 
-    private static <T> ImmutableTree<T> create(
+    private static <T> MultimapTree<T> create(
             final Supplier<? extends ImmutableMultimap.Builder<T, T>> childrenBuilderSupplier,
             final Supplier<? extends ImmutableMap.Builder<T, T>> parentsBuilderSupplier,
             final ImmutableMultimap.Builder<T, T> childrenBuilder,
             final ImmutableMap.Builder<T, T> parentsBuilder, final T root) {
-        return new ImmutableTree<T>(childrenBuilderSupplier,
+        return new MultimapTree<T>(childrenBuilderSupplier,
                 parentsBuilderSupplier, childrenBuilder, parentsBuilder,
                 root);
     }
 
-    private ImmutableTree(
+    private MultimapTree(
             final Supplier<? extends ImmutableMultimap.Builder<T, T>> childrenBuilderSupplier,
             final Supplier<? extends ImmutableMap.Builder<T, T>> parentsBuilderSupplier,
             final ImmutableMultimap.Builder<T, T> childrenBuilder,
@@ -139,13 +139,13 @@ public final class ImmutableTree<T> implements Tree<T> {
     }
 
     @Override
-    public ImmutableTree<T> withRoot(final T node) {
+    public MultimapTree<T> withRoot(final T node) {
         return create(childrenBuilderSupplier, parentsBuilderSupplier,
                 checkNotNull(node));
     };
 
     @Override
-    public ImmutableTree<T> add(final T parent, final T child) {
+    public MultimapTree<T> add(final T parent, final T child) {
         checkNotNull(parent);
         checkNotNull(child);
         checkArgument(contains(parent),
@@ -179,7 +179,7 @@ public final class ImmutableTree<T> implements Tree<T> {
     }
 
     @Override
-    public ImmutableTree<T> remove(final T node) {
+    public MultimapTree<T> remove(final T node) {
         checkNotNull(node);
         if (node == root) {
             // optimisation
