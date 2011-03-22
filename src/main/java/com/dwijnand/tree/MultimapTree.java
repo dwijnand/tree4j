@@ -47,13 +47,13 @@ public final class MultimapTree<T> implements MutableTree<T> {
     }
 
     /**
-     * Creates a new MultimapTree from the specified MultimapTree.
+     * Creates a copy the specified MultimapTree.
      * 
      * @param <T> the type of the nodes in the new and specified tree
      * @param multimapTree the MultimapTree
      * @return a new MultimapTree
      */
-    public static <T> MultimapTree<T> create(
+    public static <T> MultimapTree<T> copyOf(
             final MultimapTree<T> multimapTree) {
         return new MultimapTree<T>(checkNotNull(multimapTree));
     }
@@ -113,7 +113,7 @@ public final class MultimapTree<T> implements MutableTree<T> {
 
     @Override
     public MultimapTree<T> add(final T parent, final T child) {
-        final MultimapTree<T> multimapTree = create(this);
+        final MultimapTree<T> multimapTree = copyOf(this);
         multimapTree.added(parent, child);
         return multimapTree;
     };
@@ -147,7 +147,7 @@ public final class MultimapTree<T> implements MutableTree<T> {
             // optimisation
             return create();
         }
-        final MultimapTree<T> multimapTree = create(this);
+        final MultimapTree<T> multimapTree = copyOf(this);
         multimapTree.removed(node);
         return multimapTree;
     };
