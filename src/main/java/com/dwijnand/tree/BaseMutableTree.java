@@ -24,9 +24,9 @@ import com.google.common.collect.Multimap;
  */
 public class BaseMutableTree<T> implements MutableTree<T> {
 
-    private final Supplier<Multimap<T, T>> childrenMultimapSupplier;
+    private final Supplier<? extends Multimap<T, T>> childrenMultimapSupplier;
 
-    private final Supplier<Map<T, T>> parentsMapSupplier;
+    private final Supplier<? extends Map<T, T>> parentsMapSupplier;
 
     private final Multimap<T, T> children;
 
@@ -34,9 +34,9 @@ public class BaseMutableTree<T> implements MutableTree<T> {
 
     private T root;
 
-    public static <T> BaseMutableTree<T> create(
-            final Supplier<Multimap<T, T>> childrenMultimapSupplier,
-            final Supplier<Map<T, T>> parentsMapSupplier) {
+    public static <T, U extends Multimap<T, T>, V extends Map<T, T>> BaseMutableTree<T> create(
+            final Supplier<U> childrenMultimapSupplier,
+            final Supplier<V> parentsMapSupplier) {
         return new BaseMutableTree<T>(childrenMultimapSupplier,
                 parentsMapSupplier);
     }
@@ -46,9 +46,9 @@ public class BaseMutableTree<T> implements MutableTree<T> {
         return new BaseMutableTree<T>(baseMutableTree);
     }
 
-    public BaseMutableTree(
-            final Supplier<Multimap<T, T>> childrenMultimapSupplier,
-            final Supplier<Map<T, T>> parentsMapSupplier) {
+    public <U extends Multimap<T, T>, V extends Map<T, T>> BaseMutableTree(
+            final Supplier<U> childrenMultimapSupplier,
+            final Supplier<V> parentsMapSupplier) {
         this.childrenMultimapSupplier = childrenMultimapSupplier;
         this.parentsMapSupplier = parentsMapSupplier;
         children = childrenMultimapSupplier.get();
