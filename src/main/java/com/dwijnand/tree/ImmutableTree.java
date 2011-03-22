@@ -16,7 +16,7 @@ import com.google.common.collect.ImmutableMultimap;
  * 
  * @param <T> the types of the nodes in the tree
  */
-public class ImmutableTree<T> implements Tree<T> {
+public final class ImmutableTree<T> implements Tree<T> {
 
     private final Supplier<ImmutableMultimap.Builder<T, T>> childrenBuilderSupplier;
 
@@ -40,17 +40,54 @@ public class ImmutableTree<T> implements Tree<T> {
     public static <T> ImmutableTree<T> create(
             final Supplier<ImmutableMultimap.Builder<T, T>> childrenBuilderSupplier,
             final Supplier<ImmutableMap.Builder<T, T>> parentsBuilderSupplier) {
-        return create(checkNotNull(childrenBuilderSupplier),
-                checkNotNull(parentsBuilderSupplier), null);
+        checkNotNull(childrenBuilderSupplier);
+        checkNotNull(parentsBuilderSupplier);
+        final ImmutableMultimap.Builder<T, T> childrenBuilder = childrenBuilderSupplier
+                .get();
+        final ImmutableMap.Builder<T, T> parentsBuilder = parentsBuilderSupplier
+                .get();
+        return create(childrenBuilderSupplier, parentsBuilderSupplier,
+                childrenBuilder, parentsBuilder, null);
     }
 
     private static <T> ImmutableTree<T> create(
             final Supplier<ImmutableMultimap.Builder<T, T>> childrenBuilderSupplier,
             final Supplier<ImmutableMap.Builder<T, T>> parentsBuilderSupplier,
             final T root) {
-        // accepts null for root
-        return new ImmutableTree<T>(childrenBuilderSupplier,
-                parentsBuilderSupplier, root);
+        final ImmutableMultimap.Builder<T, T> childrenBuilder = childrenBuilderSupplier
+                .get();
+        final ImmutableMap.Builder<T, T> parentsBuilder = parentsBuilderSupplier
+                .get();
+        return create(childrenBuilderSupplier, parentsBuilderSupplier,
+                childrenBuilder, parentsBuilder, root);
+    }
+
+    /**
+     * Creates a copy of the specified ImmutableTree.
+     * 
+     * @param <T> the type of the nodes in the new and specified tree
+     * @param immutableTree the ImmutableTree
+     * @return a new ImmutableTree
+     */
+    public static <T> ImmutableTree<T> copyOf(
+            final ImmutableTree<T> immutableTree) {
+
+        checkNotNull(immutableTree);
+
+        final Supplier<ImmutableMultimap.Builder<T, T>> childrenBuilderSupplier = immutableTree.childrenBuilderSupplier;
+        final Supplier<ImmutableMap.Builder<T, T>> parentsBuilderSupplier = immutableTree.parentsBuilderSupplier;
+        final T root = immutableTree.root;
+
+        final ImmutableMultimap.Builder<T, T> childrenBuilder = childrenBuilderSupplier
+                .get();
+        childrenBuilder.putAll(immutableTree.children);
+
+        final ImmutableMap.Builder<T, T> parentsBuilder = parentsBuilderSupplier
+                .get();
+        parentsBuilder.putAll(immutableTree.parents);
+
+        return create(childrenBuilderSupplier, parentsBuilderSupplier,
+                childrenBuilder, parentsBuilder, root);
     }
 
     private static <T> ImmutableTree<T> create(
@@ -63,39 +100,6 @@ public class ImmutableTree<T> implements Tree<T> {
                 root);
     }
 
-    /**
-     * Creates a copy of the specified ImmutableTree.
-     * 
-     * @param <T> the type of the nodes in the new and specified tree
-     * @param immutableTree the ImmutableTree
-     * @return a new ImmutableTree
-     */
-    public static <T> ImmutableTree<T> copyOf(
-            final ImmutableTree<T> immutableTree) {
-        return new ImmutableTree<T>(checkNotNull(immutableTree));
-    }
-
-    public ImmutableTree(
-            final Supplier<ImmutableMultimap.Builder<T, T>> childrenBuilderSupplier,
-            final Supplier<ImmutableMap.Builder<T, T>> parentsBuilderSupplier) {
-        this.childrenBuilderSupplier = checkNotNull(childrenBuilderSupplier);
-        this.parentsBuilderSupplier = checkNotNull(parentsBuilderSupplier);
-        children = childrenBuilderSupplier.get().build();
-        parents = parentsBuilderSupplier.get().build();
-        root = null;
-    }
-
-    private ImmutableTree(
-            final Supplier<ImmutableMultimap.Builder<T, T>> childrenBuilderSupplier,
-            final Supplier<ImmutableMap.Builder<T, T>> parentsBuilderSupplier,
-            final T root) {
-        this.childrenBuilderSupplier = childrenBuilderSupplier;
-        this.parentsBuilderSupplier = parentsBuilderSupplier;
-        this.children = childrenBuilderSupplier.get().build();
-        this.parents = parentsBuilderSupplier.get().build();
-        this.root = root;
-    }
-
     private ImmutableTree(
             final Supplier<ImmutableMultimap.Builder<T, T>> childrenBuilderSupplier,
             final Supplier<ImmutableMap.Builder<T, T>> parentsBuilderSupplier,
@@ -106,22 +110,6 @@ public class ImmutableTree<T> implements Tree<T> {
         this.children = childrenBuilder.build();
         this.parents = parentsBuilder.build();
         this.root = root;
-    }
-
-    private ImmutableTree(final ImmutableTree<T> immutableTree) {
-        childrenBuilderSupplier = immutableTree.childrenBuilderSupplier;
-        parentsBuilderSupplier = immutableTree.parentsBuilderSupplier;
-        root = immutableTree.root;
-
-        final ImmutableMultimap.Builder<T, T> childrenBuilder = childrenBuilderSupplier
-                .get();
-        childrenBuilder.putAll(immutableTree.children);
-        children = childrenBuilder.build();
-
-        final ImmutableMap.Builder<T, T> parentsBuilder = parentsBuilderSupplier
-                .get();
-        parentsBuilder.putAll(immutableTree.parents);
-        parents = parentsBuilder.build();
     }
 
     @Override
