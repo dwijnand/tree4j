@@ -16,12 +16,14 @@ import org.junit.experimental.theories.Theories;
 import org.junit.experimental.theories.Theory;
 import org.junit.runner.RunWith;
 
+import com.dwijnand.tree.mutable.MultimapTree;
+
 @RunWith(Theories.class)
 public class MutableTreeTest extends TreeTest {
 
     @DataPoints
     public static MutableTree<?>[] data() {
-        return new MutableTree[] {BaseMutableTree.create(
+        return new MutableTree[] {MultimapTree.create(
                 LINKED_HASH_MULTIMAP_SUPPLIER, HASH_MAP_SUPPLIER)};
     }
 
