@@ -41,7 +41,7 @@ public final class MultimapTree<T> extends Tree<T> {
         final Multimap<T, T> children = childrenMultimapSupplier.get();
         final Map<T, T> parents = parentsMapSupplier.get();
         return new MultimapTree<T>(childrenMultimapSupplier,
-                parentsMapSupplier, children, parents);
+                parentsMapSupplier, children, parents, null);
     }
 
     public static <T> MultimapTree<T> copyOf(
@@ -52,19 +52,22 @@ public final class MultimapTree<T> extends Tree<T> {
         final Map<T, T> parents = parentsMapSupplier.get();
         children.putAll(multimapTree.children);
         parents.putAll(multimapTree.parents);
+        final T root = multimapTree.root;
 
         return new MultimapTree<T>(childrenMultimapSupplier,
-                parentsMapSupplier, children, parents);
+                parentsMapSupplier, children, parents, root);
     }
 
     private MultimapTree(
             final Supplier<? extends Multimap<T, T>> childrenMultimapSupplier,
             final Supplier<? extends Map<T, T>> parentsMapSupplier,
-            final Multimap<T, T> children, final Map<T, T> parents) {
+            final Multimap<T, T> children, final Map<T, T> parents,
+            final T root) {
         this.childrenMultimapSupplier = childrenMultimapSupplier;
         this.parentsMapSupplier = parentsMapSupplier;
         this.children = children;
         this.parents = parents;
+        this.root = root;
     }
 
     @Override
