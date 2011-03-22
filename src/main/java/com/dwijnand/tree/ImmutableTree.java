@@ -18,9 +18,9 @@ import com.google.common.collect.ImmutableMultimap;
  */
 public final class ImmutableTree<T> implements Tree<T> {
 
-    private final Supplier<ImmutableMultimap.Builder<T, T>> childrenBuilderSupplier;
+    private final Supplier<? extends ImmutableMultimap.Builder<T, T>> childrenBuilderSupplier;
 
-    private final Supplier<ImmutableMap.Builder<T, T>> parentsBuilderSupplier;
+    private final Supplier<? extends ImmutableMap.Builder<T, T>> parentsBuilderSupplier;
 
     /**
      * The parent-children relationships of the tree.
@@ -38,8 +38,8 @@ public final class ImmutableTree<T> implements Tree<T> {
     private final T root;
 
     public static <T> ImmutableTree<T> create(
-            final Supplier<ImmutableMultimap.Builder<T, T>> childrenBuilderSupplier,
-            final Supplier<ImmutableMap.Builder<T, T>> parentsBuilderSupplier) {
+            final Supplier<? extends ImmutableMultimap.Builder<T, T>> childrenBuilderSupplier,
+            final Supplier<? extends ImmutableMap.Builder<T, T>> parentsBuilderSupplier) {
         checkNotNull(childrenBuilderSupplier);
         checkNotNull(parentsBuilderSupplier);
         final ImmutableMultimap.Builder<T, T> childrenBuilder = childrenBuilderSupplier
@@ -51,8 +51,8 @@ public final class ImmutableTree<T> implements Tree<T> {
     }
 
     private static <T> ImmutableTree<T> create(
-            final Supplier<ImmutableMultimap.Builder<T, T>> childrenBuilderSupplier,
-            final Supplier<ImmutableMap.Builder<T, T>> parentsBuilderSupplier,
+            final Supplier<? extends ImmutableMultimap.Builder<T, T>> childrenBuilderSupplier,
+            final Supplier<? extends ImmutableMap.Builder<T, T>> parentsBuilderSupplier,
             final T root) {
         final ImmutableMultimap.Builder<T, T> childrenBuilder = childrenBuilderSupplier
                 .get();
@@ -74,8 +74,8 @@ public final class ImmutableTree<T> implements Tree<T> {
 
         checkNotNull(immutableTree);
 
-        final Supplier<ImmutableMultimap.Builder<T, T>> childrenBuilderSupplier = immutableTree.childrenBuilderSupplier;
-        final Supplier<ImmutableMap.Builder<T, T>> parentsBuilderSupplier = immutableTree.parentsBuilderSupplier;
+        final Supplier<? extends ImmutableMultimap.Builder<T, T>> childrenBuilderSupplier = immutableTree.childrenBuilderSupplier;
+        final Supplier<? extends ImmutableMap.Builder<T, T>> parentsBuilderSupplier = immutableTree.parentsBuilderSupplier;
         final T root = immutableTree.root;
 
         final ImmutableMultimap.Builder<T, T> childrenBuilder = childrenBuilderSupplier
@@ -91,8 +91,8 @@ public final class ImmutableTree<T> implements Tree<T> {
     }
 
     private static <T> ImmutableTree<T> create(
-            final Supplier<ImmutableMultimap.Builder<T, T>> childrenBuilderSupplier,
-            final Supplier<ImmutableMap.Builder<T, T>> parentsBuilderSupplier,
+            final Supplier<? extends ImmutableMultimap.Builder<T, T>> childrenBuilderSupplier,
+            final Supplier<? extends ImmutableMap.Builder<T, T>> parentsBuilderSupplier,
             final ImmutableMultimap.Builder<T, T> childrenBuilder,
             final ImmutableMap.Builder<T, T> parentsBuilder, final T root) {
         return new ImmutableTree<T>(childrenBuilderSupplier,
@@ -101,8 +101,8 @@ public final class ImmutableTree<T> implements Tree<T> {
     }
 
     private ImmutableTree(
-            final Supplier<ImmutableMultimap.Builder<T, T>> childrenBuilderSupplier,
-            final Supplier<ImmutableMap.Builder<T, T>> parentsBuilderSupplier,
+            final Supplier<? extends ImmutableMultimap.Builder<T, T>> childrenBuilderSupplier,
+            final Supplier<? extends ImmutableMap.Builder<T, T>> parentsBuilderSupplier,
             final ImmutableMultimap.Builder<T, T> childrenBuilder,
             final ImmutableMap.Builder<T, T> parentsBuilder, final T root) {
         this.childrenBuilderSupplier = childrenBuilderSupplier;
