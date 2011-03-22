@@ -45,19 +45,11 @@ public class ImmutableTree<T> implements Tree<T> {
                 checkNotNull(parentsBuilderSupplier), null);
     }
 
-    /**
-     * Private because it accepts null for root.
-     * 
-     * @param <T>
-     * @param childrenBuilderSupplier
-     * @param parentsBuilderSupplier
-     * @param root
-     * @return
-     */
     private static <T> ImmutableTree<T> create(
             final Supplier<ImmutableMultimap.Builder<T, T>> childrenBuilderSupplier,
             final Supplier<ImmutableMap.Builder<T, T>> parentsBuilderSupplier,
             final T root) {
+        // accepts null for root
         return new ImmutableTree<T>(childrenBuilderSupplier,
                 parentsBuilderSupplier, root);
     }
