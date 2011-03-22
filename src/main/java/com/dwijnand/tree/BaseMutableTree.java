@@ -60,6 +60,7 @@ public class BaseMutableTree<T> implements MutableTree<T> {
                 baseMutableTree.parentsMapSupplier);
         children.putAll(baseMutableTree.children);
         parents.putAll(baseMutableTree.parents);
+        root = baseMutableTree.root;
     }
 
     @Override
