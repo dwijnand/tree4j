@@ -40,10 +40,11 @@ public class ImmutableTree<T> implements Tree<T> {
      */
     private final T root;
 
-    private static <T> ImmutableTree<T> create(
+    public static <T> ImmutableTree<T> create(
             final Supplier<ImmutableMultimap.Builder<T, T>> childrenBuilderSupplier,
             final Supplier<ImmutableMap.Builder<T, T>> parentsBuilderSupplier) {
-        return create(childrenBuilderSupplier, parentsBuilderSupplier, null);
+        return create(checkNotNull(childrenBuilderSupplier),
+                checkNotNull(parentsBuilderSupplier), null);
     }
 
     /**
