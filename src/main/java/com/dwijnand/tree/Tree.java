@@ -15,6 +15,7 @@ import java.util.Collection;
  *
  * @param <T> the type of the nodes in the tree
  */
+// TODO no guarantee
 public interface Tree<T> {
 
     // Query methods

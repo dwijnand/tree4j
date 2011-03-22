@@ -16,6 +16,7 @@ import com.google.common.collect.ImmutableMultimap;
  * 
  * @param <T> the types of the nodes in the tree
  */
+// TODO guaranteed, constructor
 public final class MultimapTree<T> extends Tree<T> {
 
     private final Supplier<? extends ImmutableMultimap.Builder<T, T>> childrenBuilderSupplier;

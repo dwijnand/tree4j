@@ -5,6 +5,7 @@ package com.dwijnand.tree;
  *
  * @param <T> the types of the nodes in the tree
  */
+// TODO no guarantee
 public interface MutableTree<T> extends Tree<T> {
 
     /**
