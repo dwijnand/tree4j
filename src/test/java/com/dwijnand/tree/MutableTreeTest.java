@@ -1,5 +1,7 @@
 package com.dwijnand.tree;
 
+import static com.dwijnand.tree.test.helpers.Suppliers.HASH_MAP_SUPPLIER;
+import static com.dwijnand.tree.test.helpers.Suppliers.LINKED_HASH_MULTIMAP_SUPPLIER;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -8,41 +10,19 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Collection;
-import java.util.HashMap;
 
 import org.junit.experimental.theories.DataPoints;
 import org.junit.experimental.theories.Theories;
 import org.junit.experimental.theories.Theory;
 import org.junit.runner.RunWith;
 
-import com.google.common.base.Supplier;
-import com.google.common.collect.LinkedHashMultimap;
-import com.google.common.collect.Maps;
-
 @RunWith(Theories.class)
 public class MutableTreeTest extends TreeTest {
 
     @DataPoints
     public static MutableTree<?>[] data() {
-        final Supplier<LinkedHashMultimap<String, String>> linkedHashMultimapSupplier = new Supplier<LinkedHashMultimap<String, String>>() {
-
-            @Override
-            public LinkedHashMultimap<String, String> get() {
-                return LinkedHashMultimap.create();
-            }
-
-        };
-
-        final Supplier<HashMap<String, String>> hashMapSupplier = new Supplier<HashMap<String, String>>() {
-
-            @Override
-            public HashMap<String, String> get() {
-                return Maps.newHashMap();
-            }
-
-        };
         return new MutableTree[] {BaseMutableTree.create(
-                linkedHashMultimapSupplier, hashMapSupplier)};
+                LINKED_HASH_MULTIMAP_SUPPLIER, HASH_MAP_SUPPLIER)};
     }
 
     @Theory
