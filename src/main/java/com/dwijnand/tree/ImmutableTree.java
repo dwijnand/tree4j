@@ -57,10 +57,11 @@ public class ImmutableTree<T> implements Tree<T> {
     private static <T> ImmutableTree<T> create(
             final Supplier<ImmutableMultimap.Builder<T, T>> childrenBuilderSupplier,
             final Supplier<ImmutableMap.Builder<T, T>> parentsBuilderSupplier,
-            final ImmutableMultimap<T, T> children,
-            final ImmutableMap<T, T> parents, final T root) {
+            final ImmutableMultimap.Builder<T, T> childrenBuilder,
+            final ImmutableMap.Builder<T, T> parentsBuilder, final T root) {
         return new ImmutableTree<T>(childrenBuilderSupplier,
-                parentsBuilderSupplier, children, parents, root);
+                parentsBuilderSupplier, childrenBuilder, parentsBuilder,
+                root);
     }
 
     /**
@@ -99,12 +100,12 @@ public class ImmutableTree<T> implements Tree<T> {
     private ImmutableTree(
             final Supplier<ImmutableMultimap.Builder<T, T>> childrenBuilderSupplier,
             final Supplier<ImmutableMap.Builder<T, T>> parentsBuilderSupplier,
-            final ImmutableMultimap<T, T> children,
-            final ImmutableMap<T, T> parents, final T root) {
+            final ImmutableMultimap.Builder<T, T> childrenBuilder,
+            final ImmutableMap.Builder<T, T> parentsBuilder, final T root) {
         this.childrenBuilderSupplier = childrenBuilderSupplier;
         this.parentsBuilderSupplier = parentsBuilderSupplier;
-        this.children = children;
-        this.parents = parents;
+        this.children = childrenBuilder.build();
+        this.parents = parentsBuilder.build();
         this.root = root;
     }
 
@@ -181,7 +182,7 @@ public class ImmutableTree<T> implements Tree<T> {
         final ImmutableMap<T, T> newParents = parentsBuilder.build();
 
         return create(childrenBuilderSupplier, parentsBuilderSupplier,
-                newChildren, newParents, root);
+                childrenBuilder, parentsBuilder, root);
     };
 
     @Override
@@ -201,11 +202,9 @@ public class ImmutableTree<T> implements Tree<T> {
 
         removeRecursively(node, childrenBuilder, parentsBuilder);
 
-        final ImmutableMultimap<T, T> newChildren = childrenBuilder.build();
-        final ImmutableMap<T, T> newParents = parentsBuilder.build();
         return create(childrenBuilderSupplier, parentsBuilderSupplier,
-                newChildren, newParents, root);
-    };
+                childrenBuilder, parentsBuilder, root);
+    }
 
     private void removeRecursively(final T node,
             final ImmutableMultimap.Builder<T, T> childrenBuilder,
