@@ -8,7 +8,6 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import com.google.common.base.Supplier;
 import com.google.common.collect.ImmutableCollection;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMultimap;
 
@@ -198,36 +197,28 @@ public class ImmutableTree<T> implements Tree<T> {
             // optimisation
             return create(childrenBuilderSupplier, parentsBuilderSupplier);
         }
+
         final ImmutableMultimap.Builder<T, T> childrenBuilder = childrenBuilderSupplier
                 .get();
-        childrenBuilder.putAll(children);
-
         final ImmutableMap.Builder<T, T> parentsBuilder = parentsBuilderSupplier
                 .get();
-        parentsBuilder.putAll(parents);
 
-        removeRecursively(node, childrenBuilder, parentsBuilder);
+        addRecursivelyFilteringNode(node, childrenBuilder, parentsBuilder);
 
         return create(childrenBuilderSupplier, parentsBuilderSupplier,
                 childrenBuilder, parentsBuilder, root);
     }
 
-    private void removeRecursively(final T node,
+    private void addRecursivelyFilteringNode(final T node,
             final ImmutableMultimap.Builder<T, T> childrenBuilder,
             final ImmutableMap.Builder<T, T> parentsBuilder) {
-
-        final ImmutableMultimap<T, T> children = childrenBuilder.build();
-        ImmutableCollection<T> nodeChildren = children.get(node);
-        // A copy is required here to avoid a ConcurrentModificationException
-        nodeChildren = ImmutableList.copyOf(nodeChildren);
-
-        // TODO make this work
-// childrenBuilder.removeAll(node);
-// childrenBuilder.get(getParent(node)).remove(node);
-// parentsBuilder.remove(node);
-
+        final ImmutableCollection<T> nodeChildren = getChildren(node);
         for (final T child : nodeChildren) {
-            removeRecursively(child, childrenBuilder, parentsBuilder);
+            if (child != node) {
+                addInternal(childrenBuilder, parentsBuilder, node, child);
+            }
+            addRecursivelyFilteringNode(child, childrenBuilder,
+                    parentsBuilder);
         }
     }
 
