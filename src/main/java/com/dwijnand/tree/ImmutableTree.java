@@ -203,22 +203,23 @@ public class ImmutableTree<T> implements Tree<T> {
         final ImmutableMap.Builder<T, T> parentsBuilder = parentsBuilderSupplier
                 .get();
 
-        addRecursivelyFilteringNode(node, childrenBuilder, parentsBuilder);
+        addRecursivelyFilteringNode(node, childrenBuilder, parentsBuilder,
+                root);
 
         return create(childrenBuilderSupplier, parentsBuilderSupplier,
                 childrenBuilder, parentsBuilder, root);
     }
 
-    private void addRecursivelyFilteringNode(final T node,
+    private void addRecursivelyFilteringNode(final T excludeNode,
             final ImmutableMultimap.Builder<T, T> childrenBuilder,
-            final ImmutableMap.Builder<T, T> parentsBuilder) {
+            final ImmutableMap.Builder<T, T> parentsBuilder, final T node) {
         final ImmutableCollection<T> nodeChildren = getChildren(node);
         for (final T child : nodeChildren) {
-            if (child != node) {
+            if (child != excludeNode) {
                 addInternal(childrenBuilder, parentsBuilder, node, child);
+                addRecursivelyFilteringNode(excludeNode, childrenBuilder,
+                        parentsBuilder, child);
             }
-            addRecursivelyFilteringNode(child, childrenBuilder,
-                    parentsBuilder);
         }
     }
 
