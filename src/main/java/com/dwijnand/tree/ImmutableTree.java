@@ -86,8 +86,8 @@ public class ImmutableTree<T> implements Tree<T> {
     public ImmutableTree(
             final Supplier<ImmutableMultimap.Builder<T, T>> childrenBuilderSupplier,
             final Supplier<ImmutableMap.Builder<T, T>> parentsBuilderSupplier) {
-        this.childrenBuilderSupplier = childrenBuilderSupplier;
-        this.parentsBuilderSupplier = parentsBuilderSupplier;
+        this.childrenBuilderSupplier = checkNotNull(childrenBuilderSupplier);
+        this.parentsBuilderSupplier = checkNotNull(parentsBuilderSupplier);
         children = childrenBuilderSupplier.get().build();
         parents = parentsBuilderSupplier.get().build();
         root = null;
