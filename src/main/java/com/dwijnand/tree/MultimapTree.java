@@ -70,13 +70,13 @@ public final class MultimapTree<T> implements MutableTree<T> {
     }
 
     @Override
-    public boolean contains(final Object o) {
-        if (o == null) {
+    public boolean contains(final T node) {
+        if (node == null) {
             return false;
-        } else if (o == root) {
+        } else if (node == root) {
             return true;
         } else {
-            return parents.containsKey(o);
+            return parents.containsKey(node);
         }
     }
 

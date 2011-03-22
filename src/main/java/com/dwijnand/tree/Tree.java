@@ -26,7 +26,7 @@ public interface Tree<T> {
      * @return {@code true} if the tree contains the specified node, false
      *         otherwise.
      */
-    boolean contains(Object node);
+    boolean contains(T node);
 
     /**
      * Retrieves the parent of the specified node.
