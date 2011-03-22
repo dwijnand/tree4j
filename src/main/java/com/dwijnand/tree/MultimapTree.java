@@ -1,15 +1,13 @@
 package com.dwijnand.tree;
 
-import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import java.util.Collection;
 import java.util.Map;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
-import com.google.common.collect.ImmutableList;
+import com.google.common.base.Supplier;
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
@@ -19,22 +17,7 @@ import com.google.common.collect.Multimap;
  * 
  * @param <T> the type of the nodes in the tree
  */
-public final class MultimapTree<T> implements MutableTree<T> {
-
-    /**
-     * The parent-children relationships of the tree.
-     */
-    private final Multimap<T, T> children;
-
-    /**
-     * The child-parent relationships of the tree.
-     */
-    private final Map<T, T> parents;
-
-    /**
-     * The root of the tree.
-     */
-    private T root;
+public final class MultimapTree<T> extends BaseMutableTree<T> {
 
     /**
      * Creates a new MultimapTree.
@@ -58,123 +41,26 @@ public final class MultimapTree<T> implements MutableTree<T> {
         return new MultimapTree<T>(checkNotNull(multimapTree));
     }
 
-    private MultimapTree() {
-        children = LinkedHashMultimap.create();
-        parents = Maps.newHashMap();
+    public MultimapTree() {
+        super(new Supplier<Multimap<T, T>>() {
+
+            @Override
+            public Multimap<T, T> get() {
+                return LinkedHashMultimap.create();
+            }
+
+        }, new Supplier<Map<T, T>>() {
+
+            @Override
+            public Map<T, T> get() {
+                return Maps.newHashMap();
+            }
+
+        });
     }
 
     private MultimapTree(final MultimapTree<T> multimapTree) {
-        children = LinkedHashMultimap.create(multimapTree.children);
-        parents = Maps.newHashMap(multimapTree.parents);
-        root = multimapTree.root;
-    }
-
-    @Override
-    public boolean contains(final T node) {
-        if (node == null) {
-            return false;
-        } else if (node == root) {
-            return true;
-        } else {
-            return parents.containsKey(node);
-        }
-    }
-
-    @Override
-    public T getParent(final T node) {
-        return parents.get(checkNotNull(node));
-    }
-
-    @Override
-    public Collection<T> getChildren(final T node) {
-        return children.get(checkNotNull(node));
-    }
-
-    @Override
-    public T getRoot() {
-        return root;
-    }
-
-    @Override
-    public MultimapTree<T> withRoot(final T node) {
-        checkNotNull(node);
-        final MultimapTree<T> multimapTree = create();
-        multimapTree.root = node;
-        return multimapTree;
-    };
-
-    @Override
-    public MultimapTree<T> setRoot(final T node) {
-        checkNotNull(node);
-        clear();
-        root = node;
-        return this;
-    }
-
-    @Override
-    public MultimapTree<T> add(final T parent, final T child) {
-        final MultimapTree<T> multimapTree = copyOf(this);
-        multimapTree.added(parent, child);
-        return multimapTree;
-    };
-
-    @Override
-    public MultimapTree<T> added(final T parent, final T child) {
-        checkNotNull(parent);
-        checkNotNull(child);
-        checkArgument(contains(parent),
-                "%s does not contain parent node %s", getClass()
-                        .getSimpleName(), parent);
-        if (contains(child)) {
-            return this;
-        }
-        children.put(parent, child);
-        parents.put(child, parent);
-        return this;
-    }
-
-    @Override
-    public void clear() {
-        children.clear();
-        parents.clear();
-        root = null;
-    }
-
-    @Override
-    public MultimapTree<T> remove(final T node) {
-        checkNotNull(node);
-        if (node == root) {
-            // optimisation
-            return create();
-        }
-        final MultimapTree<T> multimapTree = copyOf(this);
-        multimapTree.removed(node);
-        return multimapTree;
-    };
-
-    @Override
-    public MultimapTree<T> removed(final T node) {
-        checkNotNull(node);
-        if (node == root) {
-            // optimisation
-            root = null;
-            clear();
-            return this;
-        }
-
-        Collection<T> nodeChildren = children.get(node);
-        // A copy is required here to avoid a ConcurrentModificationException
-        nodeChildren = ImmutableList.copyOf(nodeChildren);
-
-        children.removeAll(node);
-        children.get(getParent(node)).remove(node);
-        parents.remove(node);
-
-        for (final T child : nodeChildren) {
-            removed(child);
-        }
-
-        return this;
+        super(multimapTree);
     }
 
     @Override
