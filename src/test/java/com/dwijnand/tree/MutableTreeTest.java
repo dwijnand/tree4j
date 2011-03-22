@@ -8,7 +8,7 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Collection;
-import java.util.Map;
+import java.util.HashMap;
 
 import org.junit.experimental.theories.DataPoints;
 import org.junit.experimental.theories.Theories;
@@ -18,32 +18,31 @@ import org.junit.runner.RunWith;
 import com.google.common.base.Supplier;
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Maps;
-import com.google.common.collect.Multimap;
 
 @RunWith(Theories.class)
 public class MutableTreeTest extends TreeTest {
 
     @DataPoints
     public static MutableTree<?>[] data() {
-        final Supplier<Multimap<String, String>> childrenMultimapSupplier = new Supplier<Multimap<String, String>>() {
+        final Supplier<LinkedHashMultimap<String, String>> linkedHashMultimapSupplier = new Supplier<LinkedHashMultimap<String, String>>() {
 
             @Override
-            public Multimap<String, String> get() {
+            public LinkedHashMultimap<String, String> get() {
                 return LinkedHashMultimap.create();
             }
 
         };
 
-        final Supplier<Map<String, String>> parentsMapSupplier = new Supplier<Map<String, String>>() {
+        final Supplier<HashMap<String, String>> hashMapSupplier = new Supplier<HashMap<String, String>>() {
 
             @Override
-            public Map<String, String> get() {
+            public HashMap<String, String> get() {
                 return Maps.newHashMap();
             }
 
         };
         return new MutableTree[] {BaseMutableTree.create(
-                childrenMultimapSupplier, parentsMapSupplier)};
+                linkedHashMultimapSupplier, hashMapSupplier)};
     }
 
     @Theory
