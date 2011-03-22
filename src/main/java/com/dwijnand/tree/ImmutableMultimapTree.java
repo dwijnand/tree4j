@@ -22,7 +22,7 @@ import com.google.common.collect.Multimap;
  * 
  * @param <T> the type of the nodes in the tree
  */
-public final class ImmutableMultimapTree<T> implements ImmutableTree<T> {
+public final class ImmutableMultimapTree<T> implements Tree<T> {
 
     /**
      * The parent-children relationships of the tree.
