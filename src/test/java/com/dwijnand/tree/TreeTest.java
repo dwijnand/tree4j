@@ -18,10 +18,6 @@ import org.junit.experimental.theories.Theory;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 
-import com.dwijnand.tree.ImmutableMultimapTree;
-import com.dwijnand.tree.ImmutableTree;
-import com.dwijnand.tree.Tree;
-
 @RunWith(Theories.class)
 public class TreeTest {
 
@@ -30,7 +26,7 @@ public class TreeTest {
 
     @DataPoints
     public static Tree<?>[] data() {
-        return new ImmutableTree[] {ImmutableMultimapTree.<String> create()};
+        return new ImmutableTree[] {};
     }
 
     @Theory
