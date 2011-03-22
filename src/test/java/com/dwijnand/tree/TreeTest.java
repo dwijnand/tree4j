@@ -26,7 +26,7 @@ public class TreeTest {
 
     @DataPoints
     public static Tree<?>[] data() {
-        return new Tree[] {};
+        return new ImmutableTree[] {};
     }
 
     @Theory
