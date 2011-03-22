@@ -1,4 +1,4 @@
-package org.bitbucket.dwijnand.tree;
+package com.dwijnand.tree;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
@@ -13,6 +13,9 @@ import org.junit.experimental.theories.DataPoints;
 import org.junit.experimental.theories.Theories;
 import org.junit.experimental.theories.Theory;
 import org.junit.runner.RunWith;
+
+import com.dwijnand.tree.MultimapTree;
+import com.dwijnand.tree.MutableTree;
 
 @RunWith(Theories.class)
 public class MutableTreeTest extends TreeTest {

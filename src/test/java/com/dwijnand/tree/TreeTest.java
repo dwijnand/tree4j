@@ -1,4 +1,4 @@
-package org.bitbucket.dwijnand.tree;
+package com.dwijnand.tree;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasItems;
@@ -17,6 +17,10 @@ import org.junit.experimental.theories.Theories;
 import org.junit.experimental.theories.Theory;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
+
+import com.dwijnand.tree.ImmutableMultimapTree;
+import com.dwijnand.tree.ImmutableTree;
+import com.dwijnand.tree.Tree;
 
 @RunWith(Theories.class)
 public class TreeTest {

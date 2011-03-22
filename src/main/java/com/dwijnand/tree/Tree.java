@@ -1,4 +1,4 @@
-package org.bitbucket.dwijnand.tree;
+package com.dwijnand.tree;
 
 import java.util.Collection;
 

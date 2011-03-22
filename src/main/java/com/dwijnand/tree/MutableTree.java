@@ -1,4 +1,4 @@
-package org.bitbucket.dwijnand.tree;
+package com.dwijnand.tree;
 
 /**
  * A mutable tree structure or arborescence.
