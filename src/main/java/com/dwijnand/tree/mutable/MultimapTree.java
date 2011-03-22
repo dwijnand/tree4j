@@ -45,14 +45,13 @@ public final class MultimapTree<T> extends Tree<T> {
     }
 
     public static <T> MultimapTree<T> copyOf(
-            final MultimapTree<T> baseMutableTree) {
-
-        final Supplier<? extends Multimap<T, T>> childrenMultimapSupplier = baseMutableTree.childrenMultimapSupplier;
-        final Supplier<? extends Map<T, T>> parentsMapSupplier = baseMutableTree.parentsMapSupplier;
+            final MultimapTree<T> multimapTree) {
+        final Supplier<? extends Multimap<T, T>> childrenMultimapSupplier = multimapTree.childrenMultimapSupplier;
+        final Supplier<? extends Map<T, T>> parentsMapSupplier = multimapTree.parentsMapSupplier;
         final Multimap<T, T> children = childrenMultimapSupplier.get();
         final Map<T, T> parents = parentsMapSupplier.get();
-        children.putAll(baseMutableTree.children);
-        parents.putAll(baseMutableTree.parents);
+        children.putAll(multimapTree.children);
+        parents.putAll(multimapTree.parents);
 
         return new MultimapTree<T>(childrenMultimapSupplier,
                 parentsMapSupplier, children, parents);
@@ -97,9 +96,9 @@ public final class MultimapTree<T> extends Tree<T> {
     @Override
     public MultimapTree<T> withRoot(final T node) {
         checkNotNull(node);
-        final MultimapTree<T> baseMutableTree = createNew();
-        baseMutableTree.root = node;
-        return baseMutableTree;
+        final MultimapTree<T> multimapTree = createNew();
+        multimapTree.root = node;
+        return multimapTree;
     }
 
     @Override
@@ -112,9 +111,9 @@ public final class MultimapTree<T> extends Tree<T> {
 
     @Override
     public MultimapTree<T> add(final T parent, final T child) {
-        final MultimapTree<T> baseMutableTree = copyOf(this);
-        baseMutableTree.added(parent, child);
-        return baseMutableTree;
+        final MultimapTree<T> multimapTree = copyOf(this);
+        multimapTree.added(parent, child);
+        return multimapTree;
     }
 
     @Override
@@ -152,9 +151,9 @@ public final class MultimapTree<T> extends Tree<T> {
             return this;
         }
 
-        final MultimapTree<T> baseMutableTree = copyOf(this);
-        baseMutableTree.removed(node);
-        return baseMutableTree;
+        final MultimapTree<T> multimapTree = copyOf(this);
+        multimapTree.removed(node);
+        return multimapTree;
     }
 
     @Override
