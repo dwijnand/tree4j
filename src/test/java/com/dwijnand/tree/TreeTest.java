@@ -1,5 +1,7 @@
 package com.dwijnand.tree;
 
+import static com.dwijnand.tree.test.helpers.Suppliers.IMMUTABLE_MAP_BUILDER_SUPPLIER;
+import static com.dwijnand.tree.test.helpers.Suppliers.IMMUTABLE_MULTIMAP_BUILDER_SUPPLIER;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasItems;
 import static org.junit.Assert.assertEquals;
@@ -18,10 +20,6 @@ import org.junit.experimental.theories.Theory;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 
-import com.google.common.base.Supplier;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableMultimap;
-
 @RunWith(Theories.class)
 public class TreeTest {
 
@@ -30,26 +28,9 @@ public class TreeTest {
 
     @DataPoints
     public static Tree<?>[] data() {
-        final Supplier<ImmutableMultimap.Builder<String, String>> childrenBuilderSupplier = new Supplier<ImmutableMultimap.Builder<String, String>>() {
-
-            @Override
-            public ImmutableMultimap.Builder<String, String> get() {
-                return ImmutableMultimap.builder();
-            }
-
-        };
-
-        final Supplier<ImmutableMap.Builder<String, String>> parentsBuilderSupplier = new Supplier<ImmutableMap.Builder<String, String>>() {
-
-            @Override
-            public ImmutableMap.Builder<String, String> get() {
-                return ImmutableMap.builder();
-            }
-
-        };
-
         return new ImmutableTree[] {ImmutableTree.create(
-                childrenBuilderSupplier, parentsBuilderSupplier)};
+                IMMUTABLE_MULTIMAP_BUILDER_SUPPLIER,
+                IMMUTABLE_MAP_BUILDER_SUPPLIER)};
     }
 
     @Theory
