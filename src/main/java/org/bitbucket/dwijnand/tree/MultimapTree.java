@@ -121,9 +121,9 @@ public final class MultimapTree<T> implements MutableTree<T> {
 
     @Override
     public MultimapTree<T> withRoot(final T node) {
-        final T root = checkNotNull(node);
-        final MultimapTree<T> multimapTree = new MultimapTree<T>(comparator);
-        multimapTree.root = root;
+        checkNotNull(node);
+        final MultimapTree<T> multimapTree = create();
+        multimapTree.root = node;
         return multimapTree;
     };
 
@@ -136,7 +136,7 @@ public final class MultimapTree<T> implements MutableTree<T> {
 
     @Override
     public MultimapTree<T> add(final T parent, final T child) {
-        final MultimapTree<T> multimapTree = new MultimapTree<T>(this);
+        final MultimapTree<T> multimapTree = create(this);
         multimapTree.added(parent, child);
         return multimapTree;
     };
@@ -165,7 +165,12 @@ public final class MultimapTree<T> implements MutableTree<T> {
 
     @Override
     public MultimapTree<T> remove(final T node) {
-        final MultimapTree<T> multimapTree = new MultimapTree<T>(this);
+        checkNotNull(node);
+        if (node == root) {
+            // optimisation
+            return create();
+        }
+        final MultimapTree<T> multimapTree = create(this);
         multimapTree.removed(node);
         return multimapTree;
     };
