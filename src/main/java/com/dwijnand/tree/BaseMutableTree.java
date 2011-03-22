@@ -20,47 +20,53 @@ import com.google.common.collect.Multimap;
  * An instance in constructed using the specified multimap and map suppliers, or
  * from another {@link BaseMutableTree}.
  * 
- * @param <T> the types of the nodes in the tree
+ * @param <T> the type of the nodes in the tree
+ * @param <U> the type of the multimap to hold the parent-child relationship
+ * @param <V> the type of the map to hold the child-parent relationship
  */
-public class BaseMutableTree<T> implements MutableTree<T> {
+public class BaseMutableTree<T, U extends Multimap<T, T>, V extends Map<T, T>>
+        implements MutableTree<T> {
 
-    private final Supplier<? extends Multimap<T, T>> childrenMultimapSupplier;
+    private final Supplier<U> childrenMultimapSupplier;
 
-    private final Supplier<? extends Map<T, T>> parentsMapSupplier;
+    private final Supplier<V> parentsMapSupplier;
 
-    private final Multimap<T, T> children;
+    private final U children;
 
-    private final Map<T, T> parents;
+    private final V parents;
 
     private T root;
 
-    public static <T, U extends Multimap<T, T>, V extends Map<T, T>> BaseMutableTree<T> create(
+    public static <T, U extends Multimap<T, T>, V extends Map<T, T>> BaseMutableTree<T, U, V> create(
             final Supplier<U> childrenMultimapSupplier,
             final Supplier<V> parentsMapSupplier) {
-        return new BaseMutableTree<T>(childrenMultimapSupplier,
-                parentsMapSupplier);
+        final U children = childrenMultimapSupplier.get();
+        final V parents = parentsMapSupplier.get();
+        return new BaseMutableTree<T, U, V>(childrenMultimapSupplier,
+                parentsMapSupplier, children, parents);
     }
 
-    public static <T> BaseMutableTree<T> copyOf(
-            final BaseMutableTree<T> baseMutableTree) {
-        return new BaseMutableTree<T>(baseMutableTree);
-    }
+    public static <T, U extends Multimap<T, T>, V extends Map<T, T>> BaseMutableTree<T, U, V> copyOf(
+            final BaseMutableTree<T, U, V> baseMutableTree) {
 
-    public <U extends Multimap<T, T>, V extends Map<T, T>> BaseMutableTree(
-            final Supplier<U> childrenMultimapSupplier,
-            final Supplier<V> parentsMapSupplier) {
-        this.childrenMultimapSupplier = childrenMultimapSupplier;
-        this.parentsMapSupplier = parentsMapSupplier;
-        children = childrenMultimapSupplier.get();
-        parents = parentsMapSupplier.get();
-    }
-
-    public BaseMutableTree(final BaseMutableTree<T> baseMutableTree) {
-        this(baseMutableTree.childrenMultimapSupplier,
-                baseMutableTree.parentsMapSupplier);
+        final Supplier<U> childrenMultimapSupplier = baseMutableTree.childrenMultimapSupplier;
+        final Supplier<V> parentsMapSupplier = baseMutableTree.parentsMapSupplier;
+        final U children = childrenMultimapSupplier.get();
+        final V parents = parentsMapSupplier.get();
         children.putAll(baseMutableTree.children);
         parents.putAll(baseMutableTree.parents);
-        root = baseMutableTree.root;
+
+        return new BaseMutableTree<T, U, V>(childrenMultimapSupplier,
+                parentsMapSupplier, children, parents);
+    }
+
+    public BaseMutableTree(final Supplier<U> childrenMultimapSupplier,
+            final Supplier<V> parentsMapSupplier, final U children,
+            final V parents) {
+        this.childrenMultimapSupplier = childrenMultimapSupplier;
+        this.parentsMapSupplier = parentsMapSupplier;
+        this.children = children;
+        this.parents = parents;
     }
 
     @Override
@@ -90,15 +96,15 @@ public class BaseMutableTree<T> implements MutableTree<T> {
     }
 
     @Override
-    public BaseMutableTree<T> withRoot(final T node) {
+    public BaseMutableTree<T, U, V> withRoot(final T node) {
         checkNotNull(node);
-        final BaseMutableTree<T> baseMutableTree = createNew();
+        final BaseMutableTree<T, U, V> baseMutableTree = createNew();
         baseMutableTree.root = node;
         return baseMutableTree;
     }
 
     @Override
-    public BaseMutableTree<T> setRoot(final T node) {
+    public BaseMutableTree<T, U, V> setRoot(final T node) {
         checkNotNull(node);
         clear();
         root = node;
@@ -106,14 +112,14 @@ public class BaseMutableTree<T> implements MutableTree<T> {
     }
 
     @Override
-    public BaseMutableTree<T> add(final T parent, final T child) {
-        final BaseMutableTree<T> baseMutableTree = copyOf(this);
+    public BaseMutableTree<T, U, V> add(final T parent, final T child) {
+        final BaseMutableTree<T, U, V> baseMutableTree = copyOf(this);
         baseMutableTree.added(parent, child);
         return baseMutableTree;
     }
 
     @Override
-    public BaseMutableTree<T> added(final T parent, final T child) {
+    public BaseMutableTree<T, U, V> added(final T parent, final T child) {
         checkNotNull(parent);
         checkNotNull(child);
         checkArgument(contains(parent),
@@ -135,19 +141,19 @@ public class BaseMutableTree<T> implements MutableTree<T> {
     }
 
     @Override
-    public BaseMutableTree<T> remove(final T node) {
+    public BaseMutableTree<T, U, V> remove(final T node) {
         checkNotNull(node);
         if (node == root) {
             // optimisation
             return createNew();
         }
-        final BaseMutableTree<T> baseMutableTree = copyOf(this);
+        final BaseMutableTree<T, U, V> baseMutableTree = copyOf(this);
         baseMutableTree.removed(node);
         return baseMutableTree;
     }
 
     @Override
-    public BaseMutableTree<T> removed(final T node) {
+    public BaseMutableTree<T, U, V> removed(final T node) {
         checkNotNull(node);
         if (node == root) {
             // optimisation
@@ -171,9 +177,8 @@ public class BaseMutableTree<T> implements MutableTree<T> {
         return this;
     }
 
-    protected BaseMutableTree<T> createNew() {
-        return new BaseMutableTree<T>(childrenMultimapSupplier,
-                parentsMapSupplier);
+    protected BaseMutableTree<T, U, V> createNew() {
+        return create(childrenMultimapSupplier, parentsMapSupplier);
     }
 
     @Override
