@@ -172,18 +172,24 @@ public class ImmutableTree<T> implements Tree<T> {
         final ImmutableMultimap.Builder<T, T> childrenBuilder = childrenBuilderSupplier
                 .get();
         childrenBuilder.putAll(children);
-        childrenBuilder.put(parent, child);
-        final ImmutableMultimap<T, T> newChildren = childrenBuilder.build();
 
         final ImmutableMap.Builder<T, T> parentsBuilder = parentsBuilderSupplier
                 .get();
         parentsBuilder.putAll(parents);
-        parentsBuilder.put(child, parent);
-        final ImmutableMap<T, T> newParents = parentsBuilder.build();
+
+        addInternal(childrenBuilder, parentsBuilder, parent, child);
 
         return create(childrenBuilderSupplier, parentsBuilderSupplier,
                 childrenBuilder, parentsBuilder, root);
     };
+
+    private void addInternal(
+            final ImmutableMultimap.Builder<T, T> childrenBuilder,
+            final ImmutableMap.Builder<T, T> parentsBuilder, final T parent,
+            final T child) {
+        childrenBuilder.put(parent, child);
+        parentsBuilder.put(child, parent);
+    }
 
     @Override
     public ImmutableTree<T> remove(final T node) {
