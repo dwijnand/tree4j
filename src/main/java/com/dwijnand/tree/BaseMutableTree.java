@@ -24,7 +24,7 @@ import com.google.common.collect.Multimap;
  * @param <U> the type of the multimap to hold the parent-child relationship
  * @param <V> the type of the map to hold the child-parent relationship
  */
-public class BaseMutableTree<T, U extends Multimap<T, T>, V extends Map<T, T>>
+public final class BaseMutableTree<T, U extends Multimap<T, T>, V extends Map<T, T>>
         implements MutableTree<T> {
 
     private final Supplier<U> childrenMultimapSupplier;
@@ -60,7 +60,7 @@ public class BaseMutableTree<T, U extends Multimap<T, T>, V extends Map<T, T>>
                 parentsMapSupplier, children, parents);
     }
 
-    public BaseMutableTree(final Supplier<U> childrenMultimapSupplier,
+    private BaseMutableTree(final Supplier<U> childrenMultimapSupplier,
             final Supplier<V> parentsMapSupplier, final U children,
             final V parents) {
         this.childrenMultimapSupplier = childrenMultimapSupplier;
