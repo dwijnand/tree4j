@@ -4,21 +4,19 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.Map;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
-import com.google.common.collect.Ordering;
-import com.google.common.collect.TreeMultimap;
 
 /**
  * A mutable tree backed by a {@link Multimap}.
- *
+ * 
  * @param <T> the type of the nodes in the tree
  */
 public final class MultimapTree<T> implements MutableTree<T> {
@@ -39,37 +37,18 @@ public final class MultimapTree<T> implements MutableTree<T> {
     private T root;
 
     /**
-     * The comparator used for the ordering of the Multimap keys and values.
-     */
-    private final Comparator<T> comparator;
-
-    /**
-     * Creates a MultimapTree whose nodes are ordered according to the natural
-     * ordering of type T.
-     *
+     * Creates a new MultimapTree.
+     * 
      * @param <T> the type of the nodes in the new tree
-     * @return a new {@link MultimapTree}
-     */
-    public static <T extends Comparable<T>> MultimapTree<T> create() {
-        return new MultimapTree<T>(Ordering.<T> natural());
-    }
-
-    /**
-     * Creates a new MultimapTree whose nodes are ordered according to the
-     * specified {@link Comparator}.
-     *
-     * @param <T> the type of the nodes in the new tree
-     * @param comparator the
      * @return a new MultimapTree
-     * @throws NullPointerException if the specified comparator is null
      */
-    public static <T> MultimapTree<T> create(final Comparator<T> comparator) {
-        return new MultimapTree<T>(checkNotNull(comparator));
+    public static <T> MultimapTree<T> create() {
+        return new MultimapTree<T>();
     }
 
     /**
      * Creates a new MultimapTree from the specified MultimapTree.
-     *
+     * 
      * @param <T> the type of the nodes in the new and specified tree
      * @param multimapTree the MultimapTree
      * @return a new MultimapTree
@@ -79,16 +58,13 @@ public final class MultimapTree<T> implements MutableTree<T> {
         return new MultimapTree<T>(checkNotNull(multimapTree));
     }
 
-    private MultimapTree(final Comparator<T> comparator) {
-        this.comparator = comparator;
-        children = TreeMultimap.create(comparator, comparator);
+    private MultimapTree() {
+        children = LinkedHashMultimap.create();
         parents = Maps.newHashMap();
     }
 
     private MultimapTree(final MultimapTree<T> multimapTree) {
-        comparator = multimapTree.comparator;
-        children = TreeMultimap.create(comparator, comparator);
-        children.putAll(multimapTree.children);
+        children = LinkedHashMultimap.create(multimapTree.children);
         parents = Maps.newHashMap(multimapTree.parents);
         root = multimapTree.root;
     }
