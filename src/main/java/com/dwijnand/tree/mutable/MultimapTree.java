@@ -142,10 +142,16 @@ public final class MultimapTree<T> extends Tree<T> {
     @Override
     public MultimapTree<T> remove(final T node) {
         checkNotNull(node);
+
         if (node == root) {
             // optimisation
             return createNew();
         }
+
+        if (!contains(node)) {
+            return this;
+        }
+
         final MultimapTree<T> baseMutableTree = copyOf(this);
         baseMutableTree.removed(node);
         return baseMutableTree;

@@ -187,6 +187,10 @@ public final class MultimapTree<T> extends Tree<T> {
             return create(childrenBuilderSupplier, parentsBuilderSupplier);
         }
 
+        if (!contains(node)) {
+            return this;
+        }
+
         final ImmutableMultimap.Builder<T, T> childrenBuilder = childrenBuilderSupplier
                 .get();
         final ImmutableMap.Builder<T, T> parentsBuilder = parentsBuilderSupplier
