@@ -26,7 +26,7 @@ public abstract class GuaranteedTree<T> implements Tree<T> {
     /**
      * {@inheritDoc}
      * <p>
-     * This method always returns an {@link GuaranteedTree} instead of the more
+     * This method always returns a {@link GuaranteedTree} instead of the more
      * general {@link Tree}.
      */
     @Override
@@ -35,7 +35,7 @@ public abstract class GuaranteedTree<T> implements Tree<T> {
     /**
      * {@inheritDoc}
      * <p>
-     * This method always returns an {@link GuaranteedTree} instead of the more
+     * This method always returns a {@link GuaranteedTree} instead of the more
      * general {@link Tree}.
      */
     @Override
@@ -44,7 +44,7 @@ public abstract class GuaranteedTree<T> implements Tree<T> {
     /**
      * {@inheritDoc}
      * <p>
-     * This method always returns an {@link GuaranteedTree} instead of the more
+     * This method always returns a {@link GuaranteedTree} instead of the more
      * general {@link Tree}.
      */
     @Override
