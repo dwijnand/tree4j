@@ -16,11 +16,11 @@ import com.google.common.collect.ImmutableMultimap;
  * See {@link TreeSpec} for more details on what is intended by tree structure.
  * <p>
  * This class is final so all instances of it are guaranteed to be immutable.
- * See {@link GuaranteedTree} for more details on the immutability guarantee.
+ * See {@link Tree} for more details on the immutability guarantee.
  *
  * @param <T> the type of the nodes in the tree
  */
-public final class ImmutableMultimapTree<T> extends GuaranteedTree<T> {
+public final class ImmutableMultimapTree<T> extends ImmutableTree<T> {
 
     /**
      * The supplier of immutable multimap builder instances, used to build the

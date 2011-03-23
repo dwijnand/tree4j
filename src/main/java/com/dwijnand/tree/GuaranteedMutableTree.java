@@ -12,7 +12,7 @@ package com.dwijnand.tree;
  * This class is not final, however, it doesn't have any public or protected
  * constructors and, therefore, it cannot be subclasses outside of its package.
  * <p>
- * See {@link GuaranteedTree} for more details on the immutability guarantee.
+ * See {@link Tree} for more details on the immutability guarantee.
  *
  * @param <T> the type of the nodes in the tree
  */
