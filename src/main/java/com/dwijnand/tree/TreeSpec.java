@@ -19,9 +19,12 @@ import java.util.Collection;
  * object. There aren't, however, any guarantees that the 'modifying' methods do
  * not change the internal state of the tree as there is no way to enforce this.
  * <p>
- * See {@link GuaranteedTree} for a guaranteed immutable tree. Also, see
- * {@link MutableTreeSpec} which extends this interface adding in-place
- * modification methods.
+ * To check compatibility with this specification, there are a suite of tests
+ * that can be used. See {@link GuaranteedTree} for a guaranteed immutable tree.
+ * Also, see {@link MutableTreeSpec} which extends this interface adding
+ * in-place modification methods.
+ * <p>
+ * TODO check the last phrase after moving/renaming GuaranteedTree
  *
  * @param <T> the type of the nodes in the tree
  * @see GuaranteedTree
