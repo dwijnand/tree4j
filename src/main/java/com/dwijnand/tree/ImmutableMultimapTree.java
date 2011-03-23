@@ -53,11 +53,11 @@ public final class ImmutableMultimapTree<T> extends GuaranteedTree<T> {
      * Creates a new immutable multimap tree using the specified
      * {@link ImmutableMultimap} and {@link ImmutableMap} builder suppliers.
      * These suppliers are used to obtain builders required to constructing the
-     * parent-children and child-parent relationships within this tree.
+     * parent-children and child-parent relationships within the tree.
      * <p>
-     * Suppliers of builders are required, as opposed to simply builders, as all
-     * the 'modifying' methods actually return new instances of this tree, and
-     * therefore require fresh builders.
+     * Suppliers of builders are required, as opposed to simply builders,
+     * because all the 'modifying' methods actually return new instances of this
+     * tree, and therefore require new builders.
      *
      * @param <T> the type of the nodes in the tree
      * @param childrenBuilderSupplier an ImmutableMultimap builder supplier
