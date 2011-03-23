@@ -16,7 +16,7 @@ import com.google.common.collect.ImmutableMultimap;
  * See {@link Tree} for more details on what is intended by tree structure.
  * <p>
  * This class is final so all instances of it are guaranteed to be immutable.
- * See {@link GuaranteedTree} for more details on immutability guarantee.
+ * See {@link GuaranteedTree} for more details on the immutability guarantee.
  *
  * @param <T> the type of the nodes in the tree
  */
