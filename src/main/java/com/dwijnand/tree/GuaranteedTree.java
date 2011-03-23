@@ -20,6 +20,10 @@ package com.dwijnand.tree;
  */
 public abstract class GuaranteedTree<T> implements Tree<T> {
 
+    /**
+     * Creates an empty instance. This sole constructor is package-private so
+     * that it may not be subclassed outside of this package.
+     */
     GuaranteedTree() {
     }
 
