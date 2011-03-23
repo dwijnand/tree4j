@@ -60,9 +60,8 @@ public final class ImmutableMultimapTree<T> extends GuaranteedTree<T> {
      * therefore require fresh builders.
      *
      * @param <T> the type of the nodes in the tree
-     * @param childrenBuilderSupplier an {@link ImmutableMultimap} builder
-     *            supplier
-     * @param parentsBuilderSupplier an {@link ImmutableMap} builder supplier
+     * @param childrenBuilderSupplier an ImmutableMultimap builder supplier
+     * @param parentsBuilderSupplier an ImmutableMap builder supplier
      * @return a new immutable multimap tree
      */
     public static <T> ImmutableMultimapTree<T> create(
