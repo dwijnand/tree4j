@@ -254,6 +254,12 @@ public final class ImmutableMultimapTree<T> extends GuaranteedTree<T> {
         parentsBuilder.put(child, parent);
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This method always returns an {@link ImmutableMultimapTree} instead of
+     * the more general {@link GuaranteedTree}.
+     */
     @Override
     public ImmutableMultimapTree<T> remove(final T node) {
         checkNotNull(node);
@@ -294,11 +300,22 @@ public final class ImmutableMultimapTree<T> extends GuaranteedTree<T> {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This method uses reflection to determine whether the specified object is
+     * equal to this tree.
+     */
     @Override
     public boolean equals(final Object obj) {
         return EqualsBuilder.reflectionEquals(this, obj);
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This method uses reflection to build the returned hash code.
+     */
     @Override
     public int hashCode() {
         return HashCodeBuilder.reflectionHashCode(this);
