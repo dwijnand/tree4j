@@ -139,7 +139,18 @@ public final class ImmutableMultimapTree<T> extends GuaranteedTree<T> {
                 children, parents, root);
     }
 
-    // TODO javadoc accepts null root
+    /**
+     * Creates a new immutable multimap tree with the specified suppliers,
+     * associations and root node. See
+     * {@link #create(Supplier, Supplier, ImmutableMultimap, ImmutableMap, T)}
+     * for details.
+     *
+     * @param childrenBuilderSupplier an ImmutableMultimap builder supplier
+     * @param parentsBuilderSupplier an ImmutableMap builder supplier
+     * @param children the parent-children associations to be used
+     * @param parents the child-parent associations to be used
+     * @param root the root node
+     */
     private ImmutableMultimapTree(
             final Supplier<? extends ImmutableMultimap.Builder<T, T>> childrenBuilderSupplier,
             final Supplier<? extends ImmutableMap.Builder<T, T>> parentsBuilderSupplier,
