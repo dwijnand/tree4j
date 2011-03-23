@@ -1,7 +1,7 @@
 package com.dwijnand.tree;
 
 /**
- * This interface extends the {@link TreeSpec} specification with in-place
+ * This interface extends the {@link TreeSpec} interface with in-place
  * modification methods, making it the specification of a mutable tree.
  * <p>
  * The in-place modification methods defined in this interface specify that they
