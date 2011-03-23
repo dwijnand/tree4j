@@ -1,11 +1,18 @@
 package com.dwijnand.tree;
 
 /**
- * A mutable tree structure or arborescence.
+ * A mutable tree structure or arborescence. See {@link Tree} for more details
+ * of what is intended by a tree structure.
+ * <p>
+ * This interface specifies methods for modifying the internal state of the tree
+ * and returning itself. There is, however, no way to enforce that the
+ * modification occurs on the instance itself (instead of returning a new
+ * instance) and, therefore, there are no guarantees. See
+ * {@link com.dwijnand.tree.mutable.Tree mutable.Tree} for a guaranteed mutable
+ * tree.
  *
  * @param <T> the types of the nodes in the tree
  */
-// TODO no guarantee
 public interface MutableTree<T> extends Tree<T> {
 
     /**
