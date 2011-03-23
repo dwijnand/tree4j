@@ -14,11 +14,11 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
 
 /**
- * A guaranteed mutable tree structure which uses {@link Multimap}. See
- * {@link TreeSpec} for more details on what is intended by tree structure.
+ * A <b>guaranteed</b> compliant implementation of {@link MutableTree} which
+ * uses {@link Multimap} and {@link Map}.
  * <p>
- * This class is final so all instances of it are guaranteed. See
- * {@link MutableTree} for what is implied by guaranteed.
+ * This class is final so all instances of it are guaranteed to be compliant.
+ * See {@link Tree} for details about compliance and immutability guarantees.
  *
  * @param <T> the type of the nodes in the tree
  */
