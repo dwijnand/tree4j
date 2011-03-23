@@ -134,6 +134,11 @@ public final class ImmutableMultimapTree<T> extends GuaranteedTree<T> {
         this.root = root;
     }
 
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.dwijnand.tree.Tree#contains(java.lang.Object)
+     */
     @Override
     public boolean contains(final T node) {
         if (node == null) {
@@ -145,21 +150,44 @@ public final class ImmutableMultimapTree<T> extends GuaranteedTree<T> {
         }
     }
 
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.dwijnand.tree.Tree#getParent(java.lang.Object)
+     */
     @Override
     public T getParent(final T node) {
         return parents.get(checkNotNull(node));
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This method always returns an {@link ImmutableCollection} instead of the
+     * more general {@link java.util.Collection Collection} defined in
+     * {@link Tree}.
+     */
     @Override
     public ImmutableCollection<T> getChildren(final T node) {
         return children.get(checkNotNull(node));
     }
 
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.dwijnand.tree.Tree#getRoot()
+     */
     @Override
     public T getRoot() {
         return root;
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This method always returns an {@link ImmutableMultimapTree} instead of
+     * the more general {@link GuaranteedTree}.
+     */
     @Override
     public ImmutableMultimapTree<T> withRoot(final T node) {
         checkNotNull(node);
@@ -176,6 +204,12 @@ public final class ImmutableMultimapTree<T> extends GuaranteedTree<T> {
                 children, parents, node);
     };
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This method always returns an {@link ImmutableMultimapTree} instead of
+     * the more general {@link GuaranteedTree}.
+     */
     @Override
     public ImmutableMultimapTree<T> add(final T parent, final T child) {
         checkNotNull(parent);
