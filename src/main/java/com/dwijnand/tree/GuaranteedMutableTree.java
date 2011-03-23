@@ -5,8 +5,9 @@ package com.dwijnand.tree;
  * {@link TreeSpec} for more details on what is intended by tree structure.
  * <p>
  * By guaranteed it is implied that the implementation of the methods defined in
- * {@link TreeSpec} <em>never</em> modify the internal state of the tree, but rather
- * return a new copy of this instance with the effect of the modification.
+ * {@link TreeSpec} <em>never</em> modify the internal state of the tree, but
+ * rather return a new copy of this instance with the effect of the
+ * modification.
  * <p>
  * This class is not final, however, it doesn't have any public or protected
  * constructors and, therefore, it cannot be subclasses outside of its package.
