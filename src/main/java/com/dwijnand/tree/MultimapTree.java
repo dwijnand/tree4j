@@ -150,8 +150,18 @@ public final class MultimapTree<T> extends GuaranteedMutableTree<T> {
 
     @Override
     public MultimapTree<T> add(final T parent, final T child) {
+        checkNotNull(parent);
+        checkNotNull(child);
+        checkArgument(contains(parent),
+                "%s does not contain parent node %s", getClass()
+                        .getSimpleName(), parent);
+
+        if (contains(child)) {
+            return this;
+        }
+
         final MultimapTree<T> multimapTree = copyOf(this);
-        multimapTree.added(parent, child);
+        multimapTree.addedInternal(parent, child);
         return multimapTree;
     }
 
@@ -162,12 +172,18 @@ public final class MultimapTree<T> extends GuaranteedMutableTree<T> {
         checkArgument(contains(parent),
                 "%s does not contain parent node %s", getClass()
                         .getSimpleName(), parent);
+
         if (contains(child)) {
             return this;
         }
+
+        addedInternal(parent, child);
+        return this;
+    }
+
+    private void addedInternal(final T parent, final T child) {
         children.put(parent, child);
         parents.put(child, parent);
-        return this;
     }
 
     @Override
