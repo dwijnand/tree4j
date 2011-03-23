@@ -8,8 +8,7 @@ package com.dwijnand.tree;
  * and returning itself. There is, however, no way to enforce that the
  * modification occurs on the instance itself (instead of returning a new
  * instance) and, therefore, there are no guarantees. See
- * {@link com.dwijnand.tree.mutable.Tree mutable.Tree} for a guaranteed mutable
- * tree.
+ * {@link GuaranteedMutableTree} for a guaranteed mutable tree.
  *
  * @param <T> the type of the nodes in the tree
  */

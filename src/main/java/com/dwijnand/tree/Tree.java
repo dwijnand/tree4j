@@ -17,11 +17,11 @@ import java.util.Collection;
  * aren't, however, any guarantees for this as there is no way to enforce these
  * constraints.
  * <p>
- * See {@link com.dwijnand.tree.immutable.Tree immutable.Tree} for a guaranteed
- * immutable tree. Also, see {@link MutableTree} for in-place mutating methods.
+ * See {@link GuaranteedTree} for a guaranteed immutable tree. Also, see
+ * {@link MutableTree} for in-place mutating methods.
  *
  * @param <T> the type of the nodes in the tree
- * @see com.dwijnand.tree.immutable.Tree immutable.Tree
+ * @see GuaranteedTree
  * @see MutableTree
  */
 public interface Tree<T> {

@@ -1,9 +1,9 @@
-package com.dwijnand.tree.immutable;
+package com.dwijnand.tree;
+
 
 /**
  * A base class for implementing <b>guaranteed</b> immutable tree structures.
- * See {@link com.dwijnand.tree.Tree tree.Tree} for more details on what is
- * intended by tree structure.
+ * See {@link Tree} for more details on what is intended by tree structure.
  * <p>
  * This class is not final, however, it doesn't have any public or protected
  * constructors and, therefore, it cannot be subclasses outside of its package.
@@ -19,36 +19,36 @@ package com.dwijnand.tree.immutable;
  *
  * @param <T> the type of the nodes in the tree
  */
-public abstract class Tree<T> implements com.dwijnand.tree.Tree<T> {
+public abstract class GuaranteedTree<T> implements Tree<T> {
 
-    Tree() {
+    GuaranteedTree() {
     }
 
     /**
      * {@inheritDoc}
      * <p>
-     * This method always returns an {@link Tree immutable.Tree} instead of the
-     * more general {@link Tree}.
+     * This method always returns an {@link GuaranteedTree} instead of the more
+     * general {@link Tree}.
      */
     @Override
-    public abstract Tree<T> withRoot(T node);
+    public abstract GuaranteedTree<T> withRoot(T node);
 
     /**
      * {@inheritDoc}
      * <p>
-     * This method always returns an {@link Tree immutable.Tree} instead of the
-     * more general {@link Tree}.
+     * This method always returns an {@link GuaranteedTree} instead of the more
+     * general {@link Tree}. {@link Tree}.
      */
     @Override
-    public abstract Tree<T> add(final T parent, final T child);
+    public abstract GuaranteedTree<T> add(final T parent, final T child);
 
     /**
      * {@inheritDoc}
      * <p>
-     * This method always returns an {@link Tree immutable.Tree} instead of the
-     * more general {@link Tree}.
+     * This method always returns an {@link GuaranteedTree} instead of the more
+     * general {@link Tree}.
      */
     @Override
-    public abstract Tree<T> remove(T node);
+    public abstract GuaranteedTree<T> remove(T node);
 
 }

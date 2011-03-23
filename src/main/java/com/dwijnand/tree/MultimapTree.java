@@ -1,4 +1,4 @@
-package com.dwijnand.tree.mutable;
+package com.dwijnand.tree;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -19,11 +19,11 @@ import com.google.common.collect.Multimap;
  * <p>
  * An instance in constructed using the specified multimap and map suppliers, or
  * from another {@link MultimapTree}.
- * 
+ *
  * @param <T> the type of the nodes in the tree
  */
 // TODO guaranteed, constructor
-public final class MultimapTree<T> extends Tree<T> {
+public final class MultimapTree<T> extends GuaranteedMutableTree<T> {
 
     private final Supplier<? extends Multimap<T, T>> childrenMultimapSupplier;
 

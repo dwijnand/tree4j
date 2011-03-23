@@ -16,7 +16,6 @@ import org.junit.experimental.theories.Theories;
 import org.junit.experimental.theories.Theory;
 import org.junit.runner.RunWith;
 
-import com.dwijnand.tree.mutable.MultimapTree;
 
 @RunWith(Theories.class)
 public class MutableTreeTest extends TreeTest {

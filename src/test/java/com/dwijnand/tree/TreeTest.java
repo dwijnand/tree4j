@@ -20,7 +20,6 @@ import org.junit.experimental.theories.Theory;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 
-import com.dwijnand.tree.immutable.MultimapTree;
 
 @RunWith(Theories.class)
 public class TreeTest {
@@ -30,7 +29,7 @@ public class TreeTest {
 
     @DataPoints
     public static Tree<?>[] data() {
-        return new Tree[] {MultimapTree.create(
+        return new Tree[] {ImmutableMultimapTree.create(
                 IMMUTABLE_MULTIMAP_BUILDER_SUPPLIER,
                 IMMUTABLE_MAP_BUILDER_SUPPLIER)};
     }
