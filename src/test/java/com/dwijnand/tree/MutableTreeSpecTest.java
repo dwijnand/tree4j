@@ -16,18 +16,18 @@ import org.junit.experimental.theories.Theories;
 import org.junit.experimental.theories.Theory;
 import org.junit.runner.RunWith;
 
-
 @RunWith(Theories.class)
-public class MutableTreeTest extends TreeTest {
+public class MutableTreeSpecTest extends TreeSpecTest {
 
     @DataPoints
-    public static MutableTree<?>[] data() {
-        return new MutableTree[] {MultimapTree.create(
+    public static MutableTreeSpec<?>[] data() {
+        return new MutableTreeSpec[] {MultimapTree.create(
                 LINKED_HASH_MULTIMAP_SUPPLIER, HASH_MAP_SUPPLIER)};
     }
 
     @Theory
-    public void setRootShouldSetTheRoot(final MutableTree<String> mutableTree) {
+    public void setRootShouldSetTheRoot(
+            final MutableTreeSpec<String> mutableTree) {
         mutableTree.setRoot("root");
 
         assertEquals("root", mutableTree.getRoot());
@@ -35,7 +35,7 @@ public class MutableTreeTest extends TreeTest {
 
     @Theory
     public void setRootShouldRemoveAllExistingNodes(
-            final MutableTree<String> mutableTree) {
+            final MutableTreeSpec<String> mutableTree) {
         mutableTree.setRoot("root");
         mutableTree.added("root", "child");
 
@@ -46,7 +46,7 @@ public class MutableTreeTest extends TreeTest {
 
     @Theory
     public void addedShouldAddTheParentChildAssociation(
-            final MutableTree<String> multimapTree) {
+            final MutableTreeSpec<String> multimapTree) {
         multimapTree.setRoot("root");
 
         multimapTree.added("root", "child");
@@ -58,7 +58,7 @@ public class MutableTreeTest extends TreeTest {
 
     @Theory
     public void addedShouldThrowAnIllegalArgumentExceptionOnUnknownParent(
-            final MutableTree<String> multimapTree) {
+            final MutableTreeSpec<String> multimapTree) {
         expectedException.expect(IllegalArgumentException.class);
         expectedException
                 .expectMessage("does not contain parent node unknown parent");
@@ -68,7 +68,7 @@ public class MutableTreeTest extends TreeTest {
 
     @Theory
     public void clearShouldRemoveAllNodes(
-            final MutableTree<String> multimapTree) {
+            final MutableTreeSpec<String> multimapTree) {
         multimapTree.setRoot("root");
         multimapTree.added("root", "child");
 
@@ -80,7 +80,7 @@ public class MutableTreeTest extends TreeTest {
 
     @Theory
     public void removedShouldRemoveTheSpecifiedNodeAndAllOfItsChildren(
-            final MutableTree<String> multimapTree) {
+            final MutableTreeSpec<String> multimapTree) {
         multimapTree.setRoot("root");
         multimapTree.added("root", "1").added("root", "2")
                 .added("root", "3");

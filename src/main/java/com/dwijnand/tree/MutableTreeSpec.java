@@ -1,27 +1,27 @@
 package com.dwijnand.tree;
 
 /**
- * A mutable tree structure or arborescence. See {@link Tree} for more details
- * on what is intended by a tree structure.
+ * This interface extends the {@link TreeSpec} specification with in-place
+ * modification methods, making it the specification of a mutable tree.
  * <p>
- * This interface specifies methods for modifying the internal state of the tree
- * and returning itself. There is, however, no way to enforce that the
+ * The in-place modification methods defined in this interface specify that they
+ * should then return itself. There is, however, no way to enforce that the
  * modification occurs on the instance itself (instead of returning a new
  * instance) and, therefore, there are no guarantees. See
  * {@link GuaranteedMutableTree} for a guaranteed mutable tree.
  *
  * @param <T> the type of the nodes in the tree
  */
-public interface MutableTree<T> extends Tree<T> {
+public interface MutableTreeSpec<T> extends TreeSpec<T> {
 
     /**
      * {@inheritDoc}
      * <p>
-     * This method always returns a {@link MutableTree} instead of the more
-     * general {@link Tree}.
+     * This method always returns a {@link MutableTreeSpec} instead of the more
+     * general {@link TreeSpec}.
      */
     @Override
-    MutableTree<T> withRoot(T node);
+    MutableTreeSpec<T> withRoot(T node);
 
     /**
      * Sets the specified node as the root and removes all existing nodes.
@@ -29,16 +29,16 @@ public interface MutableTree<T> extends Tree<T> {
      * @param node a node
      * @return the mutable tree itself
      */
-    MutableTree<T> setRoot(T node);
+    MutableTreeSpec<T> setRoot(T node);
 
     /**
      * {@inheritDoc}
      * <p>
-     * This method always returns a {@link MutableTree} instead of the more
-     * general {@link Tree}.
+     * This method always returns a {@link MutableTreeSpec} instead of the more
+     * general {@link TreeSpec}.
      */
     @Override
-    MutableTree<T> add(T parent, T child);
+    MutableTreeSpec<T> add(T parent, T child);
 
     /**
      * Adds a new parent/child association, unless the tree doesn't contain the
@@ -49,7 +49,7 @@ public interface MutableTree<T> extends Tree<T> {
      * @return the mutable tree itself
      * @throws IllegalArgumentException if the tree doesn't contain parent node
      */
-    MutableTree<T> added(T parent, T child);
+    MutableTreeSpec<T> added(T parent, T child);
 
     // Removing methods
 
@@ -61,11 +61,11 @@ public interface MutableTree<T> extends Tree<T> {
     /**
      * {@inheritDoc}
      * <p>
-     * This method always returns a {@link MutableTree} instead of the more
-     * general {@link Tree}.
+     * This method always returns a {@link MutableTreeSpec} instead of the more
+     * general {@link TreeSpec}.
      */
     @Override
-    MutableTree<T> remove(T node);
+    MutableTreeSpec<T> remove(T node);
 
     /**
      * Removes the specified node and all of its children nodes from the tree.
@@ -73,6 +73,6 @@ public interface MutableTree<T> extends Tree<T> {
      * @param node a node
      * @return the mutable tree itself
      */
-    MutableTree<T> removed(T node);
+    MutableTreeSpec<T> removed(T node);
 
 }

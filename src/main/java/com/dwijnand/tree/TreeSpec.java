@@ -3,28 +3,31 @@ package com.dwijnand.tree;
 import java.util.Collection;
 
 /**
- * A tree structure or arborescence.
+ * This interface defines the specification of a tree structure, also known as
+ * an arborescence.
  * <p>
- * Specifically it is an directed acyclic graph with a root node with zero or
- * more children and where each non-root node has a parent and zero or more
- * children.
+ * Specifically it represents a directed acyclic graph with a root node with
+ * zero or more children and where each non-root node has a parent and zero or
+ * more children.
  * <p>
  * Passing {@code null} where a node is expected always throws a
  * {@link NullPointerException}.
  * <p>
- * This interface specifies that 'modifying' methods actually return a new
- * instance of the tree, making an instance of this type immutable. There
- * aren't, however, any guarantees for this as there is no way to enforce these
- * constraints.
+ * This interface doesn't specify any methods that modify the internal state of
+ * the tree; all 'modifying' methods actually return a new instance of the tree,
+ * allowing this interface to be used as the specification of an immutable
+ * object. There aren't, however, any guarantees that the 'modifying' methods do
+ * not change the internal state of the tree as there is no way to enforce this.
  * <p>
  * See {@link GuaranteedTree} for a guaranteed immutable tree. Also, see
- * {@link MutableTree} for in-place mutating methods.
+ * {@link MutableTreeSpec} which extends this interface adding in-place
+ * modification methods.
  *
  * @param <T> the type of the nodes in the tree
  * @see GuaranteedTree
- * @see MutableTree
+ * @see MutableTreeSpec
  */
-public interface Tree<T> {
+public interface TreeSpec<T> {
 
     // Query methods
 
@@ -72,7 +75,7 @@ public interface Tree<T> {
      * @param node a node
      * @return a new tree with the specified node set as the root
      */
-    Tree<T> withRoot(T node);
+    TreeSpec<T> withRoot(T node);
 
     /**
      * Creates a new tree containing the same root and associations of this tree
@@ -87,7 +90,7 @@ public interface Tree<T> {
      * @throws IllegalArgumentException if this tree doesn't contain the parent
      *             node
      */
-    Tree<T> add(T parent, T child);
+    TreeSpec<T> add(T parent, T child);
 
     // Removing methods
 
@@ -100,6 +103,6 @@ public interface Tree<T> {
      * @param node a node
      * @return a new tree without the specified node and its children
      */
-    Tree<T> remove(T node);
+    TreeSpec<T> remove(T node);
 
 }

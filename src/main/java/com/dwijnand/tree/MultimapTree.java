@@ -15,7 +15,7 @@ import com.google.common.collect.Multimap;
 
 /**
  * A guaranteed mutable tree structure which uses {@link Multimap}. See
- * {@link Tree} for more details on what is intended by tree structure.
+ * {@link TreeSpec} for more details on what is intended by tree structure.
  * <p>
  * This class is final so all instances of it are guaranteed. See
  * {@link GuaranteedMutableTree} for what is implied by guaranteed.

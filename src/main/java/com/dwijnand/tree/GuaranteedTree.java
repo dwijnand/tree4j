@@ -2,7 +2,7 @@ package com.dwijnand.tree;
 
 /**
  * A base class for implementing <b>guaranteed</b> immutable tree structures.
- * See {@link Tree} for more details on what is intended by tree structure.
+ * See {@link TreeSpec} for more details on what is intended by tree structure.
  * <p>
  * This class is not final, however, it doesn't have any public or protected
  * constructors and, therefore, it cannot be subclasses outside of its package.
@@ -18,7 +18,7 @@ package com.dwijnand.tree;
  *
  * @param <T> the type of the nodes in the tree
  */
-public abstract class GuaranteedTree<T> implements Tree<T> {
+public abstract class GuaranteedTree<T> implements TreeSpec<T> {
 
     /**
      * Creates an empty instance. This sole constructor is package-private so
@@ -31,7 +31,7 @@ public abstract class GuaranteedTree<T> implements Tree<T> {
      * {@inheritDoc}
      * <p>
      * This method always returns a {@link GuaranteedTree} instead of the more
-     * general {@link Tree}.
+     * general {@link TreeSpec}.
      */
     @Override
     public abstract GuaranteedTree<T> withRoot(T node);
@@ -40,7 +40,7 @@ public abstract class GuaranteedTree<T> implements Tree<T> {
      * {@inheritDoc}
      * <p>
      * This method always returns a {@link GuaranteedTree} instead of the more
-     * general {@link Tree}.
+     * general {@link TreeSpec}.
      */
     @Override
     public abstract GuaranteedTree<T> add(final T parent, final T child);
@@ -49,7 +49,7 @@ public abstract class GuaranteedTree<T> implements Tree<T> {
      * {@inheritDoc}
      * <p>
      * This method always returns a {@link GuaranteedTree} instead of the more
-     * general {@link Tree}.
+     * general {@link TreeSpec}.
      */
     @Override
     public abstract GuaranteedTree<T> remove(T node);

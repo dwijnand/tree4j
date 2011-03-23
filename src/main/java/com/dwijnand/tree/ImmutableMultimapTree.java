@@ -13,7 +13,7 @@ import com.google.common.collect.ImmutableMultimap;
 
 /**
  * A guaranteed immutable tree structure which uses {@link ImmutableMultimap}.
- * See {@link Tree} for more details on what is intended by tree structure.
+ * See {@link TreeSpec} for more details on what is intended by tree structure.
  * <p>
  * This class is final so all instances of it are guaranteed to be immutable.
  * See {@link GuaranteedTree} for more details on the immutability guarantee.
@@ -165,7 +165,7 @@ public final class ImmutableMultimapTree<T> extends GuaranteedTree<T> {
      * <p>
      * This method always returns an {@link ImmutableCollection} instead of the
      * more general {@link java.util.Collection Collection} defined in
-     * {@link Tree}.
+     * {@link TreeSpec}.
      */
     @Override
     public ImmutableCollection<T> getChildren(final T node) {

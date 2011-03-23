@@ -2,10 +2,10 @@ package com.dwijnand.tree;
 
 /**
  * A base class for implementing <b>guaranteed</b> mutable tree structures. See
- * {@link Tree} for more details on what is intended by tree structure.
+ * {@link TreeSpec} for more details on what is intended by tree structure.
  * <p>
  * By guaranteed it is implied that the implementation of the methods defined in
- * {@link Tree} <em>never</em> modify the internal state of the tree, but rather
+ * {@link TreeSpec} <em>never</em> modify the internal state of the tree, but rather
  * return a new copy of this instance with the effect of the modification.
  * <p>
  * This class is not final, however, it doesn't have any public or protected
@@ -15,7 +15,7 @@ package com.dwijnand.tree;
  *
  * @param <T> the type of the nodes in the tree
  */
-public abstract class GuaranteedMutableTree<T> implements MutableTree<T> {
+public abstract class GuaranteedMutableTree<T> implements MutableTreeSpec<T> {
 
     /**
      * Creates an empty instance. This sole constructor is package-private so
@@ -28,7 +28,7 @@ public abstract class GuaranteedMutableTree<T> implements MutableTree<T> {
      * {@inheritDoc}
      * <p>
      * This method always returns a {@link GuaranteedMutableTree} instead of the
-     * more general {@link MutableTree}.
+     * more general {@link MutableTreeSpec}.
      */
     @Override
     public abstract GuaranteedMutableTree<T> withRoot(T node);
@@ -37,7 +37,7 @@ public abstract class GuaranteedMutableTree<T> implements MutableTree<T> {
      * {@inheritDoc}
      * <p>
      * This method always returns a {@link GuaranteedMutableTree} instead of the
-     * more general {@link MutableTree}.
+     * more general {@link MutableTreeSpec}.
      */
     @Override
     public abstract GuaranteedMutableTree<T> setRoot(T node);
@@ -56,7 +56,7 @@ public abstract class GuaranteedMutableTree<T> implements MutableTree<T> {
      * {@inheritDoc}
      * <p>
      * This method always returns a {@link GuaranteedMutableTree} instead of the
-     * more general {@link MutableTree}.
+     * more general {@link MutableTreeSpec}.
      */
     @Override
     public abstract GuaranteedMutableTree<T> added(T parent, T child);
@@ -65,7 +65,7 @@ public abstract class GuaranteedMutableTree<T> implements MutableTree<T> {
      * {@inheritDoc}
      * <p>
      * This method always returns a {@link GuaranteedMutableTree} instead of the
-     * more general {@link MutableTree}.
+     * more general {@link MutableTreeSpec}.
      */
     @Override
     public abstract GuaranteedMutableTree<T> remove(T node);
@@ -74,7 +74,7 @@ public abstract class GuaranteedMutableTree<T> implements MutableTree<T> {
      * {@inheritDoc}
      * <p>
      * This method always returns a {@link GuaranteedMutableTree} instead of the
-     * more general {@link MutableTree}.
+     * more general {@link MutableTreeSpec}.
      */
     @Override
     public abstract GuaranteedMutableTree<T> removed(T node);
