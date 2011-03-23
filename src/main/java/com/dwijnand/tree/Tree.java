@@ -11,10 +11,18 @@ import java.util.Collection;
  * <p>
  * Passing {@code null} where a node is expected always throws a
  * {@link NullPointerException}.
+ * <p>
+ * This interface specifies that 'modifying' methods actually return a new
+ * instance of the tree, making the object itself immutable. There is, however,
+ * no way to enforce this and, therefore, there are no guarantees that an object
+ * of this type is immutable. See {@link com.dwijnand.tree.immutable.Tree
+ * immutable.Tree} for an immutable Tree. See also {@link MutableTree} for
+ * in-place mutating methods.
  *
  * @param <T> the type of the nodes in the tree
+ * @see com.dwijnand.tree.immutable.Tree immutable.Tree
+ * @see MutableTree
  */
-// TODO no guarantee
 public interface Tree<T> {
 
     // Query methods
