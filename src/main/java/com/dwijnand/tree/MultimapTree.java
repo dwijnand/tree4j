@@ -18,11 +18,11 @@ import com.google.common.collect.Multimap;
  * {@link TreeSpec} for more details on what is intended by tree structure.
  * <p>
  * This class is final so all instances of it are guaranteed. See
- * {@link GuaranteedMutableTree} for what is implied by guaranteed.
+ * {@link MutableTree} for what is implied by guaranteed.
  *
  * @param <T> the type of the nodes in the tree
  */
-public final class MultimapTree<T> extends GuaranteedMutableTree<T> {
+public final class MultimapTree<T> extends MutableTree<T> {
 
     /**
      * The supplier of mutable multimap instances, used to hold the
