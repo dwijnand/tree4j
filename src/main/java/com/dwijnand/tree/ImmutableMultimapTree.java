@@ -111,35 +111,6 @@ public final class ImmutableMultimapTree<T> extends GuaranteedTree<T> {
     }
 
     /**
-     * Creates a copy of the specified immutable multimap tree.
-     *
-     * @param <T> the type of the nodes in the trees
-     * @param immutableTree an immutable multimap tree
-     * @return a new immutable multimap tree
-     */
-    public static <T> ImmutableMultimapTree<T> copyOf(
-            final ImmutableMultimapTree<T> immutableTree) {
-        checkNotNull(immutableTree);
-
-        final Supplier<? extends ImmutableMultimap.Builder<T, T>> childrenBuilderSupplier = immutableTree.childrenBuilderSupplier;
-        final Supplier<? extends ImmutableMap.Builder<T, T>> parentsBuilderSupplier = immutableTree.parentsBuilderSupplier;
-        final T root = immutableTree.root;
-
-        final ImmutableMultimap.Builder<T, T> childrenBuilder = childrenBuilderSupplier
-                .get();
-        childrenBuilder.putAll(immutableTree.children);
-        final ImmutableMultimap<T, T> children = childrenBuilder.build();
-
-        final ImmutableMap.Builder<T, T> parentsBuilder = parentsBuilderSupplier
-                .get();
-        parentsBuilder.putAll(immutableTree.parents);
-        final ImmutableMap<T, T> parents = parentsBuilder.build();
-
-        return create(childrenBuilderSupplier, parentsBuilderSupplier,
-                children, parents, root);
-    }
-
-    /**
      * Creates a new immutable multimap tree with the specified suppliers,
      * associations and root node. See
      * {@link #create(Supplier, Supplier, ImmutableMultimap, ImmutableMap, T)}
