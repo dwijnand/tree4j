@@ -1,15 +1,10 @@
 package com.dwijnand.tree.immutable;
 
-import com.google.common.collect.ImmutableCollection;
-
 // TODO guaranteed, constructor
 public abstract class Tree<T> implements com.dwijnand.tree.Tree<T> {
 
     Tree() {
     }
-
-    @Override
-    public abstract ImmutableCollection<T> getChildren(T node);
 
     @Override
     public abstract Tree<T> withRoot(T node);
