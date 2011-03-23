@@ -4,14 +4,12 @@ package com.dwijnand.tree;
  * This interface extends the {@link TreeSpec} interface with in-place
  * modification methods, making it the specification of a mutable tree.
  * <p>
- * The in-place modification methods defined in this interface specify that they
- * should then return itself. There is, however, no way to enforce that the
- * modification occurs on the instance itself (instead of returning a new
- * instance) and, therefore, there are no guarantees. See
- * {@link GuaranteedMutableTree} for a guaranteed mutable tree.
+ * See {@link GuaranteedMutableTree} for a guaranteed mutable tree.
  *
  * @param <T> the type of the nodes in the tree
+ * @see GuaranteedMutableTree
  */
+// TODO add details about specification compliance tests
 public interface MutableTreeSpec<T> extends TreeSpec<T> {
 
     // Override to restrict return type to MutableTreeSpec's
