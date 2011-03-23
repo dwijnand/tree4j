@@ -274,8 +274,8 @@ public final class ImmutableMultimapTree<T> extends ImmutableTree<T> {
         final ImmutableMap.Builder<T, T> parentsBuilder = parentsBuilderSupplier
                 .get();
 
-        addRecursivelyFilteringNode(node, childrenBuilder, parentsBuilder,
-                root);
+        addRecursivelyExcludingNode(root, node, childrenBuilder,
+                parentsBuilder);
 
         final ImmutableMultimap<T, T> children = childrenBuilder.build();
         final ImmutableMap<T, T> parents = parentsBuilder.build();
@@ -284,16 +284,32 @@ public final class ImmutableMultimapTree<T> extends ImmutableTree<T> {
                 children, parents, root);
     }
 
-    // TODO add javadoc to addRecursivelyFilteringNode
-    private void addRecursivelyFilteringNode(final T excludeNode,
+    /**
+     * For each child of the specified node that
+     * <em>isn't the excluded node</em>, it adds a new association for the
+     * specified node and its child in the parent-children and child-parent
+     * builders and then invokes this method again passing the child as the
+     * specified node, propagating all other arguments.
+     * <p>
+     * The effect of this is that, after the recursion, the builders hold all
+     * the associations of this tree, except the exclude node and all of its
+     * children.
+     *
+     * @param node a node
+     * @param excludeNode the excluded node
+     * @param childrenBuilder a builder of parent-child associations
+     * @param parentsBuilder a builder of the child-parent associations
+     */
+    private void addRecursivelyExcludingNode(final T node,
+            final T excludeNode,
             final ImmutableMultimap.Builder<T, T> childrenBuilder,
-            final ImmutableMap.Builder<T, T> parentsBuilder, final T node) {
+            final ImmutableMap.Builder<T, T> parentsBuilder) {
         final ImmutableCollection<T> nodeChildren = getChildren(node);
         for (final T child : nodeChildren) {
             if (child != excludeNode) {
                 addInternal(node, child, childrenBuilder, parentsBuilder);
-                addRecursivelyFilteringNode(excludeNode, childrenBuilder,
-                        parentsBuilder, child);
+                addRecursivelyExcludingNode(child, excludeNode,
+                        childrenBuilder, parentsBuilder);
             }
         }
     }
