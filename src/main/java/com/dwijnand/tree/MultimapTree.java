@@ -224,11 +224,22 @@ public final class MultimapTree<T> extends GuaranteedMutableTree<T> {
         return create(childrenMultimapSupplier, parentsMapSupplier);
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This method uses reflection to determine whether the specified object is
+     * equal to this tree.
+     */
     @Override
     public boolean equals(final Object obj) {
         return EqualsBuilder.reflectionEquals(this, obj);
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This method uses reflection to build the returned hash code.
+     */
     @Override
     public int hashCode() {
         return HashCodeBuilder.reflectionHashCode(this);
