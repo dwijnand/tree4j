@@ -69,24 +69,45 @@ public final class ImmutableMultimapTree<T> extends GuaranteedTree<T> {
             final Supplier<? extends ImmutableMap.Builder<T, T>> parentsBuilderSupplier) {
         checkNotNull(childrenBuilderSupplier);
         checkNotNull(parentsBuilderSupplier);
+
         final ImmutableMultimap.Builder<T, T> childrenBuilder = childrenBuilderSupplier
                 .get();
         final ImmutableMap.Builder<T, T> parentsBuilder = parentsBuilderSupplier
                 .get();
+
+        final ImmutableMultimap<T, T> children = childrenBuilder.build();
+        final ImmutableMap<T, T> parents = parentsBuilder.build();
+
         return create(childrenBuilderSupplier, parentsBuilderSupplier,
-                childrenBuilder, parentsBuilder, null);
+                children, parents, null);
     }
 
+    /**
+     * Creates a new immutable multimap tree using the specified
+     * {@link ImmutableMultimap} and {@link ImmutableMap} builder suppliers,
+     * children ImmutableMultimap, parents ImmutableMap and root node. See
+     * {@link #create(Supplier, Supplier)} for more details.
+     * <p>
+     * This method is private because it uses the specified children and parents
+     * directly, without validating their correctness. Also it accepts
+     * <code>null</code> as the specified root node.
+     *
+     * @param <T> the type of the nodes in the tree
+     * @param childrenBuilderSupplier an ImmutableMultimap builder supplier
+     * @param parentsBuilderSupplier an ImmutableMap builder supplier
+     * @param children the parent-children associations to be used
+     * @param parents the child-parent associations to be used
+     * @param root the root node
+     * @return a new immutable multimap tree with the specified associations and
+     *         root node
+     */
     private static <T> ImmutableMultimapTree<T> create(
             final Supplier<? extends ImmutableMultimap.Builder<T, T>> childrenBuilderSupplier,
             final Supplier<? extends ImmutableMap.Builder<T, T>> parentsBuilderSupplier,
-            final T root) {
-        final ImmutableMultimap.Builder<T, T> childrenBuilder = childrenBuilderSupplier
-                .get();
-        final ImmutableMap.Builder<T, T> parentsBuilder = parentsBuilderSupplier
-                .get();
-        return create(childrenBuilderSupplier, parentsBuilderSupplier,
-                childrenBuilder, parentsBuilder, root);
+            final ImmutableMultimap<T, T> children,
+            final ImmutableMap<T, T> parents, final T root) {
+        return new ImmutableMultimapTree<T>(childrenBuilderSupplier,
+                parentsBuilderSupplier, children, parents, root);
     }
 
     /**
@@ -107,34 +128,27 @@ public final class ImmutableMultimapTree<T> extends GuaranteedTree<T> {
         final ImmutableMultimap.Builder<T, T> childrenBuilder = childrenBuilderSupplier
                 .get();
         childrenBuilder.putAll(immutableTree.children);
+        final ImmutableMultimap<T, T> children = childrenBuilder.build();
 
         final ImmutableMap.Builder<T, T> parentsBuilder = parentsBuilderSupplier
                 .get();
         parentsBuilder.putAll(immutableTree.parents);
+        final ImmutableMap<T, T> parents = parentsBuilder.build();
 
         return create(childrenBuilderSupplier, parentsBuilderSupplier,
-                childrenBuilder, parentsBuilder, root);
+                children, parents, root);
     }
 
-    private static <T> ImmutableMultimapTree<T> create(
-            final Supplier<? extends ImmutableMultimap.Builder<T, T>> childrenBuilderSupplier,
-            final Supplier<? extends ImmutableMap.Builder<T, T>> parentsBuilderSupplier,
-            final ImmutableMultimap.Builder<T, T> childrenBuilder,
-            final ImmutableMap.Builder<T, T> parentsBuilder, final T root) {
-        return new ImmutableMultimapTree<T>(childrenBuilderSupplier,
-                parentsBuilderSupplier, childrenBuilder, parentsBuilder,
-                root);
-    }
-
+    // TODO javadoc accepts null root
     private ImmutableMultimapTree(
             final Supplier<? extends ImmutableMultimap.Builder<T, T>> childrenBuilderSupplier,
             final Supplier<? extends ImmutableMap.Builder<T, T>> parentsBuilderSupplier,
-            final ImmutableMultimap.Builder<T, T> childrenBuilder,
-            final ImmutableMap.Builder<T, T> parentsBuilder, final T root) {
+            final ImmutableMultimap<T, T> children,
+            final ImmutableMap<T, T> parents, final T root) {
         this.childrenBuilderSupplier = childrenBuilderSupplier;
         this.parentsBuilderSupplier = parentsBuilderSupplier;
-        this.children = childrenBuilder.build();
-        this.parents = parentsBuilder.build();
+        this.children = children;
+        this.parents = parents;
         this.root = root;
     }
 
@@ -166,8 +180,18 @@ public final class ImmutableMultimapTree<T> extends GuaranteedTree<T> {
 
     @Override
     public ImmutableMultimapTree<T> withRoot(final T node) {
+        checkNotNull(node);
+
+        final ImmutableMultimap.Builder<T, T> childrenBuilder = childrenBuilderSupplier
+                .get();
+        final ImmutableMap.Builder<T, T> parentsBuilder = parentsBuilderSupplier
+                .get();
+
+        final ImmutableMultimap<T, T> children = childrenBuilder.build();
+        final ImmutableMap<T, T> parents = parentsBuilder.build();
+
         return create(childrenBuilderSupplier, parentsBuilderSupplier,
-                checkNotNull(node));
+                children, parents, node);
     };
 
     @Override
@@ -192,8 +216,11 @@ public final class ImmutableMultimapTree<T> extends GuaranteedTree<T> {
 
         addInternal(childrenBuilder, parentsBuilder, parent, child);
 
+        final ImmutableMultimap<T, T> children = childrenBuilder.build();
+        final ImmutableMap<T, T> parents = parentsBuilder.build();
+
         return create(childrenBuilderSupplier, parentsBuilderSupplier,
-                childrenBuilder, parentsBuilder, root);
+                children, parents, root);
     };
 
     private void addInternal(
@@ -224,8 +251,11 @@ public final class ImmutableMultimapTree<T> extends GuaranteedTree<T> {
         addRecursivelyFilteringNode(node, childrenBuilder, parentsBuilder,
                 root);
 
+        final ImmutableMultimap<T, T> children = childrenBuilder.build();
+        final ImmutableMap<T, T> parents = parentsBuilder.build();
+
         return create(childrenBuilderSupplier, parentsBuilderSupplier,
-                childrenBuilder, parentsBuilder, root);
+                children, parents, root);
     }
 
     private void addRecursivelyFilteringNode(final T excludeNode,
