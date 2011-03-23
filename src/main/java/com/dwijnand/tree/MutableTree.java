@@ -15,12 +15,30 @@ package com.dwijnand.tree;
 public interface MutableTree<T> extends Tree<T> {
 
     /**
+     * {@inheritDoc}
+     * <p>
+     * This method always returns a {@link MutableTree} instead of the more
+     * general {@link Tree}.
+     */
+    @Override
+    MutableTree<T> withRoot(T node);
+
+    /**
      * Sets the specified node as the root and removes all existing nodes.
      *
      * @param node a node
      * @return the mutable tree itself
      */
     MutableTree<T> setRoot(T node);
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This method always returns a {@link MutableTree} instead of the more
+     * general {@link Tree}.
+     */
+    @Override
+    MutableTree<T> add(T parent, T child);
 
     /**
      * Adds a new parent/child association, unless the tree doesn't contain the
@@ -39,6 +57,15 @@ public interface MutableTree<T> extends Tree<T> {
      * Removes all the nodes in the tree.
      */
     void clear();
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This method always returns a {@link MutableTree} instead of the more
+     * general {@link Tree}.
+     */
+    @Override
+    MutableTree<T> remove(T node);
 
     /**
      * Removes the specified node and all of its children nodes from the tree.
