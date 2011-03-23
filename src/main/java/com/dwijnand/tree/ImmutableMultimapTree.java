@@ -160,12 +160,10 @@ public final class ImmutableMultimapTree<T> extends ImmutableTree<T> {
         return parents.get(checkNotNull(node));
     }
 
-    /**
-     * {@inheritDoc}
-     * <p>
-     * This method always returns an {@link ImmutableCollection} instead of the
-     * more general {@link java.util.Collection Collection} defined in
-     * {@link TreeSpec}.
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.dwijnand.tree.TreeSpec#getChildren(java.lang.Object)
      */
     @Override
     public ImmutableCollection<T> getChildren(final T node) {
@@ -182,11 +180,10 @@ public final class ImmutableMultimapTree<T> extends ImmutableTree<T> {
         return root;
     }
 
-    /**
-     * {@inheritDoc}
-     * <p>
-     * This method always returns an {@link ImmutableMultimapTree} instead of
-     * the more general {@link GuaranteedTree}.
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.dwijnand.tree.ImmutableTree#withRoot(java.lang.Object)
      */
     @Override
     public ImmutableMultimapTree<T> withRoot(final T node) {
@@ -204,11 +201,11 @@ public final class ImmutableMultimapTree<T> extends ImmutableTree<T> {
                 children, parents, node);
     };
 
-    /**
-     * {@inheritDoc}
-     * <p>
-     * This method always returns an {@link ImmutableMultimapTree} instead of
-     * the more general {@link GuaranteedTree}.
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.dwijnand.tree.ImmutableTree#add(java.lang.Object,
+     * java.lang.Object)
      */
     @Override
     public ImmutableMultimapTree<T> add(final T parent, final T child) {
@@ -254,11 +251,10 @@ public final class ImmutableMultimapTree<T> extends ImmutableTree<T> {
         parentsBuilder.put(child, parent);
     }
 
-    /**
-     * {@inheritDoc}
-     * <p>
-     * This method always returns an {@link ImmutableMultimapTree} instead of
-     * the more general {@link GuaranteedTree}.
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.dwijnand.tree.ImmutableTree#remove(java.lang.Object)
      */
     @Override
     public ImmutableMultimapTree<T> remove(final T node) {

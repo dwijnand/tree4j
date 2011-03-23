@@ -177,25 +177,24 @@ public final class MultimapTree<T> extends GuaranteedMutableTree<T> {
         return root;
     }
 
-    /**
-     * {@inheritDoc}
-     * <p>
-     * This method always returns an {@link MultimapTree} instead of the more
-     * general {@link GuaranteedMutableTree}.
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.dwijnand.tree.GuaranteedMutableTree#withRoot(java.lang.Object)
      */
     @Override
     public MultimapTree<T> withRoot(final T node) {
         checkNotNull(node);
-        final MultimapTree<T> multimapTree = create(childrenMultimapSupplier, parentsMapSupplier);
+        final MultimapTree<T> multimapTree = create(
+                childrenMultimapSupplier, parentsMapSupplier);
         multimapTree.root = node;
         return multimapTree;
     }
 
-    /**
-     * {@inheritDoc}
-     * <p>
-     * This method always returns an {@link MultimapTree} instead of the more
-     * general {@link GuaranteedMutableTree}.
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.dwijnand.tree.GuaranteedMutableTree#setRoot(java.lang.Object)
      */
     @Override
     public MultimapTree<T> setRoot(final T node) {
@@ -205,11 +204,11 @@ public final class MultimapTree<T> extends GuaranteedMutableTree<T> {
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     * <p>
-     * This method always returns an {@link MultimapTree} instead of the more
-     * general {@link GuaranteedMutableTree}.
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.dwijnand.tree.GuaranteedMutableTree#add(java.lang.Object,
+     * java.lang.Object)
      */
     @Override
     public MultimapTree<T> add(final T parent, final T child) {
@@ -228,11 +227,11 @@ public final class MultimapTree<T> extends GuaranteedMutableTree<T> {
         return multimapTree;
     }
 
-    /**
-     * {@inheritDoc}
-     * <p>
-     * This method always returns an {@link MultimapTree} instead of the more
-     * general {@link GuaranteedMutableTree}.
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.dwijnand.tree.GuaranteedMutableTree#added(java.lang.Object,
+     * java.lang.Object)
      */
     @Override
     public MultimapTree<T> added(final T parent, final T child) {
@@ -273,11 +272,10 @@ public final class MultimapTree<T> extends GuaranteedMutableTree<T> {
         root = null;
     }
 
-    /**
-     * {@inheritDoc}
-     * <p>
-     * This method always returns an {@link MultimapTree} instead of the more
-     * general {@link GuaranteedMutableTree}.
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.dwijnand.tree.GuaranteedMutableTree#remove(java.lang.Object)
      */
     @Override
     public MultimapTree<T> remove(final T node) {
@@ -297,11 +295,10 @@ public final class MultimapTree<T> extends GuaranteedMutableTree<T> {
         return multimapTree;
     }
 
-    /**
-     * {@inheritDoc}
-     * <p>
-     * This method always returns an {@link MultimapTree} instead of the more
-     * general {@link GuaranteedMutableTree}.
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.dwijnand.tree.GuaranteedMutableTree#removed(java.lang.Object)
      */
     @Override
     public MultimapTree<T> removed(final T node) {

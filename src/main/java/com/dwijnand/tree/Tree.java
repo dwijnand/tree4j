@@ -31,7 +31,7 @@ public abstract class Tree<T> implements TreeSpec<T> {
     Tree() {
     }
 
-    // Override methods that return self to change the return type to Tree
+    // Override methods that return self to restrict the return type to Tree
 
     @Override
     public abstract Tree<T> withRoot(final T node);

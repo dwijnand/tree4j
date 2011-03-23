@@ -25,58 +25,25 @@ public abstract class GuaranteedMutableTree<T> implements MutableTreeSpec<T> {
     GuaranteedMutableTree() {
     }
 
-    /**
-     * {@inheritDoc}
-     * <p>
-     * This method always returns a {@link GuaranteedMutableTree} instead of the
-     * more general {@link MutableTreeSpec}.
-     */
+    // Override methods that return self to restrict the return type to
+    // GuaranteedMutableTree
+
     @Override
     public abstract GuaranteedMutableTree<T> withRoot(T node);
 
-    /**
-     * {@inheritDoc}
-     * <p>
-     * This method always returns a {@link GuaranteedMutableTree} instead of the
-     * more general {@link MutableTreeSpec}.
-     */
     @Override
     public abstract GuaranteedMutableTree<T> setRoot(T node);
 
     @Override
-    /**
-     * {@inheritDoc}
-     * <p>
-     * This method always returns a {@link GuaranteedMutableTree} instead of the
-     * more general {@link MutableTree}.
-     */
     public abstract GuaranteedMutableTree<T> add(final T parent,
             final T child);
 
-    /**
-     * {@inheritDoc}
-     * <p>
-     * This method always returns a {@link GuaranteedMutableTree} instead of the
-     * more general {@link MutableTreeSpec}.
-     */
     @Override
     public abstract GuaranteedMutableTree<T> added(T parent, T child);
 
-    /**
-     * {@inheritDoc}
-     * <p>
-     * This method always returns a {@link GuaranteedMutableTree} instead of the
-     * more general {@link MutableTreeSpec}.
-     */
     @Override
     public abstract GuaranteedMutableTree<T> remove(T node);
 
-    /**
-     * {@inheritDoc}
-     * <p>
-     * This method always returns a {@link GuaranteedMutableTree} instead of the
-     * more general {@link MutableTreeSpec}.
-     */
     @Override
     public abstract GuaranteedMutableTree<T> removed(T node);
 

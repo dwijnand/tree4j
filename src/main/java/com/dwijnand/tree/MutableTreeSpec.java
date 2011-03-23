@@ -14,12 +14,7 @@ package com.dwijnand.tree;
  */
 public interface MutableTreeSpec<T> extends TreeSpec<T> {
 
-    /**
-     * {@inheritDoc}
-     * <p>
-     * This method always returns a {@link MutableTreeSpec} instead of the more
-     * general {@link TreeSpec}.
-     */
+    // Override to restrict return type to MutableTreeSpec's
     @Override
     MutableTreeSpec<T> withRoot(T node);
 
@@ -31,12 +26,7 @@ public interface MutableTreeSpec<T> extends TreeSpec<T> {
      */
     MutableTreeSpec<T> setRoot(T node);
 
-    /**
-     * {@inheritDoc}
-     * <p>
-     * This method always returns a {@link MutableTreeSpec} instead of the more
-     * general {@link TreeSpec}.
-     */
+    // Override to restrict return type to MutableTreeSpec's
     @Override
     MutableTreeSpec<T> add(T parent, T child);
 
@@ -58,12 +48,7 @@ public interface MutableTreeSpec<T> extends TreeSpec<T> {
      */
     void clear();
 
-    /**
-     * {@inheritDoc}
-     * <p>
-     * This method always returns a {@link MutableTreeSpec} instead of the more
-     * general {@link TreeSpec}.
-     */
+    // Override to restrict return type to MutableTreeSpec's
     @Override
     MutableTreeSpec<T> remove(T node);
 
