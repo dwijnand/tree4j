@@ -186,7 +186,7 @@ public final class MultimapTree<T> extends GuaranteedMutableTree<T> {
     @Override
     public MultimapTree<T> withRoot(final T node) {
         checkNotNull(node);
-        final MultimapTree<T> multimapTree = createNew();
+        final MultimapTree<T> multimapTree = create(childrenMultimapSupplier, parentsMapSupplier);
         multimapTree.root = node;
         return multimapTree;
     }
@@ -285,7 +285,7 @@ public final class MultimapTree<T> extends GuaranteedMutableTree<T> {
 
         if (node == root) {
             // optimisation
-            return createNew();
+            return create(childrenMultimapSupplier, parentsMapSupplier);
         }
 
         if (!contains(node)) {
@@ -327,10 +327,6 @@ public final class MultimapTree<T> extends GuaranteedMutableTree<T> {
         }
 
         return this;
-    }
-
-    private MultimapTree<T> createNew() {
-        return create(childrenMultimapSupplier, parentsMapSupplier);
     }
 
     /**
