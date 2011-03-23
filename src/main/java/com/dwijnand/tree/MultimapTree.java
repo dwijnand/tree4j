@@ -24,16 +24,48 @@ import com.google.common.collect.Multimap;
  */
 public final class MultimapTree<T> extends GuaranteedMutableTree<T> {
 
+    /**
+     * The supplier of mutable multimap instances, used to hold the
+     * parent-children relationships of the tree.
+     */
     private final Supplier<? extends Multimap<T, T>> childrenMultimapSupplier;
 
+    /**
+     * The supplier of mutable map instances, used to hold the child-parent
+     * relationships of the tree.
+     */
     private final Supplier<? extends Map<T, T>> parentsMapSupplier;
 
+    /**
+     * The parent-children relationships of the tree.
+     */
     private final Multimap<T, T> children;
 
+    /**
+     * The child-parent relationships of the tree.
+     */
     private final Map<T, T> parents;
 
+    /**
+     * The root of the tree.
+     */
     private T root;
 
+    /**
+     * Creates a new multimap tree using the specified {@link Multimap} and
+     * {@link Map} suppliers. These suppliers are used to obtain multimaps and
+     * maps required to construct the parent-children and child-parent
+     * relationships within the tree.
+     * <p>
+     * Suppliers of multimaps and maps are required, as opposed to simply a
+     * multimap and a map, because all the 'modifying' methods actually return
+     * new instances of this tree, and therefore require a new multimap and map.
+     *
+     * @param <T> the type of the nodes in the tree
+     * @param childrenMultimapSupplier a Multimap supplier
+     * @param parentsMapSupplier a Map supplier
+     * @return a new multimap tree
+     */
     public static <T> MultimapTree<T> create(
             final Supplier<? extends Multimap<T, T>> childrenMultimapSupplier,
             final Supplier<? extends Map<T, T>> parentsMapSupplier) {
