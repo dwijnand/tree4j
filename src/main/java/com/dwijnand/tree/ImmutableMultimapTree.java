@@ -12,11 +12,11 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMultimap;
 
 /**
- * A guaranteed immutable tree structure which uses {@link ImmutableMultimap}.
- * See {@link TreeSpec} for more details on what is intended by tree structure.
+ * An compliant implementation of {@link ImmutableTree} that uses
+ * {@link ImmutableMultimap} and {@link ImmutableMap}.
  * <p>
  * This class is final so all instances of it are guaranteed to be immutable.
- * See {@link Tree} for more details on the immutability guarantee.
+ * See {@link Tree} for details about compliance and immutability guarantees.
  *
  * @param <T> the type of the nodes in the tree
  */
