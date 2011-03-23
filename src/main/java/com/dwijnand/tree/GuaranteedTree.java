@@ -1,6 +1,5 @@
 package com.dwijnand.tree;
 
-
 /**
  * A base class for implementing <b>guaranteed</b> immutable tree structures.
  * See {@link Tree} for more details on what is intended by tree structure.
@@ -10,8 +9,8 @@ package com.dwijnand.tree;
  * <p>
  * There is, however, no way to deny external clients the ability to subclass
  * this class, as it is still possible to simply use the same package namespace
- * as this class to define a subclass that isn't compliant. Also, on the JVM
- * it's just not possible to absolutely guarantee immutability, as it is always
+ * as this class to define a subclass that isn't compliant. Also, on the JVM it
+ * is not possible to absolutely guarantee immutability, as it is always
  * possible to gain access and modify hidden and final fields via reflection
  * and/or byte-code manipulation. However, this is the best that can be done
  * with the current state of affairs, along with a suite of tests to verify
