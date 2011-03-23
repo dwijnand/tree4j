@@ -89,14 +89,15 @@ public final class MultimapTree<T> extends GuaranteedMutableTree<T> {
 
         final Supplier<? extends Multimap<T, T>> childrenMultimapSupplier = multimapTree.childrenMultimapSupplier;
         final Supplier<? extends Map<T, T>> parentsMapSupplier = multimapTree.parentsMapSupplier;
+
         final Multimap<T, T> children = childrenMultimapSupplier.get();
         final Map<T, T> parents = parentsMapSupplier.get();
+
         children.putAll(multimapTree.children);
         parents.putAll(multimapTree.parents);
-        final T root = multimapTree.root;
 
         return new MultimapTree<T>(childrenMultimapSupplier,
-                parentsMapSupplier, children, parents, root);
+                parentsMapSupplier, children, parents, multimapTree.root);
     }
 
     private MultimapTree(
@@ -219,6 +220,7 @@ public final class MultimapTree<T> extends GuaranteedMutableTree<T> {
     @Override
     public MultimapTree<T> removed(final T node) {
         checkNotNull(node);
+
         if (node == root) {
             // optimisation
             root = null;
