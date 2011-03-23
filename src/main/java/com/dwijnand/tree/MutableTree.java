@@ -2,7 +2,7 @@ package com.dwijnand.tree;
 
 /**
  * A mutable tree structure or arborescence. See {@link Tree} for more details
- * of what is intended by a tree structure.
+ * on what is intended by a tree structure.
  * <p>
  * This interface specifies methods for modifying the internal state of the tree
  * and returning itself. There is, however, no way to enforce that the
@@ -11,7 +11,7 @@ package com.dwijnand.tree;
  * {@link com.dwijnand.tree.mutable.Tree mutable.Tree} for a guaranteed mutable
  * tree.
  *
- * @param <T> the types of the nodes in the tree
+ * @param <T> the type of the nodes in the tree
  */
 public interface MutableTree<T> extends Tree<T> {
 
