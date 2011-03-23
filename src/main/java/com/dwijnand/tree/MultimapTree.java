@@ -83,6 +83,15 @@ public final class MultimapTree<T> extends GuaranteedMutableTree<T> {
                 parentsMapSupplier, children, parents, null);
     }
 
+    /**
+     * Creates a copy of the specified multimap tree, by creating a new tree
+     * with a copy of the associations in the specified tree and the same root
+     * node.
+     *
+     * @param <T> the type of the nodes in the trees
+     * @param multimapTree a multimap tree
+     * @return a new copy of the specified multimap tree
+     */
     public static <T> MultimapTree<T> copyOf(
             final MultimapTree<T> multimapTree) {
         checkNotNull(multimapTree);
@@ -100,6 +109,16 @@ public final class MultimapTree<T> extends GuaranteedMutableTree<T> {
                 parentsMapSupplier, children, parents, multimapTree.root);
     }
 
+    /**
+     * Creates a new multimap tree with the specified suppliers, associations
+     * and root node. See {@link #create(Supplier, Supplier)} for more details.
+     *
+     * @param childrenMultimapSupplier a Multimap supplier
+     * @param parentsMapSupplier a Map supplier
+     * @param children the parent-children associations to be used
+     * @param parents the child-parent associations to be used
+     * @param root the root node
+     */
     private MultimapTree(
             final Supplier<? extends Multimap<T, T>> childrenMultimapSupplier,
             final Supplier<? extends Map<T, T>> parentsMapSupplier,
@@ -112,6 +131,11 @@ public final class MultimapTree<T> extends GuaranteedMutableTree<T> {
         this.root = root;
     }
 
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.dwijnand.tree.Tree#contains(java.lang.Object)
+     */
     @Override
     public boolean contains(final T node) {
         if (node == null) {
@@ -123,21 +147,42 @@ public final class MultimapTree<T> extends GuaranteedMutableTree<T> {
         }
     }
 
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.dwijnand.tree.Tree#getParent(java.lang.Object)
+     */
     @Override
     public T getParent(final T node) {
         return parents.get(checkNotNull(node));
     }
 
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.dwijnand.tree.Tree#getChildren(java.lang.Object)
+     */
     @Override
     public Collection<T> getChildren(final T node) {
         return children.get(checkNotNull(node));
     }
 
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.dwijnand.tree.Tree#getRoot()
+     */
     @Override
     public T getRoot() {
         return root;
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This method always returns an {@link MultimapTree} instead of the more
+     * general {@link GuaranteedMutableTree}.
+     */
     @Override
     public MultimapTree<T> withRoot(final T node) {
         checkNotNull(node);
@@ -146,6 +191,12 @@ public final class MultimapTree<T> extends GuaranteedMutableTree<T> {
         return multimapTree;
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This method always returns an {@link MultimapTree} instead of the more
+     * general {@link GuaranteedMutableTree}.
+     */
     @Override
     public MultimapTree<T> setRoot(final T node) {
         checkNotNull(node);
@@ -154,6 +205,12 @@ public final class MultimapTree<T> extends GuaranteedMutableTree<T> {
         return this;
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This method always returns an {@link MultimapTree} instead of the more
+     * general {@link GuaranteedMutableTree}.
+     */
     @Override
     public MultimapTree<T> add(final T parent, final T child) {
         checkNotNull(parent);
@@ -171,6 +228,12 @@ public final class MultimapTree<T> extends GuaranteedMutableTree<T> {
         return multimapTree;
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This method always returns an {@link MultimapTree} instead of the more
+     * general {@link GuaranteedMutableTree}.
+     */
     @Override
     public MultimapTree<T> added(final T parent, final T child) {
         checkNotNull(parent);
@@ -187,11 +250,22 @@ public final class MultimapTree<T> extends GuaranteedMutableTree<T> {
         return this;
     }
 
+    /**
+     * Adds a new parent/child association to the tree.
+     *
+     * @param parent the parent node
+     * @param child the child node
+     */
     private void addedInternal(final T parent, final T child) {
         children.put(parent, child);
         parents.put(child, parent);
     }
 
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.dwijnand.tree.MutableTree#clear()
+     */
     @Override
     public void clear() {
         children.clear();
@@ -199,6 +273,12 @@ public final class MultimapTree<T> extends GuaranteedMutableTree<T> {
         root = null;
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This method always returns an {@link MultimapTree} instead of the more
+     * general {@link GuaranteedMutableTree}.
+     */
     @Override
     public MultimapTree<T> remove(final T node) {
         checkNotNull(node);
@@ -217,6 +297,12 @@ public final class MultimapTree<T> extends GuaranteedMutableTree<T> {
         return multimapTree;
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This method always returns an {@link MultimapTree} instead of the more
+     * general {@link GuaranteedMutableTree}.
+     */
     @Override
     public MultimapTree<T> removed(final T node) {
         checkNotNull(node);
@@ -243,7 +329,7 @@ public final class MultimapTree<T> extends GuaranteedMutableTree<T> {
         return this;
     }
 
-    protected MultimapTree<T> createNew() {
+    private MultimapTree<T> createNew() {
         return create(childrenMultimapSupplier, parentsMapSupplier);
     }
 
