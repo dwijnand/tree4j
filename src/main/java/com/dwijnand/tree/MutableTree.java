@@ -18,7 +18,7 @@ public interface MutableTree<T> extends Tree<T> {
     /**
      * Sets the specified node as the root and removes all existing nodes.
      *
-     * @param node the node to set as the new root
+     * @param node a node
      * @return the mutable tree itself
      */
     MutableTree<T> setRoot(T node);
@@ -30,7 +30,7 @@ public interface MutableTree<T> extends Tree<T> {
      * @param parent the parent node
      * @param child the child node
      * @return the mutable tree itself
-     * @throws IllegalArgumentException if tree doesn't contain parent node
+     * @throws IllegalArgumentException if the tree doesn't contain parent node
      */
     MutableTree<T> added(T parent, T child);
 
@@ -44,7 +44,7 @@ public interface MutableTree<T> extends Tree<T> {
     /**
      * Removes the specified node and all of its children nodes from the tree.
      *
-     * @param node the node
+     * @param node a node
      * @return the mutable tree itself
      */
     MutableTree<T> removed(T node);
