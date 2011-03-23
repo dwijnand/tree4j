@@ -230,7 +230,7 @@ public final class ImmutableMultimapTree<T> extends GuaranteedTree<T> {
                 .get();
         parentsBuilder.putAll(parents);
 
-        addInternal(childrenBuilder, parentsBuilder, parent, child);
+        addInternal(parent, child, childrenBuilder, parentsBuilder);
 
         final ImmutableMultimap<T, T> children = childrenBuilder.build();
         final ImmutableMap<T, T> parents = parentsBuilder.build();
@@ -239,10 +239,17 @@ public final class ImmutableMultimapTree<T> extends GuaranteedTree<T> {
                 children, parents, root);
     };
 
-    private void addInternal(
+    /**
+     * Adds a new parent/child association to the specified builders.
+     *
+     * @param parent the parent node
+     * @param child the child node
+     * @param childrenBuilder the parent-children association builder
+     * @param parentsBuilder the child-parent association builder
+     */
+    private void addInternal(final T parent, final T child,
             final ImmutableMultimap.Builder<T, T> childrenBuilder,
-            final ImmutableMap.Builder<T, T> parentsBuilder, final T parent,
-            final T child) {
+            final ImmutableMap.Builder<T, T> parentsBuilder) {
         childrenBuilder.put(parent, child);
         parentsBuilder.put(child, parent);
     }
@@ -280,7 +287,7 @@ public final class ImmutableMultimapTree<T> extends GuaranteedTree<T> {
         final ImmutableCollection<T> nodeChildren = getChildren(node);
         for (final T child : nodeChildren) {
             if (child != excludeNode) {
-                addInternal(childrenBuilder, parentsBuilder, node, child);
+                addInternal(node, child, childrenBuilder, parentsBuilder);
                 addRecursivelyFilteringNode(excludeNode, childrenBuilder,
                         parentsBuilder, child);
             }
