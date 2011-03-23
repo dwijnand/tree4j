@@ -224,10 +224,10 @@ public final class ImmutableMultimapTree<T> extends GuaranteedTree<T> {
 
         final ImmutableMultimap.Builder<T, T> childrenBuilder = childrenBuilderSupplier
                 .get();
-        childrenBuilder.putAll(children);
-
         final ImmutableMap.Builder<T, T> parentsBuilder = parentsBuilderSupplier
                 .get();
+
+        childrenBuilder.putAll(children);
         parentsBuilder.putAll(parents);
 
         addInternal(parent, child, childrenBuilder, parentsBuilder);
@@ -263,6 +263,7 @@ public final class ImmutableMultimapTree<T> extends GuaranteedTree<T> {
     @Override
     public ImmutableMultimapTree<T> remove(final T node) {
         checkNotNull(node);
+
         if (node == root) {
             // optimisation
             return create(childrenBuilderSupplier, parentsBuilderSupplier);
