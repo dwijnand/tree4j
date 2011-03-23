@@ -72,6 +72,9 @@ public final class MultimapTree<T> extends GuaranteedMutableTree<T> {
     public static <T> MultimapTree<T> create(
             final Supplier<? extends Multimap<T, T>> childrenMultimapSupplier,
             final Supplier<? extends Map<T, T>> parentsMapSupplier) {
+        checkNotNull(childrenMultimapSupplier);
+        checkNotNull(parentsMapSupplier);
+
         final Multimap<T, T> children = childrenMultimapSupplier.get();
         children.clear();
         final Map<T, T> parents = parentsMapSupplier.get();
@@ -82,6 +85,8 @@ public final class MultimapTree<T> extends GuaranteedMutableTree<T> {
 
     public static <T> MultimapTree<T> copyOf(
             final MultimapTree<T> multimapTree) {
+        checkNotNull(multimapTree);
+
         final Supplier<? extends Multimap<T, T>> childrenMultimapSupplier = multimapTree.childrenMultimapSupplier;
         final Supplier<? extends Map<T, T>> parentsMapSupplier = multimapTree.parentsMapSupplier;
         final Multimap<T, T> children = childrenMultimapSupplier.get();
