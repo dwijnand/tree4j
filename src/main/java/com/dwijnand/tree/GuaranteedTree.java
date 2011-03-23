@@ -36,7 +36,7 @@ public abstract class GuaranteedTree<T> implements Tree<T> {
      * {@inheritDoc}
      * <p>
      * This method always returns an {@link GuaranteedTree} instead of the more
-     * general {@link Tree}. {@link Tree}.
+     * general {@link Tree}.
      */
     @Override
     public abstract GuaranteedTree<T> add(final T parent, final T child);
