@@ -15,8 +15,8 @@ import com.google.common.collect.ImmutableMultimap;
  * A guaranteed immutable tree structure which uses {@link ImmutableMultimap}.
  * See {@link Tree} for more details on what is intended by tree structure.
  * <p>
- * This class is final and has private constructors, so any instance of it is
- * guaranteed to be immutable.
+ * This class is final so all instances of it are guaranteed to be immutable.
+ * See {@link GuaranteedTree} for more details on immutability guarantee.
  *
  * @param <T> the type of the nodes in the tree
  */
@@ -50,10 +50,10 @@ public final class ImmutableMultimapTree<T> extends GuaranteedTree<T> {
     private final T root;
 
     /**
-     * Creates a new multimap tree using the specified {@link ImmutableMultimap}
-     * and {@link ImmutableMap} builder suppliers. These suppliers are used to
-     * obtain builders required to constructing the parent-children and
-     * child-parent relationships within this tree.
+     * Creates a new immutable multimap tree using the specified
+     * {@link ImmutableMultimap} and {@link ImmutableMap} builder suppliers.
+     * These suppliers are used to obtain builders required to constructing the
+     * parent-children and child-parent relationships within this tree.
      * <p>
      * Suppliers of builders are required, as opposed to simply builders, as all
      * the 'modifying' methods actually return new instances of this tree, and
@@ -63,7 +63,7 @@ public final class ImmutableMultimapTree<T> extends GuaranteedTree<T> {
      * @param childrenBuilderSupplier an {@link ImmutableMultimap} builder
      *            supplier
      * @param parentsBuilderSupplier an {@link ImmutableMap} builder supplier
-     * @return a new multimap tree
+     * @return a new immutable multimap tree
      */
     public static <T> ImmutableMultimapTree<T> create(
             final Supplier<? extends ImmutableMultimap.Builder<T, T>> childrenBuilderSupplier,
@@ -91,15 +91,14 @@ public final class ImmutableMultimapTree<T> extends GuaranteedTree<T> {
     }
 
     /**
-     * Creates a copy of the specified ImmutableTree.
+     * Creates a copy of the specified immutable multimap tree.
      *
-     * @param <T> the type of the nodes in the new and specified tree
-     * @param immutableTree the ImmutableTree
-     * @return a new ImmutableTree
+     * @param <T> the type of the nodes in the trees
+     * @param immutableTree an immutable multimap tree
+     * @return a new immutable multimap tree
      */
     public static <T> ImmutableMultimapTree<T> copyOf(
             final ImmutableMultimapTree<T> immutableTree) {
-
         checkNotNull(immutableTree);
 
         final Supplier<? extends ImmutableMultimap.Builder<T, T>> childrenBuilderSupplier = immutableTree.childrenBuilderSupplier;
