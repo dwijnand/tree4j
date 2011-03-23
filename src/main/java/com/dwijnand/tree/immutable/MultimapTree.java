@@ -12,15 +12,27 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMultimap;
 
 /**
- * A immutable tree structure or arborescence.
- * 
- * @param <T> the types of the nodes in the tree
+ * A guaranteed immutable tree structure which uses {@link ImmutableMultimap}.
+ * See {@link com.dwijnand.tree.Tree tree.Tree} for more details on what is
+ * intended by tree structure.
+ * <p>
+ * This class is final and has private constructors, so any instance of it is
+ * guaranteed to be immutable.
+ *
+ * @param <T> the type of the nodes in the tree
  */
-// TODO guaranteed, constructor
 public final class MultimapTree<T> extends Tree<T> {
 
+    /**
+     * The supplier of immutable multimap builder instances, used to build the
+     * parent-children relationships of a new multimap tree.
+     */
     private final Supplier<? extends ImmutableMultimap.Builder<T, T>> childrenBuilderSupplier;
 
+    /**
+     * The supplier of immutable map builder instances, used to build the
+     * child-parent relationships of a new multimap tree.
+     */
     private final Supplier<? extends ImmutableMap.Builder<T, T>> parentsBuilderSupplier;
 
     /**
@@ -38,6 +50,22 @@ public final class MultimapTree<T> extends Tree<T> {
      */
     private final T root;
 
+    /**
+     * Creates a new multimap tree using the specified {@link ImmutableMultimap}
+     * and {@link ImmutableMap} builder suppliers. These suppliers are used to
+     * obtain builders required to constructing the parent-children and
+     * child-parent relationships within this tree.
+     * <p>
+     * Suppliers of builders are required, as opposed to simply builders, as all
+     * the 'modifying' methods actually return new instances of this tree, and
+     * therefore require fresh builders.
+     *
+     * @param <T> the type of the nodes in the tree
+     * @param childrenBuilderSupplier an {@link ImmutableMultimap} builder
+     *            supplier
+     * @param parentsBuilderSupplier an {@link ImmutableMap} builder supplier
+     * @return a new multimap tree
+     */
     public static <T> MultimapTree<T> create(
             final Supplier<? extends ImmutableMultimap.Builder<T, T>> childrenBuilderSupplier,
             final Supplier<? extends ImmutableMap.Builder<T, T>> parentsBuilderSupplier) {
@@ -65,7 +93,7 @@ public final class MultimapTree<T> extends Tree<T> {
 
     /**
      * Creates a copy of the specified ImmutableTree.
-     * 
+     *
      * @param <T> the type of the nodes in the new and specified tree
      * @param immutableTree the ImmutableTree
      * @return a new ImmutableTree
