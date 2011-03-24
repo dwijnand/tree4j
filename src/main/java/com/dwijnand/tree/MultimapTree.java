@@ -60,9 +60,6 @@ public final class MultimapTree<T> extends MutableTree<T> {
      * Suppliers of multimaps and maps are required, as opposed to simply a
      * multimap and a map, because all the 'modifying' methods actually return
      * new instances of this tree, and therefore require a new multimap and map.
-     * <p>
-     * The multimap and map obtained from the suppliers are cleared before use,
-     * to ensure that they are empty.
      *
      * @param <T> the type of the nodes in the tree
      * @param childrenMultimapSupplier a Multimap supplier
@@ -76,9 +73,7 @@ public final class MultimapTree<T> extends MutableTree<T> {
         checkNotNull(parentsMapSupplier);
 
         final Multimap<T, T> children = childrenMultimapSupplier.get();
-        children.clear();
         final Map<T, T> parents = parentsMapSupplier.get();
-        parents.clear();
         return new MultimapTree<T>(childrenMultimapSupplier,
                 parentsMapSupplier, children, parents, null);
     }
