@@ -11,8 +11,8 @@ public abstract class MutableTree<T> extends Tree<T> implements
         MutableTreeSpec<T> {
 
     /**
-     * Creates an empty instance. This sole constructor is package-private so
-     * that it may not be subclassed outside of this package.
+     * Creates a new instance. This sole constructor is package-private so that
+     * it may not be subclassed outside of this package.
      */
     MutableTree() {
     }

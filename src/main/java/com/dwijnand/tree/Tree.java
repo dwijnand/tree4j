@@ -25,8 +25,8 @@ package com.dwijnand.tree;
 public abstract class Tree<T> implements TreeSpec<T> {
 
     /**
-     * Creates an empty instance. This sole constructor is package-private so
-     * that it may not be subclassed outside of this package.
+     * Creates a new instance. This sole constructor is package-private so that
+     * it may not be subclassed outside of this package.
      */
     Tree() {
     }

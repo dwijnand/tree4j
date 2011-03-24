@@ -116,6 +116,9 @@ public final class ImmutableMultimapTree<T> extends ImmutableTree<T> {
      * associations and root node. See
      * {@link #create(Supplier, Supplier, ImmutableMultimap, ImmutableMap, T)}
      * for details.
+     * <p>
+     * This sole constructor is private so that it may not be instantiated
+     * outside of this class.
      *
      * @param childrenBuilderSupplier an ImmutableMultimap builder supplier
      * @param parentsBuilderSupplier an ImmutableMap builder supplier

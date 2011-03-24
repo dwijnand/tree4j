@@ -10,8 +10,8 @@ package com.dwijnand.tree;
 public abstract class ImmutableTree<T> extends Tree<T> {
 
     /**
-     * Creates an empty instance. This sole constructor is package-private so
-     * that it may not be subclassed outside of this package.
+     * Creates a new instance. This sole constructor is package-private so that
+     * it may not be subclassed outside of this package.
      */
     ImmutableTree() {
     }

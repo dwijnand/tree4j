@@ -112,6 +112,9 @@ public final class MultimapTree<T> extends MutableTree<T> {
     /**
      * Creates a new multimap tree with the specified suppliers, associations
      * and root node. See {@link #create(Supplier, Supplier)} for more details.
+     * <p>
+     * This sole constructor is private so that it may not be instantiated
+     * outside of this class.
      *
      * @param childrenMultimapSupplier a Multimap supplier
      * @param parentsMapSupplier a Map supplier
