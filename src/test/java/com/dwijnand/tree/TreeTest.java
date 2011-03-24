@@ -21,39 +21,39 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 
 @RunWith(Theories.class)
-public class TreeSpecTest {
+public class TreeTest {
 
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 
     @DataPoints
-    public static TreeSpec<?>[] data() {
-        return new TreeSpec[] {ImmutableMultimapTree.create(
+    public static Tree<?>[] data() {
+        return new Tree[] {ImmutableMultimapTree.create(
                 IMMUTABLE_MULTIMAP_BUILDER_SUPPLIER,
                 IMMUTABLE_MAP_BUILDER_SUPPLIER)};
     }
 
     @Theory
     public void containsShouldReturnFalseWhenEmpty(
-            final TreeSpec<String> tree) {
+            final Tree<String> tree) {
         assertFalse(tree.contains("node"));
     }
 
     @Theory
-    public void containsShouldReturnTrueOnAddedNode(TreeSpec<String> tree) {
+    public void containsShouldReturnTrueOnAddedNode(Tree<String> tree) {
         tree = tree.withRoot("root");
         tree = tree.add("root", "node");
         assertTrue(tree.contains("node"));
     }
 
     @Theory
-    public void containsShouldReturnTrueForSetRoot(TreeSpec<String> tree) {
+    public void containsShouldReturnTrueForSetRoot(Tree<String> tree) {
         tree = tree.withRoot("root");
         assertTrue(tree.contains("root"));
     }
 
     @Theory
-    public void getParentShouldWorkCorrectly(TreeSpec<String> tree) {
+    public void getParentShouldWorkCorrectly(Tree<String> tree) {
         tree = tree.withRoot("root");
         tree = tree.add("root", "1").add("root", "2");
         tree = tree.add("1", "1-1").add("1", "1-2").add("1", "1-3");
@@ -66,7 +66,7 @@ public class TreeSpecTest {
 
     @Theory
     public void getParentShouldReturnNullForUnknownNode(
-            final TreeSpec<String> tree) {
+            final Tree<String> tree) {
         final String parent = tree.getParent("unknown node");
 
         assertNull(parent);
@@ -74,7 +74,7 @@ public class TreeSpecTest {
 
     @Theory
     public void getChildrenShouldReturnEmptyCollectionOnUnknownNode(
-            final TreeSpec<String> tree) {
+            final Tree<String> tree) {
         final Collection<String> children = tree.getChildren("unknown node");
 
         assertThat(0, is(children.size()));
@@ -82,18 +82,18 @@ public class TreeSpecTest {
 
     @Theory
     public void getRootShouldReturnNullBeforeSetRoot(
-            final TreeSpec<String> tree) {
+            final Tree<String> tree) {
         assertNull(tree.getRoot());
     }
 
     @Theory
-    public void getRootShouldReturnSetRoot(TreeSpec<String> tree) {
+    public void getRootShouldReturnSetRoot(Tree<String> tree) {
         tree = tree.withRoot("root");
         assertEquals("root", tree.getRoot());
     }
 
     @Theory
-    public void setRootShouldClearTree(TreeSpec<String> tree) {
+    public void setRootShouldClearTree(Tree<String> tree) {
         tree = tree.withRoot("first root");
         tree = tree.add("first root", "a child");
         tree = tree.withRoot("second root");
@@ -101,7 +101,7 @@ public class TreeSpecTest {
     }
 
     @Theory
-    public void addShouldWorkCorrectly(TreeSpec<String> tree) {
+    public void addShouldWorkCorrectly(Tree<String> tree) {
         tree = tree.withRoot("root");
         tree = tree.add("root", "1").add("root", "2");
         tree = tree.add("1", "1-1").add("1", "1-2").add("1", "1-3");
@@ -115,19 +115,19 @@ public class TreeSpecTest {
 
     @Theory
     public void addShouldReturnAnIdenticalTreeOnReinsertingNode(
-            TreeSpec<String> tree) {
+            Tree<String> tree) {
         tree = tree.withRoot("root");
         tree = tree.add("root", "1").add("root", "2");
         tree = tree.add("1", "node");
 
-        final TreeSpec<String> newTree = tree.add("root", "1");
+        final Tree<String> newTree = tree.add("root", "1");
 
         assertEquals(tree, newTree);
     }
 
     @Theory
     public void addShouldThrowIllegalArgumentExceptionOnInsertingAnUnknownParent(
-            TreeSpec<String> tree) {
+            Tree<String> tree) {
         tree = tree.withRoot("root");
 
         expectedException.expect(IllegalArgumentException.class);
@@ -138,7 +138,7 @@ public class TreeSpecTest {
     }
 
     @Theory
-    public void removeShouldCascadeRemove(TreeSpec<String> tree) {
+    public void removeShouldCascadeRemove(Tree<String> tree) {
         tree = tree.withRoot("root");
         tree = tree.add("root", "1").add("root", "2").add("root", "3");
         tree = tree.add("1", "1-1").add("1", "1-2");
@@ -156,7 +156,7 @@ public class TreeSpecTest {
 
     @Theory
     public void removeShouldNotThrowAConcurrentModificationException(
-            TreeSpec<String> tree) {
+            Tree<String> tree) {
         tree = tree.withRoot("root");
         tree = tree.add("root", "1");
         tree = tree.add("1", "1-1").add("1", "1-2");

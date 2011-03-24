@@ -1,14 +1,14 @@
 package com.dwijnand.tree;
 
 /**
- * A base class for <b>guaranteed</b> {@link MutableTreeSpec}-compliant
+ * A base class for <b>guaranteed</b> {@link MutableTree}-compliant
  * implementations that extends.{@link CompliantTree}. See {@link CompliantTree}
  * for details about compliance and immutability guarantees.
  *
  * @param <T> the type of the nodes in the tree
  */
 public abstract class CompliantMutableTree<T> extends CompliantTree<T>
-        implements MutableTreeSpec<T> {
+        implements MutableTree<T> {
 
     /**
      * Creates a new instance. This sole constructor is package-private so that

@@ -19,7 +19,7 @@ import java.util.Collection;
  * object.
  * <p>
  * See {@link ImmutableTree} for a guaranteed immutable tree and
- * {@link MutableTreeSpec} for an interface that extends this one with in-place
+ * {@link MutableTree} for an interface that extends this one with in-place
  * modification methods.
  * <p>
  * To check compliance with this specification, there are a suite of tests that
@@ -27,10 +27,10 @@ import java.util.Collection;
  *
  * @param <T> the type of the nodes in the tree
  * @see ImmutableTree
- * @see MutableTreeSpec
+ * @see MutableTree
  */
 // TODO improve the 'specification compliance tests' part of the javadoc
-public interface TreeSpec<T> {
+public interface Tree<T> {
 
     // Query methods
 
@@ -78,7 +78,7 @@ public interface TreeSpec<T> {
      * @param node a node
      * @return a new tree with the specified node set as the root
      */
-    TreeSpec<T> withRoot(T node);
+    Tree<T> withRoot(T node);
 
     /**
      * Creates a new tree containing the same root and associations of this tree
@@ -93,7 +93,7 @@ public interface TreeSpec<T> {
      * @throws IllegalArgumentException if this tree doesn't contain the parent
      *             node
      */
-    TreeSpec<T> add(T parent, T child);
+    Tree<T> add(T parent, T child);
 
     // Removing methods
 
@@ -106,6 +106,6 @@ public interface TreeSpec<T> {
      * @param node a node
      * @return a new tree without the specified node and its children
      */
-    TreeSpec<T> remove(T node);
+    Tree<T> remove(T node);
 
 }

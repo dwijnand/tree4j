@@ -1,8 +1,7 @@
 package com.dwijnand.tree;
 
 /**
- * A base class for <b>guaranteed</b> {@link TreeSpec}-compliant
- * implementations.
+ * A base class for <b>guaranteed</b> {@link Tree}-compliant implementations.
  * <p>
  * The compliance guarantee is a best-effort guarantee, due to the fact that:
  * <ul>
@@ -22,7 +21,7 @@ package com.dwijnand.tree;
  *
  * @param <T> the type of the nodes in the tree
  */
-public abstract class CompliantTree<T> implements TreeSpec<T> {
+public abstract class CompliantTree<T> implements Tree<T> {
 
     /**
      * Creates a new instance. This sole constructor is package-private so that
