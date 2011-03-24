@@ -14,8 +14,8 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
 
 /**
- * A <b>guaranteed</b> compliant implementation of {@link MutableTree} which
- * uses {@link Multimap} and {@link Map}.
+ * A <b>guaranteed</b> {@link MutableTree}-compliant implementation which uses
+ * {@link Multimap} and {@link Map}.
  * <p>
  * This class is final so all instances of it are guaranteed to be compliant.
  * See {@link Tree} for details about compliance and immutability guarantees.

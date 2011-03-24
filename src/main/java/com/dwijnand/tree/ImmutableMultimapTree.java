@@ -12,8 +12,8 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMultimap;
 
 /**
- * A <b>guaranteed</b> compliant implementation of {@link ImmutableTree} that
- * uses {@link ImmutableMultimap} and {@link ImmutableMap}.
+ * A <b>guaranteed</b> {@link ImmutableTree}-compliant implementation that uses
+ * {@link ImmutableMultimap} and {@link ImmutableMap}.
  * <p>
  * This class is final so all instances of it are guaranteed to be compliant,
  * and therefore immutable. See {@link Tree} for details about compliance and
