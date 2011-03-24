@@ -51,6 +51,19 @@ public abstract class NewMutableMapsSupplier<T extends Map<K, V>, K, V>
     };
 
     // TODO add javadoc
+    public static <K, V> NewMutableMapsSupplier<HashMap<K, V>, K, V> newNewHashMapWithExpectedSizeSupplier(
+            final int expectedSize) {
+        return new NewMutableMapsSupplier<HashMap<K, V>, K, V>() {
+
+            @Override
+            public HashMap<K, V> get() {
+                return Maps.newHashMapWithExpectedSize(expectedSize);
+            }
+
+        };
+    };
+
+    // TODO add javadoc
     public static <K extends Comparable<K>, V> NewMutableMapsSupplier<TreeMap<K, V>, K, V> newNewTreeMapSupplier() {
         return new NewMutableMapsSupplier<TreeMap<K, V>, K, V>() {
 
