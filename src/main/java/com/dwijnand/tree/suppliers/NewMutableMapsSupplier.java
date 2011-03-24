@@ -1,7 +1,10 @@
 package com.dwijnand.tree.suppliers;
 
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 import com.google.common.collect.Maps;
 
@@ -42,6 +45,43 @@ public abstract class NewMutableMapsSupplier<T extends Map<K, V>, K, V>
             @Override
             public HashMap<K, V> get() {
                 return Maps.newHashMap();
+            }
+
+        };
+    };
+
+    // TODO add javadoc
+    public static <K extends Comparable<K>, V> NewMutableMapsSupplier<TreeMap<K, V>, K, V> newNewTreeMapSupplier() {
+        return new NewMutableMapsSupplier<TreeMap<K, V>, K, V>() {
+
+            @Override
+            public TreeMap<K, V> get() {
+                return Maps.newTreeMap();
+            }
+
+        };
+    };
+
+    // TODO add javadoc
+    public static <C, K extends C, V> NewMutableMapsSupplier<TreeMap<K, V>, K, V> newNewTreeMapSupplier(
+            final Comparator<C> comparator) {
+        return new NewMutableMapsSupplier<TreeMap<K, V>, K, V>() {
+
+            @Override
+            public TreeMap<K, V> get() {
+                return Maps.newTreeMap(comparator);
+            }
+
+        };
+    };
+
+    // TODO add javadoc
+    public static <K, V> NewMutableMapsSupplier<LinkedHashMap<K, V>, K, V> newNewLinkedHashMapSupplier() {
+        return new NewMutableMapsSupplier<LinkedHashMap<K, V>, K, V>() {
+
+            @Override
+            public LinkedHashMap<K, V> get() {
+                return Maps.newLinkedHashMap();
             }
 
         };
