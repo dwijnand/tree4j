@@ -141,7 +141,7 @@ public final class ImmutableMultimapTree<T> extends ImmutableTree<T> {
     /*
      * (non-Javadoc)
      *
-     * @see com.dwijnand.tree.Tree#contains(java.lang.Object)
+     * @see com.dwijnand.tree.TreeSpec#contains(java.lang.Object)
      */
     @Override
     public boolean contains(final T node) {
@@ -157,7 +157,7 @@ public final class ImmutableMultimapTree<T> extends ImmutableTree<T> {
     /*
      * (non-Javadoc)
      *
-     * @see com.dwijnand.tree.Tree#getParent(java.lang.Object)
+     * @see com.dwijnand.tree.TreeSpec#getParent(java.lang.Object)
      */
     @Override
     public T getParent(final T node) {
@@ -177,7 +177,7 @@ public final class ImmutableMultimapTree<T> extends ImmutableTree<T> {
     /*
      * (non-Javadoc)
      *
-     * @see com.dwijnand.tree.Tree#getRoot()
+     * @see com.dwijnand.tree.TreeSpec#getRoot()
      */
     @Override
     public T getRoot() {

@@ -132,7 +132,7 @@ public final class MultimapTree<T> extends MutableTree<T> {
     /*
      * (non-Javadoc)
      *
-     * @see com.dwijnand.tree.Tree#contains(java.lang.Object)
+     * @see com.dwijnand.tree.TreeSpec#contains(java.lang.Object)
      */
     @Override
     public boolean contains(final T node) {
@@ -148,7 +148,7 @@ public final class MultimapTree<T> extends MutableTree<T> {
     /*
      * (non-Javadoc)
      *
-     * @see com.dwijnand.tree.Tree#getParent(java.lang.Object)
+     * @see com.dwijnand.tree.TreeSpec#getParent(java.lang.Object)
      */
     @Override
     public T getParent(final T node) {
@@ -158,7 +158,7 @@ public final class MultimapTree<T> extends MutableTree<T> {
     /*
      * (non-Javadoc)
      *
-     * @see com.dwijnand.tree.Tree#getChildren(java.lang.Object)
+     * @see com.dwijnand.tree.TreeSpec#getChildren(java.lang.Object)
      */
     @Override
     public Collection<T> getChildren(final T node) {
@@ -168,7 +168,7 @@ public final class MultimapTree<T> extends MutableTree<T> {
     /*
      * (non-Javadoc)
      *
-     * @see com.dwijnand.tree.Tree#getRoot()
+     * @see com.dwijnand.tree.TreeSpec#getRoot()
      */
     @Override
     public T getRoot() {
@@ -178,7 +178,7 @@ public final class MultimapTree<T> extends MutableTree<T> {
     /*
      * (non-Javadoc)
      *
-     * @see com.dwijnand.tree.GuaranteedMutableTree#withRoot(java.lang.Object)
+     * @see com.dwijnand.tree.MutableTree#withRoot(java.lang.Object)
      */
     @Override
     public MultimapTree<T> withRoot(final T node) {
@@ -192,7 +192,7 @@ public final class MultimapTree<T> extends MutableTree<T> {
     /*
      * (non-Javadoc)
      *
-     * @see com.dwijnand.tree.GuaranteedMutableTree#setRoot(java.lang.Object)
+     * @see com.dwijnand.tree.MutableTree#setRoot(java.lang.Object)
      */
     @Override
     public MultimapTree<T> setRoot(final T node) {
@@ -205,7 +205,7 @@ public final class MultimapTree<T> extends MutableTree<T> {
     /*
      * (non-Javadoc)
      *
-     * @see com.dwijnand.tree.GuaranteedMutableTree#add(java.lang.Object,
+     * @see com.dwijnand.tree.MutableTree#add(java.lang.Object,
      * java.lang.Object)
      */
     @Override
@@ -228,7 +228,7 @@ public final class MultimapTree<T> extends MutableTree<T> {
     /*
      * (non-Javadoc)
      *
-     * @see com.dwijnand.tree.GuaranteedMutableTree#added(java.lang.Object,
+     * @see com.dwijnand.tree.MutableTree#added(java.lang.Object,
      * java.lang.Object)
      */
     @Override
@@ -261,7 +261,7 @@ public final class MultimapTree<T> extends MutableTree<T> {
     /*
      * (non-Javadoc)
      *
-     * @see com.dwijnand.tree.MutableTree#clear()
+     * @see com.dwijnand.tree.MutableTreeSpec#clear()
      */
     @Override
     public void clear() {
@@ -273,7 +273,7 @@ public final class MultimapTree<T> extends MutableTree<T> {
     /*
      * (non-Javadoc)
      *
-     * @see com.dwijnand.tree.GuaranteedMutableTree#remove(java.lang.Object)
+     * @see com.dwijnand.tree.MutableTree#remove(java.lang.Object)
      */
     @Override
     public MultimapTree<T> remove(final T node) {
@@ -296,7 +296,7 @@ public final class MultimapTree<T> extends MutableTree<T> {
     /*
      * (non-Javadoc)
      *
-     * @see com.dwijnand.tree.GuaranteedMutableTree#removed(java.lang.Object)
+     * @see com.dwijnand.tree.MutableTree#removed(java.lang.Object)
      */
     @Override
     public MultimapTree<T> removed(final T node) {
