@@ -34,7 +34,7 @@ public abstract class NewMutableMultimapsSupplier<T extends Multimap<K, V>, K, V
      * @param <V> the type of the values in the multimap
      * @return a new NewMutableMultimapsSupplier
      */
-    public static <K, V> NewMutableMultimapsSupplier<LinkedHashMultimap<K, V>, K, V> newLinkedHashMultimapSupplier() {
+    public static <K, V> NewMutableMultimapsSupplier<LinkedHashMultimap<K, V>, K, V> newNewLinkedHashMultimapSupplier() {
         return new NewMutableMultimapsSupplier<LinkedHashMultimap<K, V>, K, V>() {
 
             @Override

@@ -36,7 +36,7 @@ public abstract class NewMutableMapsSupplier<T extends Map<K, V>, K, V>
      * @param <V> the type of the values in the map
      * @return a new NewMutableMapsSupplier
      */
-    public static <K, V> NewMutableMapsSupplier<HashMap<K, V>, K, V> newHashMapSupplier() {
+    public static <K, V> NewMutableMapsSupplier<HashMap<K, V>, K, V> newNewHashMapSupplier() {
         return new NewMutableMapsSupplier<HashMap<K, V>, K, V>() {
 
             @Override

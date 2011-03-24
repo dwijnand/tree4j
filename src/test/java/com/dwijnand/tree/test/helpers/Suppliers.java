@@ -16,10 +16,10 @@ public final class Suppliers {
     }
 
     public static final NewMutableMultimapsSupplier<LinkedHashMultimap<String, String>, String, String> LINKED_HASH_MULTIMAP_SUPPLIER = NewMutableMultimapsSupplier
-            .newLinkedHashMultimapSupplier();
+            .newNewLinkedHashMultimapSupplier();
 
     public static final NewMutableMapsSupplier<HashMap<String, String>, String, String> HASH_MAP_SUPPLIER = NewMutableMapsSupplier
-            .newHashMapSupplier();
+            .newNewHashMapSupplier();
 
     public static final Supplier<ImmutableMultimap.Builder<String, String>> IMMUTABLE_MULTIMAP_BUILDER_SUPPLIER = new Supplier<ImmutableMultimap.Builder<String, String>>() {
 
