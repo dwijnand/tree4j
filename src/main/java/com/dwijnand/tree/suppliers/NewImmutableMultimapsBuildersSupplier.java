@@ -6,7 +6,7 @@ import com.google.common.collect.ImmutableSetMultimap;
 
 /**
  * A <b>guaranteed</b> {@link NewInstanceSupplier}-compliant implementation that
- * returns {@link ImmutableMultimap.Builder}s. *
+ * returns {@link ImmutableMultimap.Builder}s.
  * <p>
  * The sole constructor is private so that it may only be instantiated within
  * this class. It, therefore, defines a series of static methods, each that
@@ -20,10 +20,15 @@ import com.google.common.collect.ImmutableSetMultimap;
 public abstract class NewImmutableMultimapsBuildersSupplier<T extends ImmutableMultimap.Builder<K, V>, K, V>
         extends NewInstanceSupplier<T> {
 
+    /**
+     * Creates a new instance. This sole constructor is private so that it may
+     * not be subclassed outside of this class.
+     */
     private NewImmutableMultimapsBuildersSupplier() {
     }
 
-    public static <K, V> NewImmutableMultimapsBuildersSupplier<ImmutableMultimap.Builder<K, V>, K, V> newImmutableMultimapBuilderSupplier() {
+    // TODO add javadoc
+    public static <K, V> NewImmutableMultimapsBuildersSupplier<ImmutableMultimap.Builder<K, V>, K, V> newNewImmutableMultimapsBuildersSupplier() {
         return new NewImmutableMultimapsBuildersSupplier<ImmutableMultimap.Builder<K, V>, K, V>() {
 
             @Override
@@ -34,7 +39,8 @@ public abstract class NewImmutableMultimapsBuildersSupplier<T extends ImmutableM
         };
     }
 
-    public static <K, V> NewImmutableMultimapsBuildersSupplier<ImmutableListMultimap.Builder<K, V>, K, V> newImmutableListMultimapBuilderSupplier() {
+    // TODO add javadoc
+    public static <K, V> NewImmutableMultimapsBuildersSupplier<ImmutableListMultimap.Builder<K, V>, K, V> newNewImmutableListMultimapsBuildersSupplier() {
         return new NewImmutableMultimapsBuildersSupplier<ImmutableListMultimap.Builder<K, V>, K, V>() {
 
             @Override
@@ -45,7 +51,8 @@ public abstract class NewImmutableMultimapsBuildersSupplier<T extends ImmutableM
         };
     }
 
-    public static <K, V> NewImmutableMultimapsBuildersSupplier<ImmutableSetMultimap.Builder<K, V>, K, V> newImmutableSetMultimapBuilderSupplier() {
+    // TODO add javadoc
+    public static <K, V> NewImmutableMultimapsBuildersSupplier<ImmutableSetMultimap.Builder<K, V>, K, V> newNewImmutableSetMultimapsBuildersSupplier() {
         return new NewImmutableMultimapsBuildersSupplier<ImmutableSetMultimap.Builder<K, V>, K, V>() {
 
             @Override
