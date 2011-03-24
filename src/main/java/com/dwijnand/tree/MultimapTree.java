@@ -111,8 +111,10 @@ public final class MultimapTree<T> extends CompliantMutableTree<T> {
      * Creates a new multimap tree with the specified suppliers, associations
      * and root node. See {@link #create(Supplier, Supplier)} for more details.
      * <p>
-     * This sole constructor is private so that it may not be instantiated
-     * outside of this class.
+     * This sole constructor is private so that it may not be invoked outside of
+     * this class. This is important as it is the only place where the children
+     * multimap, parents map and root node can be set directly, including
+     * setting the root node to null.
      *
      * @param childrenMultimapSupplier a Multimap supplier
      * @param parentsMapSupplier a Map supplier
