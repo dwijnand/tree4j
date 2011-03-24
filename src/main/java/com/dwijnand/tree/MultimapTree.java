@@ -19,9 +19,9 @@ import com.google.common.collect.Multimap;
  * A <b>guaranteed</b> {@link CompliantMutableTree}-compliant implementation
  * which uses a mutable {@link Multimap} and a mutable {@link Map}.
  * <p>
- * This class is final so all instances of it are guaranteed to be compliant.
- * See {@link CompliantTree} for details about compliance and immutability
- * guarantees.
+ * See {@link GuaranteedCompliance} for details about compliance and
+ * immutability guarantees, noting that this class is final (as well as only
+ * defining one private constructor).
  *
  * @param <T> the type of the nodes in the tree
  */

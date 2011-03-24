@@ -17,9 +17,12 @@ import com.google.common.collect.ImmutableMultimap;
  * A <b>guaranteed</b> {@link ImmutableTree}-compliant implementation that uses
  * {@link ImmutableMultimap} and {@link ImmutableMap}.
  * <p>
- * This class is final so all instances of it are guaranteed to be compliant,
- * and therefore immutable. See {@link CompliantTree} for details about
- * compliance and immutability guarantees.
+ * See {@link GuaranteedCompliance} for details about compliance and
+ * immutability guarantees, noting that this class is final (as well as only
+ * defining one private constructor).
+ *
+ * See {@link CompliantTree} for details about compliance and immutability
+ * guarantees.
  *
  * @param <T> the type of the nodes in the tree
  */

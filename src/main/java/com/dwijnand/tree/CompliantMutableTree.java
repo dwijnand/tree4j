@@ -2,8 +2,11 @@ package com.dwijnand.tree;
 
 /**
  * A base class for <b>guaranteed</b> {@link MutableTree}-compliant
- * implementations that extends.{@link CompliantTree}. See {@link CompliantTree}
- * for details about compliance and immutability guarantees.
+ * implementations that extends.{@link CompliantTree}.
+ * <p>
+ * See {@link GuaranteedCompliance} for details about compliance and
+ * immutability guarantees, noting that this class is not final and defines a
+ * package-private constructor.
  *
  * @param <T> the type of the nodes in the tree
  */

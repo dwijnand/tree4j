@@ -3,21 +3,9 @@ package com.dwijnand.tree;
 /**
  * A base class for <b>guaranteed</b> {@link Tree}-compliant implementations.
  * <p>
- * The compliance guarantee is a best-effort guarantee, due to the fact that:
- * <ul>
- * <li>Even though this class doesn't have any public or protected constructors,
- * there is no way to completely deny the ability to subclass this class, as it
- * is still possible to define a non-compliant subclass by using the same
- * package namespace.</li>
- * <li>On the JVM it is not possible to absolutely guarantee immutability, as it
- * is always possible to gain access and modify hidden and/or final fields via
- * reflection or byte-code manipulation.</li>
- * </ul>
- * Even if there were only a private constructor, and therefore all
- * implementations, as well as all implementations of intermediate classes, were
- * nested inner classes (which would be not only messy but ugly) it still
- * wouldn't resolve the second issue. Therefore, until the state-of-affairs
- * improves, the constructor was left package-private.
+ * See {@link GuaranteedCompliance} for details about compliance and
+ * immutability guarantees, noting that this class is not final and defines a
+ * package-private constructor.
  *
  * @param <T> the type of the nodes in the tree
  */
