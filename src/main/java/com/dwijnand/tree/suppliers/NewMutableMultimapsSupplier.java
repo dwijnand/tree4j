@@ -1,7 +1,12 @@
 package com.dwijnand.tree.suppliers;
 
+import java.util.Comparator;
+
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.HashMultimap;
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
+import com.google.common.collect.TreeMultimap;
 
 /**
  * A <b>guaranteed</b> {@link NewInstanceSupplier}-compliant implementation that
@@ -26,6 +31,30 @@ public abstract class NewMutableMultimapsSupplier<T extends Multimap<K, V>, K, V
     private NewMutableMultimapsSupplier() {
     }
 
+    // TODO add javadoc
+    public static <K, V> NewMutableMultimapsSupplier<ArrayListMultimap<K, V>, K, V> newNewArrayListMultimapSupplier() {
+        return new NewMutableMultimapsSupplier<ArrayListMultimap<K, V>, K, V>() {
+
+            @Override
+            public ArrayListMultimap<K, V> get() {
+                return ArrayListMultimap.create();
+            }
+
+        };
+    };
+
+    // TODO add javadoc
+    public static <K, V> NewMutableMultimapsSupplier<HashMultimap<K, V>, K, V> newNewHashMultimapSupplier() {
+        return new NewMutableMultimapsSupplier<HashMultimap<K, V>, K, V>() {
+
+            @Override
+            public HashMultimap<K, V> get() {
+                return HashMultimap.create();
+            }
+
+        };
+    };
+
     /**
      * Creates a new NewMutableMultimapsSupplier of {@link LinkedHashMultimap}s
      * of the specified key and value types.
@@ -40,6 +69,32 @@ public abstract class NewMutableMultimapsSupplier<T extends Multimap<K, V>, K, V
             @Override
             public LinkedHashMultimap<K, V> get() {
                 return LinkedHashMultimap.create();
+            }
+
+        };
+    };
+
+    // TODO add javadoc
+    public static <K extends Comparable<K>, V extends Comparable<V>> NewMutableMultimapsSupplier<TreeMultimap<K, V>, K, V> newNewTreeMultimapSupplier() {
+        return new NewMutableMultimapsSupplier<TreeMultimap<K, V>, K, V>() {
+
+            @Override
+            public TreeMultimap<K, V> get() {
+                return TreeMultimap.create();
+            }
+
+        };
+    };
+
+    // TODO add javadoc
+    public static <K, V> NewMutableMultimapsSupplier<TreeMultimap<K, V>, K, V> newNewTreeMultimapSupplier(
+            final Comparator<? super K> keyComparator,
+            final Comparator<? super V> valueComparator) {
+        return new NewMutableMultimapsSupplier<TreeMultimap<K, V>, K, V>() {
+
+            @Override
+            public TreeMultimap<K, V> get() {
+                return TreeMultimap.create(keyComparator, valueComparator);
             }
 
         };
