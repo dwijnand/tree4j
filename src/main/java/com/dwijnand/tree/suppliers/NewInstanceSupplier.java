@@ -1,10 +1,10 @@
 package com.dwijnand.tree.suppliers;
 
-import com.dwijnand.tree.Tree;
+import com.dwijnand.tree.CompliantTree;
 
 /**
  * A base class for <b>guaranteed</b> {@link NewInstanceSupplierSpec}-compliant
- * implementations. See {@link Tree} for details about compliance and
+ * implementations. See {@link CompliantTree} for details about compliance and
  * immutability guarantees
  *
  * @param <T> the type of the objects supplied

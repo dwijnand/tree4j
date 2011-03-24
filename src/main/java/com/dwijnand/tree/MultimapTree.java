@@ -16,15 +16,16 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
 
 /**
- * A <b>guaranteed</b> {@link MutableTree}-compliant implementation which uses
- * {@link Multimap} and {@link Map}.
+ * A <b>guaranteed</b> {@link CompliantMutableTree}-compliant implementation
+ * which uses {@link Multimap} and {@link Map}.
  * <p>
  * This class is final so all instances of it are guaranteed to be compliant.
- * See {@link Tree} for details about compliance and immutability guarantees.
+ * See {@link CompliantTree} for details about compliance and immutability
+ * guarantees.
  *
  * @param <T> the type of the nodes in the tree
  */
-public final class MultimapTree<T> extends MutableTree<T> {
+public final class MultimapTree<T> extends CompliantMutableTree<T> {
 
     /**
      * The supplier of mutable multimap instances, used to hold the

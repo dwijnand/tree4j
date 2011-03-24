@@ -22,24 +22,24 @@ package com.dwijnand.tree;
  *
  * @param <T> the type of the nodes in the tree
  */
-public abstract class Tree<T> implements TreeSpec<T> {
+public abstract class CompliantTree<T> implements TreeSpec<T> {
 
     /**
      * Creates a new instance. This sole constructor is package-private so that
      * it may not be subclassed outside of this package.
      */
-    Tree() {
+    CompliantTree() {
     }
 
     // Override methods that return self to restrict the return type to Tree
 
     @Override
-    public abstract Tree<T> withRoot(final T node);
+    public abstract CompliantTree<T> withRoot(final T node);
 
     @Override
-    public abstract Tree<T> add(final T parent, final T child);
+    public abstract CompliantTree<T> add(final T parent, final T child);
 
     @Override
-    public abstract Tree<T> remove(final T node);
+    public abstract CompliantTree<T> remove(final T node);
 
 }

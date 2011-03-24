@@ -18,8 +18,8 @@ import com.google.common.collect.ImmutableMultimap;
  * {@link ImmutableMultimap} and {@link ImmutableMap}.
  * <p>
  * This class is final so all instances of it are guaranteed to be compliant,
- * and therefore immutable. See {@link Tree} for details about compliance and
- * immutability guarantees.
+ * and therefore immutable. See {@link CompliantTree} for details about
+ * compliance and immutability guarantees.
  *
  * @param <T> the type of the nodes in the tree
  */
