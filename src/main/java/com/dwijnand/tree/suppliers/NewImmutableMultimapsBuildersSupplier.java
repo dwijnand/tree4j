@@ -17,14 +17,14 @@ import com.google.common.collect.ImmutableSetMultimap;
  * @param <K> the type of the keys in the multimap built
  * @param <V> the type of the values in the multimap built
  */
-public abstract class NewImmutableMultimapBuilderSupplier<T extends ImmutableMultimap.Builder<K, V>, K, V>
+public abstract class NewImmutableMultimapsBuildersSupplier<T extends ImmutableMultimap.Builder<K, V>, K, V>
         extends NewInstanceSupplier<T> {
 
-    private NewImmutableMultimapBuilderSupplier() {
+    private NewImmutableMultimapsBuildersSupplier() {
     }
 
-    public static <K, V> NewImmutableMultimapBuilderSupplier<ImmutableMultimap.Builder<K, V>, K, V> newImmutableMultimapBuilderSupplier() {
-        return new NewImmutableMultimapBuilderSupplier<ImmutableMultimap.Builder<K, V>, K, V>() {
+    public static <K, V> NewImmutableMultimapsBuildersSupplier<ImmutableMultimap.Builder<K, V>, K, V> newImmutableMultimapBuilderSupplier() {
+        return new NewImmutableMultimapsBuildersSupplier<ImmutableMultimap.Builder<K, V>, K, V>() {
 
             @Override
             public ImmutableMultimap.Builder<K, V> get() {
@@ -34,8 +34,8 @@ public abstract class NewImmutableMultimapBuilderSupplier<T extends ImmutableMul
         };
     }
 
-    public static <K, V> NewImmutableMultimapBuilderSupplier<ImmutableListMultimap.Builder<K, V>, K, V> newImmutableListMultimapBuilderSupplier() {
-        return new NewImmutableMultimapBuilderSupplier<ImmutableListMultimap.Builder<K, V>, K, V>() {
+    public static <K, V> NewImmutableMultimapsBuildersSupplier<ImmutableListMultimap.Builder<K, V>, K, V> newImmutableListMultimapBuilderSupplier() {
+        return new NewImmutableMultimapsBuildersSupplier<ImmutableListMultimap.Builder<K, V>, K, V>() {
 
             @Override
             public ImmutableListMultimap.Builder<K, V> get() {
@@ -45,8 +45,8 @@ public abstract class NewImmutableMultimapBuilderSupplier<T extends ImmutableMul
         };
     }
 
-    public static <K, V> NewImmutableMultimapBuilderSupplier<ImmutableSetMultimap.Builder<K, V>, K, V> newImmutableSetMultimapBuilderSupplier() {
-        return new NewImmutableMultimapBuilderSupplier<ImmutableSetMultimap.Builder<K, V>, K, V>() {
+    public static <K, V> NewImmutableMultimapsBuildersSupplier<ImmutableSetMultimap.Builder<K, V>, K, V> newImmutableSetMultimapBuilderSupplier() {
+        return new NewImmutableMultimapsBuildersSupplier<ImmutableSetMultimap.Builder<K, V>, K, V>() {
 
             @Override
             public ImmutableSetMultimap.Builder<K, V> get() {
