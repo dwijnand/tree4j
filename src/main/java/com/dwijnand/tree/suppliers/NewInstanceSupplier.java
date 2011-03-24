@@ -1,4 +1,6 @@
-package com.dwijnand.tree;
+package com.dwijnand.tree.suppliers;
+
+import com.dwijnand.tree.Tree;
 
 /**
  * A base class for <b>guaranteed</b> {@link NewInstanceSupplierSpec}-compliant

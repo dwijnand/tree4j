@@ -2,8 +2,8 @@ package com.dwijnand.tree.test.helpers;
 
 import java.util.HashMap;
 
-import com.dwijnand.tree.NewMutableMapsSupplier;
-import com.dwijnand.tree.NewMutableMultimapsSupplier;
+import com.dwijnand.tree.suppliers.NewMutableMapsSupplier;
+import com.dwijnand.tree.suppliers.NewMutableMultimapsSupplier;
 import com.google.common.base.Supplier;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMultimap;

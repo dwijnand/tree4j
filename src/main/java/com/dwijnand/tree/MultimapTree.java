@@ -9,6 +9,8 @@ import java.util.Map;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
+import com.dwijnand.tree.suppliers.NewMutableMapsSupplier;
+import com.dwijnand.tree.suppliers.NewMutableMultimapsSupplier;
 import com.google.common.base.Supplier;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;

@@ -1,4 +1,4 @@
-package com.dwijnand.tree;
+package com.dwijnand.tree.suppliers;
 
 import java.util.HashMap;
 import java.util.Map;
