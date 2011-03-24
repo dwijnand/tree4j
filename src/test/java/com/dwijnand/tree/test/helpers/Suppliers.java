@@ -2,9 +2,10 @@ package com.dwijnand.tree.test.helpers;
 
 import java.util.HashMap;
 
+import com.dwijnand.tree.suppliers.NewImmutableMapsBuildersSupplier;
+import com.dwijnand.tree.suppliers.NewImmutableMultimapsBuildersSupplier;
 import com.dwijnand.tree.suppliers.NewMutableMapsSupplier;
 import com.dwijnand.tree.suppliers.NewMutableMultimapsSupplier;
-import com.google.common.base.Supplier;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.LinkedHashMultimap;
@@ -21,22 +22,10 @@ public final class Suppliers {
     public static final NewMutableMapsSupplier<HashMap<String, String>, String, String> HASH_MAP_SUPPLIER = NewMutableMapsSupplier
             .newNewHashMapSupplier();
 
-    public static final Supplier<ImmutableMultimap.Builder<String, String>> IMMUTABLE_MULTIMAP_BUILDER_SUPPLIER = new Supplier<ImmutableMultimap.Builder<String, String>>() {
+    public static final NewImmutableMultimapsBuildersSupplier<? extends ImmutableMultimap.Builder<String, String>, String, String> IMMUTABLE_MULTIMAP_BUILDER_SUPPLIER = NewImmutableMultimapsBuildersSupplier
+            .newNewImmutableMultimapsBuildersSupplier();
 
-        @Override
-        public ImmutableMultimap.Builder<String, String> get() {
-            return ImmutableMultimap.builder();
-        }
-
-    };
-
-    public static final Supplier<ImmutableMap.Builder<String, String>> IMMUTABLE_MAP_BUILDER_SUPPLIER = new Supplier<ImmutableMap.Builder<String, String>>() {
-
-        @Override
-        public ImmutableMap.Builder<String, String> get() {
-            return ImmutableMap.builder();
-        }
-
-    };
+    public static final NewImmutableMapsBuildersSupplier<? extends ImmutableMap.Builder<String, String>, String, String> IMMUTABLE_MAP_BUILDER_SUPPLIER = NewImmutableMapsBuildersSupplier
+            .newNewImmutableMapsBuildersSupplier();
 
 }

@@ -6,6 +6,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
+import com.dwijnand.tree.suppliers.NewImmutableMapsBuildersSupplier;
+import com.dwijnand.tree.suppliers.NewImmutableMultimapsBuildersSupplier;
 import com.google.common.base.Supplier;
 import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableMap;
@@ -27,13 +29,13 @@ public final class ImmutableMultimapTree<T> extends ImmutableTree<T> {
      * The supplier of immutable multimap builder instances, used to build the
      * parent-children relationships of a new multimap tree.
      */
-    private final Supplier<? extends ImmutableMultimap.Builder<T, T>> childrenBuilderSupplier;
+    private final NewImmutableMultimapsBuildersSupplier<? extends ImmutableMultimap.Builder<T, T>, T, T> childrenBuilderSupplier;
 
     /**
      * The supplier of immutable map builder instances, used to build the
      * child-parent relationships of a new multimap tree.
      */
-    private final Supplier<? extends ImmutableMap.Builder<T, T>> parentsBuilderSupplier;
+    private final NewImmutableMapsBuildersSupplier<? extends ImmutableMap.Builder<T, T>, T, T> parentsBuilderSupplier;
 
     /**
      * The parent-children relationships of the tree.
@@ -66,8 +68,8 @@ public final class ImmutableMultimapTree<T> extends ImmutableTree<T> {
      * @return a new immutable multimap tree
      */
     public static <T> ImmutableMultimapTree<T> create(
-            final Supplier<? extends ImmutableMultimap.Builder<T, T>> childrenBuilderSupplier,
-            final Supplier<? extends ImmutableMap.Builder<T, T>> parentsBuilderSupplier) {
+            final NewImmutableMultimapsBuildersSupplier<? extends ImmutableMultimap.Builder<T, T>, T, T> childrenBuilderSupplier,
+            final NewImmutableMapsBuildersSupplier<? extends ImmutableMap.Builder<T, T>, T, T> parentsBuilderSupplier) {
         checkNotNull(childrenBuilderSupplier);
         checkNotNull(parentsBuilderSupplier);
 
@@ -103,8 +105,8 @@ public final class ImmutableMultimapTree<T> extends ImmutableTree<T> {
      *         root node
      */
     private static <T> ImmutableMultimapTree<T> create(
-            final Supplier<? extends ImmutableMultimap.Builder<T, T>> childrenBuilderSupplier,
-            final Supplier<? extends ImmutableMap.Builder<T, T>> parentsBuilderSupplier,
+            final NewImmutableMultimapsBuildersSupplier<? extends ImmutableMultimap.Builder<T, T>, T, T> childrenBuilderSupplier,
+            final NewImmutableMapsBuildersSupplier<? extends ImmutableMap.Builder<T, T>, T, T> parentsBuilderSupplier,
             final ImmutableMultimap<T, T> children,
             final ImmutableMap<T, T> parents, final T root) {
         return new ImmutableMultimapTree<T>(childrenBuilderSupplier,
@@ -127,8 +129,8 @@ public final class ImmutableMultimapTree<T> extends ImmutableTree<T> {
      * @param root the root node
      */
     private ImmutableMultimapTree(
-            final Supplier<? extends ImmutableMultimap.Builder<T, T>> childrenBuilderSupplier,
-            final Supplier<? extends ImmutableMap.Builder<T, T>> parentsBuilderSupplier,
+            final NewImmutableMultimapsBuildersSupplier<? extends ImmutableMultimap.Builder<T, T>, T, T> childrenBuilderSupplier,
+            final NewImmutableMapsBuildersSupplier<? extends ImmutableMap.Builder<T, T>, T, T> parentsBuilderSupplier,
             final ImmutableMultimap<T, T> children,
             final ImmutableMap<T, T> parents, final T root) {
         this.childrenBuilderSupplier = childrenBuilderSupplier;
