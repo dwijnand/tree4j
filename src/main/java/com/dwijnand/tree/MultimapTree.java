@@ -28,13 +28,13 @@ public final class MultimapTree<T> extends MutableTree<T> {
      * The supplier of mutable multimap instances, used to hold the
      * parent-children relationships of the tree.
      */
-    private final Supplier<? extends Multimap<T, T>> childrenMultimapSupplier;
+    private final NewMutableMultimapsSupplier<? extends Multimap<T, T>, T, T> childrenMultimapSupplier;
 
     /**
      * The supplier of mutable map instances, used to hold the child-parent
      * relationships of the tree.
      */
-    private final Supplier<? extends Map<T, T>> parentsMapSupplier;
+    private final NewMutableMapsSupplier<? extends Map<T, T>, T, T> parentsMapSupplier;
 
     /**
      * The parent-children relationships of the tree.
@@ -70,8 +70,8 @@ public final class MultimapTree<T> extends MutableTree<T> {
      * @return a new multimap tree
      */
     public static <T> MultimapTree<T> create(
-            final Supplier<? extends Multimap<T, T>> childrenMultimapSupplier,
-            final Supplier<? extends Map<T, T>> parentsMapSupplier) {
+            final NewMutableMultimapsSupplier<? extends Multimap<T, T>, T, T> childrenMultimapSupplier,
+            final NewMutableMapsSupplier<? extends Map<T, T>, T, T> parentsMapSupplier) {
         checkNotNull(childrenMultimapSupplier);
         checkNotNull(parentsMapSupplier);
 
@@ -96,8 +96,8 @@ public final class MultimapTree<T> extends MutableTree<T> {
             final MultimapTree<T> multimapTree) {
         checkNotNull(multimapTree);
 
-        final Supplier<? extends Multimap<T, T>> childrenMultimapSupplier = multimapTree.childrenMultimapSupplier;
-        final Supplier<? extends Map<T, T>> parentsMapSupplier = multimapTree.parentsMapSupplier;
+        final NewMutableMultimapsSupplier<? extends Multimap<T, T>, T, T> childrenMultimapSupplier = multimapTree.childrenMultimapSupplier;
+        final NewMutableMapsSupplier<? extends Map<T, T>, T, T> parentsMapSupplier = multimapTree.parentsMapSupplier;
 
         final Multimap<T, T> children = childrenMultimapSupplier.get();
         final Map<T, T> parents = parentsMapSupplier.get();
@@ -123,8 +123,8 @@ public final class MultimapTree<T> extends MutableTree<T> {
      * @param root the root node
      */
     private MultimapTree(
-            final Supplier<? extends Multimap<T, T>> childrenMultimapSupplier,
-            final Supplier<? extends Map<T, T>> parentsMapSupplier,
+            final NewMutableMultimapsSupplier<? extends Multimap<T, T>, T, T> childrenMultimapSupplier,
+            final NewMutableMapsSupplier<? extends Map<T, T>, T, T> parentsMapSupplier,
             final Multimap<T, T> children, final Map<T, T> parents,
             final T root) {
         this.childrenMultimapSupplier = childrenMultimapSupplier;
