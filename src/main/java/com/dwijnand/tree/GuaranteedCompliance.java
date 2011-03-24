@@ -1,8 +1,8 @@
 package com.dwijnand.tree;
 
 /**
- * This is <b>not</b> a real interface, it is a placeholder for documenting what
- * is intended by compliance and immutability guarantees.
+ * <em>This is <b>not</b> a real interface, it is a placeholder for documenting what
+ * is intended by compliance and immutability guarantees.</em>
  * <p>
  * Guaranteeing compliance is very hard on the JVM. Due to the issues described
  * below, the tree structure classes defined in this library utilise package
