@@ -21,12 +21,9 @@ import com.google.common.collect.ImmutableMultimap;
  * immutability guarantees, noting that this class is final (as well as only
  * defining one private constructor).
  *
- * See {@link CompliantTree} for details about compliance and immutability
- * guarantees.
- *
  * @param <T> the type of the nodes in the tree
  */
-public final class ImmutableMultimapTree<T> extends ImmutableTree<T> {
+public final class ImmutableMultimapTree<T> implements ImmutableTree<T> {
 
     /**
      * The supplier of immutable multimap builder instances, used to build the

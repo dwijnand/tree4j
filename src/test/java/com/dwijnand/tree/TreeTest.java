@@ -1,7 +1,5 @@
 package com.dwijnand.tree;
 
-import static com.dwijnand.tree.test.helpers.Suppliers.IMMUTABLE_MAP_BUILDER_SUPPLIER;
-import static com.dwijnand.tree.test.helpers.Suppliers.IMMUTABLE_MULTIMAP_BUILDER_SUPPLIER;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasItems;
 import static org.junit.Assert.assertEquals;
@@ -14,28 +12,16 @@ import static org.junit.Assert.assertTrue;
 import java.util.Collection;
 
 import org.junit.Rule;
-import org.junit.experimental.theories.DataPoints;
-import org.junit.experimental.theories.Theories;
 import org.junit.experimental.theories.Theory;
 import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
 
-@RunWith(Theories.class)
 public class TreeTest {
 
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 
-    @DataPoints
-    public static Tree<?>[] data() {
-        return new Tree[] {ImmutableMultimapTree.create(
-                IMMUTABLE_MULTIMAP_BUILDER_SUPPLIER,
-                IMMUTABLE_MAP_BUILDER_SUPPLIER)};
-    }
-
     @Theory
-    public void containsShouldReturnFalseWhenEmpty(
-            final Tree<String> tree) {
+    public void containsShouldReturnFalseWhenEmpty(final Tree<String> tree) {
         assertFalse(tree.contains("node"));
     }
 
@@ -81,8 +67,7 @@ public class TreeTest {
     }
 
     @Theory
-    public void getRootShouldReturnNullBeforeSetRoot(
-            final Tree<String> tree) {
+    public void getRootShouldReturnNullBeforeSetRoot(final Tree<String> tree) {
         assertNull(tree.getRoot());
     }
 

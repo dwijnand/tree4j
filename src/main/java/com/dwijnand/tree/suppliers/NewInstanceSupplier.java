@@ -1,7 +1,5 @@
 package com.dwijnand.tree.suppliers;
 
-import com.dwijnand.tree.CompliantTree;
-
 /**
  * A base class for <b>guaranteed</b> {@link NewInstanceSupplierSpec}-compliant
  * implementations. See {@link CompliantTree} for details about compliance and

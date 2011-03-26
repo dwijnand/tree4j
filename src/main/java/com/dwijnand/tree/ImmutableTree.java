@@ -1,23 +1,13 @@
 package com.dwijnand.tree;
 
 /**
- * A base class that extends {@link CompliantTree} and is <b>guaranteed</b> to
- * be immutable.
- * <p>
- * See {@link GuaranteedCompliance} for details about compliance and
- * immutability guarantees, noting that this class is not final and defines a
- * package-private constructor.
+ * This interface extends the {@link Tree} interface, with the additional
+ * restriction that the object must be immutable (i.e. <strong>no</strong>
+ * method should change the internal state of the object).
  *
  * @param <T> the type of the nodes in the tree
  */
-public abstract class ImmutableTree<T> extends CompliantTree<T> {
-
-    /**
-     * Creates a new instance. This sole constructor is package-private so that
-     * it may not be subclassed outside of this package.
-     */
-    ImmutableTree() {
-    }
+public interface ImmutableTree<T> extends Tree<T> {
 
     // Override methods that return self to change the return type to
     // ImmutableTree

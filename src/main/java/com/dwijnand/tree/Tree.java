@@ -18,9 +18,9 @@ import java.util.Collection;
  * allowing this interface to be used as the specification of an immutable
  * object.
  * <p>
- * See {@link ImmutableTree} for a guaranteed immutable tree and
- * {@link MutableTree} for an interface that extends this one with in-place
- * modification methods.
+ * See {@link ImmutableTree} for an extension to this interface that adds the
+ * immutability restriction and {@link MutableTree} for an extension that adds
+ * in-place modification methods.
  * <p>
  * To check compliance with this specification, there are a suite of tests that
  * can be used.
