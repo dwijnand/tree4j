@@ -11,21 +11,16 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import com.dwijnand.tree.suppliers.NewMutableMapsSupplier;
 import com.dwijnand.tree.suppliers.NewMutableMultimapsSupplier;
-import com.google.common.base.Supplier;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
 
 /**
- * A <b>guaranteed</b> {@link CompliantMutableTree}-compliant implementation
- * which uses a mutable {@link Multimap} and a mutable {@link Map}.
- * <p>
- * See {@link GuaranteedCompliance} for details about compliance and
- * immutability guarantees, noting that this class is final (as well as only
- * defining one private constructor).
+ * A {@link MutableTree} implementation which uses a mutable {@link Multimap}
+ * and a mutable {@link Map}.
  *
  * @param <T> the type of the nodes in the tree
  */
-public final class MultimapTree<T> extends CompliantMutableTree<T> {
+public class MultimapTree<T> implements MutableTree<T> {
 
     /**
      * The supplier of mutable multimap instances, used to hold the
@@ -53,6 +48,56 @@ public final class MultimapTree<T> extends CompliantMutableTree<T> {
      * The root of the tree.
      */
     private T root;
+
+    /**
+     * Creates a new multimap tree using the specified {@link Multimap} and
+     * {@link Map} suppliers. This constructor is protected so that the class
+     * can be subclassed. See
+     * {@link #create(NewMutableMultimapsSupplier, NewMutableMapsSupplier)} for
+     * more details; and use that for just instantiating a new instance
+     *
+     * @param childrenMultimapSupplier a Multimap supplier
+     * @param parentsMapSupplier a Map supplier
+     */
+    protected MultimapTree(
+            final NewMutableMultimapsSupplier<? extends Multimap<T, T>, T, T> childrenMultimapSupplier,
+            final NewMutableMapsSupplier<? extends Map<T, T>, T, T> parentsMapSupplier) {
+        checkNotNull(childrenMultimapSupplier);
+        checkNotNull(parentsMapSupplier);
+
+        this.childrenMultimapSupplier = childrenMultimapSupplier;
+        this.parentsMapSupplier = parentsMapSupplier;
+        this.children = childrenMultimapSupplier.get();
+        this.parents = parentsMapSupplier.get();
+        this.root = null;
+    }
+
+    /**
+     * Creates a new multimap tree with the specified suppliers, associations
+     * and root node. See
+     * {@link #create(NewMutableMultimapsSupplier, NewMutableMapsSupplier)} for
+     * more details.
+     * <p>
+     * This private constructor is used internally for setting specific
+     * associations and the root node, including setting the root node to null.
+     *
+     * @param childrenMultimapSupplier a Multimap supplier
+     * @param parentsMapSupplier a Map supplier
+     * @param children the parent-children associations to be used
+     * @param parents the child-parent associations to be used
+     * @param root the root node
+     */
+    private MultimapTree(
+            final NewMutableMultimapsSupplier<? extends Multimap<T, T>, T, T> childrenMultimapSupplier,
+            final NewMutableMapsSupplier<? extends Map<T, T>, T, T> parentsMapSupplier,
+            final Multimap<T, T> children, final Map<T, T> parents,
+            final T root) {
+        this.childrenMultimapSupplier = childrenMultimapSupplier;
+        this.parentsMapSupplier = parentsMapSupplier;
+        this.children = children;
+        this.parents = parents;
+        this.root = root;
+    }
 
     /**
      * Creates a new multimap tree using the specified {@link Multimap} and
@@ -105,33 +150,6 @@ public final class MultimapTree<T> extends CompliantMutableTree<T> {
 
         return new MultimapTree<T>(childrenMultimapSupplier,
                 parentsMapSupplier, children, parents, multimapTree.root);
-    }
-
-    /**
-     * Creates a new multimap tree with the specified suppliers, associations
-     * and root node. See {@link #create(Supplier, Supplier)} for more details.
-     * <p>
-     * This sole constructor is private so that it may not be invoked outside of
-     * this class. This is important as it is the only place where the children
-     * multimap, parents map and root node can be set directly, including
-     * setting the root node to null.
-     *
-     * @param childrenMultimapSupplier a Multimap supplier
-     * @param parentsMapSupplier a Map supplier
-     * @param children the parent-children associations to be used
-     * @param parents the child-parent associations to be used
-     * @param root the root node
-     */
-    private MultimapTree(
-            final NewMutableMultimapsSupplier<? extends Multimap<T, T>, T, T> childrenMultimapSupplier,
-            final NewMutableMapsSupplier<? extends Map<T, T>, T, T> parentsMapSupplier,
-            final Multimap<T, T> children, final Map<T, T> parents,
-            final T root) {
-        this.childrenMultimapSupplier = childrenMultimapSupplier;
-        this.parentsMapSupplier = parentsMapSupplier;
-        this.children = children;
-        this.parents = parents;
-        this.root = root;
     }
 
     /*

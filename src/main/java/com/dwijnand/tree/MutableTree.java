@@ -1,13 +1,10 @@
 package com.dwijnand.tree;
 
 /**
- * This interface extends the {@link Tree} interface with in-place
- * modification methods, making it the specification of a mutable tree.
- * <p>
- * See {@link CompliantMutableTree} for a guaranteed mutable tree.
+ * This interface extends the {@link Tree} interface with in-place modification
+ * methods, making it the specification of a mutable tree.
  *
  * @param <T> the type of the nodes in the tree
- * @see CompliantMutableTree
  */
 // TODO add details about specification compliance tests
 public interface MutableTree<T> extends Tree<T> {
