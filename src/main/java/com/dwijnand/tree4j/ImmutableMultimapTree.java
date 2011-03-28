@@ -6,9 +6,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
-import com.dwijnand.tree4j.suppliers.NewImmutableMapsBuildersSupplier;
-import com.dwijnand.tree4j.suppliers.NewImmutableMultimapsBuildersSupplier;
-import com.google.common.base.Supplier;
+import com.dwijnand.tree4j.common.ImmutableMapsBuildersFactory;
+import com.dwijnand.tree4j.common.ImmutableMultimapsBuildersFactory;
 import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMultimap;
@@ -26,16 +25,16 @@ import com.google.common.collect.ImmutableMultimap;
 public final class ImmutableMultimapTree<T> implements ImmutableTree<T> {
 
     /**
-     * The supplier of immutable multimap builder instances, used to build the
+     * The factory of immutable multimap builder instances, used to build the
      * parent-children relationships of a new multimap tree.
      */
-    private final NewImmutableMultimapsBuildersSupplier<? extends ImmutableMultimap.Builder<T, T>, T, T> childrenBuilderSupplier;
+    private final ImmutableMultimapsBuildersFactory<? extends ImmutableMultimap.Builder<T, T>, T, T> childrenBuilderFactory;
 
     /**
-     * The supplier of immutable map builder instances, used to build the
+     * The factory of immutable map builder instances, used to build the
      * child-parent relationships of a new multimap tree.
      */
-    private final NewImmutableMapsBuildersSupplier<? extends ImmutableMap.Builder<T, T>, T, T> parentsBuilderSupplier;
+    private final ImmutableMapsBuildersFactory<? extends ImmutableMap.Builder<T, T>, T, T> parentsBuilderFactory;
 
     /**
      * The parent-children relationships of the tree.
@@ -54,50 +53,51 @@ public final class ImmutableMultimapTree<T> implements ImmutableTree<T> {
 
     /**
      * Creates a new immutable multimap tree using the specified
-     * {@link ImmutableMultimap} and {@link ImmutableMap} builder suppliers.
-     * These suppliers are used to obtain builders required to constructing the
+     * {@link ImmutableMultimap} and {@link ImmutableMap} builder factories.
+     * These factories are used to obtain builders required to constructing the
      * parent-children and child-parent relationships within the tree.
      * <p>
-     * Suppliers of builders are required, as opposed to simply builders,
+     * Factories of builders are required, as opposed to simply builders,
      * because all the 'modifying' methods actually return new instances of this
      * tree, and therefore require new builders.
      *
      * @param <T> the type of the nodes in the tree
-     * @param childrenBuilderSupplier an ImmutableMultimap builder supplier
-     * @param parentsBuilderSupplier an ImmutableMap builder supplier
+     * @param childrenBuilderFactory an ImmutableMultimap builder factory
+     * @param parentsBuilderFactory an ImmutableMap builder factory
      * @return a new immutable multimap tree
      */
     public static <T> ImmutableMultimapTree<T> create(
-            final NewImmutableMultimapsBuildersSupplier<? extends ImmutableMultimap.Builder<T, T>, T, T> childrenBuilderSupplier,
-            final NewImmutableMapsBuildersSupplier<? extends ImmutableMap.Builder<T, T>, T, T> parentsBuilderSupplier) {
-        checkNotNull(childrenBuilderSupplier);
-        checkNotNull(parentsBuilderSupplier);
+            final ImmutableMultimapsBuildersFactory<? extends ImmutableMultimap.Builder<T, T>, T, T> childrenBuilderFactory,
+            final ImmutableMapsBuildersFactory<? extends ImmutableMap.Builder<T, T>, T, T> parentsBuilderFactory) {
+        checkNotNull(childrenBuilderFactory);
+        checkNotNull(parentsBuilderFactory);
 
-        final ImmutableMultimap.Builder<T, T> childrenBuilder = childrenBuilderSupplier
+        final ImmutableMultimap.Builder<T, T> childrenBuilder = childrenBuilderFactory
                 .get();
-        final ImmutableMap.Builder<T, T> parentsBuilder = parentsBuilderSupplier
+        final ImmutableMap.Builder<T, T> parentsBuilder = parentsBuilderFactory
                 .get();
 
         final ImmutableMultimap<T, T> children = childrenBuilder.build();
         final ImmutableMap<T, T> parents = parentsBuilder.build();
 
-        return create(childrenBuilderSupplier, parentsBuilderSupplier,
+        return create(childrenBuilderFactory, parentsBuilderFactory,
                 children, parents, null);
     }
 
     /**
      * Creates a new immutable multimap tree using the specified
-     * {@link ImmutableMultimap} and {@link ImmutableMap} builder suppliers,
+     * {@link ImmutableMultimap} and {@link ImmutableMap} builder factories,
      * children ImmutableMultimap, parents ImmutableMap and root node. See
-     * {@link #create(Supplier, Supplier)} for more details.
+     * {@link #create(ImmutableMultimapsBuildersFactory, ImmutableMapsBuildersFactory)
+     * )} for more details.
      * <p>
      * This method is private because it uses the specified children and parents
      * directly, without validating their correctness. Also it accepts
      * <code>null</code> as the specified root node.
      *
      * @param <T> the type of the nodes in the tree
-     * @param childrenBuilderSupplier an ImmutableMultimap builder supplier
-     * @param parentsBuilderSupplier an ImmutableMap builder supplier
+     * @param childrenBuilderFactory an ImmutableMultimap builder factory
+     * @param parentsBuilderFactory an ImmutableMap builder factory
      * @param children the parent-children associations to be used
      * @param parents the child-parent associations to be used
      * @param root the root node
@@ -105,18 +105,18 @@ public final class ImmutableMultimapTree<T> implements ImmutableTree<T> {
      *         root node
      */
     private static <T> ImmutableMultimapTree<T> create(
-            final NewImmutableMultimapsBuildersSupplier<? extends ImmutableMultimap.Builder<T, T>, T, T> childrenBuilderSupplier,
-            final NewImmutableMapsBuildersSupplier<? extends ImmutableMap.Builder<T, T>, T, T> parentsBuilderSupplier,
+            final ImmutableMultimapsBuildersFactory<? extends ImmutableMultimap.Builder<T, T>, T, T> childrenBuilderFactory,
+            final ImmutableMapsBuildersFactory<? extends ImmutableMap.Builder<T, T>, T, T> parentsBuilderFactory,
             final ImmutableMultimap<T, T> children,
             final ImmutableMap<T, T> parents, final T root) {
-        return new ImmutableMultimapTree<T>(childrenBuilderSupplier,
-                parentsBuilderSupplier, children, parents, root);
+        return new ImmutableMultimapTree<T>(childrenBuilderFactory,
+                parentsBuilderFactory, children, parents, root);
     }
 
     /**
-     * Creates a new immutable multimap tree with the specified suppliers,
+     * Creates a new immutable multimap tree with the specified factories,
      * associations and root node. See
-     * {@link #create(Supplier, Supplier, ImmutableMultimap, ImmutableMap, T)}
+     * {@link #create(ImmutableMultimapsBuildersFactory, ImmutableMapsBuildersFactory, ImmutableMultimap, ImmutableMap, Object)}
      * for details.
      * <p>
      * This sole constructor is private so that it may not be invoked outside of
@@ -124,19 +124,19 @@ public final class ImmutableMultimapTree<T> implements ImmutableTree<T> {
      * multimap, parents map and root node can be set directly, including
      * setting the root node to null.
      *
-     * @param childrenBuilderSupplier an ImmutableMultimap builder supplier
-     * @param parentsBuilderSupplier an ImmutableMap builder supplier
+     * @param childrenBuilderFactory an ImmutableMultimap builder factory
+     * @param parentsBuilderFactory an ImmutableMap builder factory
      * @param children the parent-children associations to be used
      * @param parents the child-parent associations to be used
      * @param root the root node
      */
     private ImmutableMultimapTree(
-            final NewImmutableMultimapsBuildersSupplier<? extends ImmutableMultimap.Builder<T, T>, T, T> childrenBuilderSupplier,
-            final NewImmutableMapsBuildersSupplier<? extends ImmutableMap.Builder<T, T>, T, T> parentsBuilderSupplier,
+            final ImmutableMultimapsBuildersFactory<? extends ImmutableMultimap.Builder<T, T>, T, T> childrenBuilderFactory,
+            final ImmutableMapsBuildersFactory<? extends ImmutableMap.Builder<T, T>, T, T> parentsBuilderFactory,
             final ImmutableMultimap<T, T> children,
             final ImmutableMap<T, T> parents, final T root) {
-        this.childrenBuilderSupplier = childrenBuilderSupplier;
-        this.parentsBuilderSupplier = parentsBuilderSupplier;
+        this.childrenBuilderFactory = childrenBuilderFactory;
+        this.parentsBuilderFactory = parentsBuilderFactory;
         this.children = children;
         this.parents = parents;
         this.root = root;
@@ -197,15 +197,15 @@ public final class ImmutableMultimapTree<T> implements ImmutableTree<T> {
     public ImmutableMultimapTree<T> withRoot(final T node) {
         checkNotNull(node);
 
-        final ImmutableMultimap.Builder<T, T> childrenBuilder = childrenBuilderSupplier
+        final ImmutableMultimap.Builder<T, T> childrenBuilder = childrenBuilderFactory
                 .get();
-        final ImmutableMap.Builder<T, T> parentsBuilder = parentsBuilderSupplier
+        final ImmutableMap.Builder<T, T> parentsBuilder = parentsBuilderFactory
                 .get();
 
         final ImmutableMultimap<T, T> children = childrenBuilder.build();
         final ImmutableMap<T, T> parents = parentsBuilder.build();
 
-        return create(childrenBuilderSupplier, parentsBuilderSupplier,
+        return create(childrenBuilderFactory, parentsBuilderFactory,
                 children, parents, node);
     };
 
@@ -227,9 +227,9 @@ public final class ImmutableMultimapTree<T> implements ImmutableTree<T> {
             return this;
         }
 
-        final ImmutableMultimap.Builder<T, T> childrenBuilder = childrenBuilderSupplier
+        final ImmutableMultimap.Builder<T, T> childrenBuilder = childrenBuilderFactory
                 .get();
-        final ImmutableMap.Builder<T, T> parentsBuilder = parentsBuilderSupplier
+        final ImmutableMap.Builder<T, T> parentsBuilder = parentsBuilderFactory
                 .get();
 
         childrenBuilder.putAll(children);
@@ -240,7 +240,7 @@ public final class ImmutableMultimapTree<T> implements ImmutableTree<T> {
         final ImmutableMultimap<T, T> children = childrenBuilder.build();
         final ImmutableMap<T, T> parents = parentsBuilder.build();
 
-        return create(childrenBuilderSupplier, parentsBuilderSupplier,
+        return create(childrenBuilderFactory, parentsBuilderFactory,
                 children, parents, root);
     };
 
@@ -270,16 +270,16 @@ public final class ImmutableMultimapTree<T> implements ImmutableTree<T> {
 
         if (node == root) {
             // optimisation
-            return create(childrenBuilderSupplier, parentsBuilderSupplier);
+            return create(childrenBuilderFactory, parentsBuilderFactory);
         }
 
         if (!contains(node)) {
             return this;
         }
 
-        final ImmutableMultimap.Builder<T, T> childrenBuilder = childrenBuilderSupplier
+        final ImmutableMultimap.Builder<T, T> childrenBuilder = childrenBuilderFactory
                 .get();
-        final ImmutableMap.Builder<T, T> parentsBuilder = parentsBuilderSupplier
+        final ImmutableMap.Builder<T, T> parentsBuilder = parentsBuilderFactory
                 .get();
 
         addRecursivelyExcludingNode(root, node, childrenBuilder,
@@ -288,7 +288,7 @@ public final class ImmutableMultimapTree<T> implements ImmutableTree<T> {
         final ImmutableMultimap<T, T> children = childrenBuilder.build();
         final ImmutableMap<T, T> parents = parentsBuilder.build();
 
-        return create(childrenBuilderSupplier, parentsBuilderSupplier,
+        return create(childrenBuilderFactory, parentsBuilderFactory,
                 children, parents, root);
     }
 

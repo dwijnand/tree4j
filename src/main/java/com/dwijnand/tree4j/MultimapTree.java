@@ -9,8 +9,7 @@ import java.util.Map;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
-import com.dwijnand.tree4j.suppliers.NewMutableMapsSupplier;
-import com.dwijnand.tree4j.suppliers.NewMutableMultimapsSupplier;
+import com.dwijnand.tree4j.common.Factory;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
 
@@ -23,16 +22,16 @@ import com.google.common.collect.Multimap;
 public class MultimapTree<T> implements MutableTree<T> {
 
     /**
-     * The supplier of mutable multimap instances, used to hold the
+     * The factory of mutable multimap instances, used to hold the
      * parent-children relationships of the tree.
      */
-    private final NewMutableMultimapsSupplier<? extends Multimap<T, T>, T, T> childrenMultimapSupplier;
+    private final Factory<? extends Multimap<T, T>> childrenMultimapFactory;
 
     /**
-     * The supplier of mutable map instances, used to hold the child-parent
+     * The factory of mutable map instances, used to hold the child-parent
      * relationships of the tree.
      */
-    private final NewMutableMapsSupplier<? extends Map<T, T>, T, T> parentsMapSupplier;
+    private final Factory<? extends Map<T, T>> parentsMapFactory;
 
     /**
      * The parent-children relationships of the tree.
@@ -51,49 +50,46 @@ public class MultimapTree<T> implements MutableTree<T> {
 
     /**
      * Creates a new multimap tree using the specified {@link Multimap} and
-     * {@link Map} suppliers. This constructor is protected so that the class
-     * can be subclassed. See
-     * {@link #create(NewMutableMultimapsSupplier, NewMutableMapsSupplier)} for
-     * more details; and use that for just instantiating a new instance
+     * {@link Map} factories. This constructor is protected so that the class
+     * can be subclassed. See {@link #create(Factory, Factory)} for more
+     * details; and use that for just instantiating a new instance
      *
-     * @param childrenMultimapSupplier a Multimap supplier
-     * @param parentsMapSupplier a Map supplier
+     * @param childrenMultimapFactory a Multimap factory
+     * @param parentsMapFactory a Map factory
      */
     protected MultimapTree(
-            final NewMutableMultimapsSupplier<? extends Multimap<T, T>, T, T> childrenMultimapSupplier,
-            final NewMutableMapsSupplier<? extends Map<T, T>, T, T> parentsMapSupplier) {
-        checkNotNull(childrenMultimapSupplier);
-        checkNotNull(parentsMapSupplier);
+            final Factory<? extends Multimap<T, T>> childrenMultimapFactory,
+            final Factory<? extends Map<T, T>> parentsMapFactory) {
+        checkNotNull(childrenMultimapFactory);
+        checkNotNull(parentsMapFactory);
 
-        this.childrenMultimapSupplier = childrenMultimapSupplier;
-        this.parentsMapSupplier = parentsMapSupplier;
-        this.children = childrenMultimapSupplier.get();
-        this.parents = parentsMapSupplier.get();
+        this.childrenMultimapFactory = childrenMultimapFactory;
+        this.parentsMapFactory = parentsMapFactory;
+        this.children = childrenMultimapFactory.get();
+        this.parents = parentsMapFactory.get();
         this.root = null;
     }
 
     /**
-     * Creates a new multimap tree with the specified suppliers, associations
-     * and root node. See
-     * {@link #create(NewMutableMultimapsSupplier, NewMutableMapsSupplier)} for
-     * more details.
+     * Creates a new multimap tree with the specified factories, associations
+     * and root node. See {@link #create(Factory, Factory)} for more details.
      * <p>
      * This private constructor is used internally for setting specific
      * associations and the root node, including setting the root node to null.
      *
-     * @param childrenMultimapSupplier a Multimap supplier
-     * @param parentsMapSupplier a Map supplier
+     * @param childrenMultimapFactory a Multimap factory
+     * @param parentsMapFactory a Map factory
      * @param children the parent-children associations to be used
      * @param parents the child-parent associations to be used
      * @param root the root node
      */
     private MultimapTree(
-            final NewMutableMultimapsSupplier<? extends Multimap<T, T>, T, T> childrenMultimapSupplier,
-            final NewMutableMapsSupplier<? extends Map<T, T>, T, T> parentsMapSupplier,
+            final Factory<? extends Multimap<T, T>> childrenMultimapFactory,
+            final Factory<? extends Map<T, T>> parentsMapFactory,
             final Multimap<T, T> children, final Map<T, T> parents,
             final T root) {
-        this.childrenMultimapSupplier = childrenMultimapSupplier;
-        this.parentsMapSupplier = parentsMapSupplier;
+        this.childrenMultimapFactory = childrenMultimapFactory;
+        this.parentsMapFactory = parentsMapFactory;
         this.children = children;
         this.parents = parents;
         this.root = root;
@@ -101,29 +97,29 @@ public class MultimapTree<T> implements MutableTree<T> {
 
     /**
      * Creates a new multimap tree using the specified {@link Multimap} and
-     * {@link Map} suppliers. These suppliers are used to obtain multimaps and
+     * {@link Map} factories. These factories are used to obtain multimaps and
      * maps required to construct the parent-children and child-parent
      * relationships within the tree.
      * <p>
-     * Suppliers of multimaps and maps are required, as opposed to simply a
+     * Factories of multimaps and maps are required, as opposed to simply a
      * multimap and a map, because all the 'modifying' methods actually return
      * new instances of this tree, and therefore require a new multimap and map.
      *
      * @param <T> the type of the nodes in the tree
-     * @param childrenMultimapSupplier a Multimap supplier
-     * @param parentsMapSupplier a Map supplier
+     * @param childrenMultimapFactory a Multimap factory
+     * @param parentsMapFactory a Map factory
      * @return a new multimap tree
      */
     public static <T> MultimapTree<T> create(
-            final NewMutableMultimapsSupplier<? extends Multimap<T, T>, T, T> childrenMultimapSupplier,
-            final NewMutableMapsSupplier<? extends Map<T, T>, T, T> parentsMapSupplier) {
-        checkNotNull(childrenMultimapSupplier);
-        checkNotNull(parentsMapSupplier);
+            final Factory<? extends Multimap<T, T>> childrenMultimapFactory,
+            final Factory<? extends Map<T, T>> parentsMapFactory) {
+        checkNotNull(childrenMultimapFactory);
+        checkNotNull(parentsMapFactory);
 
-        final Multimap<T, T> children = childrenMultimapSupplier.get();
-        final Map<T, T> parents = parentsMapSupplier.get();
-        return new MultimapTree<T>(childrenMultimapSupplier,
-                parentsMapSupplier, children, parents, null);
+        final Multimap<T, T> children = childrenMultimapFactory.get();
+        final Map<T, T> parents = parentsMapFactory.get();
+        return new MultimapTree<T>(childrenMultimapFactory,
+                parentsMapFactory, children, parents, null);
     }
 
     /**
@@ -139,17 +135,17 @@ public class MultimapTree<T> implements MutableTree<T> {
             final MultimapTree<T> multimapTree) {
         checkNotNull(multimapTree);
 
-        final NewMutableMultimapsSupplier<? extends Multimap<T, T>, T, T> childrenMultimapSupplier = multimapTree.childrenMultimapSupplier;
-        final NewMutableMapsSupplier<? extends Map<T, T>, T, T> parentsMapSupplier = multimapTree.parentsMapSupplier;
+        final Factory<? extends Multimap<T, T>> childrenMultimapFactory = multimapTree.childrenMultimapFactory;
+        final Factory<? extends Map<T, T>> parentsMapFactory = multimapTree.parentsMapFactory;
 
-        final Multimap<T, T> children = childrenMultimapSupplier.get();
-        final Map<T, T> parents = parentsMapSupplier.get();
+        final Multimap<T, T> children = childrenMultimapFactory.get();
+        final Map<T, T> parents = parentsMapFactory.get();
 
         children.putAll(multimapTree.children);
         parents.putAll(multimapTree.parents);
 
-        return new MultimapTree<T>(childrenMultimapSupplier,
-                parentsMapSupplier, children, parents, multimapTree.root);
+        return new MultimapTree<T>(childrenMultimapFactory,
+                parentsMapFactory, children, parents, multimapTree.root);
     }
 
     /*
@@ -206,8 +202,8 @@ public class MultimapTree<T> implements MutableTree<T> {
     @Override
     public MultimapTree<T> withRoot(final T node) {
         checkNotNull(node);
-        final MultimapTree<T> multimapTree = create(
-                childrenMultimapSupplier, parentsMapSupplier);
+        final MultimapTree<T> multimapTree = create(childrenMultimapFactory,
+                parentsMapFactory);
         multimapTree.root = node;
         return multimapTree;
     }
@@ -304,7 +300,7 @@ public class MultimapTree<T> implements MutableTree<T> {
 
         if (node == root) {
             // optimisation
-            return create(childrenMultimapSupplier, parentsMapSupplier);
+            return create(childrenMultimapFactory, parentsMapFactory);
         }
 
         if (!contains(node)) {

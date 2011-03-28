@@ -1,4 +1,4 @@
-package com.dwijnand.tree4j.suppliers;
+package com.dwijnand.tree4j.common;
 
 import com.google.common.base.Supplier;
 
@@ -8,7 +8,7 @@ import com.google.common.base.Supplier;
  *
  * @param <T> the type of the objects supplied
  */
-public interface NewInstanceSupplierSpec<T> extends Supplier<T> {
+public interface Factory<T> extends Supplier<T> {
 
     // Override javadoc without inheriting to restrict
     /**
