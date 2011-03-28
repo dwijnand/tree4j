@@ -1,7 +1,7 @@
-package com.dwijnand.tree;
+package com.dwijnand.tree4j;
 
-import static com.dwijnand.tree.test.helpers.Suppliers.HASH_MAP_SUPPLIER;
-import static com.dwijnand.tree.test.helpers.Suppliers.LINKED_HASH_MULTIMAP_SUPPLIER;
+import static com.dwijnand.tree4j.test.helpers.Suppliers.HASH_MAP_SUPPLIER;
+import static com.dwijnand.tree4j.test.helpers.Suppliers.LINKED_HASH_MULTIMAP_SUPPLIER;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -26,8 +26,7 @@ public class MutableTreeTest extends TreeTest {
     }
 
     @Theory
-    public void setRootShouldSetTheRoot(
-            final MutableTree<String> mutableTree) {
+    public void setRootShouldSetTheRoot(final MutableTree<String> mutableTree) {
         mutableTree.setRoot("root");
 
         assertEquals("root", mutableTree.getRoot());

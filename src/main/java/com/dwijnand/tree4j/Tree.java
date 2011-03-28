@@ -1,4 +1,4 @@
-package com.dwijnand.tree;
+package com.dwijnand.tree4j;
 
 import java.util.Collection;
 

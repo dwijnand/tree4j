@@ -1,11 +1,11 @@
-package com.dwijnand.tree.test.helpers;
+package com.dwijnand.tree4j.test.helpers;
 
 import java.util.HashMap;
 
-import com.dwijnand.tree.suppliers.NewImmutableMapsBuildersSupplier;
-import com.dwijnand.tree.suppliers.NewImmutableMultimapsBuildersSupplier;
-import com.dwijnand.tree.suppliers.NewMutableMapsSupplier;
-import com.dwijnand.tree.suppliers.NewMutableMultimapsSupplier;
+import com.dwijnand.tree4j.suppliers.NewImmutableMapsBuildersSupplier;
+import com.dwijnand.tree4j.suppliers.NewImmutableMultimapsBuildersSupplier;
+import com.dwijnand.tree4j.suppliers.NewMutableMapsSupplier;
+import com.dwijnand.tree4j.suppliers.NewMutableMultimapsSupplier;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.LinkedHashMultimap;

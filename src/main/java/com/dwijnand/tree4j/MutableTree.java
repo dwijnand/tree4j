@@ -1,4 +1,4 @@
-package com.dwijnand.tree;
+package com.dwijnand.tree4j;
 
 /**
  * This interface extends the {@link Tree} interface with in-place modification

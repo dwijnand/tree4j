@@ -1,4 +1,4 @@
-package com.dwijnand.tree;
+package com.dwijnand.tree4j;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasItems;

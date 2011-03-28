@@ -1,4 +1,4 @@
-package com.dwijnand.tree;
+package com.dwijnand.tree4j;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -9,8 +9,8 @@ import java.util.Map;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
-import com.dwijnand.tree.suppliers.NewMutableMapsSupplier;
-import com.dwijnand.tree.suppliers.NewMutableMultimapsSupplier;
+import com.dwijnand.tree4j.suppliers.NewMutableMapsSupplier;
+import com.dwijnand.tree4j.suppliers.NewMutableMultimapsSupplier;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
 

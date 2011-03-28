@@ -1,4 +1,4 @@
-package com.dwijnand.tree;
+package com.dwijnand.tree4j;
 
 /**
  * <em>This is <b>not</b> a real interface, it is a placeholder for documenting what

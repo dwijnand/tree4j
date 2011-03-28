@@ -1,4 +1,4 @@
-package com.dwijnand.tree.suppliers;
+package com.dwijnand.tree4j.suppliers;
 
 import com.google.common.base.Supplier;
 

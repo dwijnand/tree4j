@@ -1,4 +1,4 @@
-package com.dwijnand.tree.suppliers;
+package com.dwijnand.tree4j.suppliers;
 
 import java.util.Comparator;
 

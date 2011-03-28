@@ -1,4 +1,4 @@
-package com.dwijnand.tree.suppliers;
+package com.dwijnand.tree4j.suppliers;
 
 /**
  * A base class for <b>guaranteed</b> {@link NewInstanceSupplierSpec}-compliant
