@@ -22,6 +22,7 @@ import org.junit.rules.ExpectedException;
  * the {@link Tree} interface. It is used as the base class for the test classes
  * for the mutable and immutable extensions of this interface.
  */
+// TODO make methods final
 public class TreeTest {
 
     @Rule
@@ -33,12 +34,16 @@ public class TreeTest {
 
     public <T extends Tree<?>> TreeTest(final T tree) {
         this.tree = tree;
-        beforeHashCode = HashCodeBuilder.reflectionHashCode(tree);
+        beforeHashCode = calculateIdentity(tree);
     }
 
     protected final void assertTreeNotModified() {
-        assertEquals(beforeHashCode,
-                HashCodeBuilder.reflectionHashCode(tree));
+        assertEquals(beforeHashCode, calculateIdentity(tree));
+    }
+
+    // TODO consider identifying the tree with a checksum or digest
+    private final <T extends Tree<?>> int calculateIdentity(final T tree) {
+        return HashCodeBuilder.reflectionHashCode(tree);
     }
 
     @Theory
