@@ -99,7 +99,7 @@ public class MultimapTree<T> implements MutableTree<T> {
     }
 
     /**
-     * Creates a new multimap tree. This constructor is used directly from
+     * Creates a new multimap tree. This constructor is used directly by
      * {@link #create(Factory, Factory)} so look there for details.
      * <p>
      * This constructor is protected so that the class can be subclassed. To
