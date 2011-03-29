@@ -52,9 +52,59 @@ public class MultimapTree<T> implements MutableTree<T> {
 
     /**
      * Creates a new multimap tree using the specified {@link Multimap} and
-     * {@link Map} factories. This constructor is protected so that the class
-     * can be subclassed. See {@link #create(Factory, Factory)} for more
-     * details; and use that for just instantiating a new instance
+     * {@link Map} factories. These factories are used to obtain multimaps and
+     * maps required to construct the parent-children and child-parent
+     * relationships within the tree.
+     * <p>
+     * Factories of multimaps and maps are required, as opposed to simply a
+     * multimap and a map, because all the 'modifying' methods actually return
+     * new instances of this tree, and therefore require a new multimap and map.
+     *
+     * @param <T> the type of the nodes in the tree
+     * @param childrenMultimapFactory a Multimap factory
+     * @param parentsMapFactory a Map factory
+     * @return a new multimap tree
+     */
+    public static <T> MultimapTree<T> create(
+            final Factory<? extends MutableMultimap<T, T>> childrenMultimapFactory,
+            final Factory<? extends MutableMap<T, T>> parentsMapFactory) {
+        return new MultimapTree<T>(childrenMultimapFactory,
+                parentsMapFactory);
+    }
+
+    /**
+     * Creates a copy of the specified multimap tree, by creating a new tree
+     * with a copy of the associations in the specified tree and the same root
+     * node.
+     *
+     * @param <T> the type of the nodes in the trees
+     * @param multimapTree a multimap tree
+     * @return a new copy of the specified multimap tree
+     */
+    public static <T> MultimapTree<T> copyOf(
+            final MultimapTree<T> multimapTree) {
+        checkNotNull(multimapTree);
+
+        final Factory<? extends MutableMultimap<T, T>> childrenMultimapFactory = multimapTree.childrenMultimapFactory;
+        final Factory<? extends MutableMap<T, T>> parentsMapFactory = multimapTree.parentsMapFactory;
+
+        final MutableMultimap<T, T> children = childrenMultimapFactory.get();
+        final MutableMap<T, T> parents = parentsMapFactory.get();
+
+        children.putAll(multimapTree.children);
+        parents.putAll(multimapTree.parents);
+
+        return new MultimapTree<T>(childrenMultimapFactory,
+                parentsMapFactory, children, parents, multimapTree.root);
+    }
+
+    /**
+     * Creates a new multimap tree. This constructor is used directly from
+     * {@link #create(Factory, Factory)} so look there for details.
+     * <p>
+     * This constructor is protected so that the class can be subclassed. To
+     * instantiate this class, please use the create(Factory, Factory) static
+     * method.
      *
      * @param childrenMultimapFactory a Multimap factory
      * @param parentsMapFactory a Map factory
@@ -95,59 +145,6 @@ public class MultimapTree<T> implements MutableTree<T> {
         this.children = children;
         this.parents = parents;
         this.root = root;
-    }
-
-    /**
-     * Creates a new multimap tree using the specified {@link Multimap} and
-     * {@link Map} factories. These factories are used to obtain multimaps and
-     * maps required to construct the parent-children and child-parent
-     * relationships within the tree.
-     * <p>
-     * Factories of multimaps and maps are required, as opposed to simply a
-     * multimap and a map, because all the 'modifying' methods actually return
-     * new instances of this tree, and therefore require a new multimap and map.
-     *
-     * @param <T> the type of the nodes in the tree
-     * @param childrenMultimapFactory a Multimap factory
-     * @param parentsMapFactory a Map factory
-     * @return a new multimap tree
-     */
-    public static <T> MultimapTree<T> create(
-            final Factory<? extends MutableMultimap<T, T>> childrenMultimapFactory,
-            final Factory<? extends MutableMap<T, T>> parentsMapFactory) {
-        checkNotNull(childrenMultimapFactory);
-        checkNotNull(parentsMapFactory);
-
-        final MutableMultimap<T, T> children = childrenMultimapFactory.get();
-        final MutableMap<T, T> parents = parentsMapFactory.get();
-        return new MultimapTree<T>(childrenMultimapFactory,
-                parentsMapFactory, children, parents, null);
-    }
-
-    /**
-     * Creates a copy of the specified multimap tree, by creating a new tree
-     * with a copy of the associations in the specified tree and the same root
-     * node.
-     *
-     * @param <T> the type of the nodes in the trees
-     * @param multimapTree a multimap tree
-     * @return a new copy of the specified multimap tree
-     */
-    public static <T> MultimapTree<T> copyOf(
-            final MultimapTree<T> multimapTree) {
-        checkNotNull(multimapTree);
-
-        final Factory<? extends MutableMultimap<T, T>> childrenMultimapFactory = multimapTree.childrenMultimapFactory;
-        final Factory<? extends MutableMap<T, T>> parentsMapFactory = multimapTree.parentsMapFactory;
-
-        final MutableMultimap<T, T> children = childrenMultimapFactory.get();
-        final MutableMap<T, T> parents = parentsMapFactory.get();
-
-        children.putAll(multimapTree.children);
-        parents.putAll(multimapTree.parents);
-
-        return new MultimapTree<T>(childrenMultimapFactory,
-                parentsMapFactory, children, parents, multimapTree.root);
     }
 
     /*
