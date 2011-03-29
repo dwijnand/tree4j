@@ -93,20 +93,20 @@ public class MutableTreeTest extends TreeTest {
     public void removedShouldRemoveTheSpecifiedNodeAndAllOfItsChildren(
             final MutableTree<String> multimapTree) {
         multimapTree.setRoot("root");
-        multimapTree.added("root", "1").added("root", "2")
-                .added("root", "3");
-        multimapTree.added("1", "1-1").added("1", "1-2");
-        multimapTree.added("2", "2-1");
+        multimapTree.added("root", "males").added("root", "females")
+                .added("root", "unsure");
+        multimapTree.added("males", "Paul").added("males", "Peter");
+        multimapTree.added("females", "Maria");
 
-        multimapTree.removed("1");
+        multimapTree.removed("males");
 
-        assertFalse(multimapTree.contains("1"));
+        assertFalse(multimapTree.contains("males"));
         final Collection<String> rootChildren = multimapTree
                 .getChildren("root");
         assertThat(2, is(rootChildren.size()));
-        assertFalse(rootChildren.contains("1"));
-        assertFalse(multimapTree.contains("1-2"));
-        assertNotSame("root", multimapTree.getParent("1"));
+        assertFalse(rootChildren.contains("males"));
+        assertFalse(multimapTree.contains("Paul"));
+        assertNotSame("root", multimapTree.getParent("males"));
     }
 
 }
