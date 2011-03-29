@@ -20,15 +20,11 @@ import java.util.Collection;
  * See {@link ImmutableTree} for an extension to this interface that adds the
  * immutability restriction and {@link MutableTree} for an extension that adds
  * in-place modification methods.
- * <p>
- * To check compliance with this specification, there are a suite of tests that
- * can be used.
  *
  * @param <T> the type of the nodes in the tree
  * @see ImmutableTree
  * @see MutableTree
  */
-// TODO improve the 'specification compliance tests' part of the javadoc
 public interface Tree<T> {
 
     // Query methods

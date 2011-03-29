@@ -6,7 +6,6 @@ package com.dwijnand.tree4j;
  *
  * @param <T> the type of the nodes in the tree
  */
-// TODO add details about specification compliance tests
 public interface MutableTree<T> extends Tree<T> {
 
     // Override to restrict return type to MutableTreeSpec's

@@ -16,6 +16,14 @@ import org.junit.experimental.theories.Theories;
 import org.junit.experimental.theories.Theory;
 import org.junit.runner.RunWith;
 
+/**
+ * This class defines the tests for compliance to the specifications defined in
+ * the {@link MutableTree} interface.
+ * <p>
+ * As MutableTree extends Tree, this class extends {@link TreeTest} adding tests
+ * for the methods defined in MutableTree. It, therefore, passes MutableTree
+ * implementations to the tests in TreeTest and then to the tests defined here.
+ */
 @RunWith(Theories.class)
 public class MutableTreeTest extends TreeTest {
 

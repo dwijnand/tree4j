@@ -15,6 +15,11 @@ import org.junit.Rule;
 import org.junit.experimental.theories.Theory;
 import org.junit.rules.ExpectedException;
 
+/**
+ * This class defines the tests for compliance to the specifications defined in
+ * the {@link Tree} interface. It is used as the base class for the test classes
+ * for the mutable and immutable extensions of this interface.
+ */
 public class TreeTest {
 
     @Rule
