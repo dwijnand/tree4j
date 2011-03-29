@@ -10,6 +10,8 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import com.dwijnand.tree4j.common.Factory;
+import com.dwijnand.tree4j.common.MutableMap;
+import com.dwijnand.tree4j.common.MutableMultimap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
 
@@ -25,23 +27,23 @@ public class MultimapTree<T> implements MutableTree<T> {
      * The factory of mutable multimap instances, used to hold the
      * parent-children relationships of the tree.
      */
-    private final Factory<? extends Multimap<T, T>> childrenMultimapFactory;
+    private final Factory<? extends MutableMultimap<T, T>> childrenMultimapFactory;
 
     /**
      * The factory of mutable map instances, used to hold the child-parent
      * relationships of the tree.
      */
-    private final Factory<? extends Map<T, T>> parentsMapFactory;
+    private final Factory<? extends MutableMap<T, T>> parentsMapFactory;
 
     /**
      * The parent-children relationships of the tree.
      */
-    private final Multimap<T, T> children;
+    private final MutableMultimap<T, T> children;
 
     /**
      * The child-parent relationships of the tree.
      */
-    private final Map<T, T> parents;
+    private final MutableMap<T, T> parents;
 
     /**
      * The root of the tree.
@@ -58,8 +60,8 @@ public class MultimapTree<T> implements MutableTree<T> {
      * @param parentsMapFactory a Map factory
      */
     protected MultimapTree(
-            final Factory<? extends Multimap<T, T>> childrenMultimapFactory,
-            final Factory<? extends Map<T, T>> parentsMapFactory) {
+            final Factory<? extends MutableMultimap<T, T>> childrenMultimapFactory,
+            final Factory<? extends MutableMap<T, T>> parentsMapFactory) {
         checkNotNull(childrenMultimapFactory);
         checkNotNull(parentsMapFactory);
 
@@ -84,10 +86,10 @@ public class MultimapTree<T> implements MutableTree<T> {
      * @param root the root node
      */
     private MultimapTree(
-            final Factory<? extends Multimap<T, T>> childrenMultimapFactory,
-            final Factory<? extends Map<T, T>> parentsMapFactory,
-            final Multimap<T, T> children, final Map<T, T> parents,
-            final T root) {
+            final Factory<? extends MutableMultimap<T, T>> childrenMultimapFactory,
+            final Factory<? extends MutableMap<T, T>> parentsMapFactory,
+            final MutableMultimap<T, T> children,
+            final MutableMap<T, T> parents, final T root) {
         this.childrenMultimapFactory = childrenMultimapFactory;
         this.parentsMapFactory = parentsMapFactory;
         this.children = children;
@@ -111,13 +113,13 @@ public class MultimapTree<T> implements MutableTree<T> {
      * @return a new multimap tree
      */
     public static <T> MultimapTree<T> create(
-            final Factory<? extends Multimap<T, T>> childrenMultimapFactory,
-            final Factory<? extends Map<T, T>> parentsMapFactory) {
+            final Factory<? extends MutableMultimap<T, T>> childrenMultimapFactory,
+            final Factory<? extends MutableMap<T, T>> parentsMapFactory) {
         checkNotNull(childrenMultimapFactory);
         checkNotNull(parentsMapFactory);
 
-        final Multimap<T, T> children = childrenMultimapFactory.get();
-        final Map<T, T> parents = parentsMapFactory.get();
+        final MutableMultimap<T, T> children = childrenMultimapFactory.get();
+        final MutableMap<T, T> parents = parentsMapFactory.get();
         return new MultimapTree<T>(childrenMultimapFactory,
                 parentsMapFactory, children, parents, null);
     }
@@ -135,11 +137,11 @@ public class MultimapTree<T> implements MutableTree<T> {
             final MultimapTree<T> multimapTree) {
         checkNotNull(multimapTree);
 
-        final Factory<? extends Multimap<T, T>> childrenMultimapFactory = multimapTree.childrenMultimapFactory;
-        final Factory<? extends Map<T, T>> parentsMapFactory = multimapTree.parentsMapFactory;
+        final Factory<? extends MutableMultimap<T, T>> childrenMultimapFactory = multimapTree.childrenMultimapFactory;
+        final Factory<? extends MutableMap<T, T>> parentsMapFactory = multimapTree.parentsMapFactory;
 
-        final Multimap<T, T> children = childrenMultimapFactory.get();
-        final Map<T, T> parents = parentsMapFactory.get();
+        final MutableMultimap<T, T> children = childrenMultimapFactory.get();
+        final MutableMap<T, T> parents = parentsMapFactory.get();
 
         children.putAll(multimapTree.children);
         parents.putAll(multimapTree.parents);
