@@ -1,4 +1,4 @@
-package com.dwijnand.tree4j.test.helpers;
+package com.dwijnand.tree4j.test.helper;
 
 import java.util.Map;
 

@@ -1,7 +1,7 @@
 package com.dwijnand.tree4j;
 
-import static com.dwijnand.tree4j.test.helpers.Factories.HASH_MAP_FACTORY;
-import static com.dwijnand.tree4j.test.helpers.Factories.LINKED_HASH_MULTIMAP_FACTORY;
+import static com.dwijnand.tree4j.test.helper.Factories.HASH_MAP_FACTORY;
+import static com.dwijnand.tree4j.test.helper.Factories.LINKED_HASH_MULTIMAP_FACTORY;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
