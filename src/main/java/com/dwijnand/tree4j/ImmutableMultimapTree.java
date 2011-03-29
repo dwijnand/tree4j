@@ -177,8 +177,8 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
      * tree, and therefore require new builders.
      *
      * @param <T> the type of the nodes in the tree
-     * @param childrenBuilderFactory a children builder factory
-     * @param parentsBuilderFactory a parents builder factory
+     * @param childrenBuilderFactory an ImmutableMultimap builder factory
+     * @param parentsBuilderFactory an ImmutableMap builder factory
      * @return a new immutable multimap tree
      */
     public static <T> ImmutableMultimapTree<T> create(
@@ -197,11 +197,8 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
      * instantiate this class, please use the create(ChildrenBuilderFactory,
      * ParentsBuildersFactory) static method.
      *
-     * @param childrenMultimapFactory a Multimap factory
-     * @param parentsMapFactory a Map factory
-     *
-     * @param childrenBuilderFactory a children builder factory
-     * @param parentsBuilderFactory a parents builder factory
+     * @param childrenBuilderFactory an ImmutableMultimap builder factory
+     * @param parentsBuilderFactory an ImmutableMap builder factory
      */
     protected ImmutableMultimapTree(
             final ChildrenBuilderFactory<? extends ImmutableMultimap.Builder<T, T>, T> childrenBuilderFactory,
