@@ -19,8 +19,8 @@ import com.google.common.collect.ImmutableSortedMap;
 import com.google.common.collect.Ordering;
 
 /**
- * A <b>guaranteed</b> {@link ImmutableTree}-compliant implementation that uses
- * {@link ImmutableMultimap} and {@link ImmutableMap}.
+ * A <strong>guaranteed</strong> {@link ImmutableTree}-compliant implementation
+ * that uses {@link ImmutableMultimap} and {@link ImmutableMap}.
  *
  * @param <T> the type of the nodes in the tree
  */
@@ -190,8 +190,8 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
 
     /**
      * Creates a new immutable multimap tree. This constructor is used directly
-     * by {@link #create(ChildrenBuilderFactory, ParentsBuilderFactory)} so
-     * look there for details.
+     * by {@link #create(ChildrenBuilderFactory, ParentsBuilderFactory)} so look
+     * there for details.
      * <p>
      * This constructor is protected so that the class can be subclassed. To
      * instantiate this class, please use the create(ChildrenBuilderFactory,
@@ -221,7 +221,7 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
      * and root node. See {@link #create(Factory, Factory)} for more details.
      * <p>
      * This private constructor is used internally to set specific associations
-     * and root node, including setting the root node to <code>null</code>.
+     * and root node, including setting the root node to {@code null}.
      *
      * @param childrenBuilderFactory an ImmutableMultimap builder factory
      * @param parentsBuilderFactory an ImmutableMap builder factory

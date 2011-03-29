@@ -127,7 +127,7 @@ public class MultimapTree<T> implements MutableTree<T> {
      * and root node. See {@link #create(Factory, Factory)} for more details.
      * <p>
      * This private constructor is used internally to set specific associations
-     * and root node, including setting the root node to <code>null</code>.
+     * and root node, including setting the root node to {@code null}.
      *
      * @param childrenMultimapFactory a Multimap factory
      * @param parentsMapFactory a Map factory
