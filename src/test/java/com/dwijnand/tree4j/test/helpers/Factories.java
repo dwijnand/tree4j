@@ -42,6 +42,16 @@ public final class Factories {
 
     };
 
+    public static final Factory<MutableMap<String, String>> LINKED_HASH_MAP_FACTORY = new Factory<MutableMap<String, String>>() {
+
+        @Override
+        public MutableMap<String, String> get() {
+            final Map<String, String> map = Maps.newLinkedHashMap();
+            return MutableMaps.wrap(map);
+        }
+
+    };
+
     public static final ChildrenBuilderFactory<? extends ImmutableMultimap.Builder<String, String>, String> IMMUTABLE_MULTIMAP_BUILDER_FACTORY = ChildrenBuilderFactory
             .newImmutableMultimapsBuildersFactory();
 
