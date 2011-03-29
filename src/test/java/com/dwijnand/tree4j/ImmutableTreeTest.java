@@ -1,12 +1,5 @@
 package com.dwijnand.tree4j;
 
-import static com.dwijnand.tree4j.test.helper.Factories.IMMUTABLE_MAP_BUILDER_FACTORY;
-import static com.dwijnand.tree4j.test.helper.Factories.IMMUTABLE_MULTIMAP_BUILDER_FACTORY;
-
-import org.junit.experimental.theories.DataPoint;
-import org.junit.experimental.theories.Theories;
-import org.junit.runner.RunWith;
-
 /**
  * This class defines the tests for compliance to the specifications defined in
  * the {@link ImmutableTree} interface.
@@ -17,15 +10,7 @@ import org.junit.runner.RunWith;
  * <em>doesn't</em> happen. Therefore, this class simply extends
  * {@link TreeTest}, passing ImmutableTree implementations to those tests.
  */
-@RunWith(Theories.class)
 public class ImmutableTreeTest extends TreeTest {
-
-    @DataPoint
-    public static ImmutableTree<String> newImmutableMultimapTree() {
-        return ImmutableMultimapTree.create(
-                IMMUTABLE_MULTIMAP_BUILDER_FACTORY,
-                IMMUTABLE_MAP_BUILDER_FACTORY);
-    }
 
     public <T extends ImmutableTree<?>> ImmutableTreeTest(final T tree) {
         super(tree);
