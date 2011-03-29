@@ -21,14 +21,10 @@ import com.google.common.collect.Ordering;
 /**
  * A <b>guaranteed</b> {@link ImmutableTree}-compliant implementation that uses
  * {@link ImmutableMultimap} and {@link ImmutableMap}.
- * <p>
- * See {@link GuaranteedCompliance} for details about compliance and
- * immutability guarantees, noting that this class is final (as well as only
- * defining one private constructor).
  *
  * @param <T> the type of the nodes in the tree
  */
-public final class ImmutableMultimapTree<T> implements ImmutableTree<T> {
+public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
 
     // TODO add javadoc
     public static abstract class ChildrenBuilderFactory<B extends ImmutableMultimap.Builder<T, T>, T>
@@ -188,31 +184,33 @@ public final class ImmutableMultimapTree<T> implements ImmutableTree<T> {
     public static <T> ImmutableMultimapTree<T> create(
             final ChildrenBuilderFactory<? extends ImmutableMultimap.Builder<T, T>, T> childrenBuilderFactory,
             final ParentsBuildersFactory<? extends ImmutableMap.Builder<T, T>, T> parentsBuilderFactory) {
-        checkNotNull(childrenBuilderFactory);
-        checkNotNull(parentsBuilderFactory);
+        return new ImmutableMultimapTree<T>(childrenBuilderFactory,
+                parentsBuilderFactory);
+    }
+
+    // TODO javadoc
+    public ImmutableMultimapTree(
+            final ChildrenBuilderFactory<? extends ImmutableMultimap.Builder<T, T>, T> childrenBuilderFactory,
+            final ParentsBuildersFactory<? extends ImmutableMap.Builder<T, T>, T> parentsBuilderFactory) {
+        this.childrenBuilderFactory = checkNotNull(childrenBuilderFactory);
+        this.parentsBuilderFactory = checkNotNull(parentsBuilderFactory);
 
         final ImmutableMultimap.Builder<T, T> childrenBuilder = childrenBuilderFactory
                 .get();
         final ImmutableMap.Builder<T, T> parentsBuilder = parentsBuilderFactory
                 .get();
 
-        final ImmutableMultimap<T, T> children = childrenBuilder.build();
-        final ImmutableMap<T, T> parents = parentsBuilder.build();
-
-        return create(childrenBuilderFactory, parentsBuilderFactory,
-                children, parents, null);
+        children = childrenBuilder.build();
+        parents = parentsBuilder.build();
+        root = null;
     }
 
     /**
      * Creates a new immutable multimap tree using the specified
      * {@link ImmutableMultimap} and {@link ImmutableMap} builder factories,
      * children ImmutableMultimap, parents ImmutableMap and root node. See
-     * {@link #create(ImmutableMultimapsBuildersFactory, ImmutableMapsBuildersFactory)
-     * )} for more details.
-     * <p>
-     * This method is private because it uses the specified children and parents
-     * directly, without validating their correctness. Also it accepts
-     * <code>null</code> as the specified root node.
+     * {@link #ImmutableMultimapTree(ChildrenBuilderFactory, ParentsBuildersFactory, ImmutableMultimap, ImmutableMap, Object)}
+     * for more details.
      *
      * @param <T> the type of the nodes in the tree
      * @param childrenBuilderFactory an ImmutableMultimap builder factory
@@ -235,13 +233,13 @@ public final class ImmutableMultimapTree<T> implements ImmutableTree<T> {
     /**
      * Creates a new immutable multimap tree with the specified factories,
      * associations and root node. See
-     * {@link #create(ImmutableMultimapsBuildersFactory, ImmutableMapsBuildersFactory, ImmutableMultimap, ImmutableMap, Object)}
-     * for details.
+     * {@link #create(ChildrenBuilderFactory, ParentsBuildersFactory)} for
+     * details.
      * <p>
-     * This sole constructor is private so that it may not be invoked outside of
-     * this class. This is important as it is the only place where the children
-     * multimap, parents map and root node can be set directly, including
-     * setting the root node to null.
+     * This constructor is private so that it may not be invoked outside of this
+     * class. This is important as it is the only place where the children
+     * multimap, parents map and root node can be set directly, without checking
+     * that any of them are <code>null</code>.
      *
      * @param childrenBuilderFactory an ImmutableMultimap builder factory
      * @param parentsBuilderFactory an ImmutableMap builder factory
@@ -267,7 +265,7 @@ public final class ImmutableMultimapTree<T> implements ImmutableTree<T> {
      * @see com.dwijnand.tree.TreeSpec#contains(java.lang.Object)
      */
     @Override
-    public boolean contains(final T node) {
+    public final boolean contains(final T node) {
         if (node == null) {
             return false;
         } else if (node == root) {
@@ -283,7 +281,7 @@ public final class ImmutableMultimapTree<T> implements ImmutableTree<T> {
      * @see com.dwijnand.tree.TreeSpec#getParent(java.lang.Object)
      */
     @Override
-    public T getParent(final T node) {
+    public final T getParent(final T node) {
         return parents.get(checkNotNull(node));
     }
 
@@ -293,7 +291,7 @@ public final class ImmutableMultimapTree<T> implements ImmutableTree<T> {
      * @see com.dwijnand.tree.TreeSpec#getChildren(java.lang.Object)
      */
     @Override
-    public ImmutableCollection<T> getChildren(final T node) {
+    public final ImmutableCollection<T> getChildren(final T node) {
         return children.get(checkNotNull(node));
     }
 
@@ -303,7 +301,7 @@ public final class ImmutableMultimapTree<T> implements ImmutableTree<T> {
      * @see com.dwijnand.tree.TreeSpec#getRoot()
      */
     @Override
-    public T getRoot() {
+    public final T getRoot() {
         return root;
     }
 
@@ -313,7 +311,7 @@ public final class ImmutableMultimapTree<T> implements ImmutableTree<T> {
      * @see com.dwijnand.tree.ImmutableTree#withRoot(java.lang.Object)
      */
     @Override
-    public ImmutableMultimapTree<T> withRoot(final T node) {
+    public final ImmutableMultimapTree<T> withRoot(final T node) {
         checkNotNull(node);
 
         final ImmutableMultimap.Builder<T, T> childrenBuilder = childrenBuilderFactory
@@ -335,7 +333,7 @@ public final class ImmutableMultimapTree<T> implements ImmutableTree<T> {
      * java.lang.Object)
      */
     @Override
-    public ImmutableMultimapTree<T> add(final T parent, final T child) {
+    public final ImmutableMultimapTree<T> add(final T parent, final T child) {
         checkNotNull(parent);
         checkNotNull(child);
         checkArgument(contains(parent),
@@ -371,7 +369,7 @@ public final class ImmutableMultimapTree<T> implements ImmutableTree<T> {
      * @param childrenBuilder the parent-children association builder
      * @param parentsBuilder the child-parent association builder
      */
-    private void addInternal(final T parent, final T child,
+    private final void addInternal(final T parent, final T child,
             final ImmutableMultimap.Builder<T, T> childrenBuilder,
             final ImmutableMap.Builder<T, T> parentsBuilder) {
         childrenBuilder.put(parent, child);
@@ -384,7 +382,7 @@ public final class ImmutableMultimapTree<T> implements ImmutableTree<T> {
      * @see com.dwijnand.tree.ImmutableTree#remove(java.lang.Object)
      */
     @Override
-    public ImmutableMultimapTree<T> remove(final T node) {
+    public final ImmutableMultimapTree<T> remove(final T node) {
         checkNotNull(node);
 
         if (node == root) {
@@ -427,7 +425,7 @@ public final class ImmutableMultimapTree<T> implements ImmutableTree<T> {
      * @param childrenBuilder a builder of parent-child associations
      * @param parentsBuilder a builder of the child-parent associations
      */
-    private void addRecursivelyExcludingNode(final T node,
+    private final void addRecursivelyExcludingNode(final T node,
             final T excludeNode,
             final ImmutableMultimap.Builder<T, T> childrenBuilder,
             final ImmutableMap.Builder<T, T> parentsBuilder) {
@@ -447,6 +445,7 @@ public final class ImmutableMultimapTree<T> implements ImmutableTree<T> {
      * This method uses reflection to determine whether the specified object is
      * equal to this tree.
      */
+    // TODO decide if equals and hashCode should be final
     @Override
     public boolean equals(final Object obj) {
         return EqualsBuilder.reflectionEquals(this, obj);
