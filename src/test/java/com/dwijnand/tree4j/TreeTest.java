@@ -27,11 +27,11 @@ public class TreeTest {
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 
-    private Tree<?> tree;
+    private final Tree<?> tree;
 
-    private int beforeHashCode;
+    private final int beforeHashCode;
 
-    protected final <T extends Tree<?>> void saveInputTree(final T tree) {
+    public <T extends Tree<?>> TreeTest(final T tree) {
         this.tree = tree;
         beforeHashCode = HashCodeBuilder.reflectionHashCode(tree);
     }
@@ -43,16 +43,12 @@ public class TreeTest {
 
     @Theory
     public void containsShouldReturnFalseWhenEmpty(final Tree<String> tree) {
-        saveInputTree(tree);
-
         assertFalse(tree.contains("node"));
         assertTreeNotModified();
     }
 
     @Theory
     public void containsShouldReturnTrueOnAddedNode(Tree<String> tree) {
-        saveInputTree(tree);
-
         tree = tree.withRoot("root");
         tree = tree.add("root", "node");
         assertTrue(tree.contains("node"));
@@ -61,8 +57,6 @@ public class TreeTest {
 
     @Theory
     public void containsShouldReturnTrueForSetRoot(Tree<String> tree) {
-        saveInputTree(tree);
-
         tree = tree.withRoot("root");
         assertTrue(tree.contains("root"));
         assertTreeNotModified();
@@ -70,8 +64,6 @@ public class TreeTest {
 
     @Theory
     public void getParentShouldWorkCorrectly(Tree<String> tree) {
-        saveInputTree(tree);
-
         tree = tree.withRoot("root");
         tree = tree.add("root", "males").add("root", "females");
         tree = tree.add("males", "Paul").add("males", "Peter")
@@ -87,8 +79,6 @@ public class TreeTest {
     @Theory
     public void getParentShouldReturnNullForUnknownNode(
             final Tree<String> tree) {
-        saveInputTree(tree);
-
         final String parent = tree.getParent("unknown node");
 
         assertNull(parent);
@@ -98,8 +88,6 @@ public class TreeTest {
     @Theory
     public void getChildrenShouldReturnEmptyCollectionOnUnknownNode(
             final Tree<String> tree) {
-        saveInputTree(tree);
-
         final Collection<String> children = tree.getChildren("unknown node");
 
         assertThat(0, is(children.size()));
@@ -108,16 +96,12 @@ public class TreeTest {
 
     @Theory
     public void getRootShouldReturnNullBeforeSetRoot(final Tree<String> tree) {
-        saveInputTree(tree);
-
         assertNull(tree.getRoot());
         assertTreeNotModified();
     }
 
     @Theory
     public void getRootShouldReturnSetRoot(Tree<String> tree) {
-        saveInputTree(tree);
-
         tree = tree.withRoot("root");
         assertEquals("root", tree.getRoot());
         assertTreeNotModified();
@@ -125,8 +109,6 @@ public class TreeTest {
 
     @Theory
     public void setRootShouldClearTree(Tree<String> tree) {
-        saveInputTree(tree);
-
         tree = tree.withRoot("God");
         tree = tree.add("God", "Jesus");
         tree = tree.withRoot("Allah");
@@ -136,8 +118,6 @@ public class TreeTest {
 
     @Theory
     public void addShouldWorkCorrectly(Tree<String> tree) {
-        saveInputTree(tree);
-
         tree = tree.withRoot("root");
         tree = tree.add("root", "males").add("root", "females");
         tree = tree.add("males", "Paul").add("males", "Peter")
@@ -154,8 +134,6 @@ public class TreeTest {
     @Theory
     public void addShouldReturnAnIdenticalTreeOnReinsertingNode(
             Tree<String> tree) {
-        saveInputTree(tree);
-
         tree = tree.withRoot("root");
         tree = tree.add("root", "males").add("root", "females");
         tree = tree.add("males", "Paul");
@@ -169,8 +147,6 @@ public class TreeTest {
     @Theory
     public void addShouldThrowIllegalArgumentExceptionOnInsertingAnUnknownParent(
             Tree<String> tree) {
-        saveInputTree(tree);
-
         tree = tree.withRoot("root");
 
         expectedException.expect(IllegalArgumentException.class);
@@ -183,8 +159,6 @@ public class TreeTest {
 
     @Theory
     public void removeShouldCascadeRemove(Tree<String> tree) {
-        saveInputTree(tree);
-
         tree = tree.withRoot("root");
         tree = tree.add("root", "males").add("root", "females")
                 .add("root", "unsure");
@@ -205,8 +179,6 @@ public class TreeTest {
     @Theory
     public void removeShouldNotThrowAConcurrentModificationException(
             Tree<String> tree) {
-        saveInputTree(tree);
-
         tree = tree.withRoot("root");
         tree = tree.add("root", "males");
         tree = tree.add("males", "Peter").add("males", "Paul");

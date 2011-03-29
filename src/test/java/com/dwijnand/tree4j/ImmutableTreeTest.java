@@ -27,4 +27,8 @@ public class ImmutableTreeTest extends TreeTest {
                 IMMUTABLE_MAP_BUILDER_FACTORY);
     }
 
+    public <T extends ImmutableTree<?>> ImmutableTreeTest(final T tree) {
+        super(tree);
+    }
+
 }

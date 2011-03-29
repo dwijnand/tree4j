@@ -33,6 +33,10 @@ public class MutableTreeTest extends TreeTest {
                 HASH_MAP_FACTORY);
     }
 
+    public <T extends MutableTree<?>> MutableTreeTest(final T tree) {
+        super(tree);
+    }
+
     @Theory
     public void setRootShouldSetTheRoot(final MutableTree<String> mutableTree) {
         mutableTree.setRoot("root");
