@@ -220,15 +220,11 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
     }
 
     /**
-     * Creates a new immutable multimap tree with the specified factories,
-     * associations and root node. See
-     * {@link #create(ChildrenBuilderFactory, ParentsBuildersFactory)} for
-     * details.
+     * Creates a new multimap tree with the specified factories, associations
+     * and root node. See {@link #create(Factory, Factory)} for more details.
      * <p>
-     * This constructor is private so that it may not be invoked outside of this
-     * class. This is important as it is the only place where the children
-     * multimap, parents map and root node can be set directly, without checking
-     * that any of them are <code>null</code>.
+     * This private constructor is used internally to set specific associations
+     * and root node, including setting the root node to <code>null</code>.
      *
      * @param childrenBuilderFactory an ImmutableMultimap builder factory
      * @param parentsBuilderFactory an ImmutableMap builder factory
@@ -312,7 +308,7 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
         final ImmutableMap<T, T> parents = parentsBuilder.build();
 
         return new ImmutableMultimapTree<T>(childrenBuilderFactory,
-        parentsBuilderFactory, children, parents, node);
+                parentsBuilderFactory, children, parents, node);
     };
 
     /*
@@ -347,7 +343,7 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
         final ImmutableMap<T, T> parents = parentsBuilder.build();
 
         return new ImmutableMultimapTree<T>(childrenBuilderFactory,
-        parentsBuilderFactory, children, parents, root);
+                parentsBuilderFactory, children, parents, root);
     };
 
     /**
@@ -395,7 +391,7 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
         final ImmutableMap<T, T> parents = parentsBuilder.build();
 
         return new ImmutableMultimapTree<T>(childrenBuilderFactory,
-        parentsBuilderFactory, children, parents, root);
+                parentsBuilderFactory, children, parents, root);
     }
 
     /**
