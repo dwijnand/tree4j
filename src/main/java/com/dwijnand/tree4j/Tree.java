@@ -6,17 +6,16 @@ import java.util.Collection;
  * This interface defines the specification of a tree structure, also known as
  * an arborescence.
  * <p>
- * Specifically it represents a directed acyclic graph with a root node with
- * zero or more children and where each non-root node has a parent and zero or
- * more children.
+ * Specifically it represents a directed acyclic graph (DAG) with a root node,
+ * unless it is empty, and where each node has zero or more children nodes and
+ * each non-root node has a parent node.
  * <p>
  * Passing {@code null} where a node is expected always throws a
  * {@link NullPointerException}.
  * <p>
  * This interface doesn't specify any methods that modify the internal state of
  * the tree; all 'modifying' methods actually return a new instance of the tree,
- * allowing this interface to be used as the specification of an immutable
- * object.
+ * so this interface <em>may</em> be used as the basis of an immutable object.
  * <p>
  * See {@link ImmutableTree} for an extension to this interface that adds the
  * immutability restriction and {@link MutableTree} for an extension that adds
