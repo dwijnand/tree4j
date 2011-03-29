@@ -2,15 +2,11 @@ package com.dwijnand.tree4j.test.helper;
 
 import java.util.Map;
 
-import com.dwijnand.tree4j.ImmutableMultimapTree.ChildrenBuilderFactory;
-import com.dwijnand.tree4j.ImmutableMultimapTree.ParentsBuildersFactory;
 import com.dwijnand.tree4j.common.Factory;
 import com.dwijnand.tree4j.common.MutableMap;
 import com.dwijnand.tree4j.common.MutableMaps;
 import com.dwijnand.tree4j.common.MutableMultimap;
 import com.dwijnand.tree4j.common.MutableMultimaps;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
@@ -51,11 +47,5 @@ public final class Factories {
         }
 
     };
-
-    public static final ChildrenBuilderFactory<? extends ImmutableMultimap.Builder<String, String>, String> IMMUTABLE_MULTIMAP_BUILDER_FACTORY = ChildrenBuilderFactory
-            .newImmutableMultimapsBuildersFactory();
-
-    public static final ParentsBuildersFactory<? extends ImmutableMap.Builder<String, String>, String> IMMUTABLE_MAP_BUILDER_FACTORY = ParentsBuildersFactory
-            .newImmutableMapsBuildersFactory();
 
 }
