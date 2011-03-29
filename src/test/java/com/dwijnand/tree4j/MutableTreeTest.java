@@ -11,7 +11,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Collection;
 
-import org.junit.experimental.theories.DataPoints;
+import org.junit.experimental.theories.DataPoint;
 import org.junit.experimental.theories.Theories;
 import org.junit.experimental.theories.Theory;
 import org.junit.runner.RunWith;
@@ -27,10 +27,10 @@ import org.junit.runner.RunWith;
 @RunWith(Theories.class)
 public class MutableTreeTest extends TreeTest {
 
-    @DataPoints
-    public static MutableTree<?>[] data() {
-        return new MutableTree[] {MultimapTree.create(
-                LINKED_HASH_MULTIMAP_FACTORY, HASH_MAP_FACTORY)};
+    @DataPoint
+    public static MutableTree<String> newMultimapTree() {
+        return MultimapTree.create(LINKED_HASH_MULTIMAP_FACTORY,
+                HASH_MAP_FACTORY);
     }
 
     @Theory
