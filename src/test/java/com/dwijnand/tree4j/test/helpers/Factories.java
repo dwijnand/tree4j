@@ -21,7 +21,7 @@ public final class Factories {
         // Utility class
     }
 
-    public static final Factory<MutableMultimap<String, String>> LINKED_HASH_MULTIMAP_SUPPLIER = new Factory<MutableMultimap<String, String>>() {
+    public static final Factory<MutableMultimap<String, String>> LINKED_HASH_MULTIMAP_FACTORY = new Factory<MutableMultimap<String, String>>() {
 
         @Override
         public MutableMultimap<String, String> get() {
@@ -32,7 +32,7 @@ public final class Factories {
 
     };
 
-    public static final Factory<MutableMap<String, String>> HASH_MAP_SUPPLIER = new Factory<MutableMap<String, String>>() {
+    public static final Factory<MutableMap<String, String>> HASH_MAP_FACTORY = new Factory<MutableMap<String, String>>() {
 
         @Override
         public MutableMap<String, String> get() {
@@ -42,10 +42,10 @@ public final class Factories {
 
     };
 
-    public static final ChildrenBuilderFactory<? extends ImmutableMultimap.Builder<String, String>, String> IMMUTABLE_MULTIMAP_BUILDER_SUPPLIER = ChildrenBuilderFactory
+    public static final ChildrenBuilderFactory<? extends ImmutableMultimap.Builder<String, String>, String> IMMUTABLE_MULTIMAP_BUILDER_FACTORY = ChildrenBuilderFactory
             .newImmutableMultimapsBuildersFactory();
 
-    public static final ParentsBuildersFactory<? extends ImmutableMap.Builder<String, String>, String> IMMUTABLE_MAP_BUILDER_SUPPLIER = ParentsBuildersFactory
+    public static final ParentsBuildersFactory<? extends ImmutableMap.Builder<String, String>, String> IMMUTABLE_MAP_BUILDER_FACTORY = ParentsBuildersFactory
             .newImmutableMapsBuildersFactory();
 
 }

@@ -1,7 +1,7 @@
 package com.dwijnand.tree4j;
 
-import static com.dwijnand.tree4j.test.helpers.Factories.HASH_MAP_SUPPLIER;
-import static com.dwijnand.tree4j.test.helpers.Factories.LINKED_HASH_MULTIMAP_SUPPLIER;
+import static com.dwijnand.tree4j.test.helpers.Factories.HASH_MAP_FACTORY;
+import static com.dwijnand.tree4j.test.helpers.Factories.LINKED_HASH_MULTIMAP_FACTORY;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -22,7 +22,7 @@ public class MutableTreeTest extends TreeTest {
     @DataPoints
     public static MutableTree<?>[] data() {
         return new MutableTree[] {MultimapTree.create(
-                LINKED_HASH_MULTIMAP_SUPPLIER, HASH_MAP_SUPPLIER)};
+                LINKED_HASH_MULTIMAP_FACTORY, HASH_MAP_FACTORY)};
     }
 
     @Theory
