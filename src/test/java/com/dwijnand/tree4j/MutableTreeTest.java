@@ -1,7 +1,5 @@
 package com.dwijnand.tree4j;
 
-import static com.dwijnand.tree4j.test.helper.Factories.HASH_MAP_FACTORY;
-import static com.dwijnand.tree4j.test.helper.Factories.LINKED_HASH_MULTIMAP_FACTORY;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -11,10 +9,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Collection;
 
-import org.junit.experimental.theories.DataPoint;
-import org.junit.experimental.theories.Theories;
 import org.junit.experimental.theories.Theory;
-import org.junit.runner.RunWith;
 
 /**
  * This class defines the tests for compliance to the specifications defined in
@@ -24,14 +19,8 @@ import org.junit.runner.RunWith;
  * for the methods defined in MutableTree. It, therefore, passes MutableTree
  * implementations to the tests in TreeTest and then to the tests defined here.
  */
-@RunWith(Theories.class)
+// TODO make methods final
 public class MutableTreeTest extends TreeTest {
-
-    @DataPoint
-    public static MutableTree<String> newMultimapTree() {
-        return MultimapTree.create(LINKED_HASH_MULTIMAP_FACTORY,
-                HASH_MAP_FACTORY);
-    }
 
     public <T extends MutableTree<?>> MutableTreeTest(final T tree) {
         super(tree);
