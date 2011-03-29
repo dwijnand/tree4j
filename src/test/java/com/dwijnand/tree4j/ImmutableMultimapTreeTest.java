@@ -5,7 +5,7 @@ import org.junit.experimental.theories.Theories;
 import org.junit.runner.RunWith;
 
 import com.dwijnand.tree4j.ImmutableMultimapTree.ChildrenBuilderFactory;
-import com.dwijnand.tree4j.ImmutableMultimapTree.ParentsBuildersFactory;
+import com.dwijnand.tree4j.ImmutableMultimapTree.ParentsBuilderFactory;
 import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -14,45 +14,45 @@ import com.google.common.collect.ImmutableMultimap;
 @RunWith(Theories.class)
 public class ImmutableMultimapTreeTest extends ImmutableTreeTest {
 
-    private static final ImmutableCollection<ChildrenBuilderFactory<? extends ImmutableMultimap.Builder<String, String>, String>> CHILDREN_BUILDERS_FACTORIES;
+    private static final ImmutableCollection<ChildrenBuilderFactory<? extends ImmutableMultimap.Builder<String, String>, String>> CHILDREN_BUILDER_FACTORIES;
 
-    private static final ImmutableCollection<ParentsBuildersFactory<? extends ImmutableMap.Builder<String, String>, String>> PARENTS_BUILDERS_FACTORIES;
+    private static final ImmutableCollection<ParentsBuilderFactory<? extends ImmutableMap.Builder<String, String>, String>> PARENTS_BUILDER_FACTORIES;
 
     static {
-        final ImmutableList.Builder<ChildrenBuilderFactory<? extends ImmutableMultimap.Builder<String, String>, String>> childrenBuildersFactoriesBuilder = ImmutableList
+        final ImmutableList.Builder<ChildrenBuilderFactory<? extends ImmutableMultimap.Builder<String, String>, String>> childrenBuilderFactoryBuilder = ImmutableList
                 .builder();
 
-        childrenBuildersFactoriesBuilder.add(ChildrenBuilderFactory
+        childrenBuilderFactoryBuilder.add(ChildrenBuilderFactory
                 .<String> newImmutableMultimapsBuildersFactory());
 
-        CHILDREN_BUILDERS_FACTORIES = childrenBuildersFactoriesBuilder
+        CHILDREN_BUILDER_FACTORIES = childrenBuilderFactoryBuilder
                 .build();
 
-        final ImmutableList.Builder<ParentsBuildersFactory<? extends ImmutableMap.Builder<String, String>, String>> parentsBuildersFactoriesBuilder = ImmutableList
+        final ImmutableList.Builder<ParentsBuilderFactory<? extends ImmutableMap.Builder<String, String>, String>> parentsBuilderFactoryBuilder = ImmutableList
                 .builder();
 
-        parentsBuildersFactoriesBuilder.add(ParentsBuildersFactory
+        parentsBuilderFactoryBuilder.add(ParentsBuilderFactory
                 .<String> newImmutableMapsBuildersFactory());
 
-        PARENTS_BUILDERS_FACTORIES = parentsBuildersFactoriesBuilder.build();
+        PARENTS_BUILDER_FACTORIES = parentsBuilderFactoryBuilder.build();
     }
 
     @DataPoints
     public static ImmutableMultimapTree<?>[] data() {
-        final int childrenBuildersFactoriesCount = CHILDREN_BUILDERS_FACTORIES
+        final int childrenBuilderFactoryCount = CHILDREN_BUILDER_FACTORIES
                 .size();
-        final int parentsBuildersFactoriesCount = PARENTS_BUILDERS_FACTORIES
+        final int parentsBuilderFactoryCount = PARENTS_BUILDER_FACTORIES
                 .size();
-        final int immutableTreesCount = childrenBuildersFactoriesCount
-                * parentsBuildersFactoriesCount;
+        final int immutableTreeCount = childrenBuilderFactoryCount
+                * parentsBuilderFactoryCount;
 
-        final ImmutableMultimapTree<?>[] immutableTrees = new ImmutableMultimapTree[immutableTreesCount];
+        final ImmutableMultimapTree<?>[] immutableTrees = new ImmutableMultimapTree[immutableTreeCount];
 
         int i = 0;
-        for (final ChildrenBuilderFactory<? extends ImmutableMultimap.Builder<String, String>, String> childrenBuilderFactory : CHILDREN_BUILDERS_FACTORIES) {
-            for (final ParentsBuildersFactory<? extends ImmutableMap.Builder<String, String>, String> parentsBuildersFactory : PARENTS_BUILDERS_FACTORIES) {
+        for (final ChildrenBuilderFactory<? extends ImmutableMultimap.Builder<String, String>, String> childrenBuilderFactory : CHILDREN_BUILDER_FACTORIES) {
+            for (final ParentsBuilderFactory<? extends ImmutableMap.Builder<String, String>, String> parentsBuilderFactory : PARENTS_BUILDER_FACTORIES) {
                 immutableTrees[i++] = ImmutableMultimapTree.create(
-                        childrenBuilderFactory, parentsBuildersFactory);
+                        childrenBuilderFactory, parentsBuilderFactory);
             }
         }
 

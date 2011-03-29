@@ -16,39 +16,31 @@ import com.google.common.collect.ImmutableList;
 @RunWith(Theories.class)
 public class MultimapTreeTest extends MutableTreeTest {
 
-    private static final ImmutableCollection<Factory<MutableMultimap<String, String>>> MUTABLE_MULTIMAPS_FACTORIES;
+    private static final ImmutableCollection<Factory<MutableMultimap<String, String>>> MUTABLE_MULTIMAP_FACTORIES;
 
-    private static final ImmutableCollection<Factory<MutableMap<String, String>>> MUTABLE_MAPS_FACTORIES;
+    private static final ImmutableCollection<Factory<MutableMap<String, String>>> MUTABLE_MAP_FACTORIES;
 
     static {
-        final ImmutableList.Builder<Factory<MutableMultimap<String, String>>> mutableMultimapsFactoriesBuilder = ImmutableList
-                .builder();
-        mutableMultimapsFactoriesBuilder.add(LINKED_HASH_MULTIMAP_FACTORY);
-        MUTABLE_MULTIMAPS_FACTORIES = mutableMultimapsFactoriesBuilder
-                .build();
-
-        final ImmutableList.Builder<Factory<MutableMap<String, String>>> mutableMapsFactoriesBuilder = ImmutableList
-                .builder();
-        mutableMapsFactoriesBuilder.add(HASH_MAP_FACTORY);
-        MUTABLE_MAPS_FACTORIES = mutableMapsFactoriesBuilder.build();
-
+        MUTABLE_MULTIMAP_FACTORIES = ImmutableList
+                .of(LINKED_HASH_MULTIMAP_FACTORY);
+        MUTABLE_MAP_FACTORIES = ImmutableList.of(HASH_MAP_FACTORY);
     }
 
     @DataPoints
     public static MutableTree<?>[] data() {
-        final int mutableMultimapsFactoriesCount = MUTABLE_MULTIMAPS_FACTORIES
+        final int mutableMultimapFactoryCount = MUTABLE_MULTIMAP_FACTORIES
                 .size();
-        final int mutableMapsFactoriesCount = MUTABLE_MAPS_FACTORIES.size();
-        final int mutableTreesCount = mutableMultimapsFactoriesCount
-                * mutableMapsFactoriesCount;
+        final int mutableMapFactoryCount = MUTABLE_MAP_FACTORIES.size();
+        final int mutableTreeCount = mutableMultimapFactoryCount
+                * mutableMapFactoryCount;
 
-        final MutableTree<?>[] mutableTrees = new MutableTree[mutableTreesCount];
+        final MutableTree<?>[] mutableTrees = new MutableTree[mutableTreeCount];
 
         int i = 0;
-        for (final Factory<MutableMultimap<String, String>> mutableMultimapsFactory : MUTABLE_MULTIMAPS_FACTORIES) {
-            for (final Factory<MutableMap<String, String>> mutableMapsFactory : MUTABLE_MAPS_FACTORIES) {
+        for (final Factory<MutableMultimap<String, String>> mutableMultimapFactory : MUTABLE_MULTIMAP_FACTORIES) {
+            for (final Factory<MutableMap<String, String>> mutableMapFactory : MUTABLE_MAP_FACTORIES) {
                 mutableTrees[i++] = MultimapTree.create(
-                        mutableMultimapsFactory, mutableMapsFactory);
+                        mutableMultimapFactory, mutableMapFactory);
             }
         }
 
