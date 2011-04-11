@@ -172,36 +172,14 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
     private final T root;
 
     /**
-     * Creates a new immutable multimap tree using the specified
-     * {@link ChildrenBuilderFactory} and {@link ParentsBuilderFactory}.
-     * These factories are used to obtain builders required to constructing the
-     * parent-children and child-parent associations within the tree.
-     *
-     * @param <T>                    the type of the nodes in the tree
-     * @param childrenBuilderFactory an ImmutableMultimap builder factory
-     * @param parentsBuilderFactory  an ImmutableMap builder factory
-     * @return a new immutable multimap tree
-     */
-    public static <T> ImmutableMultimapTree<T> create(
-            final ChildrenBuilderFactory<T> childrenBuilderFactory,
-            final ParentsBuilderFactory<T> parentsBuilderFactory) {
-        return new ImmutableMultimapTree<T>(childrenBuilderFactory,
-                parentsBuilderFactory);
-    }
-
-    /**
      * Creates a new immutable multimap tree. This constructor is used directly
      * by {@link #create(ChildrenBuilderFactory, ParentsBuilderFactory)} so look
      * there for details.
-     * <p/>
-     * This constructor is protected so that the class can be sub-classed. To
-     * instantiate this class, please use the create(ChildrenBuilderFactory,
-     * ParentsBuildersFactory) static method.
      *
      * @param childrenBuilderFactory an ImmutableMultimap builder factory
      * @param parentsBuilderFactory  an ImmutableMap builder factory
      */
-    protected ImmutableMultimapTree(
+    public ImmutableMultimapTree(
             final ChildrenBuilderFactory<T> childrenBuilderFactory,
             final ParentsBuilderFactory<T> parentsBuilderFactory) {
         this.childrenBuilderFactory = checkNotNull(childrenBuilderFactory);
@@ -243,51 +221,44 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
         this.root = root;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * Creates a new immutable multimap tree using the specified
+     * {@link ChildrenBuilderFactory} and {@link ParentsBuilderFactory}.
+     * These factories are used to obtain builders required to constructing the
+     * parent-children and child-parent associations within the tree.
      *
-     * @see Tree#contains(Object)
+     * @param <T>                    the type of the nodes in the tree
+     * @param childrenBuilderFactory an ImmutableMultimap builder factory
+     * @param parentsBuilderFactory  an ImmutableMap builder factory
+     * @return a new immutable multimap tree
      */
+    public static <T> ImmutableMultimapTree<T> create(
+            final ChildrenBuilderFactory<T> childrenBuilderFactory,
+            final ParentsBuilderFactory<T> parentsBuilderFactory) {
+        return new ImmutableMultimapTree<T>(childrenBuilderFactory,
+                parentsBuilderFactory);
+    }
+
     @Override
     public final boolean contains(final T node) {
         return node != null && (node == root || parents.containsKey(node));
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see Tree#getParent(Object)
-     */
     @Override
     public final T getParent(final T node) {
         return parents.get(checkNotNull(node));
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see Tree#getChildren(Object)
-     */
     @Override
     public final ImmutableCollection<T> getChildren(final T node) {
         return children.get(checkNotNull(node));
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see Tree#getRoot()
-     */
     @Override
     public final T getRoot() {
         return root;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see Tree#withRoot(Object)
-     */
     @Override
     public final ImmutableMultimapTree<T> withRoot(final T node) {
         checkNotNull(node);
@@ -304,11 +275,6 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
                 parentsBuilderFactory, children, parents, node);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see Tree#add(Object, Object)
-     */
     @Override
     public final ImmutableMultimapTree<T> add(final T parent, final T child) {
         checkNotNull(parent);
@@ -353,11 +319,6 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
         parentsBuilder.put(child, parent);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see Tree#remove(Object)
-     */
     @Override
     public final ImmutableMultimapTree<T> remove(final T node) {
         checkNotNull(node);
