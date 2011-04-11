@@ -1,6 +1,9 @@
 syntax: glob
 
 # Please keep this in alphabetic order :)
+*.iml
+*.ipr
+*.iws
 .checkstyle
 .classpath
 .project
