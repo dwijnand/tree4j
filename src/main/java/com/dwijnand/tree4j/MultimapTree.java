@@ -142,51 +142,26 @@ public class MultimapTree<T> implements MutableTree<T> {
                 parentsMapFactory, children, parents, multimapTree.root);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see Tree#contains(Object)
-     */
     @Override
     public boolean contains(final T node) {
         return node != null && (node == root || parents.containsKey(node));
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see Tree#getPArent(Object)
-     */
     @Override
     public T getParent(final T node) {
         return parents.get(checkNotNull(node));
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see Tree#getChildren(Object)
-     */
     @Override
     public Collection<T> getChildren(final T node) {
         return children.get(checkNotNull(node));
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see Tree#getRoot()
-     */
     @Override
     public T getRoot() {
         return root;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see Tree#withRoot(Object)
-     */
     @Override
     public MultimapTree<T> withRoot(final T node) {
         checkNotNull(node);
@@ -196,11 +171,6 @@ public class MultimapTree<T> implements MutableTree<T> {
         return multimapTree;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see MutableTree#setRoot(Object)
-     */
     @Override
     public MultimapTree<T> setRoot(final T node) {
         checkNotNull(node);
@@ -209,11 +179,6 @@ public class MultimapTree<T> implements MutableTree<T> {
         return this;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see Tree#add(Object, Object)
-     */
     @Override
     public MultimapTree<T> add(final T parent, final T child) {
         checkNotNull(parent);
@@ -231,11 +196,6 @@ public class MultimapTree<T> implements MutableTree<T> {
         return multimapTree;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see Tree#added(Object, Object)
-     */
     @Override
     public MultimapTree<T> added(final T parent, final T child) {
         checkNotNull(parent);
@@ -263,11 +223,6 @@ public class MultimapTree<T> implements MutableTree<T> {
         parents.put(child, parent);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see MutableTree#clear()
-     */
     @Override
     public void clear() {
         children.clear();
@@ -275,11 +230,6 @@ public class MultimapTree<T> implements MutableTree<T> {
         root = null;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see Tree#remove(Object)
-     */
     @Override
     public MultimapTree<T> remove(final T node) {
         checkNotNull(node);
@@ -298,11 +248,6 @@ public class MultimapTree<T> implements MutableTree<T> {
         return multimapTree;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see MutableTree#removed(Object)
-     */
     @Override
     public MultimapTree<T> removed(final T node) {
         checkNotNull(node);
