@@ -48,6 +48,51 @@ public class MultimapTree<T> implements MutableTree<T> {
     private T root;
 
     /**
+     * Creates a new multimap tree. This constructor is used directly by
+     * {@link #create(Factory, Factory)} so look there for details.
+     *
+     * @param childrenMultimapFactory a Multimap factory
+     * @param parentsMapFactory       a Map factory
+     */
+    public MultimapTree(
+            final Factory<? extends MutableMultimap<T, T>> childrenMultimapFactory,
+            final Factory<? extends MutableMap<T, T>> parentsMapFactory) {
+        checkNotNull(childrenMultimapFactory);
+        checkNotNull(parentsMapFactory);
+
+        this.childrenMultimapFactory = childrenMultimapFactory;
+        this.parentsMapFactory = parentsMapFactory;
+        this.children = childrenMultimapFactory.get();
+        this.parents = parentsMapFactory.get();
+        this.root = null;
+    }
+
+    /**
+     * Creates a new multimap tree with the specified factories, associations
+     * and root node. See {@link #create(Factory, Factory)} for more details.
+     * <p/>
+     * This private constructor is used internally to set specific associations
+     * and root node, including setting the root node to {@code null}.
+     *
+     * @param childrenMultimapFactory a Multimap factory
+     * @param parentsMapFactory       a Map factory
+     * @param children                the parent-children associations to be used
+     * @param parents                 the child-parent associations to be used
+     * @param root                    the root node
+     */
+    private MultimapTree(
+            final Factory<? extends MutableMultimap<T, T>> childrenMultimapFactory,
+            final Factory<? extends MutableMap<T, T>> parentsMapFactory,
+            final MutableMultimap<T, T> children,
+            final MutableMap<T, T> parents, final T root) {
+        this.childrenMultimapFactory = childrenMultimapFactory;
+        this.parentsMapFactory = parentsMapFactory;
+        this.children = children;
+        this.parents = parents;
+        this.root = root;
+    }
+
+    /**
      * Creates a new multimap tree using the specified {@link Multimap} and
      * {@link Map} factories. These factories are used to obtain multimaps and
      * maps required to construct the parent-children and child-parent
@@ -95,55 +140,6 @@ public class MultimapTree<T> implements MutableTree<T> {
 
         return new MultimapTree<T>(childrenMultimapFactory,
                 parentsMapFactory, children, parents, multimapTree.root);
-    }
-
-    /**
-     * Creates a new multimap tree. This constructor is used directly by
-     * {@link #create(Factory, Factory)} so look there for details.
-     * <p/>
-     * This constructor is protected so that the class can be sub-classed. To
-     * instantiate this class, please use the create(Factory, Factory) static
-     * method.
-     *
-     * @param childrenMultimapFactory a Multimap factory
-     * @param parentsMapFactory       a Map factory
-     */
-    protected MultimapTree(
-            final Factory<? extends MutableMultimap<T, T>> childrenMultimapFactory,
-            final Factory<? extends MutableMap<T, T>> parentsMapFactory) {
-        checkNotNull(childrenMultimapFactory);
-        checkNotNull(parentsMapFactory);
-
-        this.childrenMultimapFactory = childrenMultimapFactory;
-        this.parentsMapFactory = parentsMapFactory;
-        this.children = childrenMultimapFactory.get();
-        this.parents = parentsMapFactory.get();
-        this.root = null;
-    }
-
-    /**
-     * Creates a new multimap tree with the specified factories, associations
-     * and root node. See {@link #create(Factory, Factory)} for more details.
-     * <p/>
-     * This private constructor is used internally to set specific associations
-     * and root node, including setting the root node to {@code null}.
-     *
-     * @param childrenMultimapFactory a Multimap factory
-     * @param parentsMapFactory       a Map factory
-     * @param children                the parent-children associations to be used
-     * @param parents                 the child-parent associations to be used
-     * @param root                    the root node
-     */
-    private MultimapTree(
-            final Factory<? extends MutableMultimap<T, T>> childrenMultimapFactory,
-            final Factory<? extends MutableMap<T, T>> parentsMapFactory,
-            final MutableMultimap<T, T> children,
-            final MutableMap<T, T> parents, final T root) {
-        this.childrenMultimapFactory = childrenMultimapFactory;
-        this.parentsMapFactory = parentsMapFactory;
-        this.children = children;
-        this.parents = parents;
-        this.root = root;
     }
 
     /*
