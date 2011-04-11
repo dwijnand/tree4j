@@ -133,31 +133,45 @@ public class MultimapTree<T> implements MutableTree<T> {
     }
 
     /**
-     * Creates a copy of the specified multimap tree, by creating a new tree
-     * with a copy of the associations in the specified tree and the same root
-     * node.
+     * Creates a copy of the specified tree, by creating a new tree with a copy
+     * of the associations in the specified tree and the same root node.
      *
-     * @param <T>          the type of the nodes in the trees
-     * @param multimapTree a multimap tree
-     * @return a new copy of the specified multimap tree
+     * @param <T>  the type of the nodes in the trees
+     * @param tree a tree
+     * @return a new copy of the specified tree
      */
     public static <T> MultimapTree<T> copyOf(
-            final MultimapTree<T> multimapTree) {
-        checkNotNull(multimapTree);
+            final Tree<T> tree) {
+        checkNotNull(tree);
 
-        final Factory<? extends MutableMultimap<T, T>> childrenMultimapFactory =
-                multimapTree.childrenMultimapFactory;
-        final Factory<? extends MutableMap<T, T>> parentsMapFactory =
-                multimapTree.parentsMapFactory;
+        if (tree instanceof MultimapTree) {
+            MultimapTree<T> multimapTree = (MultimapTree<T>) tree;
 
-        final MutableMultimap<T, T> children = childrenMultimapFactory.get();
-        final MutableMap<T, T> parents = parentsMapFactory.get();
+            final Factory<? extends MutableMultimap<T, T>> childrenMultimapFactory =
+                    multimapTree.childrenMultimapFactory;
+            final Factory<? extends MutableMap<T, T>> parentsMapFactory =
+                    multimapTree.parentsMapFactory;
 
-        children.putAll(multimapTree.children);
-        parents.putAll(multimapTree.parents);
+            final MutableMultimap<T, T> children = childrenMultimapFactory.get();
+            final MutableMap<T, T> parents = parentsMapFactory.get();
 
-        return new MultimapTree<T>(childrenMultimapFactory,
-                parentsMapFactory, children, parents, multimapTree.root);
+            children.putAll(multimapTree.children);
+            parents.putAll(multimapTree.parents);
+
+            return new MultimapTree<T>(childrenMultimapFactory,
+                    parentsMapFactory, children, parents, multimapTree.root);
+        } else {
+            MultimapTree<T> multimapTree = create();
+
+            multimapTree.setRoot(tree.getRoot());
+
+            for (Map.Entry<T, T> entry : tree) {
+                multimapTree.added(entry.getKey(), entry.getValue());
+            }
+
+            // TODO check and test this!
+            return multimapTree;
+        }
     }
 
     private static <T> Factory<MutableMultimap<T, T>>

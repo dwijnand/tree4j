@@ -3,7 +3,6 @@ package com.dwijnand.tree4j;
 import com.dwijnand.tree4j.common.Factory;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
-import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.ImmutableMap;
@@ -218,6 +217,48 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
             final ParentsBuilderFactory<T> parentsBuilderFactory) {
         return new ImmutableMultimapTree<T>(childrenBuilderFactory,
                 parentsBuilderFactory);
+    }
+
+    // TODO add javadoc
+    public static <T> ImmutableMultimapTree<T> copyOf(Tree<T> tree) {
+        checkNotNull(tree);
+
+        if (tree instanceof ImmutableMultimapTree) {
+            ImmutableMultimapTree<T> immutableMultimapTree =
+                    (ImmutableMultimapTree<T>) tree;
+
+            ChildrenBuilderFactory<T> childrenBuilderFactory =
+                    immutableMultimapTree.childrenBuilderFactory;
+            ParentsBuilderFactory<T> parentsBuilderFactory =
+                    immutableMultimapTree.parentsBuilderFactory;
+
+            ImmutableMultimap.Builder<T, T> childrenBuilder =
+                    childrenBuilderFactory.get();
+            childrenBuilder.putAll(immutableMultimapTree.children);
+            final ImmutableMultimap<T, T> children = childrenBuilder.build();
+
+            ImmutableMap.Builder<T, T> parentsBuilder = parentsBuilderFactory.get();
+            parentsBuilder.putAll(immutableMultimapTree.parents);
+            final ImmutableMap<T, T> parents = parentsBuilder.build();
+
+            return new ImmutableMultimapTree<T>(childrenBuilderFactory,
+                    parentsBuilderFactory, children, parents,
+                    immutableMultimapTree.root);
+        } else {
+            ImmutableMultimapTree<T> immutableMultimapTree = create();
+
+            T root = tree.getRoot();
+            immutableMultimapTree = immutableMultimapTree.withRoot(root);
+
+            for (Map.Entry<T, T> entry : tree) {
+                T key = entry.getKey();
+                T value = entry.getValue();
+                immutableMultimapTree = immutableMultimapTree.add(key, value);
+            }
+
+            // TODO check and test this!
+            return immutableMultimapTree;
+        }
     }
 
     @Override
