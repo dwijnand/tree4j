@@ -1,6 +1,7 @@
 package com.dwijnand.tree4j;
 
 import java.util.Collection;
+import java.util.Map;
 
 /**
  * This interface defines the specification of a tree structure, also known as
@@ -29,7 +30,7 @@ import java.util.Collection;
  * @see ImmutableTree
  * @see MutableTree
  */
-public interface Tree<T> {
+public interface Tree<T> extends Iterable<Map.Entry<T, T>> {
 
     // Query methods
 

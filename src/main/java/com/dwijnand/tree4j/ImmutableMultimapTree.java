@@ -14,6 +14,8 @@ import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Ordering;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Iterator;
+import java.util.Map;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
@@ -246,6 +248,11 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
     @Override
     public final T getRoot() {
         return root;
+    }
+
+    @Override
+    public Iterator<Map.Entry<T, T>> iterator() {
+        return children.entries().iterator();
     }
 
     @Override

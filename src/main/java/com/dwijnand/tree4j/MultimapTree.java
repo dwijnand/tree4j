@@ -12,6 +12,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -199,6 +200,11 @@ public class MultimapTree<T> implements MutableTree<T> {
     @Override
     public T getRoot() {
         return root;
+    }
+
+    @Override
+    public Iterator<Map.Entry<T, T>> iterator() {
+        return children.entries().iterator();
     }
 
     @Override
