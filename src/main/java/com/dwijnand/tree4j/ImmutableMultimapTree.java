@@ -24,17 +24,16 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
 
     // TODO add javadoc
-    // TODO perhaps don't need the B type param
-    public static abstract class ChildrenBuilderFactory<B
-            extends ImmutableMultimap.Builder<T, T>, T> implements Factory<B> {
+    public static abstract class ChildrenBuilderFactory<T>
+            implements Factory<ImmutableMultimap.Builder<T, T>> {
 
         private ChildrenBuilderFactory() {
         }
 
         // TODO add javadoc
-        public static <T> ChildrenBuilderFactory<ImmutableMultimap.Builder<T, T>, T>
+        public static <T> ChildrenBuilderFactory<T>
         newImmutableMultimapsBuildersFactory() {
-            return new ChildrenBuilderFactory<ImmutableMultimap.Builder<T, T>, T>() {
+            return new ChildrenBuilderFactory<T>() {
 
                 @Override
                 public ImmutableMultimap.Builder<T, T> get() {
@@ -44,9 +43,9 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
         }
 
         // TODO add javadoc
-        public static <T> ChildrenBuilderFactory<ImmutableListMultimap.Builder<T, T>, T>
+        public static <T> ChildrenBuilderFactory<T>
         newImmutableListMultimapsBuildersFactory() {
-            return new ChildrenBuilderFactory<ImmutableListMultimap.Builder<T, T>, T>() {
+            return new ChildrenBuilderFactory<T>() {
 
                 @Override
                 public ImmutableListMultimap.Builder<T, T> get() {
@@ -56,9 +55,9 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
         }
 
         // TODO add javadoc
-        public static <T> ChildrenBuilderFactory<ImmutableSetMultimap.Builder<T, T>, T>
+        public static <T> ChildrenBuilderFactory<T>
         newImmutableSetMultimapsBuildersFactory() {
-            return new ChildrenBuilderFactory<ImmutableSetMultimap.Builder<T, T>, T>() {
+            return new ChildrenBuilderFactory<T>() {
 
                 @Override
                 public ImmutableSetMultimap.Builder<T, T> get() {
@@ -70,16 +69,16 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
     }
 
     // TODO add javadoc
-    public static abstract class ParentsBuilderFactory<B extends ImmutableMap.Builder<T, T>, T>
-            implements Factory<B> {
+    public static abstract class ParentsBuilderFactory<T>
+            implements Factory<ImmutableMap.Builder<T, T>> {
 
         private ParentsBuilderFactory() {
         }
 
         // TODO add javadoc
-        public static <T> ParentsBuilderFactory<ImmutableMap.Builder<T, T>, T>
+        public static <T> ParentsBuilderFactory<T>
         newImmutableMapsBuildersFactory() {
-            return new ParentsBuilderFactory<ImmutableMap.Builder<T, T>, T>() {
+            return new ParentsBuilderFactory<T>() {
 
                 @Override
                 public ImmutableMap.Builder<T, T> get() {
@@ -89,9 +88,9 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
         }
 
         // TODO add javadoc
-        public static <T> ParentsBuilderFactory<ImmutableBiMap.Builder<T, T>, T>
+        public static <T> ParentsBuilderFactory<T>
         newImmutableBiMapsBuildersFactory() {
-            return new ParentsBuilderFactory<ImmutableBiMap.Builder<T, T>, T>() {
+            return new ParentsBuilderFactory<T>() {
 
                 @Override
                 public ImmutableBiMap.Builder<T, T> get() {
@@ -102,9 +101,9 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
         }
 
         // TODO add javadoc
-        public static <T extends Comparable<T>> ParentsBuilderFactory<ImmutableSortedMap.Builder<T, T>, T>
+        public static <T extends Comparable<T>> ParentsBuilderFactory<T>
         newImmutableSortedMapsBuildersFactoryNaturalOrder() {
-            return new ParentsBuilderFactory<ImmutableSortedMap.Builder<T, T>, T>() {
+            return new ParentsBuilderFactory<T>() {
 
                 @Override
                 public ImmutableSortedMap.Builder<T, T> get() {
@@ -116,10 +115,10 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
         }
 
         // TODO add javadoc
-        public static <T> ParentsBuilderFactory<ImmutableSortedMap.Builder<T, T>, T>
+        public static <T> ParentsBuilderFactory<T>
         newImmutableSortedMapsBuildersFactoryOrderedBy(
                 final Comparator<T> comparator) {
-            return new ParentsBuilderFactory<ImmutableSortedMap.Builder<T, T>, T>() {
+            return new ParentsBuilderFactory<T>() {
 
                 @Override
                 public ImmutableSortedMap.Builder<T, T> get() {
@@ -130,9 +129,9 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
         }
 
         // TODO add javadoc
-        public static <T extends Comparable<T>> ParentsBuilderFactory<ImmutableSortedMap.Builder<T, T>, T>
+        public static <T extends Comparable<T>> ParentsBuilderFactory<T>
         newImmutableSortedMapsBuildersFactoryReverseOrder() {
-            return new ParentsBuilderFactory<ImmutableSortedMap.Builder<T, T>, T>() {
+            return new ParentsBuilderFactory<T>() {
 
                 @Override
                 public ImmutableSortedMap.Builder<T, T> get() {
@@ -149,15 +148,13 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
      * The factory of immutable multimap builder instances, used to build the
      * parent-children relationships of a new immutable multimap tree.
      */
-    private final ChildrenBuilderFactory<?
-            extends ImmutableMultimap.Builder<T, T>, T> childrenBuilderFactory;
+    private final ChildrenBuilderFactory<T> childrenBuilderFactory;
 
     /**
      * The factory of immutable map builder instances, used to build the
      * child-parent relationships of a new immutable multimap tree.
      */
-    private final ParentsBuilderFactory<?
-            extends ImmutableMap.Builder<T, T>, T> parentsBuilderFactory;
+    private final ParentsBuilderFactory<T> parentsBuilderFactory;
 
     /**
      * The parent-children relationships of the tree.
@@ -176,13 +173,9 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
 
     /**
      * Creates a new immutable multimap tree using the specified
-     * {@link ImmutableMultimap} and {@link ImmutableMap} builder factories.
+     * {@link ChildrenBuilderFactory} and {@link ParentsBuilderFactory}.
      * These factories are used to obtain builders required to constructing the
      * parent-children and child-parent relationships within the tree.
-     * <p/>
-     * Factories of builders are required, as opposed to simply builders,
-     * because all the 'modifying' methods actually return new instances of this
-     * tree, and therefore require new builders.
      *
      * @param <T>                    the type of the nodes in the tree
      * @param childrenBuilderFactory an ImmutableMultimap builder factory
@@ -190,10 +183,8 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
      * @return a new immutable multimap tree
      */
     public static <T> ImmutableMultimapTree<T> create(
-            final ChildrenBuilderFactory<? extends
-                    ImmutableMultimap.Builder<T, T>, T> childrenBuilderFactory,
-            final ParentsBuilderFactory<? extends
-                    ImmutableMap.Builder<T, T>, T> parentsBuilderFactory) {
+            final ChildrenBuilderFactory<T> childrenBuilderFactory,
+            final ParentsBuilderFactory<T> parentsBuilderFactory) {
         return new ImmutableMultimapTree<T>(childrenBuilderFactory,
                 parentsBuilderFactory);
     }
@@ -211,10 +202,8 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
      * @param parentsBuilderFactory  an ImmutableMap builder factory
      */
     protected ImmutableMultimapTree(
-            final ChildrenBuilderFactory<? extends
-                    ImmutableMultimap.Builder<T, T>, T> childrenBuilderFactory,
-            final ParentsBuilderFactory<? extends
-                    ImmutableMap.Builder<T, T>, T> parentsBuilderFactory) {
+            final ChildrenBuilderFactory<T> childrenBuilderFactory,
+            final ParentsBuilderFactory<T> parentsBuilderFactory) {
         this.childrenBuilderFactory = checkNotNull(childrenBuilderFactory);
         this.parentsBuilderFactory = checkNotNull(parentsBuilderFactory);
 
@@ -243,10 +232,8 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
      * @param root                   the root node
      */
     private ImmutableMultimapTree(
-            final ChildrenBuilderFactory<? extends
-                    ImmutableMultimap.Builder<T, T>, T> childrenBuilderFactory,
-            final ParentsBuilderFactory<? extends
-                    ImmutableMap.Builder<T, T>, T> parentsBuilderFactory,
+            final ChildrenBuilderFactory<T> childrenBuilderFactory,
+            final ParentsBuilderFactory<T> parentsBuilderFactory,
             final ImmutableMultimap<T, T> children,
             final ImmutableMap<T, T> parents, final T root) {
         this.childrenBuilderFactory = childrenBuilderFactory;

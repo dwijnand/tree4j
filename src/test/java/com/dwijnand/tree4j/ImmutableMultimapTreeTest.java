@@ -2,8 +2,6 @@ package com.dwijnand.tree4j;
 
 import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableMultimap;
 import org.junit.experimental.theories.DataPoints;
 import org.junit.experimental.theories.Theories;
 import org.junit.runner.RunWith;
@@ -11,17 +9,16 @@ import org.junit.runner.RunWith;
 @RunWith(Theories.class)
 public class ImmutableMultimapTreeTest extends ImmutableTreeTest {
 
-    private static final ImmutableCollection<ImmutableMultimapTree.ChildrenBuilderFactory<?
-            extends ImmutableMultimap.Builder<String, String>, String>>
+    private static final
+    ImmutableCollection<ImmutableMultimapTree.ChildrenBuilderFactory<String>>
             CHILDREN_BUILDER_FACTORIES;
 
-    private static final ImmutableCollection<ImmutableMultimapTree.ParentsBuilderFactory<?
-            extends ImmutableMap.Builder<String, String>, String>>
+    private static final
+    ImmutableCollection<ImmutableMultimapTree.ParentsBuilderFactory<String>>
             PARENTS_BUILDER_FACTORIES;
 
     static {
-        final ImmutableList.Builder<ImmutableMultimapTree.ChildrenBuilderFactory<?
-                extends ImmutableMultimap.Builder<String, String>, String>>
+        final ImmutableList.Builder<ImmutableMultimapTree.ChildrenBuilderFactory<String>>
                 childrenBuilderFactoryBuilder = ImmutableList.builder();
 
         childrenBuilderFactoryBuilder.add(ImmutableMultimapTree.ChildrenBuilderFactory
@@ -30,8 +27,7 @@ public class ImmutableMultimapTreeTest extends ImmutableTreeTest {
         CHILDREN_BUILDER_FACTORIES =
                 childrenBuilderFactoryBuilder.build();
 
-        final ImmutableList.Builder<ImmutableMultimapTree.ParentsBuilderFactory<?
-                extends ImmutableMap.Builder<String, String>, String>>
+        final ImmutableList.Builder<ImmutableMultimapTree.ParentsBuilderFactory<String>>
                 parentsBuilderFactoryBuilder = ImmutableList.builder();
 
         parentsBuilderFactoryBuilder.add(ImmutableMultimapTree.ParentsBuilderFactory
@@ -53,11 +49,9 @@ public class ImmutableMultimapTreeTest extends ImmutableTreeTest {
                 new ImmutableMultimapTree[immutableTreeCount];
 
         int i = 0;
-        for (final ImmutableMultimapTree.ChildrenBuilderFactory<? extends
-                ImmutableMultimap.Builder<String, String>, String>
+        for (final ImmutableMultimapTree.ChildrenBuilderFactory<String>
                 childrenBuilderFactory : CHILDREN_BUILDER_FACTORIES) {
-            for (final ImmutableMultimapTree.ParentsBuilderFactory<? extends
-                    ImmutableMap.Builder<String, String>, String>
+            for (final ImmutableMultimapTree.ParentsBuilderFactory<String>
                     parentsBuilderFactory : PARENTS_BUILDER_FACTORIES) {
                 immutableTrees[i++] = ImmutableMultimapTree.create(
                         childrenBuilderFactory, parentsBuilderFactory);
