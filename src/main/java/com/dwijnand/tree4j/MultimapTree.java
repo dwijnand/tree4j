@@ -2,12 +2,17 @@ package com.dwijnand.tree4j;
 
 import com.dwijnand.tree4j.common.Factory;
 import com.dwijnand.tree4j.common.MutableMap;
+import com.dwijnand.tree4j.common.MutableMaps;
 import com.dwijnand.tree4j.common.MutableMultimap;
+import com.dwijnand.tree4j.common.MutableMultimaps;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
+import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -54,7 +59,7 @@ public class MultimapTree<T> implements MutableTree<T> {
      * @param childrenMultimapFactory a Multimap factory
      * @param parentsMapFactory       a Map factory
      */
-    public MultimapTree(
+    protected MultimapTree(
             final Factory<? extends MutableMultimap<T, T>> childrenMultimapFactory,
             final Factory<? extends MutableMap<T, T>> parentsMapFactory) {
         checkNotNull(childrenMultimapFactory);
@@ -90,6 +95,18 @@ public class MultimapTree<T> implements MutableTree<T> {
         this.children = children;
         this.parents = parents;
         this.root = root;
+    }
+
+    /**
+     * Creates a new multimap tree backed by an {@link ArrayListMultimap} and a
+     * {@link LinkedHashMap}.
+     *
+     * @param <T> the type of the nodes in the tree
+     * @return a new multimap tree
+     */
+    public static <T> MultimapTree<T> create() {
+        return create(MultimapTree.<T>newArrayListMultimapFactory(),
+                MultimapTree.<T>newLinkedHashMapFactory());
     }
 
     /**
@@ -140,6 +157,28 @@ public class MultimapTree<T> implements MutableTree<T> {
 
         return new MultimapTree<T>(childrenMultimapFactory,
                 parentsMapFactory, children, parents, multimapTree.root);
+    }
+
+    private static <T> Factory<MutableMultimap<T, T>>
+    newArrayListMultimapFactory() {
+        return new Factory<MutableMultimap<T, T>>() {
+            @Override
+            public MutableMultimap<T, T> get() {
+                Multimap<T, T> arrayListMultimap =
+                        ArrayListMultimap.<T, T>create();
+                return MutableMultimaps.wrap(arrayListMultimap);
+            }
+        };
+    }
+
+    private static <T> Factory<MutableMap<T, T>>
+    newLinkedHashMapFactory() {
+        return new Factory<MutableMap<T, T>>() {
+            @Override
+            public MutableMap<T, T> get() {
+                return MutableMaps.wrap(Maps.<T, T>newLinkedHashMap());
+            }
+        };
     }
 
     @Override
