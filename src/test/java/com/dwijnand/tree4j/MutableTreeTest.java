@@ -1,20 +1,18 @@
 package com.dwijnand.tree4j;
 
+import java.util.Collection;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-
-import java.util.Collection;
-
 import org.junit.experimental.theories.Theory;
 
 /**
  * This class defines the tests for compliance to the specifications defined in
  * the {@link MutableTree} interface.
- * <p>
+ * <p/>
  * As MutableTree extends Tree, this class extends {@link TreeTest} adding tests
  * for the methods defined in MutableTree. It, therefore, passes MutableTree
  * implementations to the tests in TreeTest and then to the tests defined here.

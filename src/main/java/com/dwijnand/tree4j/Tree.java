@@ -5,18 +5,22 @@ import java.util.Collection;
 /**
  * This interface defines the specification of a tree structure, also known as
  * an arborescence.
- * <p>
- * Specifically it represents a directed acyclic graph (DAG) with a root node,
- * unless it is empty, and where each node has zero or more children nodes and
- * each non-root node has a parent node.
- * <p>
+ * <p/>
+ * Specifically it represents a directed acyclic graph (DAG) with the following:
+ * <ul>
+ * <li>a root node (unless the tree is empty)</li>
+ * <li>each node has zero or more children nodes</li>
+ * <li>each non-root node has a parent node</li>
+ * </ul>
+ * <p/>
  * Passing {@code null} where a node is expected always throws a
  * {@link NullPointerException}.
- * <p>
+ * <p/>
  * This interface doesn't specify any methods that modify the internal state of
- * the tree; all 'modifying' methods actually return a new instance of the tree,
- * so this interface <em>may</em> be used as the basis of an immutable object.
- * <p>
+ * the tree- all 'modifying' methods are defined to return a new instance of the
+ * tree, so this interface <em>may</em> be used as the basis of an immutable
+ * object.
+ * <p/>
  * See {@link ImmutableTree} for an extension to this interface that adds the
  * immutability restriction and {@link MutableTree} for an extension that adds
  * in-place modification methods.
@@ -82,11 +86,11 @@ public interface Tree<T> {
      * an {@link IllegalArgumentException}.
      *
      * @param parent the parent node
-     * @param child the child node
+     * @param child  the child node
      * @return a new tree containing all the associations of this tree, the same
      *         node set as root and the new parent/child association
      * @throws IllegalArgumentException if this tree doesn't contain the parent
-     *             node
+     *                                  node
      */
     Tree<T> add(T parent, T child);
 

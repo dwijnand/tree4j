@@ -1,19 +1,16 @@
 package com.dwijnand.tree4j;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
-
-import java.util.Collection;
-import java.util.Map;
-
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-
 import com.dwijnand.tree4j.common.Factory;
 import com.dwijnand.tree4j.common.MutableMap;
 import com.dwijnand.tree4j.common.MutableMultimap;
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
+import java.util.Collection;
+import java.util.Map;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 
 /**
  * A {@link MutableTree} implementation which uses a mutable {@link Multimap}
@@ -55,14 +52,14 @@ public class MultimapTree<T> implements MutableTree<T> {
      * {@link Map} factories. These factories are used to obtain multimaps and
      * maps required to construct the parent-children and child-parent
      * relationships within the tree.
-     * <p>
+     * <p/>
      * Factories of multimaps and maps are required, as opposed to simply a
-     * multimap and a map, because all the 'modifying' methods actually return
-     * new instances of this tree, and therefore require a new multimap and map.
+     * multimap and a map, because some of the methods return a new instance of
+     * the tree, and, therefore, require a new multimap and map.
      *
-     * @param <T> the type of the nodes in the tree
+     * @param <T>                     the type of the nodes in the tree
      * @param childrenMultimapFactory a Multimap factory
-     * @param parentsMapFactory a Map factory
+     * @param parentsMapFactory       a Map factory
      * @return a new multimap tree
      */
     public static <T> MultimapTree<T> create(
@@ -77,7 +74,7 @@ public class MultimapTree<T> implements MutableTree<T> {
      * with a copy of the associations in the specified tree and the same root
      * node.
      *
-     * @param <T> the type of the nodes in the trees
+     * @param <T>          the type of the nodes in the trees
      * @param multimapTree a multimap tree
      * @return a new copy of the specified multimap tree
      */
@@ -85,8 +82,10 @@ public class MultimapTree<T> implements MutableTree<T> {
             final MultimapTree<T> multimapTree) {
         checkNotNull(multimapTree);
 
-        final Factory<? extends MutableMultimap<T, T>> childrenMultimapFactory = multimapTree.childrenMultimapFactory;
-        final Factory<? extends MutableMap<T, T>> parentsMapFactory = multimapTree.parentsMapFactory;
+        final Factory<? extends MutableMultimap<T, T>> childrenMultimapFactory =
+                multimapTree.childrenMultimapFactory;
+        final Factory<? extends MutableMap<T, T>> parentsMapFactory =
+                multimapTree.parentsMapFactory;
 
         final MutableMultimap<T, T> children = childrenMultimapFactory.get();
         final MutableMap<T, T> parents = parentsMapFactory.get();
@@ -101,13 +100,13 @@ public class MultimapTree<T> implements MutableTree<T> {
     /**
      * Creates a new multimap tree. This constructor is used directly by
      * {@link #create(Factory, Factory)} so look there for details.
-     * <p>
-     * This constructor is protected so that the class can be subclassed. To
+     * <p/>
+     * This constructor is protected so that the class can be sub-classed. To
      * instantiate this class, please use the create(Factory, Factory) static
      * method.
      *
      * @param childrenMultimapFactory a Multimap factory
-     * @param parentsMapFactory a Map factory
+     * @param parentsMapFactory       a Map factory
      */
     protected MultimapTree(
             final Factory<? extends MutableMultimap<T, T>> childrenMultimapFactory,
@@ -125,15 +124,15 @@ public class MultimapTree<T> implements MutableTree<T> {
     /**
      * Creates a new multimap tree with the specified factories, associations
      * and root node. See {@link #create(Factory, Factory)} for more details.
-     * <p>
+     * <p/>
      * This private constructor is used internally to set specific associations
      * and root node, including setting the root node to {@code null}.
      *
      * @param childrenMultimapFactory a Multimap factory
-     * @param parentsMapFactory a Map factory
-     * @param children the parent-children associations to be used
-     * @param parents the child-parent associations to be used
-     * @param root the root node
+     * @param parentsMapFactory       a Map factory
+     * @param children                the parent-children associations to be used
+     * @param parents                 the child-parent associations to be used
+     * @param root                    the root node
      */
     private MultimapTree(
             final Factory<? extends MutableMultimap<T, T>> childrenMultimapFactory,
@@ -150,7 +149,7 @@ public class MultimapTree<T> implements MutableTree<T> {
     /*
      * (non-Javadoc)
      *
-     * @see com.dwijnand.tree.TreeSpec#contains(java.lang.Object)
+     * @see Tree#contains(Object)
      */
     @Override
     public boolean contains(final T node) {
@@ -166,7 +165,7 @@ public class MultimapTree<T> implements MutableTree<T> {
     /*
      * (non-Javadoc)
      *
-     * @see com.dwijnand.tree.TreeSpec#getParent(java.lang.Object)
+     * @see Tree#getPArent(Object)
      */
     @Override
     public T getParent(final T node) {
@@ -176,7 +175,7 @@ public class MultimapTree<T> implements MutableTree<T> {
     /*
      * (non-Javadoc)
      *
-     * @see com.dwijnand.tree.TreeSpec#getChildren(java.lang.Object)
+     * @see Tree#getChildren(Object)
      */
     @Override
     public Collection<T> getChildren(final T node) {
@@ -186,7 +185,7 @@ public class MultimapTree<T> implements MutableTree<T> {
     /*
      * (non-Javadoc)
      *
-     * @see com.dwijnand.tree.TreeSpec#getRoot()
+     * @see Tree#getRoot()
      */
     @Override
     public T getRoot() {
@@ -196,7 +195,7 @@ public class MultimapTree<T> implements MutableTree<T> {
     /*
      * (non-Javadoc)
      *
-     * @see com.dwijnand.tree.MutableTree#withRoot(java.lang.Object)
+     * @see Tree#withRoot(Object)
      */
     @Override
     public MultimapTree<T> withRoot(final T node) {
@@ -210,7 +209,7 @@ public class MultimapTree<T> implements MutableTree<T> {
     /*
      * (non-Javadoc)
      *
-     * @see com.dwijnand.tree.MutableTree#setRoot(java.lang.Object)
+     * @see MutableTree#setRoot(Object)
      */
     @Override
     public MultimapTree<T> setRoot(final T node) {
@@ -223,8 +222,7 @@ public class MultimapTree<T> implements MutableTree<T> {
     /*
      * (non-Javadoc)
      *
-     * @see com.dwijnand.tree.MutableTree#add(java.lang.Object,
-     * java.lang.Object)
+     * @see Tree#add(Object, Object)
      */
     @Override
     public MultimapTree<T> add(final T parent, final T child) {
@@ -232,7 +230,7 @@ public class MultimapTree<T> implements MutableTree<T> {
         checkNotNull(child);
         checkArgument(contains(parent),
                 "%s does not contain parent node %s", getClass()
-                        .getSimpleName(), parent);
+                .getSimpleName(), parent);
 
         if (contains(child)) {
             return this;
@@ -246,8 +244,7 @@ public class MultimapTree<T> implements MutableTree<T> {
     /*
      * (non-Javadoc)
      *
-     * @see com.dwijnand.tree.MutableTree#added(java.lang.Object,
-     * java.lang.Object)
+     * @see Tree#added(Object, Object)
      */
     @Override
     public MultimapTree<T> added(final T parent, final T child) {
@@ -255,7 +252,7 @@ public class MultimapTree<T> implements MutableTree<T> {
         checkNotNull(child);
         checkArgument(contains(parent),
                 "%s does not contain parent node %s", getClass()
-                        .getSimpleName(), parent);
+                .getSimpleName(), parent);
 
         if (contains(child)) {
             return this;
@@ -269,7 +266,7 @@ public class MultimapTree<T> implements MutableTree<T> {
      * Adds a new parent/child association to the tree.
      *
      * @param parent the parent node
-     * @param child the child node
+     * @param child  the child node
      */
     private void addedInternal(final T parent, final T child) {
         children.put(parent, child);
@@ -279,7 +276,7 @@ public class MultimapTree<T> implements MutableTree<T> {
     /*
      * (non-Javadoc)
      *
-     * @see com.dwijnand.tree.MutableTreeSpec#clear()
+     * @see MutableTree#clear()
      */
     @Override
     public void clear() {
@@ -291,7 +288,7 @@ public class MultimapTree<T> implements MutableTree<T> {
     /*
      * (non-Javadoc)
      *
-     * @see com.dwijnand.tree.MutableTree#remove(java.lang.Object)
+     * @see Tree#remove(Object)
      */
     @Override
     public MultimapTree<T> remove(final T node) {
@@ -314,7 +311,7 @@ public class MultimapTree<T> implements MutableTree<T> {
     /*
      * (non-Javadoc)
      *
-     * @see com.dwijnand.tree.MutableTree#removed(java.lang.Object)
+     * @see MutableTree#removed(Object)
      */
     @Override
     public MultimapTree<T> removed(final T node) {
@@ -344,7 +341,7 @@ public class MultimapTree<T> implements MutableTree<T> {
 
     /**
      * {@inheritDoc}
-     * <p>
+     * <p/>
      * This method uses reflection to determine whether the specified object is
      * equal to this tree.
      */
@@ -355,7 +352,7 @@ public class MultimapTree<T> implements MutableTree<T> {
 
     /**
      * {@inheritDoc}
-     * <p>
+     * <p/>
      * This method uses reflection to build the returned hash code.
      */
     @Override

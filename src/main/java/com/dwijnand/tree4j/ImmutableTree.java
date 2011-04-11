@@ -13,12 +13,12 @@ public interface ImmutableTree<T> extends Tree<T> {
     // ImmutableTree
 
     @Override
-    public abstract ImmutableTree<T> withRoot(final T node);
+    ImmutableTree<T> withRoot(T node);
 
     @Override
-    public abstract ImmutableTree<T> add(final T parent, final T child);
+    ImmutableTree<T> add(T parent, T child);
 
     @Override
-    public abstract ImmutableTree<T> remove(final T node);
+    ImmutableTree<T> remove(T node);
 
 }

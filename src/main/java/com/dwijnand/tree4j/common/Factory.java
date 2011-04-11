@@ -10,7 +10,6 @@ import com.google.common.base.Supplier;
  */
 public interface Factory<T> extends Supplier<T> {
 
-    // Override javadoc without inheriting to restrict
     /**
      * Retrieves a new instance of the appropriate type.
      *

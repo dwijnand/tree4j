@@ -8,7 +8,7 @@ package com.dwijnand.tree4j;
  */
 public interface MutableTree<T> extends Tree<T> {
 
-    // Override to restrict return type to MutableTreeSpec's
+    // Override to restrict return type to MutableTree
     @Override
     MutableTree<T> withRoot(T node);
 
@@ -20,7 +20,7 @@ public interface MutableTree<T> extends Tree<T> {
      */
     MutableTree<T> setRoot(T node);
 
-    // Override to restrict return type to MutableTreeSpec's
+    // Override to restrict return type to MutableTree
     @Override
     MutableTree<T> add(T parent, T child);
 
@@ -29,7 +29,7 @@ public interface MutableTree<T> extends Tree<T> {
      * parent node, in which case it throws an {@link IllegalArgumentException}.
      *
      * @param parent the parent node
-     * @param child the child node
+     * @param child  the child node
      * @return the mutable tree itself
      * @throws IllegalArgumentException if the tree doesn't contain parent node
      */
@@ -42,7 +42,7 @@ public interface MutableTree<T> extends Tree<T> {
      */
     void clear();
 
-    // Override to restrict return type to MutableTreeSpec's
+    // Override to restrict return type to MutableTree
     @Override
     MutableTree<T> remove(T node);
 

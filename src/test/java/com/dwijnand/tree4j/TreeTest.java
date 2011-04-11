@@ -1,5 +1,8 @@
 package com.dwijnand.tree4j;
 
+import java.util.Collection;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasItems;
 import static org.junit.Assert.assertEquals;
@@ -8,11 +11,6 @@ import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-
-import java.util.Collection;
-
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.junit.Rule;
 import org.junit.experimental.theories.Theory;
 import org.junit.rules.ExpectedException;
@@ -42,7 +40,7 @@ public class TreeTest {
     }
 
     // TODO consider identifying the tree with a checksum or digest
-    private final <T extends Tree<?>> int calculateIdentity(final T tree) {
+    private <T extends Tree<?>> int calculateIdentity(final T tree) {
         return HashCodeBuilder.reflectionHashCode(tree);
     }
 
