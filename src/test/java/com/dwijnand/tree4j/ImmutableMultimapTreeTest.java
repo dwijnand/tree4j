@@ -36,8 +36,6 @@ public class ImmutableMultimapTreeTest extends ImmutableTreeTest {
         parentsBuilderFactoryBuilder.add(ImmutableMultimapTree.ParentsBuilderFactory
                 .<String>usingImmutableMap());
         parentsBuilderFactoryBuilder.add(ImmutableMultimapTree.ParentsBuilderFactory
-                .<String>usingImmutableBiMap());
-        parentsBuilderFactoryBuilder.add(ImmutableMultimapTree.ParentsBuilderFactory
                 .<String>usingImmutableSortedMapInNaturalOrder());
         parentsBuilderFactoryBuilder.add(ImmutableMultimapTree.ParentsBuilderFactory
                 .<String>usingImmutableSortedMapInReverseOrder());

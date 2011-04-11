@@ -73,16 +73,6 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
         }
 
         // TODO add javadoc
-        public static <T> ParentsBuilderFactory<T> usingImmutableBiMap() {
-            return new ParentsBuilderFactory<T>() {
-                @Override
-                public ImmutableBiMap.Builder<T, T> get() {
-                    return ImmutableBiMap.builder();
-                }
-            };
-        }
-
-        // TODO add javadoc
         public static <T extends Comparable<T>> ParentsBuilderFactory<T>
         usingImmutableSortedMapInNaturalOrder() {
             return new ParentsBuilderFactory<T>() {
