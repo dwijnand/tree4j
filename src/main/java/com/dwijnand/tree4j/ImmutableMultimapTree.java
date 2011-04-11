@@ -10,7 +10,9 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.ImmutableSortedMap;
+import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Ordering;
+import java.util.Collection;
 import java.util.Comparator;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -31,22 +33,8 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
         }
 
         // TODO add javadoc
-        public static <T> ChildrenBuilderFactory<T>
-        newImmutableMultimapsBuildersFactory() {
+        public static <T> ChildrenBuilderFactory<T> usingListMultimap() {
             return new ChildrenBuilderFactory<T>() {
-
-                @Override
-                public ImmutableMultimap.Builder<T, T> get() {
-                    return ImmutableMultimap.builder();
-                }
-            };
-        }
-
-        // TODO add javadoc
-        public static <T> ChildrenBuilderFactory<T>
-        newImmutableListMultimapsBuildersFactory() {
-            return new ChildrenBuilderFactory<T>() {
-
                 @Override
                 public ImmutableListMultimap.Builder<T, T> get() {
                     return ImmutableListMultimap.builder();
@@ -55,17 +43,14 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
         }
 
         // TODO add javadoc
-        public static <T> ChildrenBuilderFactory<T>
-        newImmutableSetMultimapsBuildersFactory() {
+        public static <T> ChildrenBuilderFactory<T> usingSetMultimap() {
             return new ChildrenBuilderFactory<T>() {
-
                 @Override
                 public ImmutableSetMultimap.Builder<T, T> get() {
                     return ImmutableSetMultimap.builder();
                 }
             };
         }
-
     }
 
     // TODO add javadoc
@@ -76,10 +61,8 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
         }
 
         // TODO add javadoc
-        public static <T> ParentsBuilderFactory<T>
-        newImmutableMapsBuildersFactory() {
+        public static <T> ParentsBuilderFactory<T> usingImmutableMap() {
             return new ParentsBuilderFactory<T>() {
-
                 @Override
                 public ImmutableMap.Builder<T, T> get() {
                     return ImmutableMap.builder();
@@ -88,21 +71,18 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
         }
 
         // TODO add javadoc
-        public static <T> ParentsBuilderFactory<T>
-        newImmutableBiMapsBuildersFactory() {
+        public static <T> ParentsBuilderFactory<T> usingImmutableBiMap() {
             return new ParentsBuilderFactory<T>() {
-
                 @Override
                 public ImmutableBiMap.Builder<T, T> get() {
                     return ImmutableBiMap.builder();
                 }
-
             };
         }
 
         // TODO add javadoc
         public static <T extends Comparable<T>> ParentsBuilderFactory<T>
-        newImmutableSortedMapsBuildersFactoryNaturalOrder() {
+        usingImmutableSortedMapInNaturalOrder() {
             return new ParentsBuilderFactory<T>() {
 
                 @Override
@@ -116,7 +96,7 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
 
         // TODO add javadoc
         public static <T> ParentsBuilderFactory<T>
-        newImmutableSortedMapsBuildersFactoryOrderedBy(
+        usingImmutableSortedMapOrderedBy(
                 final Comparator<T> comparator) {
             return new ParentsBuilderFactory<T>() {
 
@@ -130,7 +110,7 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
 
         // TODO add javadoc
         public static <T extends Comparable<T>> ParentsBuilderFactory<T>
-        newImmutableSortedMapsBuildersFactoryReverseOrder() {
+        usingImmutableSortedMapInReverseOrder() {
             return new ParentsBuilderFactory<T>() {
 
                 @Override

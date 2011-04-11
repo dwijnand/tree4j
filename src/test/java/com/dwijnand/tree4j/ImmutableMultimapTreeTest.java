@@ -2,6 +2,7 @@ package com.dwijnand.tree4j;
 
 import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Ordering;
 import org.junit.experimental.theories.DataPoints;
 import org.junit.experimental.theories.Theories;
 import org.junit.runner.RunWith;
@@ -21,8 +22,10 @@ public class ImmutableMultimapTreeTest extends ImmutableTreeTest {
         final ImmutableList.Builder<ImmutableMultimapTree.ChildrenBuilderFactory<String>>
                 childrenBuilderFactoryBuilder = ImmutableList.builder();
 
-        childrenBuilderFactoryBuilder.add(ImmutableMultimapTree.ChildrenBuilderFactory
-                .<String>newImmutableMultimapsBuildersFactory());
+        childrenBuilderFactoryBuilder.add(
+                ImmutableMultimapTree.ChildrenBuilderFactory.<String>usingListMultimap());
+        childrenBuilderFactoryBuilder.add(
+                ImmutableMultimapTree.ChildrenBuilderFactory.<String>usingSetMultimap());
 
         CHILDREN_BUILDER_FACTORIES =
                 childrenBuilderFactoryBuilder.build();
@@ -31,19 +34,27 @@ public class ImmutableMultimapTreeTest extends ImmutableTreeTest {
                 parentsBuilderFactoryBuilder = ImmutableList.builder();
 
         parentsBuilderFactoryBuilder.add(ImmutableMultimapTree.ParentsBuilderFactory
-                .<String>newImmutableMapsBuildersFactory());
+                .<String>usingImmutableMap());
+        parentsBuilderFactoryBuilder.add(ImmutableMultimapTree.ParentsBuilderFactory
+                .<String>usingImmutableBiMap());
+        parentsBuilderFactoryBuilder.add(ImmutableMultimapTree.ParentsBuilderFactory
+                .<String>usingImmutableSortedMapInNaturalOrder());
+        parentsBuilderFactoryBuilder.add(ImmutableMultimapTree.ParentsBuilderFactory
+                .<String>usingImmutableSortedMapInReverseOrder());
+        parentsBuilderFactoryBuilder.add(ImmutableMultimapTree.ParentsBuilderFactory
+                .<String>usingImmutableSortedMapOrderedBy(Ordering.<String>natural()));
 
         PARENTS_BUILDER_FACTORIES = parentsBuilderFactoryBuilder.build();
     }
 
     @DataPoints
     public static ImmutableMultimapTree<?>[] data() {
-        final int childrenBuilderFactoryCount = CHILDREN_BUILDER_FACTORIES
-                .size();
-        final int parentsBuilderFactoryCount = PARENTS_BUILDER_FACTORIES
-                .size();
-        final int immutableTreeCount = childrenBuilderFactoryCount
-                * parentsBuilderFactoryCount;
+        final int childrenBuilderFactoryCount =
+                CHILDREN_BUILDER_FACTORIES.size();
+        final int parentsBuilderFactoryCount =
+                PARENTS_BUILDER_FACTORIES.size();
+        final int immutableTreeCount =
+                childrenBuilderFactoryCount * parentsBuilderFactoryCount;
 
         final ImmutableMultimapTree<?>[] immutableTrees =
                 new ImmutableMultimapTree[immutableTreeCount];
