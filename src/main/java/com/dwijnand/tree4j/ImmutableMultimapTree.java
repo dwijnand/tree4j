@@ -146,23 +146,23 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
 
     /**
      * The factory of immutable multimap builder instances, used to build the
-     * parent-children relationships of a new immutable multimap tree.
+     * parent-children associations of a new immutable multimap tree.
      */
     private final ChildrenBuilderFactory<T> childrenBuilderFactory;
 
     /**
      * The factory of immutable map builder instances, used to build the
-     * child-parent relationships of a new immutable multimap tree.
+     * child-parent associations of a new immutable multimap tree.
      */
     private final ParentsBuilderFactory<T> parentsBuilderFactory;
 
     /**
-     * The parent-children relationships of the tree.
+     * The parent-children associations of the tree.
      */
     private final ImmutableMultimap<T, T> children;
 
     /**
-     * The child-parent relationships of the tree.
+     * The child-parent associations of the tree.
      */
     private final ImmutableMap<T, T> parents;
 
@@ -175,7 +175,7 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
      * Creates a new immutable multimap tree using the specified
      * {@link ChildrenBuilderFactory} and {@link ParentsBuilderFactory}.
      * These factories are used to obtain builders required to constructing the
-     * parent-children and child-parent relationships within the tree.
+     * parent-children and child-parent associations within the tree.
      *
      * @param <T>                    the type of the nodes in the tree
      * @param childrenBuilderFactory an ImmutableMultimap builder factory

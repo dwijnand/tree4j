@@ -22,23 +22,23 @@ public class MultimapTree<T> implements MutableTree<T> {
 
     /**
      * The factory of mutable multimap instances, used to hold the
-     * parent-children relationships of the tree.
+     * parent-children associations of the tree.
      */
     private final Factory<? extends MutableMultimap<T, T>> childrenMultimapFactory;
 
     /**
      * The factory of mutable map instances, used to hold the child-parent
-     * relationships of the tree.
+     * associations of the tree.
      */
     private final Factory<? extends MutableMap<T, T>> parentsMapFactory;
 
     /**
-     * The parent-children relationships of the tree.
+     * The parent-children associations of the tree.
      */
     private final MutableMultimap<T, T> children;
 
     /**
-     * The child-parent relationships of the tree.
+     * The child-parent associations of the tree.
      */
     private final MutableMap<T, T> parents;
 
@@ -51,7 +51,7 @@ public class MultimapTree<T> implements MutableTree<T> {
      * Creates a new multimap tree using the specified {@link Multimap} and
      * {@link Map} factories. These factories are used to obtain multimaps and
      * maps required to construct the parent-children and child-parent
-     * relationships within the tree.
+     * associations within the tree.
      * <p/>
      * Factories of multimaps and maps are required, as opposed to simply a
      * multimap and a map, because some of the methods return a new instance of
