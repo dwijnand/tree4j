@@ -38,12 +38,12 @@ public abstract class ForwardingTree<T> extends ForwardingObject
     }
 
     @Override
-    public Tree<T> add(T parent, T child) {
-        return delegate().add(parent, child);
+    public Tree<T> plus(T parent, T child) {
+        return delegate().plus(parent, child);
     }
 
     @Override
-    public Tree<T> remove(T node) {
-        return delegate().remove(node);
+    public Tree<T> minus(T node) {
+        return delegate().minus(node);
     }
 }

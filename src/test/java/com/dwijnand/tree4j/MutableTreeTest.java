@@ -35,7 +35,7 @@ public class MutableTreeTest extends TreeTest {
     public void setRootShouldRemoveAllExistingNodes(
             final MutableTree<String> mutableTree) {
         mutableTree.setRoot("root");
-        mutableTree.added("root", "child");
+        mutableTree.add("root", "child");
 
         mutableTree.setRoot("new root");
 
@@ -43,11 +43,11 @@ public class MutableTreeTest extends TreeTest {
     }
 
     @Theory
-    public void addedShouldAddTheParentChildAssociation(
+    public void addShouldAddTheParentChildAssociation(
             final MutableTree<String> multimapTree) {
         multimapTree.setRoot("root");
 
-        multimapTree.added("root", "child");
+        multimapTree.add("root", "child");
 
         assertTrue(multimapTree.contains("root"));
         assertTrue(multimapTree.contains("child"));
@@ -55,20 +55,20 @@ public class MutableTreeTest extends TreeTest {
     }
 
     @Theory
-    public void addedShouldThrowAnIllegalArgumentExceptionOnUnknownParent(
+    public void addShouldThrowAnIllegalArgumentExceptionOnUnknownParent(
             final MutableTree<String> multimapTree) {
         expectedException.expect(IllegalArgumentException.class);
         expectedException
                 .expectMessage("does not contain parent node unknown parent");
 
-        multimapTree.added("unknown parent", "child");
+        multimapTree.add("unknown parent", "child");
     }
 
     @Theory
     public void clearShouldRemoveAllNodes(
             final MutableTree<String> multimapTree) {
         multimapTree.setRoot("root");
-        multimapTree.added("root", "child");
+        multimapTree.add("root", "child");
 
         multimapTree.clear();
 
@@ -77,15 +77,15 @@ public class MutableTreeTest extends TreeTest {
     }
 
     @Theory
-    public void removedShouldRemoveTheSpecifiedNodeAndAllOfItsChildren(
+    public void removeShouldRemoveTheSpecifiedNodeAndAllOfItsChildren(
             final MutableTree<String> multimapTree) {
         multimapTree.setRoot("root");
-        multimapTree.added("root", "males").added("root", "females")
-                .added("root", "unsure");
-        multimapTree.added("males", "Paul").added("males", "Peter");
-        multimapTree.added("females", "Maria");
+        multimapTree.add("root", "males").add("root", "females")
+                .add("root", "unsure");
+        multimapTree.add("males", "Paul").add("males", "Peter");
+        multimapTree.add("females", "Maria");
 
-        multimapTree.removed("males");
+        multimapTree.remove("males");
 
         assertFalse(multimapTree.contains("males"));
         final Collection<String> rootChildren = multimapTree

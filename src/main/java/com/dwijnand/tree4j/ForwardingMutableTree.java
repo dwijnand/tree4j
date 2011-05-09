@@ -42,13 +42,13 @@ public abstract class ForwardingMutableTree<T> extends ForwardingTree<T>
     }
 
     @Override
-    public MutableTree<T> add(T parent, T child) {
-        return delegate().add(parent, child);
+    public MutableTree<T> plus(T parent, T child) {
+        return delegate().plus(parent, child);
     }
 
     @Override
-    public MutableTree<T> added(T parent, T child) {
-        return delegate().added(parent, child);
+    public MutableTree<T> add(T parent, T child) {
+        return delegate().add(parent, child);
     }
 
     @Override
@@ -57,12 +57,12 @@ public abstract class ForwardingMutableTree<T> extends ForwardingTree<T>
     }
 
     @Override
-    public MutableTree<T> remove(T node) {
-        return delegate().remove(node);
+    public MutableTree<T> minus(T node) {
+        return delegate().minus(node);
     }
 
     @Override
-    public MutableTree<T> removed(T node) {
-        return delegate().removed(node);
+    public MutableTree<T> remove(T node) {
+        return delegate().remove(node);
     }
 }

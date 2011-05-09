@@ -93,7 +93,7 @@ public interface Tree<T> extends Iterable<Map.Entry<T, T>> {
      * @throws IllegalArgumentException if this tree doesn't contain the parent
      *                                  node
      */
-    Tree<T> add(T parent, T child);
+    Tree<T> plus(T parent, T child);
 
     // Removing methods
 
@@ -106,6 +106,6 @@ public interface Tree<T> extends Iterable<Map.Entry<T, T>> {
      * @param node a node
      * @return a new tree without the specified node and its children
      */
-    Tree<T> remove(T node);
+    Tree<T> minus(T node);
 
 }

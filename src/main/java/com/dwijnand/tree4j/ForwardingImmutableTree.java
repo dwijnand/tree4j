@@ -37,12 +37,12 @@ public abstract class ForwardingImmutableTree<T> extends ForwardingTree<T>
     }
 
     @Override
-    public ImmutableTree<T> add(T parent, T child) {
-        return delegate().add(parent, child);
+    public ImmutableTree<T> plus(T parent, T child) {
+        return delegate().plus(parent, child);
     }
 
     @Override
-    public ImmutableTree<T> remove(T node) {
-        return delegate().remove(node);
+    public ImmutableTree<T> minus(T node) {
+        return delegate().minus(node);
     }
 }

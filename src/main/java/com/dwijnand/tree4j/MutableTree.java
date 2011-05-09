@@ -22,7 +22,7 @@ public interface MutableTree<T> extends Tree<T> {
 
     // Override to restrict return type to MutableTree
     @Override
-    MutableTree<T> add(T parent, T child);
+    MutableTree<T> plus(T parent, T child);
 
     /**
      * Adds a new parent/child association, unless the tree doesn't contain the
@@ -33,7 +33,7 @@ public interface MutableTree<T> extends Tree<T> {
      * @return the mutable tree itself
      * @throws IllegalArgumentException if the tree doesn't contain parent node
      */
-    MutableTree<T> added(T parent, T child);
+    MutableTree<T> add(T parent, T child);
 
     // Removing methods
 
@@ -44,7 +44,7 @@ public interface MutableTree<T> extends Tree<T> {
 
     // Override to restrict return type to MutableTree
     @Override
-    MutableTree<T> remove(T node);
+    MutableTree<T> minus(T node);
 
     /**
      * Removes the specified node and all of its children nodes from the tree.
@@ -52,6 +52,6 @@ public interface MutableTree<T> extends Tree<T> {
      * @param node a node
      * @return the mutable tree itself
      */
-    MutableTree<T> removed(T node);
+    MutableTree<T> remove(T node);
 
 }

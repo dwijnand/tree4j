@@ -53,7 +53,7 @@ public class TreeTest {
     @Theory
     public void containsShouldReturnTrueOnAddedNode(Tree<String> tree) {
         tree = tree.withRoot("root");
-        tree = tree.add("root", "node");
+        tree = tree.plus("root", "node");
         assertTrue(tree.contains("node"));
         assertTreeNotModified();
     }
@@ -68,10 +68,10 @@ public class TreeTest {
     @Theory
     public void getParentShouldWorkCorrectly(Tree<String> tree) {
         tree = tree.withRoot("root");
-        tree = tree.add("root", "males").add("root", "females");
-        tree = tree.add("males", "Paul").add("males", "Peter")
-                .add("males", "John");
-        tree = tree.add("females", "Maria");
+        tree = tree.plus("root", "males").plus("root", "females");
+        tree = tree.plus("males", "Paul").plus("males", "Peter")
+                .plus("males", "John");
+        tree = tree.plus("females", "Maria");
 
         final String parent = tree.getParent("Peter");
 
@@ -113,19 +113,19 @@ public class TreeTest {
     @Theory
     public void setRootShouldClearTree(Tree<String> tree) {
         tree = tree.withRoot("God");
-        tree = tree.add("God", "Jesus");
+        tree = tree.plus("God", "Jesus");
         tree = tree.withRoot("Allah");
         assertFalse(tree.contains("Muhammad"));
         assertTreeNotModified();
     }
 
     @Theory
-    public void addShouldWorkCorrectly(Tree<String> tree) {
+    public void plusShouldWorkCorrectly(Tree<String> tree) {
         tree = tree.withRoot("root");
-        tree = tree.add("root", "males").add("root", "females");
-        tree = tree.add("males", "Paul").add("males", "Peter")
-                .add("males", "John");
-        tree = tree.add("females", "Maria");
+        tree = tree.plus("root", "males").plus("root", "females");
+        tree = tree.plus("males", "Paul").plus("males", "Peter")
+                .plus("males", "John");
+        tree = tree.plus("females", "Maria");
 
         final Collection<String> children = tree.getChildren("males");
 
@@ -135,20 +135,20 @@ public class TreeTest {
     }
 
     @Theory
-    public void addShouldReturnAnIdenticalTreeOnReinsertingNode(
+    public void plusShouldReturnAnIdenticalTreeOnReinsertingNode(
             Tree<String> tree) {
         tree = tree.withRoot("root");
-        tree = tree.add("root", "males").add("root", "females");
-        tree = tree.add("males", "Paul");
+        tree = tree.plus("root", "males").plus("root", "females");
+        tree = tree.plus("males", "Paul");
 
-        final Tree<String> newTree = tree.add("root", "males");
+        final Tree<String> newTree = tree.plus("root", "males");
 
         EqualsBuilder.reflectionEquals(tree, newTree);
         assertTreeNotModified();
     }
 
     @Theory
-    public void addShouldThrowIllegalArgumentExceptionOnInsertingAnUnknownParent(
+    public void plusShouldThrowIllegalArgumentExceptionOnInsertingAnUnknownParent(
             Tree<String> tree) {
         tree = tree.withRoot("root");
 
@@ -156,19 +156,19 @@ public class TreeTest {
         expectedException
                 .expectMessage("does not contain parent node unknown parent");
 
-        tree.add("unknown parent", "node");
+        tree.plus("unknown parent", "node");
         assertTreeNotModified();
     }
 
     @Theory
-    public void removeShouldCascadeRemove(Tree<String> tree) {
+    public void minusShouldCascadeRemove(Tree<String> tree) {
         tree = tree.withRoot("root");
-        tree = tree.add("root", "males").add("root", "females")
-                .add("root", "unsure");
-        tree = tree.add("males", "Peter").add("males", "Paul");
-        tree = tree.add("females", "Maria");
+        tree = tree.plus("root", "males").plus("root", "females")
+                .plus("root", "unsure");
+        tree = tree.plus("males", "Peter").plus("males", "Paul");
+        tree = tree.plus("females", "Maria");
 
-        tree = tree.remove("males");
+        tree = tree.minus("males");
 
         assertFalse(tree.contains("males"));
         final Collection<String> rootChildren = tree.getChildren("root");
@@ -180,13 +180,13 @@ public class TreeTest {
     }
 
     @Theory
-    public void removeShouldNotThrowAConcurrentModificationException(
+    public void minusShouldNotThrowAConcurrentModificationException(
             Tree<String> tree) {
         tree = tree.withRoot("root");
-        tree = tree.add("root", "males");
-        tree = tree.add("males", "Peter").add("males", "Paul");
+        tree = tree.plus("root", "males");
+        tree = tree.plus("males", "Peter").plus("males", "Paul");
 
-        tree.remove("males");
+        tree.minus("males");
         assertTreeNotModified();
     }
 

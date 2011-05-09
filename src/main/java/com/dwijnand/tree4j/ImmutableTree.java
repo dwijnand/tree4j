@@ -16,9 +16,9 @@ public interface ImmutableTree<T> extends Tree<T> {
     ImmutableTree<T> withRoot(T node);
 
     @Override
-    ImmutableTree<T> add(T parent, T child);
+    ImmutableTree<T> plus(T parent, T child);
 
     @Override
-    ImmutableTree<T> remove(T node);
+    ImmutableTree<T> minus(T node);
 
 }

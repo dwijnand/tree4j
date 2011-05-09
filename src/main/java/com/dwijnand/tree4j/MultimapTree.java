@@ -166,7 +166,7 @@ public class MultimapTree<T> implements MutableTree<T> {
             multimapTree.setRoot(tree.getRoot());
 
             for (Map.Entry<T, T> entry : tree) {
-                multimapTree.added(entry.getKey(), entry.getValue());
+                multimapTree.add(entry.getKey(), entry.getValue());
             }
 
             // TODO check and test this!
@@ -239,7 +239,7 @@ public class MultimapTree<T> implements MutableTree<T> {
     }
 
     @Override
-    public MultimapTree<T> add(final T parent, final T child) {
+    public MultimapTree<T> plus(final T parent, final T child) {
         checkNotNull(parent);
         checkNotNull(child);
         checkArgument(contains(parent),
@@ -256,7 +256,7 @@ public class MultimapTree<T> implements MutableTree<T> {
     }
 
     @Override
-    public MultimapTree<T> added(final T parent, final T child) {
+    public MultimapTree<T> add(final T parent, final T child) {
         checkNotNull(parent);
         checkNotNull(child);
         checkArgument(contains(parent),
@@ -290,7 +290,7 @@ public class MultimapTree<T> implements MutableTree<T> {
     }
 
     @Override
-    public MultimapTree<T> remove(final T node) {
+    public MultimapTree<T> minus(final T node) {
         checkNotNull(node);
 
         if (node == root) {
@@ -303,12 +303,12 @@ public class MultimapTree<T> implements MutableTree<T> {
         }
 
         final MultimapTree<T> multimapTree = copyOf(this);
-        multimapTree.removed(node);
+        multimapTree.remove(node);
         return multimapTree;
     }
 
     @Override
-    public MultimapTree<T> removed(final T node) {
+    public MultimapTree<T> remove(final T node) {
         checkNotNull(node);
 
         if (node == root) {
@@ -327,7 +327,7 @@ public class MultimapTree<T> implements MutableTree<T> {
         parents.remove(node);
 
         for (final T child : nodeChildren) {
-            removed(child);
+            remove(child);
         }
 
         return this;
