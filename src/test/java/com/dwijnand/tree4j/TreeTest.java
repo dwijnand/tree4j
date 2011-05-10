@@ -24,7 +24,7 @@ import org.junit.rules.ExpectedException;
 public class TreeTest {
 
     @Rule
-    public ExpectedException expectedException = ExpectedException.none();
+    public final ExpectedException expectedException = ExpectedException.none();
 
     private final Tree<?> tree;
 

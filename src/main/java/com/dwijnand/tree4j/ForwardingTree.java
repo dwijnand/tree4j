@@ -13,17 +13,17 @@ public abstract class ForwardingTree<T> extends ForwardingObject
     protected abstract Tree<T> delegate();
 
     @Override
-    public boolean contains(T node) {
+    public boolean contains(final T node) {
         return delegate().contains(node);
     }
 
     @Override
-    public T getParent(T node) {
+    public T getParent(final T node) {
         return delegate().getParent(node);
     }
 
     @Override
-    public Collection<T> getChildren(T node) {
+    public Collection<T> getChildren(final T node) {
         return delegate().getChildren(node);
     }
 
@@ -33,17 +33,17 @@ public abstract class ForwardingTree<T> extends ForwardingObject
     }
 
     @Override
-    public Tree<T> withRoot(T node) {
+    public Tree<T> withRoot(final T node) {
         return delegate().withRoot(node);
     }
 
     @Override
-    public Tree<T> plus(T parent, T child) {
+    public Tree<T> plus(final T parent, final T child) {
         return delegate().plus(parent, child);
     }
 
     @Override
-    public Tree<T> minus(T node) {
+    public Tree<T> minus(final T node) {
         return delegate().minus(node);
     }
 }

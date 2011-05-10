@@ -145,7 +145,7 @@ public class MultimapTree<T> implements MutableTree<T> {
         checkNotNull(tree);
 
         if (tree instanceof MultimapTree) {
-            MultimapTree<T> multimapTree = (MultimapTree<T>) tree;
+            final MultimapTree<T> multimapTree = (MultimapTree<T>) tree;
 
             final Factory<? extends MutableMultimap<T, T>> childrenMultimapFactory =
                     multimapTree.childrenMultimapFactory;
@@ -161,11 +161,11 @@ public class MultimapTree<T> implements MutableTree<T> {
             return new MultimapTree<T>(childrenMultimapFactory,
                     parentsMapFactory, children, parents, multimapTree.root);
         } else {
-            MultimapTree<T> multimapTree = create();
+            final MultimapTree<T> multimapTree = create();
 
             multimapTree.setRoot(tree.getRoot());
 
-            for (Map.Entry<T, T> entry : tree) {
+            for (final Map.Entry<T, T> entry : tree) {
                 multimapTree.add(entry.getKey(), entry.getValue());
             }
 
@@ -179,8 +179,8 @@ public class MultimapTree<T> implements MutableTree<T> {
         return new Factory<MutableMultimap<T, T>>() {
             @Override
             public MutableMultimap<T, T> get() {
-                Multimap<T, T> arrayListMultimap =
-                        ArrayListMultimap.<T, T>create();
+                final Multimap<T, T> arrayListMultimap =
+                        ArrayListMultimap.create();
                 return MutableMultimaps.wrap(arrayListMultimap);
             }
         };

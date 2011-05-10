@@ -220,24 +220,24 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
     }
 
     // TODO add javadoc
-    public static <T> ImmutableMultimapTree<T> copyOf(Tree<T> tree) {
+    public static <T> ImmutableMultimapTree<T> copyOf(final Tree<T> tree) {
         checkNotNull(tree);
 
         if (tree instanceof ImmutableMultimapTree) {
-            ImmutableMultimapTree<T> immutableMultimapTree =
+            final ImmutableMultimapTree<T> immutableMultimapTree =
                     (ImmutableMultimapTree<T>) tree;
 
-            ChildrenBuilderFactory<T> childrenBuilderFactory =
+            final ChildrenBuilderFactory<T> childrenBuilderFactory =
                     immutableMultimapTree.childrenBuilderFactory;
-            ParentsBuilderFactory<T> parentsBuilderFactory =
+            final ParentsBuilderFactory<T> parentsBuilderFactory =
                     immutableMultimapTree.parentsBuilderFactory;
 
-            ImmutableMultimap.Builder<T, T> childrenBuilder =
+            final ImmutableMultimap.Builder<T, T> childrenBuilder =
                     childrenBuilderFactory.get();
             childrenBuilder.putAll(immutableMultimapTree.children);
             final ImmutableMultimap<T, T> children = childrenBuilder.build();
 
-            ImmutableMap.Builder<T, T> parentsBuilder = parentsBuilderFactory.get();
+            final ImmutableMap.Builder<T, T> parentsBuilder = parentsBuilderFactory.get();
             parentsBuilder.putAll(immutableMultimapTree.parents);
             final ImmutableMap<T, T> parents = parentsBuilder.build();
 
@@ -247,12 +247,12 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
         } else {
             ImmutableMultimapTree<T> immutableMultimapTree = create();
 
-            T root = tree.getRoot();
+            final T root = tree.getRoot();
             immutableMultimapTree = immutableMultimapTree.withRoot(root);
 
-            for (Map.Entry<T, T> entry : tree) {
-                T key = entry.getKey();
-                T value = entry.getValue();
+            for (final Map.Entry<T, T> entry : tree) {
+                final T key = entry.getKey();
+                final T value = entry.getValue();
                 immutableMultimapTree = immutableMultimapTree.plus(key, value);
             }
 

@@ -12,17 +12,17 @@ public abstract class ForwardingImmutableTree<T> extends ForwardingTree<T>
     protected abstract ImmutableTree<T> delegate();
 
     @Override
-    public boolean contains(T node) {
+    public boolean contains(final T node) {
         return delegate().contains(node);
     }
 
     @Override
-    public T getParent(T node) {
+    public T getParent(final T node) {
         return delegate().getParent(node);
     }
 
     @Override
-    public Collection<T> getChildren(T node) {
+    public Collection<T> getChildren(final T node) {
         return delegate().getChildren(node);
     }
 
@@ -32,17 +32,17 @@ public abstract class ForwardingImmutableTree<T> extends ForwardingTree<T>
     }
 
     @Override
-    public ImmutableTree<T> withRoot(T node) {
+    public ImmutableTree<T> withRoot(final T node) {
         return delegate().withRoot(node);
     }
 
     @Override
-    public ImmutableTree<T> plus(T parent, T child) {
+    public ImmutableTree<T> plus(final T parent, final T child) {
         return delegate().plus(parent, child);
     }
 
     @Override
-    public ImmutableTree<T> minus(T node) {
+    public ImmutableTree<T> minus(final T node) {
         return delegate().minus(node);
     }
 }

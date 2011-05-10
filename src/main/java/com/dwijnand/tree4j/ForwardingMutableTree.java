@@ -12,17 +12,17 @@ public abstract class ForwardingMutableTree<T> extends ForwardingTree<T>
     protected abstract MutableTree<T> delegate();
 
     @Override
-    public boolean contains(T node) {
+    public boolean contains(final T node) {
         return delegate().contains(node);
     }
 
     @Override
-    public T getParent(T node) {
+    public T getParent(final T node) {
         return delegate().getParent(node);
     }
 
     @Override
-    public Collection<T> getChildren(T node) {
+    public Collection<T> getChildren(final T node) {
         return delegate().getChildren(node);
     }
 
@@ -32,22 +32,22 @@ public abstract class ForwardingMutableTree<T> extends ForwardingTree<T>
     }
 
     @Override
-    public MutableTree<T> withRoot(T node) {
+    public MutableTree<T> withRoot(final T node) {
         return delegate().withRoot(node);
     }
 
     @Override
-    public MutableTree<T> setRoot(T node) {
+    public MutableTree<T> setRoot(final T node) {
         return delegate().setRoot(node);
     }
 
     @Override
-    public MutableTree<T> plus(T parent, T child) {
+    public MutableTree<T> plus(final T parent, final T child) {
         return delegate().plus(parent, child);
     }
 
     @Override
-    public MutableTree<T> add(T parent, T child) {
+    public MutableTree<T> add(final T parent, final T child) {
         return delegate().add(parent, child);
     }
 
@@ -57,12 +57,12 @@ public abstract class ForwardingMutableTree<T> extends ForwardingTree<T>
     }
 
     @Override
-    public MutableTree<T> minus(T node) {
+    public MutableTree<T> minus(final T node) {
         return delegate().minus(node);
     }
 
     @Override
-    public MutableTree<T> remove(T node) {
+    public MutableTree<T> remove(final T node) {
         return delegate().remove(node);
     }
 }
