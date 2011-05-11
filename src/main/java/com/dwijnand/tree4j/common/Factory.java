@@ -9,7 +9,6 @@ import com.google.common.base.Supplier;
  * @param <T> the type of the objects supplied
  */
 public interface Factory<T> extends Supplier<T> {
-
     /**
      * Retrieves a new instance of the appropriate type.
      *
@@ -17,5 +16,4 @@ public interface Factory<T> extends Supplier<T> {
      */
     @Override
     T get();
-
 }

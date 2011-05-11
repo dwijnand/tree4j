@@ -32,18 +32,8 @@ public abstract class ForwardingMutableTree<T> extends ForwardingTree<T>
     }
 
     @Override
-    public MutableTree<T> withRoot(final T node) {
-        return delegate().withRoot(node);
-    }
-
-    @Override
     public MutableTree<T> setRoot(final T node) {
         return delegate().setRoot(node);
-    }
-
-    @Override
-    public MutableTree<T> plus(final T parent, final T child) {
-        return delegate().plus(parent, child);
     }
 
     @Override
@@ -54,11 +44,6 @@ public abstract class ForwardingMutableTree<T> extends ForwardingTree<T>
     @Override
     public void clear() {
         delegate().clear();
-    }
-
-    @Override
-    public MutableTree<T> minus(final T node) {
-        return delegate().minus(node);
     }
 
     @Override

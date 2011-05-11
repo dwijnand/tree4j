@@ -31,19 +31,4 @@ public abstract class ForwardingTree<T> extends ForwardingObject
     public T getRoot() {
         return delegate().getRoot();
     }
-
-    @Override
-    public Tree<T> withRoot(final T node) {
-        return delegate().withRoot(node);
-    }
-
-    @Override
-    public Tree<T> plus(final T parent, final T child) {
-        return delegate().plus(parent, child);
-    }
-
-    @Override
-    public Tree<T> minus(final T node) {
-        return delegate().minus(node);
-    }
 }

@@ -1,4 +1,4 @@
-package com.dwijnand.tree4j.test.helper;
+package com.dwijnand.tree4j.testutils;
 
 import com.dwijnand.tree4j.common.Factory;
 import com.dwijnand.tree4j.common.MutableMap;
@@ -11,12 +11,12 @@ import com.google.common.collect.Multimap;
 import java.util.Map;
 
 public final class Factories {
-
     private Factories() {
         // Utility class
     }
 
-    public static final Factory<MutableMultimap<String, String>> LINKED_HASH_MULTIMAP_FACTORY =
+    public static final Factory<MutableMultimap<String, String>>
+            LINKED_HASH_MULTIMAP_FACTORY =
             new Factory<MutableMultimap<String, String>>() {
                 @Override
                 public MutableMultimap<String, String> get() {
@@ -35,7 +35,8 @@ public final class Factories {
                 }
             };
 
-    public static final Factory<MutableMap<String, String>> LINKED_HASH_MAP_FACTORY =
+    public static final Factory<MutableMap<String, String>>
+            LINKED_HASH_MAP_FACTORY =
             new Factory<MutableMap<String, String>>() {
                 @Override
                 public MutableMap<String, String> get() {

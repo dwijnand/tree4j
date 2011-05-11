@@ -3,10 +3,11 @@ package com.dwijnand.tree4j;
 import com.dwijnand.tree4j.common.Factory;
 import com.dwijnand.tree4j.common.MutableMap;
 import com.dwijnand.tree4j.common.MutableMultimap;
-import static com.dwijnand.tree4j.test.helper.Factories.HASH_MAP_FACTORY;
-import static com.dwijnand.tree4j.test.helper.Factories.LINKED_HASH_MULTIMAP_FACTORY;
-import com.google.common.collect.ImmutableCollection;
+import static com.dwijnand.tree4j.testutils.Factories.HASH_MAP_FACTORY;
+import static com.dwijnand.tree4j.testutils.Factories.LINKED_HASH_MAP_FACTORY;
+import static com.dwijnand.tree4j.testutils.Factories.LINKED_HASH_MULTIMAP_FACTORY;
 import com.google.common.collect.ImmutableList;
+import java.util.Collection;
 import org.junit.experimental.theories.DataPoints;
 import org.junit.experimental.theories.Theories;
 import org.junit.runner.RunWith;
@@ -14,42 +15,39 @@ import org.junit.runner.RunWith;
 @RunWith(Theories.class)
 public class MultimapTreeTest extends MutableTreeTest {
 
-    private static final ImmutableCollection<Factory<MutableMultimap<String, String>>>
+    private static final Collection<Factory<MutableMultimap<String, String>>>
             MUTABLE_MULTIMAP_FACTORIES;
 
-    private static final ImmutableCollection<Factory<MutableMap<String, String>>>
+    private static final Collection<Factory<MutableMap<String, String>>>
             MUTABLE_MAP_FACTORIES;
 
     static {
         MUTABLE_MULTIMAP_FACTORIES =
                 ImmutableList.of(LINKED_HASH_MULTIMAP_FACTORY);
-        MUTABLE_MAP_FACTORIES = ImmutableList.of(HASH_MAP_FACTORY);
+        MUTABLE_MAP_FACTORIES =
+                ImmutableList.of(HASH_MAP_FACTORY, LINKED_HASH_MAP_FACTORY);
     }
 
     @DataPoints
     public static MutableTree<?>[] data() {
-        final int mutableMultimapFactoryCount =
-                MUTABLE_MULTIMAP_FACTORIES.size();
-        final int mutableMapFactoryCount = MUTABLE_MAP_FACTORIES.size();
-        final int mutableTreeCount =
-                mutableMultimapFactoryCount * mutableMapFactoryCount;
-
-        final MutableTree<?>[] mutableTrees = new MutableTree[mutableTreeCount];
+        final int count = MUTABLE_MULTIMAP_FACTORIES.size()
+                * MUTABLE_MAP_FACTORIES.size();
+        final MutableTree<?>[] data = new MutableTree[count];
 
         int i = 0;
-        for (final Factory<MutableMultimap<String, String>> mutableMultimapFactory
+        for (final Factory<MutableMultimap<String, String>> mmmapFactory
                 : MUTABLE_MULTIMAP_FACTORIES) {
-            for (final Factory<MutableMap<String, String>> mutableMapFactory
+            for (final Factory<MutableMap<String, String>> mmapFactory
                     : MUTABLE_MAP_FACTORIES) {
-                mutableTrees[i++] = MultimapTree.create(
-                        mutableMultimapFactory, mutableMapFactory);
+                data[i++] = MultimapTree.create(
+                        mmmapFactory.get(), mmapFactory.get());
             }
         }
 
-        return mutableTrees;
+        return data;
     }
 
-    public <T extends MultimapTree<?>> MultimapTreeTest(final T tree) {
+    public MultimapTreeTest(final MultimapTree<?> tree) {
         super(tree);
     }
 

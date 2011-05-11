@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Map;
 
 /**
+ * TODO revise javadoc
  * This interface defines the specification of a tree structure, also known as
  * an arborescence.
  * <p/>
@@ -31,9 +32,6 @@ import java.util.Map;
  * @see MutableTree
  */
 public interface Tree<T> extends Iterable<Map.Entry<T, T>> {
-
-    // Query methods
-
     /**
      * Tests whether the specified node is in the tree.
      *
@@ -69,43 +67,4 @@ public interface Tree<T> extends Iterable<Map.Entry<T, T>> {
      * @return the root, or {@code null} if no root is set
      */
     T getRoot();
-
-    // Adding methods
-
-    /**
-     * Creates a new tree with the specified node set as the root.
-     *
-     * @param node a node
-     * @return a new tree with the specified node set as the root
-     */
-    Tree<T> withRoot(T node);
-
-    /**
-     * Creates a new tree containing the same root and associations of this tree
-     * as well as a new association for the specified parent and child nodes,
-     * unless this tree doesn't contain the parent node, in which case it throws
-     * an {@link IllegalArgumentException}.
-     *
-     * @param parent the parent node
-     * @param child  the child node
-     * @return a new tree containing all the associations of this tree, the same
-     *         node set as root and the new parent/child association
-     * @throws IllegalArgumentException if this tree doesn't contain the parent
-     *                                  node
-     */
-    Tree<T> plus(T parent, T child);
-
-    // Removing methods
-
-    /**
-     * Creates a new tree containing the same root and associations of this
-     * tree, excluding the the specified node and its children nodes,
-     * recursively. If this tree doesn't contain the specified node, this tree
-     * is returned.
-     *
-     * @param node a node
-     * @return a new tree without the specified node and its children
-     */
-    Tree<T> minus(T node);
-
 }

@@ -6,12 +6,11 @@ public final class MutableMultimaps {
     private MutableMultimaps() {
     }
 
-    public static <T extends Multimap<K, V>, K, V> MutableMultimap<K, V> wrap(
-            final T map) {
+    public static <K, V> MutableMultimap<K, V> wrap(final Multimap<K, V> mMap) {
         return new ForwardingMutableMultimap<K, V>() {
             @Override
             protected Multimap<K, V> delegate() {
-                return map;
+                return mMap;
             }
         };
     }

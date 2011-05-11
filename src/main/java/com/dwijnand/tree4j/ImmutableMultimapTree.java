@@ -25,7 +25,6 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
  * @param <T> the type of the nodes in the tree
  */
 public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
-
     // TODO add javadoc
     public static abstract class ChildrenBuilderFactory<T>
             implements Factory<ImmutableMultimap.Builder<T, T>> {
@@ -112,7 +111,6 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
 
             };
         }
-
     }
 
     /**
@@ -237,7 +235,8 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
             childrenBuilder.putAll(immutableMultimapTree.children);
             final ImmutableMultimap<T, T> children = childrenBuilder.build();
 
-            final ImmutableMap.Builder<T, T> parentsBuilder = parentsBuilderFactory.get();
+            final ImmutableMap.Builder<T, T> parentsBuilder =
+                    parentsBuilderFactory.get();
             parentsBuilder.putAll(immutableMultimapTree.parents);
             final ImmutableMap<T, T> parents = parentsBuilder.build();
 
