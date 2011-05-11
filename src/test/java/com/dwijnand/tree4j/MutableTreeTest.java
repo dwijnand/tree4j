@@ -26,9 +26,9 @@ public class MutableTreeTest extends TreeTest {
     @Theory
     @Override
     public void containsShouldReturnTrueOnAddedNode(final Tree<String> tree) {
-        MutableTree<String> mutableTree = (MutableTree<String>) tree;
-        mutableTree = mutableTree.setRoot("root");
-        mutableTree = mutableTree.add("root", "node");
+        final MutableTree<String> mutableTree = (MutableTree<String>) tree;
+        mutableTree.setRoot("root");
+        mutableTree.add("root", "node");
         assertTrue(mutableTree.contains("node"));
         assertTreeNotModified();
     }
@@ -36,8 +36,8 @@ public class MutableTreeTest extends TreeTest {
     @Theory
     @Override
     public void containsShouldReturnTrueForSetRoot(final Tree<String> tree) {
-        MutableTree<String> mutableTree = (MutableTree<String>) tree;
-        mutableTree = mutableTree.setRoot("root");
+        final MutableTree<String> mutableTree = (MutableTree<String>) tree;
+        mutableTree.setRoot("root");
         assertTrue(mutableTree.contains("root"));
         assertTreeNotModified();
     }
@@ -45,14 +45,14 @@ public class MutableTreeTest extends TreeTest {
     @Theory
     @Override
     public void getParentShouldWorkCorrectly(final Tree<String> tree) {
-        MutableTree<String> mutableTree = (MutableTree<String>) tree;
-        mutableTree = mutableTree.setRoot("root");
-        mutableTree = mutableTree.add("root", "males");
-        mutableTree = mutableTree.add("root", "females");
-        mutableTree = mutableTree.add("males", "Paul");
-        mutableTree = mutableTree.add("males", "Peter");
-        mutableTree = mutableTree.add("males", "John");
-        mutableTree = mutableTree.add("females", "Maria");
+        final MutableTree<String> mutableTree = (MutableTree<String>) tree;
+        mutableTree.setRoot("root");
+        mutableTree.add("root", "males");
+        mutableTree.add("root", "females");
+        mutableTree.add("males", "Paul");
+        mutableTree.add("males", "Peter");
+        mutableTree.add("males", "John");
+        mutableTree.add("females", "Maria");
 
         final String parent = mutableTree.getParent("Peter");
 
@@ -63,8 +63,8 @@ public class MutableTreeTest extends TreeTest {
     @Theory
     @Override
     public void getRootShouldReturnSetRoot(final Tree<String> tree) {
-        MutableTree<String> mutableTree = (MutableTree<String>) tree;
-        mutableTree = mutableTree.setRoot("root");
+        final MutableTree<String> mutableTree = (MutableTree<String>) tree;
+        mutableTree.setRoot("root");
         assertEquals("root", mutableTree.getRoot());
         assertTreeNotModified();
     }
@@ -72,10 +72,10 @@ public class MutableTreeTest extends TreeTest {
     @Theory
     @Override
     public void setRootShouldClearTree(final Tree<String> tree) {
-        MutableTree<String> mutableTree = (MutableTree<String>) tree;
-        mutableTree = mutableTree.setRoot("God");
-        mutableTree = mutableTree.add("God", "Jesus");
-        mutableTree = mutableTree.setRoot("Allah");
+        final MutableTree<String> mutableTree = (MutableTree<String>) tree;
+        mutableTree.setRoot("God");
+        mutableTree.add("God", "Jesus");
+        mutableTree.setRoot("Allah");
         assertFalse(mutableTree.contains("Muhammad"));
         assertTreeNotModified();
     }

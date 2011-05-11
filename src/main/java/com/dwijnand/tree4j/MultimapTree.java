@@ -161,7 +161,7 @@ public class MultimapTree<T> implements MutableTree<T> {
             return this;
         }
 
-        addedInternal(parent, child);
+        addInternal(parent, child);
         return this;
     }
 
@@ -171,7 +171,7 @@ public class MultimapTree<T> implements MutableTree<T> {
      * @param parent the parent node
      * @param child  the child node
      */
-    private void addedInternal(final T parent, final T child) {
+    private void addInternal(final T parent, final T child) {
         children.put(parent, child);
         parents.put(child, parent);
     }
