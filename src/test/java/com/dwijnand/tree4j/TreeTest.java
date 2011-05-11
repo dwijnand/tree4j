@@ -1,7 +1,7 @@
 package com.dwijnand.tree4j;
 
+import com.dwijnand.tree4j.testutils.ObjectHashes;
 import java.util.Collection;
-import org.apache.commons.lang.builder.HashCodeBuilder;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -25,20 +25,19 @@ public abstract class TreeTest {
 
     private final Tree<?> tree;
 
-    private final int beforeHashCode;
+    private final long beforeHash;
 
     public TreeTest(final Tree<?> tree) {
         this.tree = tree;
-        beforeHashCode = calculateIdentity(tree);
+        beforeHash = calculateIdentity(tree);
     }
 
     protected final void assertTreeNotModified() {
-        assertEquals(beforeHashCode, calculateIdentity(tree));
+        assertEquals(beforeHash, calculateIdentity(tree));
     }
 
-    // TODO consider identifying the tree with a checksum or digest
-    private int calculateIdentity(final Tree<?> tree) {
-        return HashCodeBuilder.reflectionHashCode(tree);
+    private long calculateIdentity(final Tree<?> tree) {
+        return ObjectHashes.getCRCChecksum(tree);
     }
 
     @Theory
