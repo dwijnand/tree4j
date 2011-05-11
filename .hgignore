@@ -6,6 +6,7 @@ syntax: glob
 *.iws
 .checkstyle
 .classpath
+.idea
 .project
 .settings
 bin/
