@@ -26,15 +26,15 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
  */
 public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
     // TODO add javadoc
-    public static abstract class ChildrenBuilderFactory<T>
+    public static abstract class ChildrenMaker<T>
             implements Factory<ImmutableMultimap.Builder<T, T>> {
 
-        private ChildrenBuilderFactory() {
+        private ChildrenMaker() {
         }
 
         // TODO add javadoc
-        public static <T> ChildrenBuilderFactory<T> usingListMultimap() {
-            return new ChildrenBuilderFactory<T>() {
+        public static <T> ChildrenMaker<T> usingListMultimap() {
+            return new ChildrenMaker<T>() {
                 @Override
                 public ImmutableListMultimap.Builder<T, T> get() {
                     return ImmutableListMultimap.builder();
@@ -43,8 +43,8 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
         }
 
         // TODO add javadoc
-        public static <T> ChildrenBuilderFactory<T> usingSetMultimap() {
-            return new ChildrenBuilderFactory<T>() {
+        public static <T> ChildrenMaker<T> usingSetMultimap() {
+            return new ChildrenMaker<T>() {
                 @Override
                 public ImmutableSetMultimap.Builder<T, T> get() {
                     return ImmutableSetMultimap.builder();
@@ -54,15 +54,15 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
     }
 
     // TODO add javadoc
-    public static abstract class ParentsBuilderFactory<T>
+    public static abstract class ParentsMaker<T>
             implements Factory<ImmutableMap.Builder<T, T>> {
 
-        private ParentsBuilderFactory() {
+        private ParentsMaker() {
         }
 
         // TODO add javadoc
-        public static <T> ParentsBuilderFactory<T> usingImmutableMap() {
-            return new ParentsBuilderFactory<T>() {
+        public static <T> ParentsMaker<T> usingImmutableMap() {
+            return new ParentsMaker<T>() {
                 @Override
                 public ImmutableMap.Builder<T, T> get() {
                     return ImmutableMap.builder();
@@ -71,44 +71,40 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
         }
 
         // TODO add javadoc
-        public static <T extends Comparable<T>> ParentsBuilderFactory<T>
+        public static <T extends Comparable<T>> ParentsMaker<T>
         usingImmutableSortedMapInNaturalOrder() {
-            return new ParentsBuilderFactory<T>() {
 
+            return new ParentsMaker<T>() {
                 @Override
                 public ImmutableSortedMap.Builder<T, T> get() {
                     return new ImmutableSortedMap.Builder<T, T>(
                             Ordering.natural());
                 }
-
             };
         }
 
         // TODO add javadoc
-        public static <T> ParentsBuilderFactory<T>
-        usingImmutableSortedMapOrderedBy(
+        public static <T> ParentsMaker<T> usingImmutableSortedMapOrderedBy(
                 final Comparator<T> comparator) {
-            return new ParentsBuilderFactory<T>() {
 
+            return new ParentsMaker<T>() {
                 @Override
                 public ImmutableSortedMap.Builder<T, T> get() {
                     return new ImmutableSortedMap.Builder<T, T>(comparator);
                 }
-
             };
         }
 
         // TODO add javadoc
-        public static <T extends Comparable<T>> ParentsBuilderFactory<T>
+        public static <T extends Comparable<T>> ParentsMaker<T>
         usingImmutableSortedMapInReverseOrder() {
-            return new ParentsBuilderFactory<T>() {
 
+            return new ParentsMaker<T>() {
                 @Override
                 public ImmutableSortedMap.Builder<T, T> get() {
                     return new ImmutableSortedMap.Builder<T, T>(Ordering
                             .natural().reverse());
                 }
-
             };
         }
     }
@@ -117,13 +113,13 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
      * The factory of immutable multimap builder instances, used to build the
      * parent-children associations of a new immutable multimap tree.
      */
-    private final ChildrenBuilderFactory<T> childrenBuilderFactory;
+    private final ChildrenMaker<T> childrenMaker;
 
     /**
      * The factory of immutable map builder instances, used to build the
      * child-parent associations of a new immutable multimap tree.
      */
-    private final ParentsBuilderFactory<T> parentsBuilderFactory;
+    private final ParentsMaker<T> parentsMaker;
 
     /**
      * The parent-children associations of the tree.
@@ -142,45 +138,44 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
 
     /**
      * Creates a new immutable multimap tree using the specified
-     * {@link ChildrenBuilderFactory} and {@link ParentsBuilderFactory}.
+     * {@link ChildrenMaker} and {@link ParentsMaker}.
      * <p/>
      * These factories are used to obtain builders required to constructing the
      * parent-children and child-parent associations within the tree.
      *
-     * @param childrenBuilderFactory an ImmutableMultimap builder factory
-     * @param parentsBuilderFactory  an ImmutableMap builder factory
+     * @param childrenMaker an ImmutableMultimap builder factory
+     * @param parentsMaker  an ImmutableMap builder factory
      */
-    protected ImmutableMultimapTree(
-            final ChildrenBuilderFactory<T> childrenBuilderFactory,
-            final ParentsBuilderFactory<T> parentsBuilderFactory) {
-        this.childrenBuilderFactory = checkNotNull(childrenBuilderFactory);
-        this.parentsBuilderFactory = checkNotNull(parentsBuilderFactory);
-        children = childrenBuilderFactory.get().build();
-        parents = parentsBuilderFactory.get().build();
+    protected ImmutableMultimapTree(final ChildrenMaker<T> childrenMaker,
+                                    final ParentsMaker<T> parentsMaker) {
+        this.childrenMaker = checkNotNull(childrenMaker);
+        this.parentsMaker = checkNotNull(parentsMaker);
+        children = childrenMaker.get().build();
+        parents = parentsMaker.get().build();
         root = null;
     }
 
     /**
      * Creates a new multimap tree with the specified factories, associations
-     * and root node. See {@link #create(ChildrenBuilderFactory,
-     * ParentsBuilderFactory)} for more details.
+     * and root node. See {@link #create(ChildrenMaker, ParentsMaker)} for more
+     * details.
      * <p/>
      * This private constructor is used internally to set specific associations
      * and root node, including setting the root node to {@code null}.
      *
-     * @param childrenBuilderFactory an ImmutableMultimap builder factory
-     * @param parentsBuilderFactory  an ImmutableMap builder factory
-     * @param children               the parent-children associations to be used
-     * @param parents                the child-parent associations to be used
-     * @param root                   the root node
+     * @param childrenMaker an ImmutableMultimap builder factory
+     * @param parentsMaker  an ImmutableMap builder factory
+     * @param children      the parent-children associations to be used
+     * @param parents       the child-parent associations to be used
+     * @param root          the root node
      */
-    private ImmutableMultimapTree(
-            final ChildrenBuilderFactory<T> childrenBuilderFactory,
-            final ParentsBuilderFactory<T> parentsBuilderFactory,
-            final ImmutableMultimap<T, T> children,
-            final ImmutableMap<T, T> parents, final T root) {
-        this.childrenBuilderFactory = childrenBuilderFactory;
-        this.parentsBuilderFactory = parentsBuilderFactory;
+    private ImmutableMultimapTree(final ChildrenMaker<T> childrenMaker,
+                                  final ParentsMaker<T> parentsMaker,
+                                  final ImmutableMultimap<T, T> children,
+                                  final ImmutableMap<T, T> parents,
+                                  final T root) {
+        this.childrenMaker = childrenMaker;
+        this.parentsMaker = parentsMaker;
         this.children = children;
         this.parents = parents;
         this.root = root;
@@ -194,27 +189,26 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
      * @return a new immutable multimap tree
      */
     public static <T> ImmutableMultimapTree<T> create() {
-        return create(ChildrenBuilderFactory.<T>usingListMultimap(),
-                ParentsBuilderFactory.<T>usingImmutableMap());
+        return create(ChildrenMaker.<T>usingListMultimap(),
+                ParentsMaker.<T>usingImmutableMap());
     }
 
     /**
      * Creates a new immutable multimap tree using the specified
-     * {@link ChildrenBuilderFactory} and {@link ParentsBuilderFactory}.
+     * {@link ChildrenMaker} and {@link ParentsMaker}.
      * See the {@link
-     * ImmutableMultimapTree#ImmutableMultimapTree(ChildrenBuilderFactory, ParentsBuilderFactory)}
+     * ImmutableMultimapTree#ImmutableMultimapTree(ChildrenMaker, ParentsMaker)}
      * constructor for more details, as it calls that directly.
      *
-     * @param <T>                    the type of the nodes in the tree
-     * @param childrenBuilderFactory an ImmutableMultimap builder factory
-     * @param parentsBuilderFactory  an ImmutableMap builder factory
+     * @param <T>           the type of the nodes in the tree
+     * @param childrenMaker an ImmutableMultimap builder factory
+     * @param parentsMaker  an ImmutableMap builder factory
      * @return a new immutable multimap tree
      */
     public static <T> ImmutableMultimapTree<T> create(
-            final ChildrenBuilderFactory<T> childrenBuilderFactory,
-            final ParentsBuilderFactory<T> parentsBuilderFactory) {
-        return new ImmutableMultimapTree<T>(childrenBuilderFactory,
-                parentsBuilderFactory);
+            final ChildrenMaker<T> childrenMaker,
+            final ParentsMaker<T> parentsMaker) {
+        return new ImmutableMultimapTree<T>(childrenMaker, parentsMaker);
     }
 
     // TODO add javadoc
@@ -225,24 +219,21 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
             final ImmutableMultimapTree<T> immutableMultimapTree =
                     (ImmutableMultimapTree<T>) tree;
 
-            final ChildrenBuilderFactory<T> childrenBuilderFactory =
-                    immutableMultimapTree.childrenBuilderFactory;
-            final ParentsBuilderFactory<T> parentsBuilderFactory =
-                    immutableMultimapTree.parentsBuilderFactory;
-
             final ImmutableMultimap.Builder<T, T> childrenBuilder =
-                    childrenBuilderFactory.get();
-            childrenBuilder.putAll(immutableMultimapTree.children);
-            final ImmutableMultimap<T, T> children = childrenBuilder.build();
-
+                    immutableMultimapTree.childrenMaker.get();
             final ImmutableMap.Builder<T, T> parentsBuilder =
-                    parentsBuilderFactory.get();
+                    immutableMultimapTree.parentsMaker.get();
+
+            childrenBuilder.putAll(immutableMultimapTree.children);
             parentsBuilder.putAll(immutableMultimapTree.parents);
+
+            final ImmutableMultimap<T, T> children = childrenBuilder.build();
             final ImmutableMap<T, T> parents = parentsBuilder.build();
 
-            return new ImmutableMultimapTree<T>(childrenBuilderFactory,
-                    parentsBuilderFactory, children, parents,
-                    immutableMultimapTree.root);
+            return new ImmutableMultimapTree<T>(
+                    immutableMultimapTree.childrenMaker,
+                    immutableMultimapTree.parentsMaker,
+                    children, parents, immutableMultimapTree.root);
         } else {
             ImmutableMultimapTree<T> immutableMultimapTree = create();
 
@@ -250,9 +241,8 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
             immutableMultimapTree = immutableMultimapTree.withRoot(root);
 
             for (final Map.Entry<T, T> entry : tree) {
-                final T key = entry.getKey();
-                final T value = entry.getValue();
-                immutableMultimapTree = immutableMultimapTree.plus(key, value);
+                immutableMultimapTree = immutableMultimapTree.plus(
+                        entry.getKey(), entry.getValue());
             }
 
             // TODO check and test this!
@@ -289,14 +279,11 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
     public final ImmutableMultimapTree<T> withRoot(final T node) {
         checkNotNull(node);
 
-        final ImmutableMultimap<T, T> children =
-                childrenBuilderFactory.get().build();
+        final ImmutableMultimap<T, T> children = childrenMaker.get().build();
+        final ImmutableMap<T, T> parents = parentsMaker.get().build();
 
-        final ImmutableMap<T, T> parents =
-                parentsBuilderFactory.get().build();
-
-        return new ImmutableMultimapTree<T>(childrenBuilderFactory,
-                parentsBuilderFactory, children, parents, node);
+        return new ImmutableMultimapTree<T>(childrenMaker, parentsMaker,
+                children, parents, node);
     }
 
     @Override
@@ -304,19 +291,17 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
         checkNotNull(parent);
         checkNotNull(child);
 
-        checkArgument(contains(parent),
-                "%s does not contain parent node %s", getClass()
-                .getSimpleName(), parent);
+        checkArgument(contains(parent), "%s does not contain parent node %s",
+                getClass().getSimpleName(), parent);
 
         if (contains(child)) {
             return this;
         }
 
         final ImmutableMultimap.Builder<T, T> childrenBuilder =
-                childrenBuilderFactory.get();
-
+                childrenMaker.get();
         final ImmutableMap.Builder<T, T> parentsBuilder =
-                parentsBuilderFactory.get();
+                parentsMaker.get();
 
         childrenBuilder.putAll(children);
         parentsBuilder.putAll(parents);
@@ -326,8 +311,8 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
         final ImmutableMultimap<T, T> children = childrenBuilder.build();
         final ImmutableMap<T, T> parents = parentsBuilder.build();
 
-        return new ImmutableMultimapTree<T>(childrenBuilderFactory,
-                parentsBuilderFactory, children, parents, root);
+        return new ImmutableMultimapTree<T>(childrenMaker, parentsMaker,
+                children, parents, root);
     }
 
     /**
@@ -338,9 +323,10 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
      * @param childrenBuilder the parent-children association builder
      * @param parentsBuilder  the child-parent association builder
      */
-    private void addInternal(final T parent, final T child,
-                             final ImmutableMultimap.Builder<T, T> childrenBuilder,
-                             final ImmutableMap.Builder<T, T> parentsBuilder) {
+    private void addInternal(
+            final T parent, final T child,
+            final ImmutableMultimap.Builder<T, T> childrenBuilder,
+            final ImmutableMap.Builder<T, T> parentsBuilder) {
         childrenBuilder.put(parent, child);
         parentsBuilder.put(child, parent);
     }
@@ -351,7 +337,7 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
 
         if (node == root) {
             // optimisation
-            return create(childrenBuilderFactory, parentsBuilderFactory);
+            return create(childrenMaker, parentsMaker);
         }
 
         if (!contains(node)) {
@@ -359,9 +345,9 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
         }
 
         final ImmutableMultimap.Builder<T, T> childrenBuilder =
-                childrenBuilderFactory.get();
+                childrenMaker.get();
         final ImmutableMap.Builder<T, T> parentsBuilder =
-                parentsBuilderFactory.get();
+                parentsMaker.get();
 
         addRecursivelyExcludingNode(root, node, childrenBuilder,
                 parentsBuilder);
@@ -369,8 +355,8 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
         final ImmutableMultimap<T, T> children = childrenBuilder.build();
         final ImmutableMap<T, T> parents = parentsBuilder.build();
 
-        return new ImmutableMultimapTree<T>(childrenBuilderFactory,
-                parentsBuilderFactory, children, parents, root);
+        return new ImmutableMultimapTree<T>(childrenMaker, parentsMaker,
+                children, parents, root);
     }
 
     /**
@@ -389,17 +375,17 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
      * @param childrenBuilder a builder of parent-child associations
      * @param parentsBuilder  a builder of the child-parent associations
      */
-    private void addRecursivelyExcludingNode(final T node, final T excludeNode,
-                                             final ImmutableMultimap.Builder<T, T>
-                                                     childrenBuilder,
-                                             final ImmutableMap.Builder<T, T>
-                                                     parentsBuilder) {
+    private void addRecursivelyExcludingNode(
+            final T node, final T excludeNode,
+            final ImmutableMultimap.Builder<T, T> childrenBuilder,
+            final ImmutableMap.Builder<T, T> parentsBuilder) {
+
         final Collection<T> nodeChildren = getChildren(node);
         for (final T child : nodeChildren) {
             if (child != excludeNode) {
                 addInternal(node, child, childrenBuilder, parentsBuilder);
-                addRecursivelyExcludingNode(child, excludeNode,
-                        childrenBuilder, parentsBuilder);
+                addRecursivelyExcludingNode(child, excludeNode, childrenBuilder,
+                        parentsBuilder);
             }
         }
     }
@@ -425,5 +411,4 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
     public int hashCode() {
         return HashCodeBuilder.reflectionHashCode(this);
     }
-
 }

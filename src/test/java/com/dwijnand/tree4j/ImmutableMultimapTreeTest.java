@@ -1,6 +1,5 @@
 package com.dwijnand.tree4j;
 
-import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
@@ -11,58 +10,50 @@ import org.junit.runner.RunWith;
 
 @RunWith(Theories.class)
 public class ImmutableMultimapTreeTest extends ImmutableTreeTest {
-    private static final
-    ImmutableCollection<ImmutableMultimapTree.ChildrenBuilderFactory<String>>
-            CHILDREN_BUILDER_FACTORIES;
+    private static final Collection<ImmutableMultimapTree.ChildrenMaker<String>>
+            CHILDREN_MAKERS;
 
-    private static final
-    ImmutableCollection<ImmutableMultimapTree.ParentsBuilderFactory<String>>
-            PARENTS_BUILDER_FACTORIES;
+    private static final Collection<ImmutableMultimapTree.ParentsMaker<String>>
+            PARENTS_MAKERS;
 
     static {
-        final Collection<ImmutableMultimapTree.ChildrenBuilderFactory<String>>
-                childrenBuilderFactories = Lists.newArrayList();
+        final Collection<ImmutableMultimapTree.ChildrenMaker<String>> cms =
+                Lists.newArrayList();
 
-        childrenBuilderFactories.add(ImmutableMultimapTree
-                .ChildrenBuilderFactory.<String>usingListMultimap());
-        childrenBuilderFactories.add(ImmutableMultimapTree
-                .ChildrenBuilderFactory.<String>usingSetMultimap());
+        cms.add(ImmutableMultimapTree.ChildrenMaker.<String>usingSetMultimap());
+        cms.add(ImmutableMultimapTree.ChildrenMaker
+                .<String>usingListMultimap());
 
-        CHILDREN_BUILDER_FACTORIES =
-                ImmutableList.copyOf(childrenBuilderFactories);
+        CHILDREN_MAKERS = ImmutableList.copyOf(cms);
 
-        final Collection<ImmutableMultimapTree.ParentsBuilderFactory<String>>
-                parentsBuilderFactories = Lists.newArrayList();
+        final Collection<ImmutableMultimapTree.ParentsMaker<String>> pms =
+                Lists.newArrayList();
 
-        parentsBuilderFactories.add(ImmutableMultimapTree.ParentsBuilderFactory
-                .<String>usingImmutableMap());
-        parentsBuilderFactories.add(ImmutableMultimapTree.ParentsBuilderFactory
+        pms.add(ImmutableMultimapTree.ParentsMaker.<String>usingImmutableMap());
+        pms.add(ImmutableMultimapTree.ParentsMaker
                 .<String>usingImmutableSortedMapInNaturalOrder());
-        parentsBuilderFactories.add(ImmutableMultimapTree.ParentsBuilderFactory
+        pms.add(ImmutableMultimapTree.ParentsMaker
                 .<String>usingImmutableSortedMapInReverseOrder());
-        parentsBuilderFactories.add(ImmutableMultimapTree.ParentsBuilderFactory
+        pms.add(ImmutableMultimapTree.ParentsMaker
                 .<String>usingImmutableSortedMapOrderedBy(
                         Ordering.<String>natural()));
 
-        PARENTS_BUILDER_FACTORIES =
-                ImmutableList.copyOf(parentsBuilderFactories);
+        PARENTS_MAKERS = ImmutableList.copyOf(pms);
     }
 
     @DataPoints
     public static ImmutableMultimapTree<?>[] data() {
-        final int count = CHILDREN_BUILDER_FACTORIES.size()
-                * PARENTS_BUILDER_FACTORIES.size();
-
+        final int count = CHILDREN_MAKERS.size() * PARENTS_MAKERS.size();
         final ImmutableMultimapTree<?>[] data =
                 new ImmutableMultimapTree[count];
 
         int i = 0;
-        for (final ImmutableMultimapTree.ChildrenBuilderFactory<String>
-                childrenBuilderFactory : CHILDREN_BUILDER_FACTORIES) {
-            for (final ImmutableMultimapTree.ParentsBuilderFactory<String>
-                    parentsBuilderFactory : PARENTS_BUILDER_FACTORIES) {
+        for (final ImmutableMultimapTree.ChildrenMaker<String>
+                childrenMaker : CHILDREN_MAKERS) {
+            for (final ImmutableMultimapTree.ParentsMaker<String>
+                    parentsMaker : PARENTS_MAKERS) {
                 data[i++] = ImmutableMultimapTree.create(
-                        childrenBuilderFactory, parentsBuilderFactory);
+                        childrenMaker, parentsMaker);
             }
         }
 
