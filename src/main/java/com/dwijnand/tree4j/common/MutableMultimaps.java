@@ -2,6 +2,7 @@ package com.dwijnand.tree4j.common;
 
 import com.google.common.collect.Multimap;
 
+// TODO document this class entirely
 public final class MutableMultimaps {
     private MutableMultimaps() {
     }

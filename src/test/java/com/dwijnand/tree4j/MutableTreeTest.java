@@ -114,8 +114,8 @@ public class MutableTreeTest extends TreeTest {
     public void addShouldThrowAnIllegalArgumentExceptionOnUnknownParent(
             final MutableTree<String> multimapTree) {
         expectedException.expect(IllegalArgumentException.class);
-        expectedException
-                .expectMessage("does not contain parent node unknown parent");
+        expectedException.expectMessage("The tree doesn't contain the specified"
+                + " parent node: unknown parent");
 
         multimapTree.add("unknown parent", "child");
     }
@@ -136,9 +136,11 @@ public class MutableTreeTest extends TreeTest {
     public void removeShouldRemoveTheSpecifiedNodeAndAllOfItsChildren(
             final MutableTree<String> multimapTree) {
         multimapTree.setRoot("root");
-        multimapTree.add("root", "males").add("root", "females")
-                .add("root", "unsure");
-        multimapTree.add("males", "Paul").add("males", "Peter");
+        multimapTree.add("root", "males");
+        multimapTree.add("root", "females");
+        multimapTree.add("root", "unsure");
+        multimapTree.add("males", "Paul");
+        multimapTree.add("males", "Peter");
         multimapTree.add("females", "Maria");
 
         multimapTree.remove("males");

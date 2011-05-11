@@ -3,6 +3,7 @@ package com.dwijnand.tree4j;
 import com.google.common.collect.ForwardingObject;
 import java.util.Collection;
 
+// TODO document this class entirely
 public abstract class ForwardingTree<T> extends ForwardingObject
         implements Tree<T> {
 

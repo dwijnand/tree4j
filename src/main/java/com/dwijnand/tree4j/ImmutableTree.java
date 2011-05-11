@@ -1,45 +1,52 @@
 package com.dwijnand.tree4j;
 
 /**
- * TODO revise javadoc
- * This interface extends the {@link Tree} interface, with the additional
- * restriction that the object must be immutable (i.e. <strong>no</strong>
- * method should change the internal state of the object).
+ * An extension of the {@link Tree} interface with methods for returning
+ * modified copies of the tree. It also specifies immutability, and, as such it,
+ * <strong>no</strong> subclasses or sub-interface may define or implement
+ * methods that change the internal state of the tree (its root node and
+ * associations).
+ * <p/>
+ * <strong>Note:</strong><br/>
+ * A {@link NullPointerException} will <em>always</em> by thrown if
+ * <code>null</code> is passed were a node is expected, while an
+ * {@link IllegalArgumentException} will by thrown when a node which isn't
+ * contained in the tree, is passed to {@link #plus(Object, Object)} or
+ * {@link #minus(Object)}. Also, any method which would return an
+ * <em>identical</em> copy of the tree, returns the tree instead.
  *
  * @param <T> the type of the nodes in the tree
  */
 public interface ImmutableTree<T> extends Tree<T> {
     /**
-     * Creates a new tree with the specified node set as the root.
+     * Creates a new tree with the specified node set as the root, unless the
+     * specified node is already the root, in which case it returns
+     * itself.
      *
      * @param node a node
-     * @return a new tree with the specified node set as the root
+     * @return a new tree with the specified root node or itself
      */
     ImmutableTree<T> withRoot(T node);
 
     /**
-     * Creates a new tree containing the same root and associations of this tree
-     * as well as a new association for the specified parent and child nodes,
-     * unless this tree doesn't contain the parent node, in which case it throws
-     * an {@link IllegalArgumentException}.
+     * Creates a copy of this tree with additionally the specified parent-child
+     * association, unless this tree doesn't contain the parent node, in which
+     * case it throws an {@link IllegalArgumentException}.
      *
      * @param parent the parent node
      * @param child  the child node
-     * @return a new tree containing all the associations of this tree, the same
-     *         node set as root and the new parent/child association
-     * @throws IllegalArgumentException if this tree doesn't contain the parent
-     *                                  node
+     * @return a modified copy of this tree containing the new parent-child
+     *         association
      */
     ImmutableTree<T> plus(T parent, T child);
 
     /**
-     * Creates a new tree containing the same root and associations of this
-     * tree, excluding the the specified node and its children nodes,
-     * recursively. If this tree doesn't contain the specified node, this tree
-     * is returned.
+     * Creates a copy of this tree with without the specified mode and all of
+     * its children nodes, recursively.
      *
      * @param node a node
-     * @return a new tree without the specified node and its children
+     * @return a modified copy of this tree without the specified node and its
+     *         children
      */
     ImmutableTree<T> minus(T node);
 }

@@ -2,6 +2,7 @@ package com.dwijnand.tree4j;
 
 import java.util.Collection;
 
+// TODO document this class entirely
 public abstract class ForwardingImmutableTree<T> extends ForwardingTree<T>
         implements ImmutableTree<T> {
 

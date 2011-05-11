@@ -142,38 +142,35 @@ public class MultimapTree<T> implements MutableTree<T> {
     }
 
     @Override
-    public MultimapTree<T> setRoot(final T node) {
+    public boolean setRoot(final T node) {
         checkNotNull(node);
-        clear();
-        root = node;
-        return this;
+        if (root == node) {
+            return false;
+        } else {
+            // clear first, then set the root, otherwise the root is cleared too
+            clear();
+            root = node;
+            return true;
+        }
     }
 
     @Override
-    public MultimapTree<T> add(final T parent, final T child) {
+    public boolean add(final T parent, final T child) {
         checkNotNull(parent);
         checkNotNull(child);
-        checkArgument(contains(parent),
-                "%s does not contain parent node %s", getClass()
-                .getSimpleName(), parent);
+        checkArgument(contains(parent), "The tree doesn't contain the specified"
+                + " parent node: %s", parent);
+        checkArgument(!parents.containsKey(child), "The child node (%s) is " +
+                "already associated to another node", child);
 
-        if (contains(child)) {
-            return this;
+        if (parents.get(child) == parent) {
+            return false;
         }
 
-        addInternal(parent, child);
-        return this;
-    }
-
-    /**
-     * Adds a new parent/child association to the tree.
-     *
-     * @param parent the parent node
-     * @param child  the child node
-     */
-    private void addInternal(final T parent, final T child) {
         children.put(parent, child);
         parents.put(child, parent);
+
+        return true;
     }
 
     @Override
@@ -184,14 +181,16 @@ public class MultimapTree<T> implements MutableTree<T> {
     }
 
     @Override
-    public MultimapTree<T> remove(final T node) {
+    public boolean remove(final T node) {
         checkNotNull(node);
+        checkArgument(contains(node), "The tree doesn't contain the specified"
+                + " node: %s", node);
 
         if (node == root) {
             // optimisation
             root = null;
             clear();
-            return this;
+            return true;
         }
 
         Collection<T> nodeChildren = children.get(node);
@@ -206,7 +205,7 @@ public class MultimapTree<T> implements MutableTree<T> {
             remove(child);
         }
 
-        return this;
+        return true;
     }
 
     /**

@@ -30,11 +30,12 @@ public class MultimapTreeTest extends MutableTreeTest {
 
     @DataPoints
     public static MutableTree<?>[] data() {
-        final int count = MUTABLE_MULTIMAP_FACTORIES.size()
+        final int count = 1 + MUTABLE_MULTIMAP_FACTORIES.size()
                 * MUTABLE_MAP_FACTORIES.size();
         final MutableTree<?>[] data = new MutableTree[count];
 
         int i = 0;
+        data[i++] = MultimapTree.create();
         for (final Factory<MutableMultimap<String, String>> mmmapFactory
                 : MUTABLE_MULTIMAP_FACTORIES) {
             for (final Factory<MutableMap<String, String>> mmapFactory

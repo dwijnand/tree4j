@@ -25,14 +25,13 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
  * @param <T> the type of the nodes in the tree
  */
 public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
-    // TODO add javadoc
+    // TODO document this class entirely
     public static abstract class ChildrenMaker<T>
             implements Factory<ImmutableMultimap.Builder<T, T>> {
 
         private ChildrenMaker() {
         }
 
-        // TODO add javadoc
         public static <T> ChildrenMaker<T> usingListMultimap() {
             return new ChildrenMaker<T>() {
                 @Override
@@ -42,7 +41,6 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
             };
         }
 
-        // TODO add javadoc
         public static <T> ChildrenMaker<T> usingSetMultimap() {
             return new ChildrenMaker<T>() {
                 @Override
@@ -53,14 +51,13 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
         }
     }
 
-    // TODO add javadoc
+    // TODO document this class entirely
     public static abstract class ParentsMaker<T>
             implements Factory<ImmutableMap.Builder<T, T>> {
 
         private ParentsMaker() {
         }
 
-        // TODO add javadoc
         public static <T> ParentsMaker<T> usingImmutableMap() {
             return new ParentsMaker<T>() {
                 @Override
@@ -70,7 +67,6 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
             };
         }
 
-        // TODO add javadoc
         public static <T extends Comparable<T>> ParentsMaker<T>
         usingImmutableSortedMapInNaturalOrder() {
 
@@ -83,7 +79,6 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
             };
         }
 
-        // TODO add javadoc
         public static <T> ParentsMaker<T> usingImmutableSortedMapOrderedBy(
                 final Comparator<T> comparator) {
 
@@ -95,7 +90,6 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
             };
         }
 
-        // TODO add javadoc
         public static <T extends Comparable<T>> ParentsMaker<T>
         usingImmutableSortedMapInReverseOrder() {
 

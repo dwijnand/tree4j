@@ -2,6 +2,7 @@ package com.dwijnand.tree4j.common;
 
 import java.util.Map;
 
+// TODO document this class entirely
 public final class MutableMaps {
     private MutableMaps() {
     }

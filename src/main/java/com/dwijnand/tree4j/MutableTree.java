@@ -1,30 +1,35 @@
 package com.dwijnand.tree4j;
 
 /**
- * This interface extends the {@link Tree} interface with in-place modification
- * methods, making it the specification of a mutable tree.
+ * An extension of the {@link Tree} interface with added state-mutating methods.
+ * <p/>
+ * <strong>Note:</strong><br/>
+ * A {@link NullPointerException} will <em>always</em> by thrown if
+ * <code>null</code> is passed were a node is expected, while an
+ * {@link IllegalArgumentException} will by thrown when a node which isn't
+ * contained in the tree, is passed to {@link #add(Object, Object)} or
+ * {@link #remove(Object)}.
  *
  * @param <T> the type of the nodes in the tree
  */
 public interface MutableTree<T> extends Tree<T> {
     /**
-     * Sets the specified node as the root and removes all existing nodes.
+     * Sets the specified node as the root of the tree.
      *
      * @param node a node
-     * @return the mutable tree itself
+     * @return {@code true} if the tree was modified (the root node was changed)
      */
-    MutableTree<T> setRoot(T node);
+    boolean setRoot(T node);
 
     /**
-     * Adds a new parent/child association, unless the tree doesn't contain the
-     * parent node, in which case it throws an {@link IllegalArgumentException}.
+     * Adds a new parent/child association to the tree.
      *
-     * @param parent the parent node
-     * @param child  the child node
-     * @return the mutable tree itself
-     * @throws IllegalArgumentException if the tree doesn't contain parent node
+     * @param parent the parent node, an existing node of the tree
+     * @param child  the child node, a node not already associated to another
+     *               node
+     * @return {@code true} if the tree was modified (new association was added)
      */
-    MutableTree<T> add(T parent, T child);
+    boolean add(T parent, T child);
 
     /**
      * Removes all the nodes in the tree.
@@ -34,8 +39,9 @@ public interface MutableTree<T> extends Tree<T> {
     /**
      * Removes the specified node and all of its children nodes from the tree.
      *
-     * @param node a node
-     * @return the mutable tree itself
+     * @param node a node of the tree
+     * @return @{code true} if the tree was modified (the node and its children
+     *         nodes were removed)
      */
-    MutableTree<T> remove(T node);
+    boolean remove(T node);
 }

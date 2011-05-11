@@ -2,6 +2,7 @@ package com.dwijnand.tree4j;
 
 import java.util.Collection;
 
+// TODO document this class entirely
 public abstract class ForwardingMutableTree<T> extends ForwardingTree<T>
         implements MutableTree<T> {
 
@@ -32,12 +33,12 @@ public abstract class ForwardingMutableTree<T> extends ForwardingTree<T>
     }
 
     @Override
-    public MutableTree<T> setRoot(final T node) {
+    public boolean setRoot(final T node) {
         return delegate().setRoot(node);
     }
 
     @Override
-    public MutableTree<T> add(final T parent, final T child) {
+    public boolean add(final T parent, final T child) {
         return delegate().add(parent, child);
     }
 
@@ -47,7 +48,7 @@ public abstract class ForwardingMutableTree<T> extends ForwardingTree<T>
     }
 
     @Override
-    public MutableTree<T> remove(final T node) {
+    public boolean remove(final T node) {
         return delegate().remove(node);
     }
 }
