@@ -4,6 +4,7 @@ import java.util.Collection;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import org.junit.experimental.theories.Theory;
@@ -45,7 +46,7 @@ public class ImmutableTreeTest extends TreeTest {
 
     @Theory
     @Override
-    public void getParentShouldWorkCorrectly(final Tree<String> tree) {
+    public void getParentShouldReturnTheExpectedNode(final Tree<String> tree) {
         ImmutableTree<String> immutableTree = (ImmutableTree<String>) tree;
         immutableTree = immutableTree.withRoot("R");
         immutableTree = immutableTree.plus("R", "1");
@@ -60,6 +61,40 @@ public class ImmutableTreeTest extends TreeTest {
         assertTreeNotModified();
     }
 
+    @Override
+    public void getChildrenShouldReturnTheExpectedNodes(
+            final Tree<String> tree) {
+        ImmutableTree<String> immutableTree = (ImmutableTree<String>) tree;
+        immutableTree = immutableTree.withRoot("R");
+        immutableTree = immutableTree.plus("R", "1");
+        immutableTree = immutableTree.plus("R", "2");
+        immutableTree = immutableTree.plus("1", "a");
+        immutableTree = immutableTree.plus("1", "b");
+        immutableTree = immutableTree.plus("2", "c");
+
+        final Collection<String> children = immutableTree.getChildren("1");
+
+        assertEquals(2, children.size());
+        assertThat(children, hasItems("a", "b"));
+    }
+
+    @Override
+    public void getChildrenShouldReturnAnEmptyCollectionOnALeafNode(
+            final Tree<String> tree) {
+        ImmutableTree<String> immutableTree = (ImmutableTree<String>) tree;
+        immutableTree = immutableTree.withRoot("R");
+        immutableTree = immutableTree.plus("R", "1");
+        immutableTree = immutableTree.plus("R", "2");
+        immutableTree = immutableTree.plus("1", "a");
+        immutableTree = immutableTree.plus("1", "b");
+        immutableTree = immutableTree.plus("2", "c");
+
+        final Collection<String> children = immutableTree.getChildren("c");
+
+        assertNotNull(children);
+        assertEquals(0, children.size());
+    }
+
     @Theory
     @Override
     public void getRootShouldReturnSetRoot(final Tree<String> tree) {
@@ -70,12 +105,13 @@ public class ImmutableTreeTest extends TreeTest {
     }
 
     @Theory
-    @Override
-    public void setRootShouldClearTree(final Tree<String> tree) {
-        ImmutableTree<String> immutableTree = (ImmutableTree<String>) tree;
+    public void withRootShouldReturnATreeWithoutAPreviousNode(
+            ImmutableTree<String> immutableTree) {
         immutableTree = immutableTree.withRoot("R");
         immutableTree = immutableTree.plus("R", "1");
+
         immutableTree = immutableTree.withRoot("S");
+
         assertFalse(immutableTree.contains("1"));
         assertTreeNotModified();
     }

@@ -52,13 +52,25 @@ public abstract class TreeTest {
 
     public abstract void containsShouldReturnTrueForSetRoot(Tree<String> tree);
 
-    public abstract void getParentShouldWorkCorrectly(Tree<String> tree);
+    @Theory
+    public void getParentShouldThrowANPEOnNullNode(final Tree<String> tree) {
+        expectedException.expect(NullPointerException.class);
+        tree.getParent(null);
+    }
 
     @Theory
     public void getParentShouldThrowAnIAEOnUnknownNode(
             final Tree<String> tree) {
         expectedException.expect(IllegalArgumentException.class);
         tree.getParent("unknown node");
+    }
+
+    public abstract void getParentShouldReturnTheExpectedNode(Tree<String> tree);
+
+    @Theory
+    public void getChildrenShouldThrowANPEOnNullNode(final Tree<String> tree) {
+        expectedException.expect(NullPointerException.class);
+        tree.getChildren(null);
     }
 
     @Theory
@@ -68,6 +80,12 @@ public abstract class TreeTest {
         tree.getChildren("unknown node");
     }
 
+    public abstract void getChildrenShouldReturnTheExpectedNodes(
+            Tree<String> tree);
+
+    public abstract void getChildrenShouldReturnAnEmptyCollectionOnALeafNode(
+            Tree<String> tree);
+
     @Theory
     public void getRootShouldReturnNullBeforeSetRoot(final Tree<String> tree) {
         assertNull(tree.getRoot());
@@ -75,6 +93,4 @@ public abstract class TreeTest {
     }
 
     public abstract void getRootShouldReturnSetRoot(Tree<String> tree);
-
-    public abstract void setRootShouldClearTree(Tree<String> tree);
 }
