@@ -118,7 +118,8 @@ public class MultimapTree<T> implements MutableTree<T> {
 
     @Override
     public boolean contains(final T node) {
-        return node != null && (node == root || parents.containsKey(node));
+        checkNotNull(node);
+        return node == root || parents.containsKey(node);
     }
 
     @Override

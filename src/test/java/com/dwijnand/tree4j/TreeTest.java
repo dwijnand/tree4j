@@ -42,6 +42,12 @@ public abstract class TreeTest {
         assertTreeNotModified();
     }
 
+    @Theory
+    public void containsShouldThrowANPEOnNullNode(final Tree<String> tree) {
+        expectedException.expect(NullPointerException.class);
+        tree.contains(null);
+    }
+
     public abstract void containsShouldReturnTrueOnAddedNode(Tree<String> tree);
 
     public abstract void containsShouldReturnTrueForSetRoot(Tree<String> tree);

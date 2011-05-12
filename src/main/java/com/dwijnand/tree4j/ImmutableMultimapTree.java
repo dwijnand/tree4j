@@ -246,7 +246,8 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
 
     @Override
     public final boolean contains(final T node) {
-        return node != null && (node == root || parents.containsKey(node));
+        checkNotNull(node);
+        return node == root || parents.containsKey(node);
     }
 
     @Override
