@@ -4,9 +4,7 @@ import java.util.Collection;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 import org.junit.experimental.theories.Theory;
 import static org.junit.matchers.JUnitMatchers.hasItems;
 
@@ -23,85 +21,6 @@ import static org.junit.matchers.JUnitMatchers.hasItems;
 public class ImmutableTreeTest extends TreeTest {
     public ImmutableTreeTest(final ImmutableTree<?> tree) {
         super(tree);
-    }
-
-    @Theory
-    @Override
-    public void containsShouldReturnTrueOnAddedNode(final Tree<String> tree) {
-        ImmutableTree<String> immutableTree = (ImmutableTree<String>) tree;
-        immutableTree = immutableTree.withRoot("R");
-        immutableTree = immutableTree.plus("R", "1");
-        assertTrue(immutableTree.contains("1"));
-        assertTreeNotModified();
-    }
-
-    @Theory
-    @Override
-    public void containsShouldReturnTrueForSetRoot(final Tree<String> tree) {
-        ImmutableTree<String> immutableTree = (ImmutableTree<String>) tree;
-        immutableTree = immutableTree.withRoot("R");
-        assertTrue(immutableTree.contains("R"));
-        assertTreeNotModified();
-    }
-
-    @Theory
-    @Override
-    public void getParentShouldReturnTheExpectedNode(final Tree<String> tree) {
-        ImmutableTree<String> immutableTree = (ImmutableTree<String>) tree;
-        immutableTree = immutableTree.withRoot("R");
-        immutableTree = immutableTree.plus("R", "1");
-        immutableTree = immutableTree.plus("R", "2");
-        immutableTree = immutableTree.plus("1", "a");
-        immutableTree = immutableTree.plus("1", "b");
-        immutableTree = immutableTree.plus("2", "c");
-
-        final String parent = immutableTree.getParent("b");
-
-        assertEquals("1", parent);
-        assertTreeNotModified();
-    }
-
-    @Override
-    public void getChildrenShouldReturnTheExpectedNodes(
-            final Tree<String> tree) {
-        ImmutableTree<String> immutableTree = (ImmutableTree<String>) tree;
-        immutableTree = immutableTree.withRoot("R");
-        immutableTree = immutableTree.plus("R", "1");
-        immutableTree = immutableTree.plus("R", "2");
-        immutableTree = immutableTree.plus("1", "a");
-        immutableTree = immutableTree.plus("1", "b");
-        immutableTree = immutableTree.plus("2", "c");
-
-        final Collection<String> children = immutableTree.getChildren("1");
-
-        assertEquals(2, children.size());
-        assertThat(children, hasItems("a", "b"));
-    }
-
-    @Override
-    public void getChildrenShouldReturnAnEmptyCollectionOnALeafNode(
-            final Tree<String> tree) {
-        ImmutableTree<String> immutableTree = (ImmutableTree<String>) tree;
-        immutableTree = immutableTree.withRoot("R");
-        immutableTree = immutableTree.plus("R", "1");
-        immutableTree = immutableTree.plus("R", "2");
-        immutableTree = immutableTree.plus("1", "a");
-        immutableTree = immutableTree.plus("1", "b");
-        immutableTree = immutableTree.plus("2", "c");
-
-        final Collection<String> children = immutableTree.getChildren("c");
-
-        assertNotNull(children);
-        assertEquals(0, children.size());
-    }
-
-    @Theory
-    @Override
-    public void getRootShouldReturnSetRoot(final Tree<String> tree) {
-        ImmutableTree<String> immutableTree = (ImmutableTree<String>) tree;
-        immutableTree = immutableTree.withRoot("R");
-        assertEquals("R", immutableTree.getRoot());
-        assertTreeNotModified();
     }
 
     @Theory

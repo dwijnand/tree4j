@@ -3,11 +3,8 @@ package com.dwijnand.tree4j;
 import java.util.Collection;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import org.junit.experimental.theories.Theory;
-import static org.junit.matchers.JUnitMatchers.hasItems;
 
 /**
  * This class defines the tests for compliance to the specifications defined in
@@ -21,87 +18,6 @@ import static org.junit.matchers.JUnitMatchers.hasItems;
 public class MutableTreeTest extends TreeTest {
     public MutableTreeTest(final MutableTree<?> tree) {
         super(tree);
-    }
-
-    @Theory
-    @Override
-    public void containsShouldReturnTrueOnAddedNode(final Tree<String> tree) {
-        final MutableTree<String> mutableTree = (MutableTree<String>) tree;
-        mutableTree.setRoot("R");
-        mutableTree.add("R", "1");
-        assertTrue(mutableTree.contains("1"));
-        assertTreeNotModified();
-    }
-
-    @Theory
-    @Override
-    public void containsShouldReturnTrueForSetRoot(final Tree<String> tree) {
-        final MutableTree<String> mutableTree = (MutableTree<String>) tree;
-        mutableTree.setRoot("R");
-        assertTrue(mutableTree.contains("R"));
-        assertTreeNotModified();
-    }
-
-    @Theory
-    @Override
-    public void getParentShouldReturnTheExpectedNode(final Tree<String> tree) {
-        final MutableTree<String> mutableTree = (MutableTree<String>) tree;
-        mutableTree.setRoot("R");
-        mutableTree.add("R", "1");
-        mutableTree.add("R", "2");
-        mutableTree.add("1", "a");
-        mutableTree.add("1", "b");
-        mutableTree.add("2", "c");
-
-        final String parent = mutableTree.getParent("a");
-
-        assertEquals("1", parent);
-        assertTreeNotModified();
-    }
-
-    @Theory
-    @Override
-    public void getChildrenShouldReturnTheExpectedNodes(
-            final Tree<String> tree) {
-        final MutableTree<String> mutableTree = (MutableTree<String>) tree;
-        mutableTree.setRoot("R");
-        mutableTree.add("R", "1");
-        mutableTree.add("R", "2");
-        mutableTree.add("1", "a");
-        mutableTree.add("1", "b");
-        mutableTree.add("2", "c");
-
-        final Collection<String> children = mutableTree.getChildren("1");
-
-        assertEquals(2, children.size());
-        assertThat(children, hasItems("a", "b"));
-    }
-
-    @Theory
-    @Override
-    public void getChildrenShouldReturnAnEmptyCollectionOnALeafNode(
-            final Tree<String> tree) {
-        final MutableTree<String> mutableTree = (MutableTree<String>) tree;
-        mutableTree.setRoot("R");
-        mutableTree.add("R", "1");
-        mutableTree.add("R", "2");
-        mutableTree.add("1", "a");
-        mutableTree.add("1", "b");
-        mutableTree.add("2", "c");
-
-        final Collection<String> children = mutableTree.getChildren("c");
-
-        assertNotNull(children);
-        assertEquals(0, children.size());
-    }
-
-    @Theory
-    @Override
-    public void getRootShouldReturnSetRoot(final Tree<String> tree) {
-        final MutableTree<String> mutableTree = (MutableTree<String>) tree;
-        mutableTree.setRoot("R");
-        assertEquals("R", mutableTree.getRoot());
-        assertTreeNotModified();
     }
 
     @Theory

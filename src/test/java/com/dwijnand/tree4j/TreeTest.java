@@ -1,11 +1,16 @@
 package com.dwijnand.tree4j;
 
 import com.dwijnand.tree4j.testutils.ObjectHashes;
+import java.util.Collection;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import org.junit.Rule;
 import org.junit.experimental.theories.Theory;
+import static org.junit.matchers.JUnitMatchers.hasItems;
 import org.junit.rules.ExpectedException;
 
 /**
@@ -48,9 +53,20 @@ public abstract class TreeTest {
         tree.contains(null);
     }
 
-    public abstract void containsShouldReturnTrueOnAddedNode(Tree<String> tree);
+    @Theory
+    public void containsShouldReturnTrueOnAddedNode(Tree<String> tree) {
+        tree = withRoot(tree, "R");
+        tree = plus(tree, "R", "1");
+        assertTrue(tree.contains("1"));
+        assertTreeNotModified();
+    }
 
-    public abstract void containsShouldReturnTrueForSetRoot(Tree<String> tree);
+    @Theory
+    public void containsShouldReturnTrueForSetRoot(Tree<String> tree) {
+        tree = withRoot(tree, "R");
+        assertTrue(tree.contains("R"));
+        assertTreeNotModified();
+    }
 
     @Theory
     public void getParentShouldThrowANPEOnNullNode(final Tree<String> tree) {
@@ -65,7 +81,15 @@ public abstract class TreeTest {
         tree.getParent("unknown node");
     }
 
-    public abstract void getParentShouldReturnTheExpectedNode(Tree<String> tree);
+    @Theory
+    public void getParentShouldReturnTheExpectedNode(Tree<String> tree) {
+        tree = setupTreeTestData(tree);
+
+        final String parent = tree.getParent("a");
+
+        assertEquals("1", parent);
+        assertTreeNotModified();
+    }
 
     @Theory
     public void getChildrenShouldThrowANPEOnNullNode(final Tree<String> tree) {
@@ -80,11 +104,26 @@ public abstract class TreeTest {
         tree.getChildren("unknown node");
     }
 
-    public abstract void getChildrenShouldReturnTheExpectedNodes(
-            Tree<String> tree);
+    @Theory
+    public void getChildrenShouldReturnTheExpectedNodes(Tree<String> tree) {
+        tree = setupTreeTestData(tree);
 
-    public abstract void getChildrenShouldReturnAnEmptyCollectionOnALeafNode(
-            Tree<String> tree);
+        final Collection<String> children = tree.getChildren("1");
+
+        assertEquals(2, children.size());
+        assertThat(children, hasItems("a", "b"));
+    }
+
+    @Theory
+    public void getChildrenShouldReturnAnEmptyCollectionOnALeafNode(
+            Tree<String> tree) {
+        tree = setupTreeTestData(tree);
+
+        final Collection<String> children = tree.getChildren("c");
+
+        assertNotNull(children);
+        assertEquals(0, children.size());
+    }
 
     @Theory
     public void getRootShouldReturnNullBeforeSetRoot(final Tree<String> tree) {
@@ -92,11 +131,19 @@ public abstract class TreeTest {
         assertTreeNotModified();
     }
 
-    public abstract void getRootShouldReturnSetRoot(Tree<String> tree);
+    @Theory
+    public void getRootShouldReturnSetRoot(Tree<String> tree) {
+        tree = withRoot(tree, "R");
+        assertEquals("R", tree.getRoot());
+        assertTreeNotModified();
+    }
 
     public abstract Tree<String> withRoot(Tree<String> tree, String root);
+
     public abstract Tree<String> plus(Tree<String> tree, String parent,
                                       String child);
+
     public abstract Tree<String> minus(Tree<String> tree, String node);
+
     public abstract Tree<String> setupTreeTestData(Tree<String> tree);
 }
