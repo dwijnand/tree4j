@@ -26,7 +26,7 @@ public interface MutableTree<T> extends Tree<T> {
      *
      * @param parent the parent node, an existing node of the tree
      * @param child  the child node, a node not already associated to another
-     *               node
+     *               node, which isn't the specified parent node // TODO test this
      * @return {@code true} if the tree was modified (new association was added)
      */
     boolean add(T parent, T child);

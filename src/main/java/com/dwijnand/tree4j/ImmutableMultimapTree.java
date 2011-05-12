@@ -285,8 +285,14 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
         checkNotNull(parent);
         checkNotNull(child);
 
-        checkArgument(contains(parent), "%s does not contain parent node %s",
-                getClass().getSimpleName(), parent);
+        checkArgument(contains(parent), "The tree doesn't contain the specified"
+                + " parent node: %s", parent);
+
+        final T childParent = parents.get(child);
+        // TODO test both cases
+        checkArgument(childParent == null || childParent == parent, "The child "
+                + "node (%s) is already associated to another node", child);
+
 
         if (contains(child)) {
             return this;

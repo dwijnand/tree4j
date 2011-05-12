@@ -27,9 +27,9 @@ public class MutableTreeTest extends TreeTest {
     @Override
     public void containsShouldReturnTrueOnAddedNode(final Tree<String> tree) {
         final MutableTree<String> mutableTree = (MutableTree<String>) tree;
-        mutableTree.setRoot("root");
-        mutableTree.add("root", "node");
-        assertTrue(mutableTree.contains("node"));
+        mutableTree.setRoot("R");
+        mutableTree.add("R", "1");
+        assertTrue(mutableTree.contains("1"));
         assertTreeNotModified();
     }
 
@@ -37,8 +37,8 @@ public class MutableTreeTest extends TreeTest {
     @Override
     public void containsShouldReturnTrueForSetRoot(final Tree<String> tree) {
         final MutableTree<String> mutableTree = (MutableTree<String>) tree;
-        mutableTree.setRoot("root");
-        assertTrue(mutableTree.contains("root"));
+        mutableTree.setRoot("R");
+        assertTrue(mutableTree.contains("R"));
         assertTreeNotModified();
     }
 
@@ -46,17 +46,16 @@ public class MutableTreeTest extends TreeTest {
     @Override
     public void getParentShouldWorkCorrectly(final Tree<String> tree) {
         final MutableTree<String> mutableTree = (MutableTree<String>) tree;
-        mutableTree.setRoot("root");
-        mutableTree.add("root", "males");
-        mutableTree.add("root", "females");
-        mutableTree.add("males", "Paul");
-        mutableTree.add("males", "Peter");
-        mutableTree.add("males", "John");
-        mutableTree.add("females", "Maria");
+        mutableTree.setRoot("R");
+        mutableTree.add("R", "1");
+        mutableTree.add("R", "2");
+        mutableTree.add("1", "a");
+        mutableTree.add("1", "b");
+        mutableTree.add("2", "c");
 
-        final String parent = mutableTree.getParent("Peter");
+        final String parent = mutableTree.getParent("a");
 
-        assertEquals("males", parent);
+        assertEquals("1", parent);
         assertTreeNotModified();
     }
 
@@ -64,8 +63,8 @@ public class MutableTreeTest extends TreeTest {
     @Override
     public void getRootShouldReturnSetRoot(final Tree<String> tree) {
         final MutableTree<String> mutableTree = (MutableTree<String>) tree;
-        mutableTree.setRoot("root");
-        assertEquals("root", mutableTree.getRoot());
+        mutableTree.setRoot("R");
+        assertEquals("R", mutableTree.getRoot());
         assertTreeNotModified();
     }
 
@@ -73,41 +72,41 @@ public class MutableTreeTest extends TreeTest {
     @Override
     public void setRootShouldClearTree(final Tree<String> tree) {
         final MutableTree<String> mutableTree = (MutableTree<String>) tree;
-        mutableTree.setRoot("God");
-        mutableTree.add("God", "Jesus");
-        mutableTree.setRoot("Allah");
-        assertFalse(mutableTree.contains("Muhammad"));
+        mutableTree.setRoot("R");
+        mutableTree.add("R", "1");
+        mutableTree.setRoot("S");
+        assertFalse(mutableTree.contains("1"));
         assertTreeNotModified();
     }
 
     @Theory
     public void setRootShouldSetTheRoot(final MutableTree<String> mutableTree) {
-        mutableTree.setRoot("root");
+        mutableTree.setRoot("R");
 
-        assertEquals("root", mutableTree.getRoot());
+        assertEquals("R", mutableTree.getRoot());
     }
 
     @Theory
     public void setRootShouldRemoveAllExistingNodes(
             final MutableTree<String> mutableTree) {
-        mutableTree.setRoot("root");
-        mutableTree.add("root", "child");
+        mutableTree.setRoot("R");
+        mutableTree.add("R", "1");
 
-        mutableTree.setRoot("new root");
+        mutableTree.setRoot("S");
 
-        assertFalse(mutableTree.contains("child"));
+        assertFalse(mutableTree.contains("1"));
     }
 
     @Theory
     public void addShouldAddTheParentChildAssociation(
             final MutableTree<String> multimapTree) {
-        multimapTree.setRoot("root");
+        multimapTree.setRoot("R");
 
-        multimapTree.add("root", "child");
+        multimapTree.add("R", "1");
 
-        assertTrue(multimapTree.contains("root"));
-        assertTrue(multimapTree.contains("child"));
-        assertTrue(multimapTree.getChildren("root").contains("child"));
+        assertTrue(multimapTree.contains("R"));
+        assertTrue(multimapTree.contains("1"));
+        assertTrue(multimapTree.getChildren("R").contains("1"));
     }
 
     @Theory
@@ -123,35 +122,35 @@ public class MutableTreeTest extends TreeTest {
     @Theory
     public void clearShouldRemoveAllNodes(
             final MutableTree<String> multimapTree) {
-        multimapTree.setRoot("root");
-        multimapTree.add("root", "child");
+        multimapTree.setRoot("R");
+        multimapTree.add("R", "1");
 
         multimapTree.clear();
 
-        assertFalse(multimapTree.contains("root"));
-        assertFalse(multimapTree.contains("child"));
+        assertFalse(multimapTree.contains("R"));
+        assertFalse(multimapTree.contains("1"));
     }
 
     @Theory
     public void removeShouldRemoveTheSpecifiedNodeAndAllOfItsChildren(
             final MutableTree<String> multimapTree) {
-        multimapTree.setRoot("root");
-        multimapTree.add("root", "males");
-        multimapTree.add("root", "females");
-        multimapTree.add("root", "unsure");
-        multimapTree.add("males", "Paul");
-        multimapTree.add("males", "Peter");
-        multimapTree.add("females", "Maria");
+        multimapTree.setRoot("R");
+        multimapTree.add("R", "1");
+        multimapTree.add("R", "2");
+        multimapTree.add("R", "3");
+        multimapTree.add("1", "a");
+        multimapTree.add("1", "b");
+        multimapTree.add("2", "c");
 
-        multimapTree.remove("males");
+        multimapTree.remove("1");
 
-        assertFalse(multimapTree.contains("males"));
+        assertFalse(multimapTree.contains("1"));
         final Collection<String> rootChildren = multimapTree
-                .getChildren("root");
+                .getChildren("R");
         assertThat(2, is(rootChildren.size()));
-        assertFalse(rootChildren.contains("males"));
-        assertFalse(multimapTree.contains("Paul"));
-        assertNotSame("root", multimapTree.getParent("males"));
+        assertFalse(rootChildren.contains("1"));
+        assertFalse(multimapTree.contains("1"));
+        assertNotSame("R", multimapTree.getParent("1"));
     }
 
 }

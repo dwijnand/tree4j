@@ -30,11 +30,11 @@ public interface ImmutableTree<T> extends Tree<T> {
 
     /**
      * Creates a copy of this tree with additionally the specified parent-child
-     * association, unless this tree doesn't contain the parent node, in which
-     * case it throws an {@link IllegalArgumentException}.
+     * association.
      *
-     * @param parent the parent node
-     * @param child  the child node
+     * @param parent the parent node, an existing node of the tree
+     * @param child  the child node, a node not already associated to another
+     *               node, which isn't the specified parent node
      * @return a modified copy of this tree containing the new parent-child
      *         association
      */
@@ -44,7 +44,7 @@ public interface ImmutableTree<T> extends Tree<T> {
      * Creates a copy of this tree with without the specified mode and all of
      * its children nodes, recursively.
      *
-     * @param node a node
+     * @param node a node of the tree
      * @return a modified copy of this tree without the specified node and its
      *         children
      */
