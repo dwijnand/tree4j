@@ -1,7 +1,6 @@
 package com.dwijnand.tree4j;
 
 import com.dwijnand.tree4j.testutils.ObjectHashes;
-import java.util.Collection;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
@@ -53,23 +52,21 @@ public abstract class TreeTest {
     @Theory
     public void getParentShouldThrowAnIAEOnUnknownNode(
             final Tree<String> tree) {
-
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("The tree doesn't contain the " +
                 "specified node: unknown node");
 
         tree.getParent("unknown node");
-
-        assertTreeNotModified();
     }
 
     @Theory
-    public void getChildrenShouldReturnEmptyCollectionOnUnknownNode(
+    public void getChildrenShouldThrowAnIAEOnUnknownNode(
             final Tree<String> tree) {
-        final Collection<String> children = tree.getChildren("unknown node");
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("The tree doesn't contain the " +
+                "specified node: unknown node");
 
-        assertEquals(0, children.size());
-        assertTreeNotModified();
+        tree.getChildren("unknown node");
     }
 
     @Theory

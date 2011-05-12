@@ -131,7 +131,10 @@ public class MultimapTree<T> implements MutableTree<T> {
 
     @Override
     public Collection<T> getChildren(final T node) {
-        return children.get(checkNotNull(node));
+        checkNotNull(node);
+        checkArgument(contains(node), "The tree doesn't contain the specified"
+                + " node: %s", node);
+        return children.get(node);
     }
 
     @Override
