@@ -110,9 +110,6 @@ public class MutableTreeTest extends TreeTest {
     public void addShouldThrowAnIllegalArgumentExceptionOnUnknownParent(
             final MutableTree<String> multimapTree) {
         expectedException.expect(IllegalArgumentException.class);
-        expectedException.expectMessage("The tree doesn't contain the " +
-                "specified parent node: unknown parent");
-
         multimapTree.add("unknown parent", "child");
     }
 
@@ -149,5 +146,4 @@ public class MutableTreeTest extends TreeTest {
         assertFalse(rootChildren.contains("1"));
         assertFalse(multimapTree.contains("1"));
     }
-
 }

@@ -116,8 +116,6 @@ public class ImmutableTreeTest extends TreeTest {
         immutableTree = immutableTree.withRoot("R");
 
         expectedException.expect(IllegalArgumentException.class);
-        expectedException.expectMessage("The tree doesn't contain the " +
-                "specified parent node: unknown parent");
 
         immutableTree.plus("unknown parent", "node");
         assertTreeNotModified();

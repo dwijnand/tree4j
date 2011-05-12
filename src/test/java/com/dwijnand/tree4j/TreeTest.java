@@ -15,7 +15,6 @@ import org.junit.rules.ExpectedException;
  */
 // TODO make methods final
 public abstract class TreeTest {
-
     @Rule
     @SuppressWarnings({"PublicField"})
     public ExpectedException expectedException = ExpectedException.none();
@@ -53,9 +52,6 @@ public abstract class TreeTest {
     public void getParentShouldThrowAnIAEOnUnknownNode(
             final Tree<String> tree) {
         expectedException.expect(IllegalArgumentException.class);
-        expectedException.expectMessage("The tree doesn't contain the " +
-                "specified node: unknown node");
-
         tree.getParent("unknown node");
     }
 
@@ -63,9 +59,6 @@ public abstract class TreeTest {
     public void getChildrenShouldThrowAnIAEOnUnknownNode(
             final Tree<String> tree) {
         expectedException.expect(IllegalArgumentException.class);
-        expectedException.expectMessage("The tree doesn't contain the " +
-                "specified node: unknown node");
-
         tree.getChildren("unknown node");
     }
 
