@@ -251,7 +251,10 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
 
     @Override
     public final T getParent(final T node) {
-        return parents.get(checkNotNull(node));
+        checkNotNull(node);
+        checkArgument(contains(node), "The tree doesn't contain the specified"
+                + " node: %s", node);
+        return parents.get(node);
     }
 
     @Override

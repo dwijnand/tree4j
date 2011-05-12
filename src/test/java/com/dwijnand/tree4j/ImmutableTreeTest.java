@@ -4,7 +4,6 @@ import java.util.Collection;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import org.junit.experimental.theories.Theory;
@@ -142,7 +141,7 @@ public class ImmutableTreeTest extends TreeTest {
         assertEquals(2, rootChildren.size());
         assertFalse(rootChildren.contains("1"));
         assertFalse(immutableTree.contains("a"));
-        assertNotSame("R", immutableTree.getParent("1"));
+
         assertTreeNotModified();
     }
 

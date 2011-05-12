@@ -5,7 +5,6 @@ import java.util.Collection;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
 import org.junit.Rule;
 import org.junit.experimental.theories.Theory;
 import org.junit.rules.ExpectedException;
@@ -52,11 +51,15 @@ public abstract class TreeTest {
     public abstract void getParentShouldWorkCorrectly(Tree<String> tree);
 
     @Theory
-    public void getParentShouldReturnNullForUnknownNode(
+    public void getParentShouldThrowAnIAEOnUnknownNode(
             final Tree<String> tree) {
-        final String parent = tree.getParent("unknown node");
 
-        assertNull(parent);
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("The tree doesn't contain the " +
+                "specified node: unknown node");
+
+        tree.getParent("unknown node");
+
         assertTreeNotModified();
     }
 

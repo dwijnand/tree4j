@@ -3,8 +3,6 @@ package com.dwijnand.tree4j;
 import java.util.Collection;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import org.junit.experimental.theories.Theory;
 
@@ -150,7 +148,6 @@ public class MutableTreeTest extends TreeTest {
         assertEquals(2, rootChildren.size());
         assertFalse(rootChildren.contains("1"));
         assertFalse(multimapTree.contains("1"));
-        assertNotSame("R", multimapTree.getParent("1"));
     }
 
 }
