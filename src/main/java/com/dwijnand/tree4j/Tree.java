@@ -23,7 +23,8 @@ import java.util.Map;
  * @param <T> the type of the nodes in the tree
  * @see ImmutableTree
  * @see MutableTree
- * @see http://en.wikipedia.org/wiki/Arborescence_(graph_theory)
+ * @see <a href="http://en.wikipedia.org/wiki/Arborescence_(graph_theory)">
+ *      Arborescence (Wikipedia)</a>
  */
 public interface Tree<T> extends Iterable<Map.Entry<T, T>> {
     /**
