@@ -182,4 +182,41 @@ public class MutableTreeTest extends TreeTest {
         assertFalse(rootChildren.contains("1"));
         assertFalse(mutableTree.contains("1"));
     }
+
+    @Override
+    public Tree<String> withOrSetRoot(final Tree<String> tree,
+                                      final String root) {
+        ((MutableTree<String>) tree).setRoot(root);
+        return tree;
+    }
+
+    @Override
+    public Tree<String> plusOrAdd(final Tree<String> tree, final String parent,
+                                  final String child) {
+        ((MutableTree<String>) tree).add(parent, child);
+        return tree;
+    }
+
+    @Override
+    public Tree<String> minusOrRemove(final Tree<String> tree,
+                                      final String node) {
+        ((MutableTree<String>) tree).remove(node);
+        return tree;
+    }
+
+    @Override
+    public Tree<String> setupTreeTestData(final Tree<String> tree) {
+        return setupTreeTestData((MutableTree<String>) tree);
+    }
+
+    private static MutableTree<String> setupTreeTestData(
+            final MutableTree<String> mutableTree) {
+        mutableTree.setRoot("R");
+        mutableTree.add("R", "1");
+        mutableTree.add("R", "2");
+        mutableTree.add("1", "a");
+        mutableTree.add("1", "b");
+        mutableTree.add("2", "c");
+        return mutableTree;
+    }
 }

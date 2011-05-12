@@ -190,4 +190,38 @@ public class ImmutableTreeTest extends TreeTest {
         immutableTree.minus("1");
         assertTreeNotModified();
     }
+
+    @Override
+    public Tree<String> withOrSetRoot(final Tree<String> tree,
+                                      final String root) {
+        return ((ImmutableTree<String>) tree).withRoot(root);
+    }
+
+    @Override
+    public Tree<String> plusOrAdd(final Tree<String> tree,
+                                  final String parent, final String child) {
+        return ((ImmutableTree<String>) tree).plus(parent, child);
+    }
+
+    @Override
+    public Tree<String> minusOrRemove(final Tree<String> tree,
+                                      final String node) {
+        return ((ImmutableTree<String>) tree).minus(node);
+    }
+
+    @Override
+    public Tree<String> setupTreeTestData(final Tree<String> tree) {
+        return setupTreeTestData((ImmutableTree<String>) tree);
+    }
+
+    private static ImmutableTree<String> setupTreeTestData(
+            ImmutableTree<String> immutableTree) {
+        immutableTree = immutableTree.withRoot("R");
+        immutableTree = immutableTree.plus("R", "1");
+        immutableTree = immutableTree.plus("R", "2");
+        immutableTree = immutableTree.plus("1", "a");
+        immutableTree = immutableTree.plus("1", "b");
+        immutableTree = immutableTree.plus("2", "c");
+        return immutableTree;
+    }
 }
