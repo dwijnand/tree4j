@@ -192,20 +192,20 @@ public class ImmutableTreeTest extends TreeTest {
     }
 
     @Override
-    public Tree<String> withOrSetRoot(final Tree<String> tree,
-                                      final String root) {
+    public Tree<String> withRoot(final Tree<String> tree,
+                                 final String root) {
         return ((ImmutableTree<String>) tree).withRoot(root);
     }
 
     @Override
-    public Tree<String> plusOrAdd(final Tree<String> tree,
-                                  final String parent, final String child) {
+    public Tree<String> plus(final Tree<String> tree,
+                             final String parent, final String child) {
         return ((ImmutableTree<String>) tree).plus(parent, child);
     }
 
     @Override
-    public Tree<String> minusOrRemove(final Tree<String> tree,
-                                      final String node) {
+    public Tree<String> minus(final Tree<String> tree,
+                              final String node) {
         return ((ImmutableTree<String>) tree).minus(node);
     }
 

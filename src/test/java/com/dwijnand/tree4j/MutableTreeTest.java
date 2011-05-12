@@ -184,22 +184,22 @@ public class MutableTreeTest extends TreeTest {
     }
 
     @Override
-    public Tree<String> withOrSetRoot(final Tree<String> tree,
-                                      final String root) {
+    public Tree<String> withRoot(final Tree<String> tree,
+                                 final String root) {
         ((MutableTree<String>) tree).setRoot(root);
         return tree;
     }
 
     @Override
-    public Tree<String> plusOrAdd(final Tree<String> tree, final String parent,
-                                  final String child) {
+    public Tree<String> plus(final Tree<String> tree, final String parent,
+                             final String child) {
         ((MutableTree<String>) tree).add(parent, child);
         return tree;
     }
 
     @Override
-    public Tree<String> minusOrRemove(final Tree<String> tree,
-                                      final String node) {
+    public Tree<String> minus(final Tree<String> tree,
+                              final String node) {
         ((MutableTree<String>) tree).remove(node);
         return tree;
     }

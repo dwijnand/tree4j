@@ -94,9 +94,9 @@ public abstract class TreeTest {
 
     public abstract void getRootShouldReturnSetRoot(Tree<String> tree);
 
-    public abstract Tree<String> withOrSetRoot(Tree<String> tree, String root);
-    public abstract Tree<String> plusOrAdd(Tree<String> tree, String parent,
-                                           String child);
-    public abstract Tree<String> minusOrRemove(Tree<String> tree, String node);
+    public abstract Tree<String> withRoot(Tree<String> tree, String root);
+    public abstract Tree<String> plus(Tree<String> tree, String parent,
+                                      String child);
+    public abstract Tree<String> minus(Tree<String> tree, String node);
     public abstract Tree<String> setupTreeTestData(Tree<String> tree);
 }
