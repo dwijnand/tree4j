@@ -192,8 +192,7 @@ public class ImmutableTreeTest extends TreeTest {
     }
 
     @Override
-    public Tree<String> withRoot(final Tree<String> tree,
-                                 final String root) {
+    public Tree<String> withRoot(final Tree<String> tree, final String root) {
         return ((ImmutableTree<String>) tree).withRoot(root);
     }
 
@@ -204,8 +203,7 @@ public class ImmutableTreeTest extends TreeTest {
     }
 
     @Override
-    public Tree<String> minus(final Tree<String> tree,
-                              final String node) {
+    public Tree<String> minus(final Tree<String> tree, final String node) {
         return ((ImmutableTree<String>) tree).minus(node);
     }
 
