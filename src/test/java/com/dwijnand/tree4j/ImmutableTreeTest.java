@@ -2,14 +2,13 @@ package com.dwijnand.tree4j;
 
 import java.util.Collection;
 import org.apache.commons.lang.builder.EqualsBuilder;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.hasItems;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import org.junit.experimental.theories.Theory;
+import static org.junit.matchers.JUnitMatchers.hasItems;
 
 /**
  * This class defines the tests for compliance to the specifications defined in
@@ -93,7 +92,7 @@ public class ImmutableTreeTest extends TreeTest {
 
         final Collection<String> children = immutableTree.getChildren("1");
 
-        assertThat(2, is(children.size()));
+        assertEquals(2, children.size());
         assertThat(children, hasItems("a", "b"));
         assertTreeNotModified();
     }
@@ -118,15 +117,15 @@ public class ImmutableTreeTest extends TreeTest {
         immutableTree = immutableTree.withRoot("R");
 
         expectedException.expect(IllegalArgumentException.class);
-        expectedException
-                .expectMessage("The tree doesn't contain the specified parent" +
-                        " node: unknown parent");
+        expectedException.expectMessage("The tree doesn't contain the " +
+                "specified parent node: unknown parent");
 
         immutableTree.plus("unknown parent", "node");
         assertTreeNotModified();
     }
 
     @Theory
+    // TODO split this into smaller asserting tests
     public void minusShouldCascadeRemove(ImmutableTree<String> immutableTree) {
         immutableTree = immutableTree.withRoot("R");
         immutableTree = immutableTree.plus("R", "1");
@@ -140,7 +139,7 @@ public class ImmutableTreeTest extends TreeTest {
 
         assertFalse(immutableTree.contains("1"));
         final Collection<String> rootChildren = immutableTree.getChildren("R");
-        assertThat(2, is(rootChildren.size()));
+        assertEquals(2, rootChildren.size());
         assertFalse(rootChildren.contains("1"));
         assertFalse(immutableTree.contains("a"));
         assertNotSame("R", immutableTree.getParent("1"));

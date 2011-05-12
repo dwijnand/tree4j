@@ -2,7 +2,6 @@ package com.dwijnand.tree4j;
 
 import com.dwijnand.tree4j.testutils.ObjectHashes;
 import java.util.Collection;
-import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
@@ -66,7 +65,7 @@ public abstract class TreeTest {
             final Tree<String> tree) {
         final Collection<String> children = tree.getChildren("unknown node");
 
-        assertThat(0, is(children.size()));
+        assertEquals(0, children.size());
         assertTreeNotModified();
     }
 

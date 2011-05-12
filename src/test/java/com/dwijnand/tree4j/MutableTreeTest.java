@@ -1,7 +1,6 @@
 package com.dwijnand.tree4j;
 
 import java.util.Collection;
-import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotSame;
@@ -113,8 +112,8 @@ public class MutableTreeTest extends TreeTest {
     public void addShouldThrowAnIllegalArgumentExceptionOnUnknownParent(
             final MutableTree<String> multimapTree) {
         expectedException.expect(IllegalArgumentException.class);
-        expectedException.expectMessage("The tree doesn't contain the specified"
-                + " parent node: unknown parent");
+        expectedException.expectMessage("The tree doesn't contain the " +
+                "specified parent node: unknown parent");
 
         multimapTree.add("unknown parent", "child");
     }
@@ -132,6 +131,7 @@ public class MutableTreeTest extends TreeTest {
     }
 
     @Theory
+    // TODO split this into smaller asserting tests
     public void removeShouldRemoveTheSpecifiedNodeAndAllOfItsChildren(
             final MutableTree<String> multimapTree) {
         multimapTree.setRoot("R");
@@ -147,7 +147,7 @@ public class MutableTreeTest extends TreeTest {
         assertFalse(multimapTree.contains("1"));
         final Collection<String> rootChildren = multimapTree
                 .getChildren("R");
-        assertThat(2, is(rootChildren.size()));
+        assertEquals(2, rootChildren.size());
         assertFalse(rootChildren.contains("1"));
         assertFalse(multimapTree.contains("1"));
         assertNotSame("R", multimapTree.getParent("1"));
