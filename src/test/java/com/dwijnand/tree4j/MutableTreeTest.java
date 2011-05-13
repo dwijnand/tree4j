@@ -1,6 +1,6 @@
 package com.dwijnand.tree4j;
 
-import java.util.Collection;
+import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
@@ -112,13 +112,10 @@ public class MutableTreeTest extends TreeTest {
     }
 
     @Theory
-    public void addShouldModifyTheTreeWithANewAssociation(
+    public void addShouldReturnTrueOnModifyingTheTreeByAddingANewAssociation(
             final MutableTree<String> mutableTree) {
         mutableTree.setRoot("R");
-
-        final boolean modified = mutableTree.add("R", "1");
-
-        assertTrue(modified);
+        assertTrue(mutableTree.add("R", "1"));
     }
 
     @Theory
@@ -154,25 +151,37 @@ public class MutableTreeTest extends TreeTest {
     }
 
     @Theory
-    // TODO split this into smaller asserting tests
-    public void removeShouldRemoveTheSpecifiedNodeAndAllOfItsChildren(
+    public void removeShouldThrowANPEOnNullNode(
             final MutableTree<String> mutableTree) {
         mutableTree.setRoot("R");
-        mutableTree.add("R", "1");
-        mutableTree.add("R", "2");
-        mutableTree.add("R", "3");
-        mutableTree.add("1", "a");
-        mutableTree.add("1", "b");
-        mutableTree.add("2", "c");
+        expectedException.expect(NullPointerException.class);
+        mutableTree.remove(null);
+    }
+
+    @Theory
+    public void removeShouldThrowAIAEOnUnknownNode(
+            final MutableTree<String> mutableTree) {
+        mutableTree.setRoot("R");
+        expectedException.expect(IllegalArgumentException.class);
+        mutableTree.remove("unknown node");
+    }
+
+    @Theory
+    public void removeShouldRemoveTheSpecifiedNodeAndAllOfItsChildren(
+            final MutableTree<String> mutableTree) {
+        setupTreeTestData(mutableTree);
 
         mutableTree.remove("1");
 
         assertFalse(mutableTree.contains("1"));
-        final Collection<String> rootChildren = mutableTree
-                .getChildren("R");
-        assertEquals(2, rootChildren.size());
-        assertFalse(rootChildren.contains("1"));
-        assertFalse(mutableTree.contains("1"));
+        assertThat(mutableTree.getChildren("R"), not(hasItem("1")));
+    }
+
+    @Theory
+    void removeShouldReturnTrueOnModifyingTheTreeByRemovingANode(
+            final MutableTree<String> mutableTree) {
+        setupTreeTestData(mutableTree);
+        assertTrue(mutableTree.remove("1"));
     }
 
     @Override
