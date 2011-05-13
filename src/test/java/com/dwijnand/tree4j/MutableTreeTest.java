@@ -3,8 +3,10 @@ package com.dwijnand.tree4j;
 import java.util.Collection;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import org.junit.experimental.theories.Theory;
+import static org.junit.matchers.JUnitMatchers.hasItem;
 
 /**
  * This class defines the tests for compliance to the specifications defined in
@@ -21,17 +23,15 @@ public class MutableTreeTest extends TreeTest {
     }
 
     @Theory
-    public void setRootShouldClearTree(final MutableTree<String> mutableTree) {
-        mutableTree.setRoot("R");
-        mutableTree.add("R", "1");
-        mutableTree.setRoot("S");
-        assertFalse(mutableTree.contains("1"));
+    public void setRootShouldThrowANPEOnNullNode(
+            final MutableTree<String> mutableTree) {
+        expectedException.expect(NullPointerException.class);
+        mutableTree.setRoot(null);
     }
 
     @Theory
     public void setRootShouldSetTheRoot(final MutableTree<String> mutableTree) {
         mutableTree.setRoot("R");
-
         assertEquals("R", mutableTree.getRoot());
     }
 
@@ -47,7 +47,61 @@ public class MutableTreeTest extends TreeTest {
     }
 
     @Theory
-    public void addShouldAddTheParentChildAssociation(
+    public void addShouldThrowANPEOnNullParentNode(
+            final MutableTree<String> mutableTree) {
+        mutableTree.setRoot("R");
+        expectedException.expect(NullPointerException.class);
+        mutableTree.add(null, "1");
+    }
+
+    @Theory
+    public void addShouldThrowANPEOnNullChildNode(
+            final MutableTree<String> mutableTree) {
+        mutableTree.setRoot("R");
+        expectedException.expect(NullPointerException.class);
+        mutableTree.add("R", null);
+    }
+
+    @Theory
+    public void addShouldThrowAnIAEOnUnknownParentNode(
+            final MutableTree<String> mutableTree) {
+        mutableTree.setRoot("R");
+        expectedException.expect(IllegalArgumentException.class);
+        mutableTree.add("unknown node", "1");
+    }
+
+    @Theory
+    public void addShouldThrowAnIAEWhenAssociatingAChildNodeToAnotherParentNode(
+            final MutableTree<String> mutableTree) {
+        mutableTree.setRoot("R");
+        mutableTree.add("R", "1");
+        mutableTree.add("R", "2");
+        mutableTree.add("1", "a");
+        expectedException.expect(IllegalArgumentException.class);
+        mutableTree.add("2", "a");
+    }
+
+    @Theory
+    public void addShouldNotThrowAnIAEWhenAddingTheSameAssociationTwice(
+            final MutableTree<String> mutableTree) {
+        mutableTree.setRoot("R");
+        mutableTree.add("R", "1");
+        mutableTree.add("1", "a");
+        mutableTree.add("1", "a");
+    }
+
+    @Theory
+    public void addShouldReturnFalseWhenAddingTheSameAssociationTwice(
+            final MutableTree<String> mutableTree) {
+        mutableTree.setRoot("R");
+        mutableTree.add("R", "1");
+        mutableTree.add("1", "a");
+        final boolean modified = mutableTree.add("1", "a");
+        assertFalse(modified);
+    }
+
+    @Theory
+    public void addShouldAddTheNodesToTheTree(
             final MutableTree<String> mutableTree) {
         mutableTree.setRoot("R");
 
@@ -55,14 +109,36 @@ public class MutableTreeTest extends TreeTest {
 
         assertTrue(mutableTree.contains("R"));
         assertTrue(mutableTree.contains("1"));
-        assertTrue(mutableTree.getChildren("R").contains("1"));
     }
 
     @Theory
-    public void addShouldThrowAnIllegalArgumentExceptionOnUnknownParent(
+    public void addShouldModifyTheTreeWithANewAssociation(
             final MutableTree<String> mutableTree) {
-        expectedException.expect(IllegalArgumentException.class);
-        mutableTree.add("unknown parent", "child");
+        mutableTree.setRoot("R");
+
+        final boolean modified = mutableTree.add("R", "1");
+
+        assertTrue(modified);
+    }
+
+    @Theory
+    public void addShouldAddTheChildNodeToTheChildrenOfTheParentNode(
+            final MutableTree<String> mutableTree) {
+        mutableTree.setRoot("R");
+
+        mutableTree.add("R", "1");
+
+        assertThat(mutableTree.getChildren("R"), hasItem("1"));
+    }
+
+    @Theory
+    public void addShouldSetTheParentNodeAsTheParentOfTheChildNode(
+            final MutableTree<String> mutableTree) {
+        mutableTree.setRoot("R");
+
+        mutableTree.add("R", "1");
+
+        assertEquals("R", mutableTree.getParent("1"));
     }
 
     @Theory
