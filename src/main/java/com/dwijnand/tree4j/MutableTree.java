@@ -14,7 +14,8 @@ package com.dwijnand.tree4j;
  */
 public interface MutableTree<T> extends Tree<T> {
     /**
-     * Sets the specified node as the root of the tree.
+     * Sets the specified node as the root of the tree, removing all previous
+     * nodes unless the specified node already was the root node.
      *
      * @param node a node
      * @return {@code true} if the tree was modified (the root node was changed)
