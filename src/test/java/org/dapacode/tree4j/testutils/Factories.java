@@ -1,13 +1,13 @@
 package org.dapacode.tree4j.testutils;
 
+import com.google.common.collect.LinkedHashMultimap;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Multimap;
 import org.dapacode.tree4j.common.Factory;
 import org.dapacode.tree4j.common.MutableMap;
 import org.dapacode.tree4j.common.MutableMaps;
 import org.dapacode.tree4j.common.MutableMultimap;
 import org.dapacode.tree4j.common.MutableMultimaps;
-import com.google.common.collect.LinkedHashMultimap;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Multimap;
 
 import java.util.Map;
 

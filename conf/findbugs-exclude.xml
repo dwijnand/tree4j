@@ -4,6 +4,6 @@
   <Match><!-- Added otherwise the XML isn't valid -->
     <Class name="NA"/>
     <Method name="na"/>
-    <Bug pattern="NA" />
+    <Bug pattern="NA"/>
   </Match>
 </FindBugsFilter>

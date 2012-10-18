@@ -1,9 +1,9 @@
 package org.dapacode.tree4j;
 
+import com.google.common.collect.ImmutableList;
 import org.dapacode.tree4j.common.Factory;
 import org.dapacode.tree4j.common.MutableMap;
 import org.dapacode.tree4j.common.MutableMultimap;
-import com.google.common.collect.ImmutableList;
 import org.junit.experimental.theories.DataPoints;
 import org.junit.experimental.theories.Theories;
 import org.junit.runner.RunWith;

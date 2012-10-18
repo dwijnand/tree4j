@@ -1,14 +1,14 @@
 package org.dapacode.tree4j;
 
-import org.dapacode.tree4j.common.MutableMap;
-import org.dapacode.tree4j.common.MutableMaps;
-import org.dapacode.tree4j.common.MutableMultimap;
-import org.dapacode.tree4j.common.MutableMultimaps;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.dapacode.tree4j.common.MutableMap;
+import org.dapacode.tree4j.common.MutableMaps;
+import org.dapacode.tree4j.common.MutableMultimap;
+import org.dapacode.tree4j.common.MutableMultimaps;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -61,8 +61,8 @@ public class MultimapTree<T> implements MutableTree<T> {
    * factories. These factories are used to obtain multimaps and maps required to construct the parent-children and child-parent
    * associations within the tree.
    * <p/>
-   * Factories of multimaps and maps are required, as opposed to simply a multimap and a map, because some of the methods
-   * return a new instance of the tree, and, therefore, require a new multimap and map.
+   * Factories of multimaps and maps are required, as opposed to simply a multimap and a map, because some of the methods return
+   * a new instance of the tree, and, therefore, require a new multimap and map.
    *
    * @param <T> the type of the nodes in the tree
    * @param children the parent-children associations to be used
@@ -74,8 +74,8 @@ public class MultimapTree<T> implements MutableTree<T> {
   }
 
   /**
-   * Creates a copy of the specified tree, by creating a new tree with a copy of the associations in the specified tree and
-   * the same root node.
+   * Creates a copy of the specified tree, by creating a new tree with a copy of the associations in the specified tree and the
+   * same root node.
    *
    * @param <T> the type of the nodes in the trees
    * @param tree a tree
