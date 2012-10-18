@@ -199,7 +199,7 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
       immutableMultimapTree = immutableMultimapTree.withRoot(root);
 
       for (final Map.Entry<T, T> entry : tree) {
-        immutableMultimapTree = immutableMultimapTree.plus(entry.getKey(), entry.getValue());
+        immutableMultimapTree = immutableMultimapTree.added(entry.getKey(), entry.getValue());
       }
 
       // TODO check and test this!
@@ -248,7 +248,7 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
   }
 
   @Override
-  public final ImmutableMultimapTree<T> plus(final T parent, final T child) {
+  public final ImmutableMultimapTree<T> added(final T parent, final T child) {
     checkNotNull(parent);
     checkNotNull(child);
 
@@ -292,7 +292,7 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
   }
 
   @Override
-  public final ImmutableMultimapTree<T> minus(final T node) {
+  public final ImmutableMultimapTree<T> removed(final T node) {
     checkNotNull(node);
 
     if (node == root) {

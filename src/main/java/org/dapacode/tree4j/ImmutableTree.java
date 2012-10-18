@@ -21,21 +21,21 @@ public interface ImmutableTree<T> extends Tree<T> {
   ImmutableTree<T> withRoot(T node);
 
   /**
-   * Creates a copy of this tree with additionally the specified parent-child association.
+   * Creates a copy of this tree with the specified parent-child association added to it.
    *
    * @param parent the parent node, an existing node of the tree
    * @param child the child node, a node not already associated to another node, which isn't the specified parent node
-   * @return a modified copy of this tree containing the new parent-child association
+   * @return a modified copy of this tree containing the specified parent-child association
    * @throws IllegalArgumentException if the specified node isn't contained in the tree
    */
-  ImmutableTree<T> plus(T parent, T child);
+  ImmutableTree<T> added(T parent, T child);
 
   /**
-   * Creates a copy of this tree with without the specified mode and all of its children nodes, recursively.
+   * Creates a copy of this tree with the specified mode and. recursively, all of its children nodes removed from it.
    *
    * @param node a node of the tree
    * @return a modified copy of this tree without the specified node and its children
    * @throws IllegalArgumentException if the specified node isn't contained in the tree
    */
-  ImmutableTree<T> minus(T node);
+  ImmutableTree<T> removed(T node);
 }

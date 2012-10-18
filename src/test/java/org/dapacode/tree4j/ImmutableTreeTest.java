@@ -26,7 +26,7 @@ public class ImmutableTreeTest extends TreeTest {
   @Theory
   public void withRootShouldReturnATreeWithoutAPreviousNode(ImmutableTree<String> immutableTree) {
     immutableTree = immutableTree.withRoot("R");
-    immutableTree = immutableTree.plus("R", "1");
+    immutableTree = immutableTree.added("R", "1");
 
     immutableTree = immutableTree.withRoot("S");
 
@@ -37,11 +37,11 @@ public class ImmutableTreeTest extends TreeTest {
   @Theory
   public void plusShouldWorkCorrectly(ImmutableTree<String> immutableTree) {
     immutableTree = immutableTree.withRoot("R");
-    immutableTree = immutableTree.plus("R", "1");
-    immutableTree = immutableTree.plus("R", "2");
-    immutableTree = immutableTree.plus("1", "a");
-    immutableTree = immutableTree.plus("1", "b");
-    immutableTree = immutableTree.plus("2", "c");
+    immutableTree = immutableTree.added("R", "1");
+    immutableTree = immutableTree.added("R", "2");
+    immutableTree = immutableTree.added("1", "a");
+    immutableTree = immutableTree.added("1", "b");
+    immutableTree = immutableTree.added("2", "c");
 
     final Collection<String> children = immutableTree.getChildren("1");
 
@@ -53,11 +53,11 @@ public class ImmutableTreeTest extends TreeTest {
   @Theory
   public void plusShouldReturnAnIdenticalTreeOnReinsertingNode(ImmutableTree<String> immutableTree) {
     immutableTree = immutableTree.withRoot("R");
-    immutableTree = immutableTree.plus("R", "1");
-    immutableTree = immutableTree.plus("R", "2");
-    immutableTree = immutableTree.plus("1", "a");
+    immutableTree = immutableTree.added("R", "1");
+    immutableTree = immutableTree.added("R", "2");
+    immutableTree = immutableTree.added("1", "a");
 
-    final Tree<String> newTree = immutableTree.plus("R", "1");
+    final Tree<String> newTree = immutableTree.added("R", "1");
 
     EqualsBuilder.reflectionEquals(immutableTree, newTree);
     assertTreeNotModified();
@@ -69,7 +69,7 @@ public class ImmutableTreeTest extends TreeTest {
 
     expectedException.expect(IllegalArgumentException.class);
 
-    immutableTree.plus("unknown parent", "node");
+    immutableTree.added("unknown parent", "node");
     assertTreeNotModified();
   }
 
@@ -77,14 +77,14 @@ public class ImmutableTreeTest extends TreeTest {
   // TODO split this into smaller asserting tests
   public void minusShouldCascadeRemove(ImmutableTree<String> immutableTree) {
     immutableTree = immutableTree.withRoot("R");
-    immutableTree = immutableTree.plus("R", "1");
-    immutableTree = immutableTree.plus("R", "2");
-    immutableTree = immutableTree.plus("R", "3");
-    immutableTree = immutableTree.plus("1", "a");
-    immutableTree = immutableTree.plus("1", "b");
-    immutableTree = immutableTree.plus("2", "c");
+    immutableTree = immutableTree.added("R", "1");
+    immutableTree = immutableTree.added("R", "2");
+    immutableTree = immutableTree.added("R", "3");
+    immutableTree = immutableTree.added("1", "a");
+    immutableTree = immutableTree.added("1", "b");
+    immutableTree = immutableTree.added("2", "c");
 
-    immutableTree = immutableTree.minus("1");
+    immutableTree = immutableTree.removed("1");
 
     assertFalse(immutableTree.contains("1"));
     final Collection<String> rootChildren = immutableTree.getChildren("R");
@@ -98,11 +98,11 @@ public class ImmutableTreeTest extends TreeTest {
   @Theory
   public void minusShouldNotThrowAConcurrentModificationException(ImmutableTree<String> immutableTree) {
     immutableTree = immutableTree.withRoot("R");
-    immutableTree = immutableTree.plus("R", "1");
-    immutableTree = immutableTree.plus("1", "a");
-    immutableTree = immutableTree.plus("1", "b");
+    immutableTree = immutableTree.added("R", "1");
+    immutableTree = immutableTree.added("1", "a");
+    immutableTree = immutableTree.added("1", "b");
 
-    immutableTree.minus("1");
+    immutableTree.removed("1");
     assertTreeNotModified();
   }
 
@@ -113,23 +113,23 @@ public class ImmutableTreeTest extends TreeTest {
 
   @Override
   public Tree<String> plus(final Tree<String> tree, final String parent, final String child) {
-    return ((ImmutableTree<String>) tree).plus(parent, child);
+    return ((ImmutableTree<String>) tree).added(parent, child);
   }
 
   @Override
   public Tree<String> minus(final Tree<String> tree, final String node) {
-    return ((ImmutableTree<String>) tree).minus(node);
+    return ((ImmutableTree<String>) tree).removed(node);
   }
 
   @Override
   public Tree<String> setupTreeTestData(final Tree<String> tree) {
     ImmutableTree<String> immutableTree = (ImmutableTree<String>) tree;
     immutableTree = immutableTree.withRoot("R");
-    immutableTree = immutableTree.plus("R", "1");
-    immutableTree = immutableTree.plus("R", "2");
-    immutableTree = immutableTree.plus("1", "a");
-    immutableTree = immutableTree.plus("1", "b");
-    immutableTree = immutableTree.plus("2", "c");
+    immutableTree = immutableTree.added("R", "1");
+    immutableTree = immutableTree.added("R", "2");
+    immutableTree = immutableTree.added("1", "a");
+    immutableTree = immutableTree.added("1", "b");
+    immutableTree = immutableTree.added("2", "c");
     return immutableTree;
   }
 }
