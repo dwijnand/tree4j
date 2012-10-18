@@ -51,6 +51,22 @@
     <build>
         <plugins>
             <plugin>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>2.9.1</version>
+                <configuration>
+                    <configLocation>conf/checkstyle-configuration.xml</configLocation>
+                    <logViolationsToConsole>true</logViolationsToConsole>
+                    <suppressionsLocation>conf/checkstyle-suppressions.xml</suppressionsLocation>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <!--<goal>check</goal>-->
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <artifactId>maven-clean-plugin</artifactId>
                 <version>2.5</version>
             </plugin>
