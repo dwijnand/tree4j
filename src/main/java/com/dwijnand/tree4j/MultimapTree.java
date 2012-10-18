@@ -167,12 +167,13 @@ public class MultimapTree<T> implements MutableTree<T> {
         checkNotNull(child);
         checkArgument(contains(parent), "The tree doesn't contain the specified"
                 + " parent node: %s", parent);
-        checkArgument(!parents.containsKey(child), "The child node (%s) is " +
-                "already associated to another node", child);
 
         if (parents.get(child) == parent) {
             return false;
         }
+
+        checkArgument(!parents.containsKey(child), "The child node (%s) is " +
+                "already associated to another node", child);
 
         children.put(parent, child);
         parents.put(child, parent);
