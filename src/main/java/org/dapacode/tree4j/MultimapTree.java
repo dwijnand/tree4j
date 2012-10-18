@@ -57,8 +57,9 @@ public class MultimapTree<T> implements MutableTree<T> {
   }
 
   /**
-   * Creates a new multimap tree using the specified {@link Multimap} and {@link Map} factories. These factories are used to
-   * obtain multimaps and maps required to construct the parent-children and child-parent associations within the tree.
+   * Creates a new multimap tree using the specified {@link com.google.common.collect.Multimap Multimap} and {@link Map}
+   * factories. These factories are used to obtain multimaps and maps required to construct the parent-children and child-parent
+   * associations within the tree.
    * <p/>
    * Factories of multimaps and maps are required, as opposed to simply a multimap and a map, because some of the methods
    * return a new instance of the tree, and, therefore, require a new multimap and map.
