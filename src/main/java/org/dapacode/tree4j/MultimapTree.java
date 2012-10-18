@@ -7,22 +7,22 @@ import org.dapacode.tree4j.common.MutableMultimaps;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Maps;
-import com.google.common.collect.Multimap;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static com.google.common.base.Preconditions.*;
 
 /**
- * A {@link MutableTree} implementation which uses a mutable {@link Multimap} and a mutable {@link Map}.
+ * A {@link MutableTree} implementation which uses a mutable {@link com.google.common.collect.Multimap Multimap} and a mutable
+ * {@link Map}.
  *
  * @param <T> the type of the nodes in the tree
  */
+// CSOFF: DesignForExtensionCheck
 public class MultimapTree<T> implements MutableTree<T> {
   /** The parent-children associations of the tree. */
   private final MutableMultimap<T, T> children;
@@ -47,7 +47,7 @@ public class MultimapTree<T> implements MutableTree<T> {
   }
 
   /**
-   * Creates a new multimap tree backed by an {@link ArrayListMultimap} and a {@link LinkedHashMap}.
+   * Creates a new multimap tree backed by an {@link ArrayListMultimap} and a {@link java.util.LinkedHashMap LinkedHashMap}.
    *
    * @param <T> the type of the nodes in the tree
    * @return a new multimap tree
