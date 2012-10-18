@@ -178,7 +178,7 @@ public class MutableTreeTest extends TreeTest {
     }
 
     @Theory
-    void removeShouldReturnTrueOnModifyingTheTreeByRemovingANode(
+    public void removeShouldReturnTrueOnModifyingTheTreeByRemovingANode(
             final MutableTree<String> mutableTree) {
         setupTreeTestData(mutableTree);
         assertTrue(mutableTree.remove("1"));
