@@ -1,16 +1,16 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+set -o errexit
 
 version=$1
-if [ -z $version ]; then
-    read -p "Enter release version: " version
-fi
+[ -z $version ] && read -p "Enter release version: " version
+
 mvn versions:set -DgenerateBackupPoms=false -DnewVersion=$version
-hg commit --verbose --message "pom: prepare for $version release"
-hg tag --verbose v$version
+git commit pom.xml --verbose --message "Prepare for $version release."
+git tag v$version
 
 version=$2
-if [ -z $version ]; then
-    read -p "Enter development version: " version
-fi
+[ -z $version ] && read -p "Enter development version: " version
+
 mvn versions:set -DgenerateBackupPoms=false -DnewVersion=$version
-hg commit --verbose --message "pom: set version to $version"
+git commit pom.xml --verbose --message "Prepare for next development version ($version)."

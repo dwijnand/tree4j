@@ -1,0 +1,10 @@
+.*
+!.gitignore
+
+# IntelliJ
+/*.iml
+/*.ipr
+/*.iws
+
+# Maven
+/target/
