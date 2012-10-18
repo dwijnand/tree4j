@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<FindBugsFilter xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:noNamespaceSchemaLocation="https://findbugs.googlecode.com/svn/trunk/findbugs/etc/bugcollection.xsd">
+  <Match><!-- Added otherwise the XML isn't valid -->
+    <Class name="NA"/>
+    <Method name="na"/>
+    <Bug pattern="NA" />
+  </Match>
+</FindBugsFilter>
