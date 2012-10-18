@@ -29,7 +29,7 @@ public final class ObjectHashes {
       }
 
       checksumValue = crc32.getValue();
-    } catch (IOException e) {
+    } catch (final IOException e) {
       final String message = "Failed to calculate the checksum value";
       throw new RuntimeException(message, e);
     } finally {
@@ -43,7 +43,7 @@ public final class ObjectHashes {
     if (in != null) {
       try {
         in.close();
-      } catch (IOException e) {
+      } catch (final IOException e) {
         throw new RuntimeException(
             "IOException thrown while closing InputStream", e);
       }

@@ -56,6 +56,7 @@
         <version>2.9.1</version>
         <configuration>
           <configLocation>conf/checkstyle-configuration.xml</configLocation>
+          <includeTestSourceDirectory>true</includeTestSourceDirectory>
           <logViolationsToConsole>true</logViolationsToConsole>
           <suppressionsLocation>conf/checkstyle-suppressions.xml</suppressionsLocation>
         </configuration>

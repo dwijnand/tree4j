@@ -1,6 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE suppressions PUBLIC "-//Puppy Crawl//DTD Suppressions 1.1//EN" "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
 <suppressions>
-  <suppress checks="DesignForExtensionCheck" files="/Forwarding[A-Z].*\.java"/>
-  <suppress checks="DesignForExtensionCheck" files="/Delegating[A-Z].*\.java"/>
+  <suppress checks="DesignForExtensionCheck" files="/Forwarding[A-Z].*\.java"/><!-- Methods are meant to be extended -->
+  <suppress checks="DesignForExtensionCheck" files="/Delegating[A-Z].*\.java"/><!-- Methods are meant to be extended -->
+  <suppress checks="HiddenFieldCheck" files="/TreeTest.java"/><!-- Extra class field for assertTreeNotModified -->
+  <suppress checks="FinalParameters" files="/TreeTest.java"/><!-- Less verbose to just reassign the parameter -->
+  <suppress checks="FinalParameters" files="/ImmutableTreeTest.java"/><!-- Less verbose to just reassign the parameter -->
+
+  <!-- Global -->
+  <suppress checks="DesignForExtensionCheck" files="src/test/.*"/><!-- Test methods aren't designed for extension -->
 </suppressions>

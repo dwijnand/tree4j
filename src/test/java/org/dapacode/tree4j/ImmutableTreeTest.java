@@ -15,7 +15,9 @@ import static org.junit.Assert.*;
  * that the object is immutable. It is, however, impossible to prove that something <em>doesn't</em> happen. Therefore, this
  * class simply extends {@link TreeTest}, passing ImmutableTree implementations to those tests.
  */
+// CSOFF: WhitespaceAroundCheck
 @SuppressWarnings({"FeatureEnvy", "InstanceMethodNamingConvention"})
+// CSON: WhitespaceAroundCheck
 public class ImmutableTreeTest extends TreeTest {
   public ImmutableTreeTest(final ImmutableTree<?> tree) {
     super(tree);

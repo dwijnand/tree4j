@@ -101,7 +101,7 @@
     <!-- Checks for imports                              -->
     <!-- See http://checkstyle.sf.net/config_import.html -->
     <module name="AvoidStarImport">
-      <property name="excludes" value="com.google.common.base.Preconditions"/>
+      <property name="excludes" value="com.google.common.base.Preconditions,org.junit.Assert"/>
     </module>
     <module name="IllegalImport"/>
     <!-- defaults to sun.* packages -->
@@ -178,7 +178,9 @@
     <!-- Miscellaneous other checks.                   -->
     <!-- See http://checkstyle.sf.net/config_misc.html -->
     <module name="ArrayTypeStyle"/>
-    <module name="FinalParameters"/>
+    <module name="FinalParameters">
+      <property name="tokens" value="METHOD_DEF, CTOR_DEF, LITERAL_CATCH"/>
+    </module>
     <module name="TodoComment"/>
     <module name="UpperEll"/>
   </module>

@@ -15,7 +15,9 @@ import static org.junit.Assert.*;
  * base class for the test classes for the mutable and immutable extensions of this interface.
  */
 // TODO make methods final
+// CSOFF: WhitespaceAroundCheck
 @SuppressWarnings({"InstanceMethodNamingConvention", "NonBooleanMethodNameMayNotStartWithQuestion"})
+// CSON: WhitespaceAroundCheck
 public abstract class TreeTest {
   @Rule
   @SuppressWarnings("PublicField")
@@ -34,7 +36,7 @@ public abstract class TreeTest {
     assertEquals(beforeHash, calculateIdentity(tree));
   }
 
-  private long calculateIdentity(final Tree<?> tree) {
+  private static long calculateIdentity(final Tree<?> tree) {
     return ObjectHashes.getCRCChecksum(tree);
   }
 

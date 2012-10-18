@@ -13,7 +13,9 @@ import static org.junit.Assert.*;
  * therefore, passes MutableTree implementations to the tests in TreeTest and then to the tests defined here.
  */
 // TODO make methods final
+// CSOFF: WhitespaceAroundCheck
 @SuppressWarnings({"FeatureEnvy", "InstanceMethodNamingConvention"})
+// CSON: WhitespaceAroundCheck
 public class MutableTreeTest extends TreeTest {
   public MutableTreeTest(final MutableTree<?> tree) {
     super(tree);
