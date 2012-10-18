@@ -5,8 +5,8 @@ import com.google.common.collect.ForwardingObject;
 import java.util.Collection;
 
 // TODO document this class entirely
-public abstract class ForwardingTree<T> extends ForwardingObject implements Tree<T> {
-  protected ForwardingTree() {}
+public abstract class DelegatingTree<T> extends ForwardingObject implements Tree<T> {
+  protected DelegatingTree() {}
 
   @Override
   protected abstract Tree<T> delegate();

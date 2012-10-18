@@ -3,8 +3,8 @@ package org.dapacode.tree4j;
 import java.util.Collection;
 
 // TODO document this class entirely
-public abstract class ForwardingMutableTree<T> extends ForwardingTree<T> implements MutableTree<T> {
-  protected ForwardingMutableTree() {}
+public abstract class DelegatingMutableTree<T> extends DelegatingTree<T> implements MutableTree<T> {
+  protected DelegatingMutableTree() {}
 
   @Override
   protected abstract MutableTree<T> delegate();
