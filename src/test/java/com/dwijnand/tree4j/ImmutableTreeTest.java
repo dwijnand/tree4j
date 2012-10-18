@@ -2,11 +2,12 @@ package com.dwijnand.tree4j;
 
 import java.util.Collection;
 import org.apache.commons.lang3.builder.EqualsBuilder;
+
+import static org.hamcrest.CoreMatchers.hasItems;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import org.junit.experimental.theories.Theory;
-import static org.junit.matchers.JUnitMatchers.hasItems;
 
 /**
  * This class defines the tests for compliance to the specifications defined in

@@ -32,7 +32,7 @@ public class MultimapTreeTest extends MutableTreeTest {
     public static MutableTree<?>[] data() {
         final int count = 1 + MUTABLE_MULTIMAP_FACTORIES.size()
                 * MUTABLE_MAP_FACTORIES.size();
-        final MutableTree<?>[] data = new MutableTree[count];
+        final MutableTree<?>[] data = new MutableTree<?>[count];
 
         int i = 0;
         data[i++] = MultimapTree.create();

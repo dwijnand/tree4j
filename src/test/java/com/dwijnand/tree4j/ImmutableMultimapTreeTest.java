@@ -45,7 +45,7 @@ public class ImmutableMultimapTreeTest extends ImmutableTreeTest {
     public static ImmutableMultimapTree<?>[] data() {
         final int count = 1 + CHILDREN_MAKERS.size() * PARENTS_MAKERS.size();
         final ImmutableMultimapTree<?>[] data =
-                new ImmutableMultimapTree[count];
+                new ImmutableMultimapTree<?>[count];
 
         int i = 0;
         data[i++] = ImmutableMultimapTree.create();
