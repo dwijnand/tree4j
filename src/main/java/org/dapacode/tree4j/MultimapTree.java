@@ -139,8 +139,7 @@ public class MultimapTree<T> extends AbstractMultimapTree<T> implements MutableT
     checkNotNull(node);
     checkArgument(contains(node), "The tree doesn't contain the specified node: %s", node);
 
-    if (node == root) { // optimisation
-      root = null;
+    if (node == root) { // optimisation // TODO test this case
       clear();
       return true;
     }
