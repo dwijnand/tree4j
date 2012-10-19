@@ -83,7 +83,7 @@ public class MultimapTree<T> implements MutableTree<T> {
     checkNotNull(tree);
 
     final MultimapTree<T> multimapTree = create();
-    if (tree instanceof MultimapTree) {
+    if (tree instanceof MultimapTree) { // Optimisation
       final MultimapTree<T> original = (MultimapTree<T>) tree;
 
       multimapTree.root = original.root;
@@ -173,16 +173,14 @@ public class MultimapTree<T> implements MutableTree<T> {
     checkNotNull(node);
     checkArgument(contains(node), "The tree doesn't contain the specified node: %s", node);
 
-    if (node == root) {
-      // optimisation
+    if (node == root) { // optimisation
       root = null;
       clear();
       return true;
     }
 
     Collection<T> nodeChildren = children.get(node);
-    // A copy is required here to avoid a ConcurrentModificationException
-    nodeChildren = ImmutableList.copyOf(nodeChildren);
+    nodeChildren = ImmutableList.copyOf(nodeChildren); // Required to avoid a ConcurrentModificationException
 
     children.removeAll(node);
     children.get(getParent(node)).remove(node);

@@ -61,20 +61,20 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
       };
     }
 
-    public static <T extends Comparable<T>> ParentsMaker<T> usingImmutableSortedMapInNaturalOrder() {
-      return new ParentsMaker<T>() {
-        @Override
-        public ImmutableSortedMap.Builder<T, T> get() {
-          return new ImmutableSortedMap.Builder<T, T>(Ordering.natural());
-        }
-      };
-    }
-
     public static <T> ParentsMaker<T> usingImmutableSortedMapOrderedBy(final Comparator<T> comparator) {
       return new ParentsMaker<T>() {
         @Override
         public ImmutableSortedMap.Builder<T, T> get() {
           return new ImmutableSortedMap.Builder<T, T>(comparator);
+        }
+      };
+    }
+
+    public static <T extends Comparable<T>> ParentsMaker<T> usingImmutableSortedMapInNaturalOrder() {
+      return new ParentsMaker<T>() {
+        @Override
+        public ImmutableSortedMap.Builder<T, T> get() {
+          return new ImmutableSortedMap.Builder<T, T>(Ordering.natural());
         }
       };
     }
