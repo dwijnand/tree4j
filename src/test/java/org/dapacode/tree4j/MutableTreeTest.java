@@ -17,10 +17,6 @@ import static org.junit.Assert.*;
 @SuppressWarnings({"FeatureEnvy", "InstanceMethodNamingConvention"})
 // CSON: WhitespaceAroundCheck
 public class MutableTreeTest extends TreeTest {
-  public MutableTreeTest(final MutableTree<?> tree) {
-    super(tree);
-  }
-
   @Theory
   public void setRootShouldThrowANPEOnNullNode(final MutableTree<String> mutableTree) {
     expectedException.expect(NullPointerException.class);

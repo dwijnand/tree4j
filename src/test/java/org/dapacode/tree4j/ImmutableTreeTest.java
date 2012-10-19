@@ -19,91 +19,110 @@ import static org.junit.Assert.*;
 @SuppressWarnings({"FeatureEnvy", "InstanceMethodNamingConvention"})
 // CSON: WhitespaceAroundCheck
 public class ImmutableTreeTest extends TreeTest {
-  public ImmutableTreeTest(final ImmutableTree<?> tree) {
-    super(tree);
-  }
-
   @Theory
   public void withRootShouldReturnATreeWithoutAPreviousNode(ImmutableTree<String> immutableTree) {
-    immutableTree = immutableTree.withRoot("R");
-    immutableTree = immutableTree.added("R", "1");
+    withoutModifying(immutableTree, new Test<ImmutableTree<String>>() {
+      @Override
+      public void apply(ImmutableTree<String> immutableTree) {
+        immutableTree = immutableTree.withRoot("R");
+        immutableTree = immutableTree.added("R", "1");
 
-    immutableTree = immutableTree.withRoot("S");
+        immutableTree = immutableTree.withRoot("S");
 
-    assertFalse(immutableTree.contains("1"));
-    assertTreeNotModified();
+        assertFalse(immutableTree.contains("1"));
+      }
+    });
   }
 
   @Theory
   public void plusShouldWorkCorrectly(ImmutableTree<String> immutableTree) {
-    immutableTree = immutableTree.withRoot("R");
-    immutableTree = immutableTree.added("R", "1");
-    immutableTree = immutableTree.added("R", "2");
-    immutableTree = immutableTree.added("1", "a");
-    immutableTree = immutableTree.added("1", "b");
-    immutableTree = immutableTree.added("2", "c");
+    withoutModifying(immutableTree, new Test<ImmutableTree<String>>() {
+      @Override
+      public void apply(ImmutableTree<String> immutableTree) {
+        immutableTree = immutableTree.withRoot("R");
+        immutableTree = immutableTree.added("R", "1");
+        immutableTree = immutableTree.added("R", "2");
+        immutableTree = immutableTree.added("1", "a");
+        immutableTree = immutableTree.added("1", "b");
+        immutableTree = immutableTree.added("2", "c");
 
-    final Collection<String> children = immutableTree.getChildren("1");
+        final Collection<String> children = immutableTree.getChildren("1");
 
-    assertEquals(2, children.size());
-    assertThat(children, hasItems("a", "b"));
-    assertTreeNotModified();
+        assertEquals(2, children.size());
+        assertThat(children, hasItems("a", "b"));
+      }
+    });
   }
 
   @Theory
   public void plusShouldReturnAnIdenticalTreeOnReinsertingNode(ImmutableTree<String> immutableTree) {
-    immutableTree = immutableTree.withRoot("R");
-    immutableTree = immutableTree.added("R", "1");
-    immutableTree = immutableTree.added("R", "2");
-    immutableTree = immutableTree.added("1", "a");
+    withoutModifying(immutableTree, new Test<ImmutableTree<String>>() {
+      @Override
+      public void apply(ImmutableTree<String> immutableTree) {
+        immutableTree = immutableTree.withRoot("R");
+        immutableTree = immutableTree.added("R", "1");
+        immutableTree = immutableTree.added("R", "2");
+        immutableTree = immutableTree.added("1", "a");
 
-    final Tree<String> newTree = immutableTree.added("R", "1");
+        final Tree<String> newTree = immutableTree.added("R", "1");
 
-    EqualsBuilder.reflectionEquals(immutableTree, newTree);
-    assertTreeNotModified();
+        EqualsBuilder.reflectionEquals(immutableTree, newTree);
+      }
+    });
   }
 
   @Theory
   public void plusShouldThrowIllegalArgumentExceptionOnInsertingAnUnknownParent(ImmutableTree<String> immutableTree) {
-    immutableTree = immutableTree.withRoot("R");
+    withoutModifying(immutableTree, new Test<ImmutableTree<String>>() {
+      @Override
+      public void apply(ImmutableTree<String> immutableTree) {
+        immutableTree = immutableTree.withRoot("R");
 
-    expectedException.expect(IllegalArgumentException.class);
+        expectedException.expect(IllegalArgumentException.class);
 
-    immutableTree.added("unknown parent", "node");
-    assertTreeNotModified();
+        immutableTree.added("unknown parent", "node");
+      }
+    });
   }
 
   @Theory
   // TODO split this into smaller asserting tests
   public void minusShouldCascadeRemove(ImmutableTree<String> immutableTree) {
-    immutableTree = immutableTree.withRoot("R");
-    immutableTree = immutableTree.added("R", "1");
-    immutableTree = immutableTree.added("R", "2");
-    immutableTree = immutableTree.added("R", "3");
-    immutableTree = immutableTree.added("1", "a");
-    immutableTree = immutableTree.added("1", "b");
-    immutableTree = immutableTree.added("2", "c");
+    withoutModifying(immutableTree, new Test<ImmutableTree<String>>() {
+      @Override
+      public void apply(ImmutableTree<String> immutableTree) {
+        immutableTree = immutableTree.withRoot("R");
+        immutableTree = immutableTree.added("R", "1");
+        immutableTree = immutableTree.added("R", "2");
+        immutableTree = immutableTree.added("R", "3");
+        immutableTree = immutableTree.added("1", "a");
+        immutableTree = immutableTree.added("1", "b");
+        immutableTree = immutableTree.added("2", "c");
 
-    immutableTree = immutableTree.removed("1");
+        immutableTree = immutableTree.removed("1");
 
-    assertFalse(immutableTree.contains("1"));
-    final Collection<String> rootChildren = immutableTree.getChildren("R");
-    assertEquals(2, rootChildren.size());
-    assertFalse(rootChildren.contains("1"));
-    assertFalse(immutableTree.contains("a"));
-
-    assertTreeNotModified();
+        assertFalse(immutableTree.contains("1"));
+        final Collection<String> rootChildren = immutableTree.getChildren("R");
+        assertEquals(2, rootChildren.size());
+        assertFalse(rootChildren.contains("1"));
+        assertFalse(immutableTree.contains("a"));
+      }
+    });
   }
 
   @Theory
   public void minusShouldNotThrowAConcurrentModificationException(ImmutableTree<String> immutableTree) {
-    immutableTree = immutableTree.withRoot("R");
-    immutableTree = immutableTree.added("R", "1");
-    immutableTree = immutableTree.added("1", "a");
-    immutableTree = immutableTree.added("1", "b");
+    withoutModifying(immutableTree, new Test<ImmutableTree<String>>() {
+      @Override
+      public void apply(ImmutableTree<String> immutableTree) {
+        immutableTree = immutableTree.withRoot("R");
+        immutableTree = immutableTree.added("R", "1");
+        immutableTree = immutableTree.added("1", "a");
+        immutableTree = immutableTree.added("1", "b");
 
-    immutableTree.removed("1");
-    assertTreeNotModified();
+        immutableTree.removed("1");
+      }
+    });
   }
 
   @Override

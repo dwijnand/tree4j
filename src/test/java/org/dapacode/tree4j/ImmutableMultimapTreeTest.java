@@ -47,8 +47,4 @@ public class ImmutableMultimapTreeTest extends ImmutableTreeTest {
 
     return data;
   }
-
-  public ImmutableMultimapTreeTest(final ImmutableMultimapTree<?> tree) {
-    super(tree);
-  }
 }

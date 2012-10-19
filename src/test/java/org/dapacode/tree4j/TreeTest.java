@@ -21,117 +21,153 @@ import static org.junit.Assert.*;
 public abstract class TreeTest {
   @Rule
   @SuppressWarnings("PublicField")
-  public ExpectedException expectedException = ExpectedException.none();
-
-  private final Tree<?> tree;
-
-  private final long beforeHash;
-
-  public TreeTest(final Tree<?> tree) {
-    this.tree = tree;
-    beforeHash = calculateIdentity(tree);
-  }
-
-  protected final void assertTreeNotModified() {
-    assertEquals(beforeHash, calculateIdentity(tree));
-  }
-
-  private static long calculateIdentity(final Tree<?> tree) {
-    return ObjectHashes.getCRCChecksum(tree);
-  }
+  public final ExpectedException expectedException = ExpectedException.none();
 
   @Theory
   public void containsShouldReturnFalseWhenEmpty(final Tree<String> tree) {
-    assertFalse(tree.contains("node"));
-    assertTreeNotModified();
+    withoutModifying(tree, new Test<Tree<String>>() {
+      @Override
+      public void apply(Tree<String> tree) {
+        assertFalse(tree.contains("node"));
+      }
+    });
   }
 
   @Theory
   public void containsShouldThrowANPEOnNullNode(final Tree<String> tree) {
-    expectedException.expect(NullPointerException.class);
-    tree.contains(null);
+    withoutModifying(tree, new Test<Tree<String>>() {
+      @Override
+      public void apply(Tree<String> tree) {
+        expectedException.expect(NullPointerException.class);
+        tree.contains(null);
+      }
+    });
   }
 
   @Theory
   public void containsShouldReturnTrueOnAddedNode(Tree<String> tree) {
     tree = withRoot(tree, "R");
     tree = plus(tree, "R", "1");
-    assertTrue(tree.contains("1"));
-    assertTreeNotModified();
+    withoutModifying(tree, new Test<Tree<String>>() {
+      @Override
+      public void apply(Tree<String> tree) {
+        assertTrue(tree.contains("1"));
+      }
+    });
   }
 
   @Theory
   public void containsShouldReturnTrueForSetRoot(Tree<String> tree) {
     tree = withRoot(tree, "R");
-    assertTrue(tree.contains("R"));
-    assertTreeNotModified();
+    withoutModifying(tree, new Test<Tree<String>>() {
+      @Override
+      public void apply(Tree<String> tree) {
+        assertTrue(tree.contains("R"));
+      }
+    });
   }
 
   @Theory
   public void getParentShouldThrowANPEOnNullNode(final Tree<String> tree) {
-    expectedException.expect(NullPointerException.class);
-    tree.getParent(null);
+    withoutModifying(tree, new Test<Tree<String>>() {
+      @Override
+      public void apply(Tree<String> tree) {
+        expectedException.expect(NullPointerException.class);
+        tree.getParent(null);
+      }
+    });
   }
 
   @Theory
   public void getParentShouldThrowAnIAEOnUnknownNode(final Tree<String> tree) {
-    expectedException.expect(IllegalArgumentException.class);
-    tree.getParent("unknown node");
+    withoutModifying(tree, new Test<Tree<String>>() {
+      @Override
+      public void apply(Tree<String> tree) {
+        expectedException.expect(IllegalArgumentException.class);
+        tree.getParent("unknown node");
+      }
+    });
   }
 
   @Theory
   public void getParentShouldReturnTheExpectedNode(Tree<String> tree) {
     tree = setupTreeTestData(tree);
-
-    final String parent = tree.getParent("a");
-
-    assertEquals("1", parent);
-    assertTreeNotModified();
+    withoutModifying(tree, new Test<Tree<String>>() {
+      @Override
+      public void apply(Tree<String> tree) {
+        final String parent = tree.getParent("a");
+        assertEquals("1", parent);
+      }
+    });
   }
 
   @Theory
   public void getChildrenShouldThrowANPEOnNullNode(final Tree<String> tree) {
-    expectedException.expect(NullPointerException.class);
-    tree.getChildren(null);
+    withoutModifying(tree, new Test<Tree<String>>() {
+      @Override
+      public void apply(Tree<String> tree) {
+        expectedException.expect(NullPointerException.class);
+        tree.getChildren(null);
+      }
+    });
   }
 
   @Theory
   public void getChildrenShouldThrowAnIAEOnUnknownNode(final Tree<String> tree) {
-    expectedException.expect(IllegalArgumentException.class);
-    tree.getChildren("unknown node");
+    withoutModifying(tree, new Test<Tree<String>>() {
+      @Override
+      public void apply(Tree<String> tree) {
+        expectedException.expect(IllegalArgumentException.class);
+        tree.getChildren("unknown node");
+      }
+    });
   }
 
   @Theory
   public void getChildrenShouldReturnTheExpectedNodes(Tree<String> tree) {
     tree = setupTreeTestData(tree);
-
-    final Collection<String> children = tree.getChildren("1");
-
-    assertEquals(2, children.size());
-    assertThat(children, hasItems("a", "b"));
+    withoutModifying(tree, new Test<Tree<String>>() {
+      @Override
+      public void apply(Tree<String> tree) {
+        final Collection<String> children = tree.getChildren("1");
+        assertEquals(2, children.size());
+        assertThat(children, hasItems("a", "b"));
+      }
+    });
   }
 
   @Theory
   public void getChildrenShouldReturnAnEmptyCollectionOnALeafNode(Tree<String> tree) {
     tree = setupTreeTestData(tree);
-
-    final Collection<String> children = tree.getChildren("c");
-
-    assertNotNull(children);
-    assertEquals(0, children.size());
+    withoutModifying(tree, new Test<Tree<String>>() {
+      @Override
+      public void apply(Tree<String> tree) {
+        final Collection<String> children = tree.getChildren("c");
+        assertNotNull(children);
+        assertEquals(0, children.size());
+      }
+    });
   }
 
   @Theory
   public void getRootShouldReturnNullBeforeSetRoot(final Tree<String> tree) {
-    assertNull(tree.getRoot());
-    assertTreeNotModified();
+    withoutModifying(tree, new Test<Tree<String>>() {
+      @Override
+      public void apply(Tree<String> tree) {
+        assertNull(tree.getRoot());
+      }
+    });
   }
 
   @Theory
   public void getRootShouldReturnSetRoot(Tree<String> tree) {
     tree = withRoot(tree, "R");
-    assertEquals("R", tree.getRoot());
-    assertTreeNotModified();
+    withoutModifying(tree, new Test<Tree<String>>() {
+      @Override
+      public void apply(Tree<String> tree) {
+        assertEquals("R", tree.getRoot());
+      }
+    });
   }
 
   public abstract Tree<String> withRoot(Tree<String> tree, String root);
@@ -141,4 +177,17 @@ public abstract class TreeTest {
   public abstract Tree<String> minus(Tree<String> tree, String node);
 
   public abstract Tree<String> setupTreeTestData(Tree<String> tree);
+
+  protected static <T extends Tree<String>> void withoutModifying(T tree, Test<T> test) {
+    final long beforeHash = ObjectHashes.getCRCChecksum(tree);
+    try {
+      test.apply(tree);
+    } finally {
+      assertEquals(beforeHash, ObjectHashes.getCRCChecksum(tree));
+    }
+  }
+
+  protected interface Test<T extends Tree<String>> {
+    void apply(T tree);
+  }
 }

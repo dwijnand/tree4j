@@ -36,8 +36,4 @@ public class MultimapTreeTest extends MutableTreeTest {
 
     return data;
   }
-
-  public MultimapTreeTest(final MultimapTree<?> tree) {
-    super(tree);
-  }
 }
