@@ -1,14 +1,14 @@
 package org.dapacode.tree4j;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Multimap;
 import org.dapacode.tree4j.common.Factory;
-import org.dapacode.tree4j.common.MutableMap;
-import org.dapacode.tree4j.common.MutableMultimap;
 import org.junit.experimental.theories.DataPoints;
 import org.junit.experimental.theories.Theories;
 import org.junit.runner.RunWith;
 
 import java.util.Collection;
+import java.util.Map;
 
 import static org.dapacode.tree4j.testutils.Factories.HASH_MAP_FACTORY;
 import static org.dapacode.tree4j.testutils.Factories.LINKED_HASH_MAP_FACTORY;
@@ -16,9 +16,9 @@ import static org.dapacode.tree4j.testutils.Factories.LINKED_HASH_MULTIMAP_FACTO
 
 @RunWith(Theories.class)
 public class MultimapTreeTest extends MutableTreeTest {
-  private static final Collection<Factory<MutableMultimap<String, String>>> MUTABLE_MULTIMAP_FACTORIES =
+  private static final Collection<Factory<Multimap<String, String>>> MUTABLE_MULTIMAP_FACTORIES =
       ImmutableList.of(LINKED_HASH_MULTIMAP_FACTORY);
-  private static final Collection<Factory<MutableMap<String, String>>> MUTABLE_MAP_FACTORIES =
+  private static final Collection<Factory<Map<String, String>>> MUTABLE_MAP_FACTORIES =
       ImmutableList.of(HASH_MAP_FACTORY, LINKED_HASH_MAP_FACTORY);
 
   @DataPoints
@@ -28,9 +28,9 @@ public class MultimapTreeTest extends MutableTreeTest {
 
     int i = 0;
     data[i++] = MultimapTree.create();
-    for (final Factory<MutableMultimap<String, String>> mmmapFactory : MUTABLE_MULTIMAP_FACTORIES) {
-      for (final Factory<MutableMap<String, String>> mmapFactory : MUTABLE_MAP_FACTORIES) {
-        data[i++] = MultimapTree.create(mmmapFactory.get(), mmapFactory.get());
+    for (final Factory<Multimap<String, String>> mmapFactory : MUTABLE_MULTIMAP_FACTORIES) {
+      for (final Factory<Map<String, String>> mapFactory : MUTABLE_MAP_FACTORIES) {
+        data[i++] = MultimapTree.create(mmapFactory.get(), mapFactory.get());
       }
     }
 
