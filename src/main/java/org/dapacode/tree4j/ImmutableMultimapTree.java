@@ -1,6 +1,5 @@
 package org.dapacode.tree4j;
 
-import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMultimap;
@@ -24,7 +23,8 @@ import static com.google.common.base.Preconditions.*;
  *
  * @param <T> the type of the nodes in the tree
  */
-public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
+// TODO see if it's possible to return ImmutableCollection on getChildren(T)
+public class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> implements ImmutableTree<T> {
   // TODO document this class entirely
   public abstract static class ChildrenMaker<T> implements Factory<ImmutableMultimap.Builder<T, T>> {
     private ChildrenMaker() {}
@@ -101,12 +101,6 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
    */
   private final ParentsMaker<T> parentsMaker;
 
-  /** The parent-children associations of the tree. */
-  private final ImmutableMultimap<T, T> children;
-
-  /** The child-parent associations of the tree. */
-  private final ImmutableMap<T, T> parents;
-
   /** The root of the tree. */
   private final T root;
 
@@ -120,11 +114,8 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
    * @param parentsMaker an ImmutableMap builder factory
    */
   protected ImmutableMultimapTree(final ChildrenMaker<T> childrenMaker, final ParentsMaker<T> parentsMaker) {
-    this.childrenMaker = checkNotNull(childrenMaker);
-    this.parentsMaker = checkNotNull(parentsMaker);
-    children = childrenMaker.get().build();
-    parents = parentsMaker.get().build();
-    root = null;
+    this(checkNotNull(childrenMaker), checkNotNull(parentsMaker),
+        childrenMaker.get().build(), parentsMaker.get().build(), null);
   }
 
   /**
@@ -142,10 +133,9 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
    */
   private ImmutableMultimapTree(final ChildrenMaker<T> childrenMaker, final ParentsMaker<T> parentsMaker,
                                 final ImmutableMultimap<T, T> children, final ImmutableMap<T, T> parents, final T root) {
+    super(children, parents);
     this.childrenMaker = childrenMaker;
     this.parentsMaker = parentsMaker;
-    this.children = children;
-    this.parents = parents;
     this.root = root;
   }
 
@@ -208,33 +198,8 @@ public class ImmutableMultimapTree<T> implements ImmutableTree<T> {
   }
 
   @Override
-  public final boolean contains(final T node) {
-    checkNotNull(node);
-    return node == root || parents.containsKey(node);
-  }
-
-  @Override
-  public final T getParent(final T node) {
-    checkNotNull(node);
-    checkArgument(contains(node), "The tree doesn't contain the specified node: %s", node);
-    return parents.get(node);
-  }
-
-  @Override
-  public final ImmutableCollection<T> getChildren(final T node) {
-    checkNotNull(node);
-    checkArgument(contains(node), "The tree doesn't contain the specified node: %s", node);
-    return children.get(node);
-  }
-
-  @Override
   public final T getRoot() {
     return root;
-  }
-
-  @Override
-  public final Iterator<Map.Entry<T, T>> iterator() {
-    return children.entries().iterator();
   }
 
   @Override

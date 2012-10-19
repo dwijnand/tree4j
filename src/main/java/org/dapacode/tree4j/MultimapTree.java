@@ -8,7 +8,6 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.Map;
 
 import static com.google.common.base.Preconditions.*;
@@ -20,13 +19,7 @@ import static com.google.common.base.Preconditions.*;
  * @param <T> the type of the nodes in the tree
  */
 // CSOFF: DesignForExtensionCheck
-public class MultimapTree<T> implements MutableTree<T> {
-  /** The parent-children associations of the tree. */
-  private final Multimap<T, T> children;
-
-  /** The child-parent associations of the tree. */
-  private final Map<T, T> parents;
-
+public class MultimapTree<T> extends AbstractMultimapTree<T> implements MutableTree<T> {
   /** The root of the tree. */
   private T root;
 
@@ -38,9 +31,7 @@ public class MultimapTree<T> implements MutableTree<T> {
    * @param parents the child-parent associations to be used
    */
   protected MultimapTree(final Multimap<T, T> children, final Map<T, T> parents) {
-    this.children = checkNotNull(children);
-    this.parents = checkNotNull(parents);
-    root = null;
+    super(checkNotNull(children), checkNotNull(parents));
   }
 
   /**
@@ -101,33 +92,8 @@ public class MultimapTree<T> implements MutableTree<T> {
   }
 
   @Override
-  public boolean contains(final T node) {
-    checkNotNull(node);
-    return node == root || parents.containsKey(node);
-  }
-
-  @Override
-  public T getParent(final T node) {
-    checkNotNull(node);
-    checkArgument(contains(node), "The tree doesn't contain the specified node: %s", node);
-    return parents.get(node);
-  }
-
-  @Override
-  public Collection<T> getChildren(final T node) {
-    checkNotNull(node);
-    checkArgument(contains(node), "The tree doesn't contain the specified node: %s", node);
-    return children.get(node);
-  }
-
-  @Override
   public T getRoot() {
     return root;
-  }
-
-  @Override
-  public Iterator<Map.Entry<T, T>> iterator() {
-    return children.entries().iterator();
   }
 
   @Override
