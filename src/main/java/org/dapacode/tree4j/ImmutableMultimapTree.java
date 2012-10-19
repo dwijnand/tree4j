@@ -12,7 +12,6 @@ import org.dapacode.tree4j.common.Factory;
 
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.Map;
 
 import static com.google.common.base.Preconditions.*;
@@ -24,7 +23,7 @@ import static com.google.common.base.Preconditions.*;
  * @param <T> the type of the nodes in the tree
  */
 // TODO see if it's possible to return ImmutableCollection on getChildren(T)
-public class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> implements ImmutableTree<T> {
+public final class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> implements ImmutableTree<T> {
   // TODO document this class entirely
   public abstract static class ChildrenMaker<T> implements Factory<ImmutableMultimap.Builder<T, T>> {
     private ChildrenMaker() {}
@@ -198,12 +197,12 @@ public class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> implements
   }
 
   @Override
-  public final T getRoot() {
+  public T getRoot() {
     return root;
   }
 
   @Override
-  public final ImmutableMultimapTree<T> withRoot(final T node) {
+  public ImmutableMultimapTree<T> withRoot(final T node) {
     checkNotNull(node);
 
     final ImmutableMultimap<T, T> newChildren = childrenMaker.get().build();
@@ -213,7 +212,7 @@ public class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> implements
   }
 
   @Override
-  public final ImmutableMultimapTree<T> added(final T parent, final T child) {
+  public ImmutableMultimapTree<T> added(final T parent, final T child) {
     checkNotNull(parent);
     checkNotNull(child);
 
@@ -257,7 +256,7 @@ public class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> implements
   }
 
   @Override
-  public final ImmutableMultimapTree<T> removed(final T node) {
+  public ImmutableMultimapTree<T> removed(final T node) {
     checkNotNull(node);
 
     if (node == root) {
@@ -310,8 +309,7 @@ public class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> implements
    * <p/>
    * This method uses reflection to determine whether the specified object is equal to this tree.
    */
-  // TODO decide if equals and hashCode should be final, or just make the whole class final
-  @Override // CSIGNORE: DesignForExtensionCheck
+  @Override
   public boolean equals(final Object obj) {
     return EqualsBuilder.reflectionEquals(this, obj);
   }
@@ -321,7 +319,7 @@ public class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> implements
    * <p/>
    * This method uses reflection to build the returned hash code.
    */
-  @Override // CSIGNORE: DesignForExtensionCheck
+  @Override
   public int hashCode() {
     return HashCodeBuilder.reflectionHashCode(this);
   }
