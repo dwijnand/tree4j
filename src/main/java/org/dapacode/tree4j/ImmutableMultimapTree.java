@@ -1,8 +1,6 @@
 package org.dapacode.tree4j;
 
-import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.ImmutableSortedMap;
 import com.google.common.collect.Ordering;
@@ -17,25 +15,16 @@ import java.util.Map;
 import static com.google.common.base.Preconditions.*;
 
 /**
- * A <strong>guaranteed</strong> {@link ImmutableTree}-compliant implementation that uses {@link ImmutableMultimap} and {@link
- * ImmutableMap}.
+ * A <strong>guaranteed</strong> {@link ImmutableTree}-compliant implementation that uses {@link ImmutableSetMultimap} and
+ * {@link ImmutableMap}.
  *
  * @param <T> the type of the nodes in the tree
  */
 // TODO see if it's possible to return ImmutableCollection on getChildren(T)
 public final class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> implements ImmutableTree<T> {
   // TODO document this class entirely
-  public abstract static class ChildrenMaker<T> implements Factory<ImmutableMultimap.Builder<T, T>> {
+  public abstract static class ChildrenMaker<T> implements Factory<ImmutableSetMultimap.Builder<T, T>> {
     private ChildrenMaker() {}
-
-    public static <T> ChildrenMaker<T> usingListMultimap() {
-      return new ChildrenMaker<T>() {
-        @Override
-        public ImmutableListMultimap.Builder<T, T> get() {
-          return ImmutableListMultimap.builder();
-        }
-      };
-    }
 
     public static <T> ChildrenMaker<T> usingSetMultimap() {
       return new ChildrenMaker<T>() {
@@ -109,7 +98,7 @@ public final class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> impl
    * These factories are used to obtain builders required to constructing the parent-children and child-parent associations
    * within the tree.
    *
-   * @param childrenMaker an ImmutableMultimap builder factory
+   * @param childrenMaker an ImmutableSetMultimap builder factory
    * @param parentsMaker an ImmutableMap builder factory
    */
   protected ImmutableMultimapTree(final ChildrenMaker<T> childrenMaker, final ParentsMaker<T> parentsMaker) {
@@ -124,14 +113,14 @@ public final class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> impl
    * This private constructor is used internally to set specific associations and root node, including setting the root node to
    * {@code null}.
    *
-   * @param childrenMaker an ImmutableMultimap builder factory
+   * @param childrenMaker an ImmutableSetMultimap builder factory
    * @param parentsMaker an ImmutableMap builder factory
    * @param children the parent-children associations to be used
    * @param parents the child-parent associations to be used
    * @param root the root node
    */
   private ImmutableMultimapTree(final ChildrenMaker<T> childrenMaker, final ParentsMaker<T> parentsMaker,
-                                final ImmutableMultimap<T, T> children, final ImmutableMap<T, T> parents, final T root) {
+                                final ImmutableSetMultimap<T, T> children, final ImmutableMap<T, T> parents, final T root) {
     super(children, parents);
     this.childrenMaker = childrenMaker;
     this.parentsMaker = parentsMaker;
@@ -146,7 +135,7 @@ public final class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> impl
    * @return a new immutable multimap tree
    */
   public static <T> ImmutableMultimapTree<T> create() {
-    return create(ChildrenMaker.<T>usingListMultimap(), ParentsMaker.<T>usingImmutableMap());
+    return create(ChildrenMaker.<T>usingSetMultimap(), ParentsMaker.<T>usingImmutableMap());
   }
 
   /**
@@ -155,7 +144,7 @@ public final class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> impl
    * directly.
    *
    * @param <T> the type of the nodes in the tree
-   * @param childrenMaker an ImmutableMultimap builder factory
+   * @param childrenMaker an ImmutableSetMultimap builder factory
    * @param parentsMaker an ImmutableMap builder factory
    * @return a new immutable multimap tree
    */
@@ -170,13 +159,13 @@ public final class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> impl
     if (tree instanceof ImmutableMultimapTree) {
       final ImmutableMultimapTree<T> immutableMultimapTree = (ImmutableMultimapTree<T>) tree;
 
-      final ImmutableMultimap.Builder<T, T> childrenBuilder = immutableMultimapTree.childrenMaker.get();
+      final ImmutableSetMultimap.Builder<T, T> childrenBuilder = immutableMultimapTree.childrenMaker.get();
       final ImmutableMap.Builder<T, T> parentsBuilder = immutableMultimapTree.parentsMaker.get();
 
       childrenBuilder.putAll(immutableMultimapTree.children);
       parentsBuilder.putAll(immutableMultimapTree.parents);
 
-      final ImmutableMultimap<T, T> children = childrenBuilder.build();
+      final ImmutableSetMultimap<T, T> children = childrenBuilder.build();
       final ImmutableMap<T, T> parents = parentsBuilder.build();
 
       return new ImmutableMultimapTree<T>(immutableMultimapTree.childrenMaker, immutableMultimapTree.parentsMaker, children,
@@ -204,7 +193,7 @@ public final class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> impl
   public ImmutableMultimapTree<T> withRoot(final T node) {
     checkNotNull(node);
 
-    final ImmutableMultimap<T, T> newChildren = childrenMaker.get().build();
+    final ImmutableSetMultimap<T, T> newChildren = childrenMaker.get().build();
     final ImmutableMap<T, T> newParents = parentsMaker.get().build();
 
     return new ImmutableMultimapTree<T>(childrenMaker, parentsMaker, newChildren, newParents, node);
@@ -223,7 +212,7 @@ public final class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> impl
 
     checkArgument(childParent == null, "The child node (%s) is already associated to another node", child);
 
-    final ImmutableMultimap.Builder<T, T> childrenBuilder = childrenMaker.get();
+    final ImmutableSetMultimap.Builder<T, T> childrenBuilder = childrenMaker.get();
     final ImmutableMap.Builder<T, T> parentsBuilder = parentsMaker.get();
 
     childrenBuilder.putAll(children);
@@ -231,7 +220,7 @@ public final class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> impl
 
     addInternal(parent, child, childrenBuilder, parentsBuilder);
 
-    final ImmutableMultimap<T, T> newChildren = childrenBuilder.build();
+    final ImmutableSetMultimap<T, T> newChildren = childrenBuilder.build();
     final ImmutableMap<T, T> newParents = parentsBuilder.build();
 
     return new ImmutableMultimapTree<T>(childrenMaker, parentsMaker, newChildren, newParents, root);
@@ -245,7 +234,7 @@ public final class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> impl
    * @param childrenBuilder the parent-children association builder
    * @param parentsBuilder the child-parent association builder
    */
-  private void addInternal(final T parent, final T child, final ImmutableMultimap.Builder<T, T> childrenBuilder,
+  private void addInternal(final T parent, final T child, final ImmutableSetMultimap.Builder<T, T> childrenBuilder,
                            final ImmutableMap.Builder<T, T> parentsBuilder) {
     childrenBuilder.put(parent, child);
     parentsBuilder.put(child, parent);
@@ -263,12 +252,12 @@ public final class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> impl
       return this;
     }
 
-    final ImmutableMultimap.Builder<T, T> childrenBuilder = childrenMaker.get();
+    final ImmutableSetMultimap.Builder<T, T> childrenBuilder = childrenMaker.get();
     final ImmutableMap.Builder<T, T> parentsBuilder = parentsMaker.get();
 
     addRecursivelyExcludingNode(root, node, childrenBuilder, parentsBuilder);
 
-    final ImmutableMultimap<T, T> newChildren = childrenBuilder.build();
+    final ImmutableSetMultimap<T, T> newChildren = childrenBuilder.build();
     final ImmutableMap<T, T> newParents = parentsBuilder.build();
 
     return new ImmutableMultimapTree<T>(childrenMaker, parentsMaker, newChildren, newParents, root);
@@ -288,7 +277,7 @@ public final class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> impl
    * @param parentsBuilder a builder of the child-parent associations
    */
   private void addRecursivelyExcludingNode(final T node, final T excludeNode,
-                                           final ImmutableMultimap.Builder<T, T> childrenBuilder,
+                                           final ImmutableSetMultimap.Builder<T, T> childrenBuilder,
                                            final ImmutableMap.Builder<T, T> parentsBuilder) {
     final Collection<T> nodeChildren = getChildren(node);
     for (final T child : nodeChildren) {

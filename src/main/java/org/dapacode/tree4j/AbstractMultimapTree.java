@@ -1,6 +1,6 @@
 package org.dapacode.tree4j;
 
-import com.google.common.collect.Multimap;
+import com.google.common.collect.SetMultimap;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -10,12 +10,12 @@ import static com.google.common.base.Preconditions.*;
 
 public abstract class AbstractMultimapTree<T> implements Tree<T> {
   /** The parent-children associations of the tree. */
-  protected final Multimap<T, T> children;
+  protected final SetMultimap<T, T> children;
 
   /** The child-parent associations of the tree. */
   protected final Map<T, T> parents;
 
-  protected AbstractMultimapTree(final Multimap<T, T> children, final Map<T, T> parents) {
+  protected AbstractMultimapTree(final SetMultimap<T, T> children, final Map<T, T> parents) {
     this.children = children;
     this.parents = parents;
   }

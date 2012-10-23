@@ -1,9 +1,9 @@
 package org.dapacode.tree4j;
 
-import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Maps;
-import com.google.common.collect.Multimap;
+import com.google.common.collect.SetMultimap;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -13,8 +13,8 @@ import java.util.Map;
 import static com.google.common.base.Preconditions.*;
 
 /**
- * A {@link MutableTree} implementation which uses a mutable {@link com.google.common.collect.Multimap Multimap} and a mutable
- * {@link Map}.
+ * A {@link MutableTree} implementation which uses a mutable {@link com.google.common.collect.SetMultimap SetMultimap} and a
+ * mutable {@link Map}.
  *
  * @param <T> the type of the nodes in the tree
  */
@@ -24,24 +24,24 @@ public class MultimapTree<T> extends AbstractMultimapTree<T> implements MutableT
   private T root;
 
   /**
-   * Creates a new multimap tree. This constructor is used directly by {@link #create(Multimap, Map)} so look there for
+   * Creates a new multimap tree. This constructor is used directly by {@link #create(SetMultimap, Map)} so look there for
    * details.
    *
    * @param children the parent-children associations to be used
    * @param parents the child-parent associations to be used
    */
-  protected MultimapTree(final Multimap<T, T> children, final Map<T, T> parents) {
+  protected MultimapTree(final SetMultimap<T, T> children, final Map<T, T> parents) {
     super(checkNotNull(children), checkNotNull(parents));
   }
 
   /**
-   * Creates a new multimap tree backed by an {@link ArrayListMultimap} and a {@link java.util.LinkedHashMap LinkedHashMap}.
+   * Creates a new multimap tree backed by an {@link LinkedHashMultimap} and a {@link java.util.LinkedHashMap LinkedHashMap}.
    *
    * @param <T> the type of the nodes in the tree
    * @return a new multimap tree
    */
   public static <T> MultimapTree<T> create() {
-    return create(ArrayListMultimap.<T, T>create(), Maps.<T, T>newLinkedHashMap());
+    return create(LinkedHashMultimap.<T, T>create(), Maps.<T, T>newLinkedHashMap());
   }
 
   /**
@@ -57,7 +57,7 @@ public class MultimapTree<T> extends AbstractMultimapTree<T> implements MutableT
    * @param parents the child-parent associations to be used
    * @return a new multimap tree
    */
-  public static <T> MultimapTree<T> create(final Multimap<T, T> children, final Map<T, T> parents) {
+  public static <T> MultimapTree<T> create(final SetMultimap<T, T> children, final Map<T, T> parents) {
     return new MultimapTree<T>(children, parents);
   }
 

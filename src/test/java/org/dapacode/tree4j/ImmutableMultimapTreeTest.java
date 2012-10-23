@@ -18,7 +18,6 @@ public class ImmutableMultimapTreeTest extends ImmutableTreeTest {
     final Collection<ImmutableMultimapTree.ChildrenMaker<String>> cms = Lists.newArrayList();
 
     cms.add(ImmutableMultimapTree.ChildrenMaker.<String>usingSetMultimap());
-    cms.add(ImmutableMultimapTree.ChildrenMaker.<String>usingListMultimap());
 
     CHILDREN_MAKERS = ImmutableList.copyOf(cms);
 
