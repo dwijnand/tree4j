@@ -5,10 +5,14 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
 import org.junit.experimental.theories.DataPoints;
 import org.junit.experimental.theories.Theories;
+import org.junit.experimental.theories.Theory;
 import org.junit.runner.RunWith;
 
 import java.util.Collection;
 
+import static org.junit.Assert.*;
+
+@SuppressWarnings("InstanceMethodNamingConvention")
 @RunWith(Theories.class)
 public class ImmutableMultimapTreeTest extends ImmutableTreeTest {
   private static final Collection<ImmutableMultimapTree.ChildrenMaker<String>> CHILDREN_MAKERS;
@@ -54,5 +58,19 @@ public class ImmutableMultimapTreeTest extends ImmutableTreeTest {
     }
 
     return data;
+  }
+
+  @Theory
+  public void copyOfShouldReturnAnEqualButNotSameTree(ImmutableTree<String> immutableTree) {
+    immutableTree = setupTreeTestData(immutableTree);
+
+    withoutModifying(immutableTree, new Test<ImmutableTree<String>>() {
+      @Override
+      public void apply(ImmutableTree<String> immutableTree) {
+        ImmutableMultimapTree<String> copyTree = ImmutableMultimapTree.copyOf(immutableTree);
+        assertNotSame(immutableTree, copyTree);
+        assertEquals(immutableTree, copyTree);
+      }
+    });
   }
 }

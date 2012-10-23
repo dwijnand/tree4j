@@ -5,6 +5,7 @@ import com.google.common.collect.SetMultimap;
 import org.dapacode.tree4j.common.Factory;
 import org.junit.experimental.theories.DataPoints;
 import org.junit.experimental.theories.Theories;
+import org.junit.experimental.theories.Theory;
 import org.junit.runner.RunWith;
 
 import java.util.Collection;
@@ -13,6 +14,7 @@ import java.util.Map;
 import static org.dapacode.tree4j.testutils.Factories.HASH_MAP_FACTORY;
 import static org.dapacode.tree4j.testutils.Factories.LINKED_HASH_MAP_FACTORY;
 import static org.dapacode.tree4j.testutils.Factories.LINKED_HASH_MULTIMAP_FACTORY;
+import static org.junit.Assert.*;
 
 @RunWith(Theories.class)
 public class MultimapTreeTest extends MutableTreeTest {
@@ -44,5 +46,19 @@ public class MultimapTreeTest extends MutableTreeTest {
     }
 
     return data;
+  }
+
+  @Theory
+  public void copyOfShouldReturnAnEqualButNotSameTree(MutableTree<String> mutableTree) {
+    setupTreeTestData(mutableTree);
+
+    withoutModifying(mutableTree, new Test<MutableTree<String>>() {
+      @Override
+      public void apply(MutableTree<String> mutableTree) {
+        MutableTree<String> copyTree = MultimapTree.copyOf(mutableTree);
+        assertNotSame(mutableTree, copyTree);
+        assertEquals(mutableTree, copyTree);
+      }
+    });
   }
 }
