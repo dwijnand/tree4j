@@ -18,8 +18,7 @@ import static com.google.common.base.Preconditions.*;
  *
  * @param <T> the type of the nodes in the tree
  */
-// CSOFF: DesignForExtensionCheck
-public class MultimapTree<T> extends AbstractMultimapTree<T> implements MutableTree<T> {
+public final class MultimapTree<T> extends AbstractMultimapTree<T> implements MutableTree<T> {
   /** The root of the tree. */
   private T root;
 
