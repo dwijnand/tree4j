@@ -25,7 +25,8 @@ public class MutableTreeTest extends TreeTest<MutableTree<String>> {
 
   @Theory
   public void setRootShouldSetTheRoot(final MutableTree<String> mutableTree) {
-    mutableTree.setRoot("R");
+    boolean changed = mutableTree.setRoot("R");
+    assertTrue(changed);
     assertEquals("R", mutableTree.getRoot());
   }
 
@@ -37,6 +38,13 @@ public class MutableTreeTest extends TreeTest<MutableTree<String>> {
     mutableTree.setRoot("S");
 
     assertFalse(mutableTree.contains("1"));
+  }
+
+  @Theory
+  public void setRootShouldntChangeAnythingWhenPassedRoot(final MutableTree<String> mutableTree) {
+    mutableTree.setRoot("R");
+    boolean changed = mutableTree.setRoot("R");
+    assertFalse(changed);
   }
 
   @Theory
@@ -137,8 +145,17 @@ public class MutableTreeTest extends TreeTest<MutableTree<String>> {
 
     mutableTree.clear();
 
+    assertNull(mutableTree.getRoot());
     assertFalse(mutableTree.contains("R"));
     assertFalse(mutableTree.contains("1"));
+  }
+
+  @Theory
+  public void clearShouldRemoveAllNodes2(final MutableTree<String> mutableTree) {
+    setupTreeTestData(mutableTree);
+    mutableTree.clear();
+    mutableTree.setRoot("R");
+    assertEquals(0, mutableTree.getChildren("R").size());
   }
 
   @Theory
@@ -150,7 +167,6 @@ public class MutableTreeTest extends TreeTest<MutableTree<String>> {
 
   @Theory
   public void removeShouldThrowAIAEOnUnknownNode(final MutableTree<String> mutableTree) {
-    mutableTree.setRoot("R");
     expectedException.expect(IllegalArgumentException.class);
     mutableTree.remove("unknown node");
   }
@@ -162,6 +178,7 @@ public class MutableTreeTest extends TreeTest<MutableTree<String>> {
     mutableTree.remove("1");
 
     assertFalse(mutableTree.contains("1"));
+    assertFalse(mutableTree.contains("a"));
     assertThat(mutableTree.getChildren("R"), not(hasItem("1")));
   }
 
@@ -175,12 +192,13 @@ public class MutableTreeTest extends TreeTest<MutableTree<String>> {
   public void removeShouldEmptyTheTreeOnRootNode(final MutableTree<String> mutableTree) {
     setupTreeTestData(mutableTree);
 
-    mutableTree.remove(mutableTree.getRoot());
+    boolean changed = mutableTree.remove(mutableTree.getRoot());
 
     assertNull(mutableTree.getRoot());
     assertFalse(mutableTree.contains("R"));
     assertFalse(mutableTree.contains("1"));
     assertFalse(mutableTree.contains("a"));
+    assertTrue(changed);
   }
 
   @Override
