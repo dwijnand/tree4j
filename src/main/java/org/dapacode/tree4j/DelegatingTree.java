@@ -37,4 +37,14 @@ public abstract class DelegatingTree<T> extends ForwardingObject implements Tree
   public Iterator<Map.Entry<T, T>> iterator() {
     return delegate().iterator();
   }
+
+  @Override
+  public boolean equals(final Object obj) {
+    return obj == this || delegate().equals(obj);
+  }
+
+  @Override
+  public int hashCode() {
+    return delegate().hashCode();
+  }
 }
