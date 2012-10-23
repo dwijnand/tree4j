@@ -191,7 +191,6 @@ public final class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> impl
         immutableMultimapTree = immutableMultimapTree.added(entry.getKey(), entry.getValue());
       }
 
-      // TODO check and test this!
       return immutableMultimapTree;
     }
   }
