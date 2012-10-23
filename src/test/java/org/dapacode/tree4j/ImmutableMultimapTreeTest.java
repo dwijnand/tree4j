@@ -33,12 +33,12 @@ public class ImmutableMultimapTreeTest extends ImmutableTreeTest {
   }
 
   @DataPoints
-  public static ImmutableMultimapTree<?>[] data() {
+  public static ImmutableTree<?>[] data() {
     final int count = 1 + CHILDREN_MAKERS.size() * PARENTS_MAKERS.size();
-    final ImmutableMultimapTree<?>[] data = new ImmutableMultimapTree<?>[count];
+    final ImmutableTree<?>[] data = new ImmutableTree<?>[count];
 
     int i = 0;
-    data[i++] = ImmutableMultimapTree.create();
+    data[i++] = ImmutableMultimapTree.<String>create();
     for (final ImmutableMultimapTree.ChildrenMaker<String> childrenMaker : CHILDREN_MAKERS) {
       for (final ImmutableMultimapTree.ParentsMaker<String> parentsMaker : PARENTS_MAKERS) {
         data[i++] = ImmutableMultimapTree.create(childrenMaker, parentsMaker);

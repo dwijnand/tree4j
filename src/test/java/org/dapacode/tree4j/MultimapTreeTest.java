@@ -27,7 +27,7 @@ public class MultimapTreeTest extends MutableTreeTest {
     final MutableTree<?>[] data = new MutableTree<?>[count];
 
     int i = 0;
-    data[i++] = MultimapTree.create();
+    data[i++] = MultimapTree.<String>create();
     for (final Factory<Multimap<String, String>> mmapFactory : MUTABLE_MULTIMAP_FACTORIES) {
       for (final Factory<Map<String, String>> mapFactory : MUTABLE_MAP_FACTORIES) {
         data[i++] = MultimapTree.create(mmapFactory.get(), mapFactory.get());
