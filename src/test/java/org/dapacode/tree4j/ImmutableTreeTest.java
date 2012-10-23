@@ -35,7 +35,7 @@ public class ImmutableTreeTest extends TreeTest {
   }
 
   @Theory
-  public void plusShouldWorkCorrectly(ImmutableTree<String> immutableTree) {
+  public void addedShouldWorkCorrectly(ImmutableTree<String> immutableTree) {
     withoutModifying(immutableTree, new Test<ImmutableTree<String>>() {
       @Override
       public void apply(ImmutableTree<String> immutableTree) {
@@ -55,7 +55,7 @@ public class ImmutableTreeTest extends TreeTest {
   }
 
   @Theory
-  public void plusShouldReturnAnIdenticalTreeOnReinsertingNode(ImmutableTree<String> immutableTree) {
+  public void addedShouldReturnAnIdenticalTreeOnReinsertingNode(ImmutableTree<String> immutableTree) {
     withoutModifying(immutableTree, new Test<ImmutableTree<String>>() {
       @Override
       public void apply(ImmutableTree<String> immutableTree) {
@@ -72,7 +72,7 @@ public class ImmutableTreeTest extends TreeTest {
   }
 
   @Theory
-  public void plusShouldThrowIllegalArgumentExceptionOnInsertingAnUnknownParent(ImmutableTree<String> immutableTree) {
+  public void addedShouldThrowIllegalArgumentExceptionOnInsertingAnUnknownParent(ImmutableTree<String> immutableTree) {
     withoutModifying(immutableTree, new Test<ImmutableTree<String>>() {
       @Override
       public void apply(ImmutableTree<String> immutableTree) {
@@ -87,7 +87,7 @@ public class ImmutableTreeTest extends TreeTest {
 
   @Theory
   // TODO split this into smaller asserting tests
-  public void minusShouldCascadeRemove(ImmutableTree<String> immutableTree) {
+  public void removedShouldCascadeRemove(ImmutableTree<String> immutableTree) {
     withoutModifying(immutableTree, new Test<ImmutableTree<String>>() {
       @Override
       public void apply(ImmutableTree<String> immutableTree) {
@@ -111,7 +111,7 @@ public class ImmutableTreeTest extends TreeTest {
   }
 
   @Theory
-  public void minusShouldNotThrowAConcurrentModificationException(ImmutableTree<String> immutableTree) {
+  public void removedShouldNotThrowAConcurrentModificationException(ImmutableTree<String> immutableTree) {
     withoutModifying(immutableTree, new Test<ImmutableTree<String>>() {
       @Override
       public void apply(ImmutableTree<String> immutableTree) {
