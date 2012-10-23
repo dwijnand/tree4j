@@ -171,6 +171,18 @@ public class MutableTreeTest extends TreeTest<MutableTree<String>> {
     assertTrue(mutableTree.remove("1"));
   }
 
+  @Theory
+  public void removeShouldEmptyTheTreeOnRootNode(final MutableTree<String> mutableTree) {
+    setupTreeTestData(mutableTree);
+
+    mutableTree.remove(mutableTree.getRoot());
+
+    assertNull(mutableTree.getRoot());
+    assertFalse(mutableTree.contains("R"));
+    assertFalse(mutableTree.contains("1"));
+    assertFalse(mutableTree.contains("a"));
+  }
+
   @Override
   public MutableTree<String> withRoot(final MutableTree<String> mutableTree, final String root) {
     mutableTree.setRoot(root);

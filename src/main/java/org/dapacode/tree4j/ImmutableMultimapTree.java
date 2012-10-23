@@ -255,8 +255,7 @@ public final class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> impl
   public ImmutableMultimapTree<T> removed(final T node) {
     checkNotNull(node);
 
-    if (node == root) {
-      // optimisation
+    if (node == root) { // optimisation
       return create(childrenMaker, parentsMaker);
     }
 

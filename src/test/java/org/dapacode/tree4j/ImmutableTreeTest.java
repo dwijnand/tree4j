@@ -142,6 +142,23 @@ public class ImmutableTreeTest extends TreeTest<ImmutableTree<String>> {
     });
   }
 
+  @Theory
+  public void removedShouldReturnAnEmptyTreeOnRootNode(ImmutableTree<String> immutableTree) {
+    withoutModifying(immutableTree, new Test<ImmutableTree<String>>() {
+      @Override
+      public void apply(ImmutableTree<String> immutableTree) {
+        immutableTree = setupTreeTestData(immutableTree);
+
+        immutableTree = immutableTree.removed(immutableTree.getRoot());
+
+        assertNull(immutableTree.getRoot());
+        assertFalse(immutableTree.contains("R"));
+        assertFalse(immutableTree.contains("1"));
+        assertFalse(immutableTree.contains("a"));
+      }
+    });
+  }
+
   @Override
   public ImmutableTree<String> withRoot(final ImmutableTree<String> immutableTree, final String root) {
     return immutableTree.withRoot(root);
