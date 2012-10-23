@@ -214,17 +214,15 @@ public final class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> impl
   public ImmutableMultimapTree<T> added(final T parent, final T child) {
     checkNotNull(parent);
     checkNotNull(child);
-
     checkArgument(contains(parent), "The tree doesn't contain the specified parent node: %s", parent);
 
     final T childParent = parents.get(child);
-    // TODO test both cases
-    checkArgument(childParent == null || childParent == parent, "The child node (%s) is already associated to another node",
-        child);
-
-    if (contains(child)) {
+    if (childParent == parent) {
       return this;
     }
+
+    // TODO add test
+    checkArgument(childParent == null, "The child node (%s) is already associated to another node", child);
 
     final ImmutableMultimap.Builder<T, T> childrenBuilder = childrenMaker.get();
     final ImmutableMap.Builder<T, T> parentsBuilder = parentsMaker.get();

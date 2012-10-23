@@ -115,11 +115,12 @@ public class MultimapTree<T> extends AbstractMultimapTree<T> implements MutableT
     checkNotNull(child);
     checkArgument(contains(parent), "The tree doesn't contain the specified parent node: %s", parent);
 
-    if (parents.get(child) == parent) {
+    T childParent = parents.get(child);
+    if (childParent == parent) {
       return false;
     }
 
-    checkArgument(!parents.containsKey(child), "The child node (%s) is already associated to another node", child);
+    checkArgument(childParent == null, "The child node (%s) is already associated to another node", child);
 
     children.put(parent, child);
     parents.put(child, parent);
