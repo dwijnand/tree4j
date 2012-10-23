@@ -26,7 +26,7 @@ public interface ImmutableTree<T> extends Tree<T> {
    * @param parent the parent node, an existing node of the tree
    * @param child the child node, a node not already associated to another node, which isn't the specified parent node
    * @return a modified copy of this tree containing the specified parent-child association
-   * @throws IllegalArgumentException if the specified node isn't contained in the tree
+   * @throws IllegalArgumentException if the specified parent node isn't contained in the tree
    */
   ImmutableTree<T> added(T parent, T child);
 
