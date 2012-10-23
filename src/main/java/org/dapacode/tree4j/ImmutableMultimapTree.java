@@ -221,7 +221,6 @@ public final class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> impl
       return this;
     }
 
-    // TODO add test
     checkArgument(childParent == null, "The child node (%s) is already associated to another node", child);
 
     final ImmutableMultimap.Builder<T, T> childrenBuilder = childrenMaker.get();

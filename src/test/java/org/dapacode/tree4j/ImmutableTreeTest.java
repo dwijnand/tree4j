@@ -86,6 +86,23 @@ public class ImmutableTreeTest extends TreeTest {
   }
 
   @Theory
+  public void addedShouldThrowIllegalArgumentExceptionOnInsertingAnAlreadyAssociatedChild(
+      ImmutableTree<String> immutableTree) {
+    withoutModifying(immutableTree, new Test<ImmutableTree<String>>() {
+      @Override
+      public void apply(ImmutableTree<String> immutableTree) {
+        immutableTree = immutableTree.withRoot("R");
+        immutableTree = immutableTree.added("R", "1");
+        immutableTree = immutableTree.added("1", "a");
+
+        expectedException.expect(IllegalArgumentException.class);
+
+        immutableTree.added("a", "1");
+      }
+    });
+  }
+
+  @Theory
   // TODO split this into smaller asserting tests
   public void removedShouldCascadeRemove(ImmutableTree<String> immutableTree) {
     withoutModifying(immutableTree, new Test<ImmutableTree<String>>() {

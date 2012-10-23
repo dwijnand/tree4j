@@ -61,6 +61,15 @@ public class MutableTreeTest extends TreeTest {
   }
 
   @Theory
+  public void addShouldThrowAnIAEOnAlreadyAssociatedChildNode(final MutableTree<String> mutableTree) {
+    mutableTree.setRoot("R");
+    mutableTree.add("R", "1");
+    mutableTree.add("1", "a");
+    expectedException.expect(IllegalArgumentException.class);
+    mutableTree.add("a", "1");
+  }
+
+  @Theory
   public void addShouldThrowAnIAEWhenAssociatingAChildNodeToAnotherParentNode(final MutableTree<String> mutableTree) {
     mutableTree.setRoot("R");
     mutableTree.add("R", "1");
