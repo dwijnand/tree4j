@@ -66,6 +66,7 @@ public class ImmutableTreeTest extends TreeTest<ImmutableTree<String>> {
 
         final Tree<String> newTree = immutableTree.added("R", "1");
 
+        assertSame(immutableTree, newTree);
         EqualsBuilder.reflectionEquals(immutableTree, newTree);
       }
     });
