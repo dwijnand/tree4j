@@ -7,8 +7,8 @@ import org.junit.rules.ExpectedException;
 
 import java.util.Collection;
 
-import static org.hamcrest.CoreMatchers.hasItems;
 import static org.junit.Assert.*;
+import static org.junit.matchers.JUnitMatchers.hasItems;
 
 /**
  * This class defines the tests for compliance to the specifications defined in the {@link Tree} interface. It is used as the

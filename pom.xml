@@ -56,9 +56,10 @@
       <version>13.0.1</version>
     </dependency>
     <dependency>
+      <!-- TODO: Switch back to 4.11-beta-1 once the PIT bug is fixed. -->
       <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.11-beta-1</version>
+      <artifactId>junit-dep</artifactId>
+      <version>4.10</version>
       <scope>test</scope>
     </dependency>
     <dependency>
