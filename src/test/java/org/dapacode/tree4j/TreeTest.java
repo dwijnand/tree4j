@@ -18,13 +18,13 @@ import static org.junit.Assert.*;
 // CSOFF: WhitespaceAroundCheck
 @SuppressWarnings({"InstanceMethodNamingConvention", "NonBooleanMethodNameMayNotStartWithQuestion"})
 // CSON: WhitespaceAroundCheck
-public abstract class TreeTest {
+public abstract class TreeTest<T extends Tree<String>> {
   @Rule
   @SuppressWarnings("PublicField")
   public final ExpectedException expectedException = ExpectedException.none();
 
   @Theory
-  public void containsShouldReturnFalseWhenEmpty(final Tree<String> tree) {
+  public void containsShouldReturnFalseWhenEmpty(final T tree) {
     withoutModifying(tree, new Test<Tree<String>>() {
       @Override
       public void apply(Tree<String> tree) {
@@ -34,7 +34,7 @@ public abstract class TreeTest {
   }
 
   @Theory
-  public void containsShouldThrowANPEOnNullNode(final Tree<String> tree) {
+  public void containsShouldThrowANPEOnNullNode(final T tree) {
     withoutModifying(tree, new Test<Tree<String>>() {
       @Override
       public void apply(Tree<String> tree) {
@@ -45,7 +45,7 @@ public abstract class TreeTest {
   }
 
   @Theory
-  public void containsShouldReturnTrueOnAddedNode(Tree<String> tree) {
+  public void containsShouldReturnTrueOnAddedNode(T tree) {
     tree = withRoot(tree, "R");
     tree = plus(tree, "R", "1");
     withoutModifying(tree, new Test<Tree<String>>() {
@@ -57,7 +57,7 @@ public abstract class TreeTest {
   }
 
   @Theory
-  public void containsShouldReturnTrueForSetRoot(Tree<String> tree) {
+  public void containsShouldReturnTrueForSetRoot(T tree) {
     tree = withRoot(tree, "R");
     withoutModifying(tree, new Test<Tree<String>>() {
       @Override
@@ -68,7 +68,7 @@ public abstract class TreeTest {
   }
 
   @Theory
-  public void getParentShouldThrowANPEOnNullNode(final Tree<String> tree) {
+  public void getParentShouldThrowANPEOnNullNode(T tree) {
     withoutModifying(tree, new Test<Tree<String>>() {
       @Override
       public void apply(Tree<String> tree) {
@@ -79,7 +79,7 @@ public abstract class TreeTest {
   }
 
   @Theory
-  public void getParentShouldThrowAnIAEOnUnknownNode(final Tree<String> tree) {
+  public void getParentShouldThrowAnIAEOnUnknownNode(T tree) {
     withoutModifying(tree, new Test<Tree<String>>() {
       @Override
       public void apply(Tree<String> tree) {
@@ -90,7 +90,7 @@ public abstract class TreeTest {
   }
 
   @Theory
-  public void getParentShouldReturnTheExpectedNode(Tree<String> tree) {
+  public void getParentShouldReturnTheExpectedNode(T tree) {
     tree = setupTreeTestData(tree);
     withoutModifying(tree, new Test<Tree<String>>() {
       @Override
@@ -102,7 +102,7 @@ public abstract class TreeTest {
   }
 
   @Theory
-  public void getChildrenShouldThrowANPEOnNullNode(final Tree<String> tree) {
+  public void getChildrenShouldThrowANPEOnNullNode(T tree) {
     withoutModifying(tree, new Test<Tree<String>>() {
       @Override
       public void apply(Tree<String> tree) {
@@ -113,7 +113,7 @@ public abstract class TreeTest {
   }
 
   @Theory
-  public void getChildrenShouldThrowAnIAEOnUnknownNode(final Tree<String> tree) {
+  public void getChildrenShouldThrowAnIAEOnUnknownNode(T tree) {
     withoutModifying(tree, new Test<Tree<String>>() {
       @Override
       public void apply(Tree<String> tree) {
@@ -124,7 +124,7 @@ public abstract class TreeTest {
   }
 
   @Theory
-  public void getChildrenShouldReturnTheExpectedNodes(Tree<String> tree) {
+  public void getChildrenShouldReturnTheExpectedNodes(T tree) {
     tree = setupTreeTestData(tree);
     withoutModifying(tree, new Test<Tree<String>>() {
       @Override
@@ -137,7 +137,7 @@ public abstract class TreeTest {
   }
 
   @Theory
-  public void getChildrenShouldReturnAnEmptyCollectionOnALeafNode(Tree<String> tree) {
+  public void getChildrenShouldReturnAnEmptyCollectionOnALeafNode(T tree) {
     tree = setupTreeTestData(tree);
     withoutModifying(tree, new Test<Tree<String>>() {
       @Override
@@ -150,7 +150,7 @@ public abstract class TreeTest {
   }
 
   @Theory
-  public void getRootShouldReturnNullBeforeSetRoot(final Tree<String> tree) {
+  public void getRootShouldReturnNullBeforeSetRoot(T tree) {
     withoutModifying(tree, new Test<Tree<String>>() {
       @Override
       public void apply(Tree<String> tree) {
@@ -160,7 +160,7 @@ public abstract class TreeTest {
   }
 
   @Theory
-  public void getRootShouldReturnSetRoot(Tree<String> tree) {
+  public void getRootShouldReturnSetRoot(T tree) {
     tree = withRoot(tree, "R");
     withoutModifying(tree, new Test<Tree<String>>() {
       @Override
@@ -170,13 +170,13 @@ public abstract class TreeTest {
     });
   }
 
-  public abstract Tree<String> withRoot(Tree<String> tree, String root);
+  public abstract T withRoot(T tree, String root);
 
-  public abstract Tree<String> plus(Tree<String> tree, String parent, String child);
+  public abstract T plus(T tree, String parent, String child);
 
-  public abstract Tree<String> minus(Tree<String> tree, String node);
+  public abstract T minus(T tree, String node);
 
-  public abstract Tree<String> setupTreeTestData(Tree<String> tree);
+  public abstract T setupTreeTestData(T tree);
 
   protected static <T extends Tree<String>> void withoutModifying(T tree, Test<T> test) {
     final long beforeHash = ObjectHashes.getCRCChecksum(tree);

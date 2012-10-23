@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
 // CSOFF: WhitespaceAroundCheck
 @SuppressWarnings({"FeatureEnvy", "InstanceMethodNamingConvention"})
 // CSON: WhitespaceAroundCheck
-public class ImmutableTreeTest extends TreeTest {
+public class ImmutableTreeTest extends TreeTest<ImmutableTree<String>> {
   @Theory
   public void withRootShouldReturnATreeWithoutAPreviousNode(ImmutableTree<String> immutableTree) {
     withoutModifying(immutableTree, new Test<ImmutableTree<String>>() {
@@ -143,23 +143,22 @@ public class ImmutableTreeTest extends TreeTest {
   }
 
   @Override
-  public Tree<String> withRoot(final Tree<String> tree, final String root) {
-    return ((ImmutableTree<String>) tree).withRoot(root);
+  public ImmutableTree<String> withRoot(final ImmutableTree<String> immutableTree, final String root) {
+    return immutableTree.withRoot(root);
   }
 
   @Override
-  public Tree<String> plus(final Tree<String> tree, final String parent, final String child) {
-    return ((ImmutableTree<String>) tree).added(parent, child);
+  public ImmutableTree<String> plus(final ImmutableTree<String> immutableTree, final String parent, final String child) {
+    return immutableTree.added(parent, child);
   }
 
   @Override
-  public Tree<String> minus(final Tree<String> tree, final String node) {
-    return ((ImmutableTree<String>) tree).removed(node);
+  public ImmutableTree<String> minus(final ImmutableTree<String> immutableTree, final String node) {
+    return immutableTree.removed(node);
   }
 
   @Override
-  public Tree<String> setupTreeTestData(final Tree<String> tree) {
-    ImmutableTree<String> immutableTree = (ImmutableTree<String>) tree;
+  public ImmutableTree<String> setupTreeTestData(ImmutableTree<String> immutableTree) {
     immutableTree = immutableTree.withRoot("R");
     immutableTree = immutableTree.added("R", "1");
     immutableTree = immutableTree.added("R", "2");

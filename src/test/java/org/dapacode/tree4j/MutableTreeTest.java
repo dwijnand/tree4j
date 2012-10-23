@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 // CSOFF: WhitespaceAroundCheck
 @SuppressWarnings({"FeatureEnvy", "InstanceMethodNamingConvention"})
 // CSON: WhitespaceAroundCheck
-public class MutableTreeTest extends TreeTest {
+public class MutableTreeTest extends TreeTest<MutableTree<String>> {
   @Theory
   public void setRootShouldThrowANPEOnNullNode(final MutableTree<String> mutableTree) {
     expectedException.expect(NullPointerException.class);
@@ -172,26 +172,25 @@ public class MutableTreeTest extends TreeTest {
   }
 
   @Override
-  public Tree<String> withRoot(final Tree<String> tree, final String root) {
-    ((MutableTree<String>) tree).setRoot(root);
-    return tree;
+  public MutableTree<String> withRoot(final MutableTree<String> mutableTree, final String root) {
+    mutableTree.setRoot(root);
+    return mutableTree;
   }
 
   @Override
-  public Tree<String> plus(final Tree<String> tree, final String parent, final String child) {
-    ((MutableTree<String>) tree).add(parent, child);
-    return tree;
+  public MutableTree<String> plus(final MutableTree<String> mutableTree, final String parent, final String child) {
+    mutableTree.add(parent, child);
+    return mutableTree;
   }
 
   @Override
-  public Tree<String> minus(final Tree<String> tree, final String node) {
-    ((MutableTree<String>) tree).remove(node);
-    return tree;
+  public MutableTree<String> minus(final MutableTree<String> mutableTree, final String node) {
+    mutableTree.remove(node);
+    return mutableTree;
   }
 
   @Override
-  public Tree<String> setupTreeTestData(final Tree<String> tree) {
-    final MutableTree<String> mutableTree = (MutableTree<String>) tree;
+  public MutableTree<String> setupTreeTestData(final MutableTree<String> mutableTree) {
     mutableTree.setRoot("R");
     mutableTree.add("R", "1");
     mutableTree.add("R", "2");
