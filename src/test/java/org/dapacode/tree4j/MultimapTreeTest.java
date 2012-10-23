@@ -23,11 +23,20 @@ public class MultimapTreeTest extends MutableTreeTest {
 
   @DataPoints
   public static MutableTree<?>[] data() {
-    final int count = 1 + MUTABLE_MULTIMAP_FACTORIES.size() * MUTABLE_MAP_FACTORIES.size();
+    final int count = 2 + MUTABLE_MULTIMAP_FACTORIES.size() * MUTABLE_MAP_FACTORIES.size();
     final MutableTree<?>[] data = new MutableTree<?>[count];
-
     int i = 0;
+
     data[i++] = MultimapTree.<String>create();
+
+    final MultimapTree<String> delegate = MultimapTree.create();
+    data[i++] = new DelegatingMutableTree<String>() {
+      @Override
+      protected MutableTree<String> delegate() {
+        return delegate;
+      }
+    };
+
     for (final Factory<Multimap<String, String>> mmapFactory : MUTABLE_MULTIMAP_FACTORIES) {
       for (final Factory<Map<String, String>> mapFactory : MUTABLE_MAP_FACTORIES) {
         data[i++] = MultimapTree.create(mmapFactory.get(), mapFactory.get());
