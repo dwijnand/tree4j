@@ -109,6 +109,20 @@
         </configuration>
       </plugin>
       <plugin>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>2.5.1</version>
+        <configuration>
+          <failOnWarning>true</failOnWarning>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>analyze-only</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <artifactId>maven-deploy-plugin</artifactId>
         <version>2.7</version>
       </plugin>
