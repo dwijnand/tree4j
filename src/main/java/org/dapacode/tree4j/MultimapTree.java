@@ -68,7 +68,7 @@ public final class MultimapTree<T> extends AbstractMultimapTree<T> implements Mu
    * @param tree a tree
    * @return a new copy of the specified tree
    */
-  // TODO check and test this!
+  // TODO add javadoc
   public static <T> MultimapTree<T> copyOf(final Tree<T> tree) {
     checkNotNull(tree);
 

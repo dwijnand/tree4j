@@ -152,7 +152,7 @@ public final class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> impl
     return new ImmutableMultimapTree<T>(childrenMaker, parentsMaker);
   }
 
-  // TODO add javadoc & test
+  // TODO add javadoc
   public static <T> ImmutableMultimapTree<T> copyOf(final Tree<T> tree) {
     checkNotNull(tree);
 
