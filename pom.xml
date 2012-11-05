@@ -35,6 +35,7 @@
   </scm>
 
   <properties>
+    <maven.compiler.fork>true</maven.compiler.fork><!-- Required for -Xlint -->
     <maven.compiler.showDeprecation>true</maven.compiler.showDeprecation>
     <maven.compiler.showWarnings>true</maven.compiler.showWarnings>
     <maven.compiler.source>1.6</maven.compiler.source>
