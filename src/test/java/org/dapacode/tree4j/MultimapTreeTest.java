@@ -17,6 +17,9 @@ import static org.dapacode.tree4j.testutils.Factories.LINKED_HASH_MULTIMAP_FACTO
 import static org.junit.Assert.*;
 
 @RunWith(Theories.class)
+// CSOFF: WhitespaceAroundCheck
+@SuppressWarnings({"InstanceMethodNamingConvention", "DesignForExtension", "LocalCanBeFinal"})
+// CSON: WhitespaceAroundCheck
 public class MultimapTreeTest extends MutableTreeTest {
   private static final Collection<Factory<SetMultimap<String, String>>> MUTABLE_SETMULTIMAP_FACTORIES =
       ImmutableList.of(LINKED_HASH_MULTIMAP_FACTORY);

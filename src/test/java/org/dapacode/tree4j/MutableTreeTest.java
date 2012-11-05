@@ -14,7 +14,7 @@ import static org.junit.matchers.JUnitMatchers.hasItem;
  */
 // TODO make methods final
 // CSOFF: WhitespaceAroundCheck
-@SuppressWarnings({"FeatureEnvy", "InstanceMethodNamingConvention"})
+@SuppressWarnings({"FeatureEnvy", "InstanceMethodNamingConvention", "DesignForExtension", "LocalCanBeFinal"})
 // CSON: WhitespaceAroundCheck
 public class MutableTreeTest extends TreeTest<MutableTree<String>> {
   @Theory
@@ -202,24 +202,28 @@ public class MutableTreeTest extends TreeTest<MutableTree<String>> {
   }
 
   @Override
+  @SuppressWarnings("ParameterNameDiffersFromOverriddenParameter")
   public MutableTree<String> withRoot(final MutableTree<String> mutableTree, final String root) {
     mutableTree.setRoot(root);
     return mutableTree;
   }
 
   @Override
+  @SuppressWarnings("ParameterNameDiffersFromOverriddenParameter")
   public MutableTree<String> plus(final MutableTree<String> mutableTree, final String parent, final String child) {
     mutableTree.add(parent, child);
     return mutableTree;
   }
 
   @Override
+  @SuppressWarnings("ParameterNameDiffersFromOverriddenParameter")
   public MutableTree<String> minus(final MutableTree<String> mutableTree, final String node) {
     mutableTree.remove(node);
     return mutableTree;
   }
 
   @Override
+  @SuppressWarnings("ParameterNameDiffersFromOverriddenParameter")
   public MutableTree<String> setupTreeTestData(final MutableTree<String> mutableTree) {
     mutableTree.setRoot("R");
     mutableTree.add("R", "1");

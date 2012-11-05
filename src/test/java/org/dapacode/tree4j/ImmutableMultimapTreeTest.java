@@ -12,8 +12,10 @@ import java.util.Collection;
 
 import static org.junit.Assert.*;
 
-@SuppressWarnings("InstanceMethodNamingConvention")
 @RunWith(Theories.class)
+// CSOFF: WhitespaceAroundCheck
+@SuppressWarnings({"InstanceMethodNamingConvention", "DesignForExtension", "LocalCanBeFinal"})
+// CSON: WhitespaceAroundCheck
 public class ImmutableMultimapTreeTest extends ImmutableTreeTest {
   private static final Collection<ImmutableMultimapTree.ChildrenMaker<String>> CHILDREN_MAKERS;
   private static final Collection<ImmutableMultimapTree.ParentsMaker<String>> PARENTS_MAKERS;

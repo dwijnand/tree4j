@@ -16,7 +16,8 @@ import static org.junit.matchers.JUnitMatchers.hasItems;
  */
 // TODO make methods final
 // CSOFF: WhitespaceAroundCheck
-@SuppressWarnings({"InstanceMethodNamingConvention", "NonBooleanMethodNameMayNotStartWithQuestion"})
+@SuppressWarnings(
+    {"InstanceMethodNamingConvention", "NonBooleanMethodNameMayNotStartWithQuestion", "DesignForExtension", "LocalCanBeFinal"})
 // CSON: WhitespaceAroundCheck
 public abstract class TreeTest<T extends Tree<String>> {
   @Rule

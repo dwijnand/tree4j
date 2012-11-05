@@ -16,7 +16,7 @@ import static org.junit.matchers.JUnitMatchers.hasItems;
  * class simply extends {@link TreeTest}, passing ImmutableTree implementations to those tests.
  */
 // CSOFF: WhitespaceAroundCheck
-@SuppressWarnings({"FeatureEnvy", "InstanceMethodNamingConvention"})
+@SuppressWarnings({"FeatureEnvy", "InstanceMethodNamingConvention", "DesignForExtension", "LocalCanBeFinal"})
 // CSON: WhitespaceAroundCheck
 public class ImmutableTreeTest extends TreeTest<ImmutableTree<String>> {
   @Theory
@@ -161,21 +161,25 @@ public class ImmutableTreeTest extends TreeTest<ImmutableTree<String>> {
   }
 
   @Override
+  @SuppressWarnings("ParameterNameDiffersFromOverriddenParameter")
   public ImmutableTree<String> withRoot(final ImmutableTree<String> immutableTree, final String root) {
     return immutableTree.withRoot(root);
   }
 
   @Override
+  @SuppressWarnings("ParameterNameDiffersFromOverriddenParameter")
   public ImmutableTree<String> plus(final ImmutableTree<String> immutableTree, final String parent, final String child) {
     return immutableTree.added(parent, child);
   }
 
   @Override
+  @SuppressWarnings("ParameterNameDiffersFromOverriddenParameter")
   public ImmutableTree<String> minus(final ImmutableTree<String> immutableTree, final String node) {
     return immutableTree.removed(node);
   }
 
   @Override
+  @SuppressWarnings("ParameterNameDiffersFromOverriddenParameter")
   public ImmutableTree<String> setupTreeTestData(ImmutableTree<String> immutableTree) {
     immutableTree = immutableTree.withRoot("R");
     immutableTree = immutableTree.added("R", "1");
