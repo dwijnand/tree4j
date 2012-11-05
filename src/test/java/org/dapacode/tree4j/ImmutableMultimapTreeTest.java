@@ -21,13 +21,13 @@ public class ImmutableMultimapTreeTest extends ImmutableTreeTest {
   private static final Collection<ImmutableMultimapTree.ParentsMaker<String>> PARENTS_MAKERS;
 
   static {
-    final Collection<ImmutableMultimapTree.ChildrenMaker<String>> cms = Lists.newArrayList();
+    Collection<ImmutableMultimapTree.ChildrenMaker<String>> cms = Lists.newArrayList();
 
     cms.add(ImmutableMultimapTree.ChildrenMaker.<String>usingSetMultimap());
 
     CHILDREN_MAKERS = ImmutableList.copyOf(cms);
 
-    final Collection<ImmutableMultimapTree.ParentsMaker<String>> pms = Lists.newArrayList();
+    Collection<ImmutableMultimapTree.ParentsMaker<String>> pms = Lists.newArrayList();
 
     pms.add(ImmutableMultimapTree.ParentsMaker.<String>usingImmutableMap());
     pms.add(ImmutableMultimapTree.ParentsMaker.<String>usingImmutableSortedMapInNaturalOrder());
@@ -39,8 +39,8 @@ public class ImmutableMultimapTreeTest extends ImmutableTreeTest {
 
   @DataPoints
   public static ImmutableTree<?>[] data() {
-    final int count = 2 + CHILDREN_MAKERS.size() * PARENTS_MAKERS.size();
-    final ImmutableTree<?>[] data = new ImmutableTree<?>[count];
+    int count = 2 + CHILDREN_MAKERS.size() * PARENTS_MAKERS.size();
+    ImmutableTree<?>[] data = new ImmutableTree<?>[count];
     int i = 0;
 
     data[i++] = ImmutableMultimapTree.<String>create();
@@ -53,8 +53,8 @@ public class ImmutableMultimapTreeTest extends ImmutableTreeTest {
       }
     };
 
-    for (final ImmutableMultimapTree.ChildrenMaker<String> childrenMaker : CHILDREN_MAKERS) {
-      for (final ImmutableMultimapTree.ParentsMaker<String> parentsMaker : PARENTS_MAKERS) {
+    for (ImmutableMultimapTree.ChildrenMaker<String> childrenMaker : CHILDREN_MAKERS) {
+      for (ImmutableMultimapTree.ParentsMaker<String> parentsMaker : PARENTS_MAKERS) {
         data[i++] = ImmutableMultimapTree.create(childrenMaker, parentsMaker);
       }
     }

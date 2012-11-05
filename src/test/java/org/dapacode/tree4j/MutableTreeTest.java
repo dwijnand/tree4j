@@ -18,20 +18,20 @@ import static org.junit.matchers.JUnitMatchers.hasItem;
 // CSON: WhitespaceAroundCheck
 public class MutableTreeTest extends TreeTest<MutableTree<String>> {
   @Theory
-  public void setRootShouldThrowANPEOnNullNode(final MutableTree<String> mutableTree) {
+  public void setRootShouldThrowANPEOnNullNode(MutableTree<String> mutableTree) {
     expectedException.expect(NullPointerException.class);
     mutableTree.setRoot(null);
   }
 
   @Theory
-  public void setRootShouldSetTheRoot(final MutableTree<String> mutableTree) {
+  public void setRootShouldSetTheRoot(MutableTree<String> mutableTree) {
     boolean changed = mutableTree.setRoot("R");
     assertTrue(changed);
     assertEquals("R", mutableTree.getRoot());
   }
 
   @Theory
-  public void setRootShouldRemoveAllExistingNodes(final MutableTree<String> mutableTree) {
+  public void setRootShouldRemoveAllExistingNodes(MutableTree<String> mutableTree) {
     mutableTree.setRoot("R");
     mutableTree.add("R", "1");
 
@@ -41,35 +41,35 @@ public class MutableTreeTest extends TreeTest<MutableTree<String>> {
   }
 
   @Theory
-  public void setRootShouldntChangeAnythingWhenPassedRoot(final MutableTree<String> mutableTree) {
+  public void setRootShouldntChangeAnythingWhenPassedRoot(MutableTree<String> mutableTree) {
     mutableTree.setRoot("R");
     boolean changed = mutableTree.setRoot("R");
     assertFalse(changed);
   }
 
   @Theory
-  public void addShouldThrowANPEOnNullParentNode(final MutableTree<String> mutableTree) {
+  public void addShouldThrowANPEOnNullParentNode(MutableTree<String> mutableTree) {
     mutableTree.setRoot("R");
     expectedException.expect(NullPointerException.class);
     mutableTree.add(null, "1");
   }
 
   @Theory
-  public void addShouldThrowANPEOnNullChildNode(final MutableTree<String> mutableTree) {
+  public void addShouldThrowANPEOnNullChildNode(MutableTree<String> mutableTree) {
     mutableTree.setRoot("R");
     expectedException.expect(NullPointerException.class);
     mutableTree.add("R", null);
   }
 
   @Theory
-  public void addShouldThrowAnIAEOnUnknownParentNode(final MutableTree<String> mutableTree) {
+  public void addShouldThrowAnIAEOnUnknownParentNode(MutableTree<String> mutableTree) {
     mutableTree.setRoot("R");
     expectedException.expect(IllegalArgumentException.class);
     mutableTree.add("unknown node", "1");
   }
 
   @Theory
-  public void addShouldThrowAnIAEOnAlreadyAssociatedChildNode(final MutableTree<String> mutableTree) {
+  public void addShouldThrowAnIAEOnAlreadyAssociatedChildNode(MutableTree<String> mutableTree) {
     mutableTree.setRoot("R");
     mutableTree.add("R", "1");
     mutableTree.add("1", "a");
@@ -78,7 +78,7 @@ public class MutableTreeTest extends TreeTest<MutableTree<String>> {
   }
 
   @Theory
-  public void addShouldThrowAnIAEWhenAssociatingAChildNodeToAnotherParentNode(final MutableTree<String> mutableTree) {
+  public void addShouldThrowAnIAEWhenAssociatingAChildNodeToAnotherParentNode(MutableTree<String> mutableTree) {
     mutableTree.setRoot("R");
     mutableTree.add("R", "1");
     mutableTree.add("R", "2");
@@ -88,7 +88,7 @@ public class MutableTreeTest extends TreeTest<MutableTree<String>> {
   }
 
   @Theory
-  public void addShouldNotThrowAnIAEWhenAddingTheSameAssociationTwice(final MutableTree<String> mutableTree) {
+  public void addShouldNotThrowAnIAEWhenAddingTheSameAssociationTwice(MutableTree<String> mutableTree) {
     mutableTree.setRoot("R");
     mutableTree.add("R", "1");
     mutableTree.add("1", "a");
@@ -96,16 +96,16 @@ public class MutableTreeTest extends TreeTest<MutableTree<String>> {
   }
 
   @Theory
-  public void addShouldReturnFalseWhenAddingTheSameAssociationTwice(final MutableTree<String> mutableTree) {
+  public void addShouldReturnFalseWhenAddingTheSameAssociationTwice(MutableTree<String> mutableTree) {
     mutableTree.setRoot("R");
     mutableTree.add("R", "1");
     mutableTree.add("1", "a");
-    final boolean modified = mutableTree.add("1", "a");
+    boolean modified = mutableTree.add("1", "a");
     assertFalse(modified);
   }
 
   @Theory
-  public void addShouldAddTheNodesToTheTree(final MutableTree<String> mutableTree) {
+  public void addShouldAddTheNodesToTheTree(MutableTree<String> mutableTree) {
     mutableTree.setRoot("R");
 
     mutableTree.add("R", "1");
@@ -115,13 +115,13 @@ public class MutableTreeTest extends TreeTest<MutableTree<String>> {
   }
 
   @Theory
-  public void addShouldReturnTrueOnModifyingTheTreeByAddingANewAssociation(final MutableTree<String> mutableTree) {
+  public void addShouldReturnTrueOnModifyingTheTreeByAddingANewAssociation(MutableTree<String> mutableTree) {
     mutableTree.setRoot("R");
     assertTrue(mutableTree.add("R", "1"));
   }
 
   @Theory
-  public void addShouldAddTheChildNodeToTheChildrenOfTheParentNode(final MutableTree<String> mutableTree) {
+  public void addShouldAddTheChildNodeToTheChildrenOfTheParentNode(MutableTree<String> mutableTree) {
     mutableTree.setRoot("R");
 
     mutableTree.add("R", "1");
@@ -130,7 +130,7 @@ public class MutableTreeTest extends TreeTest<MutableTree<String>> {
   }
 
   @Theory
-  public void addShouldSetTheParentNodeAsTheParentOfTheChildNode(final MutableTree<String> mutableTree) {
+  public void addShouldSetTheParentNodeAsTheParentOfTheChildNode(MutableTree<String> mutableTree) {
     mutableTree.setRoot("R");
 
     mutableTree.add("R", "1");
@@ -139,7 +139,7 @@ public class MutableTreeTest extends TreeTest<MutableTree<String>> {
   }
 
   @Theory
-  public void clearShouldRemoveAllNodes(final MutableTree<String> mutableTree) {
+  public void clearShouldRemoveAllNodes(MutableTree<String> mutableTree) {
     mutableTree.setRoot("R");
     mutableTree.add("R", "1");
 
@@ -151,7 +151,7 @@ public class MutableTreeTest extends TreeTest<MutableTree<String>> {
   }
 
   @Theory
-  public void clearShouldRemoveAllNodes2(final MutableTree<String> mutableTree) {
+  public void clearShouldRemoveAllNodes2(MutableTree<String> mutableTree) {
     setupTreeTestData(mutableTree);
     mutableTree.clear();
     mutableTree.setRoot("R");
@@ -159,20 +159,20 @@ public class MutableTreeTest extends TreeTest<MutableTree<String>> {
   }
 
   @Theory
-  public void removeShouldThrowANPEOnNullNode(final MutableTree<String> mutableTree) {
+  public void removeShouldThrowANPEOnNullNode(MutableTree<String> mutableTree) {
     mutableTree.setRoot("R");
     expectedException.expect(NullPointerException.class);
     mutableTree.remove(null);
   }
 
   @Theory
-  public void removeShouldThrowAIAEOnUnknownNode(final MutableTree<String> mutableTree) {
+  public void removeShouldThrowAIAEOnUnknownNode(MutableTree<String> mutableTree) {
     expectedException.expect(IllegalArgumentException.class);
     mutableTree.remove("unknown node");
   }
 
   @Theory
-  public void removeShouldRemoveTheSpecifiedNodeAndAllOfItsChildren(final MutableTree<String> mutableTree) {
+  public void removeShouldRemoveTheSpecifiedNodeAndAllOfItsChildren(MutableTree<String> mutableTree) {
     setupTreeTestData(mutableTree);
 
     mutableTree.remove("1");
@@ -183,13 +183,13 @@ public class MutableTreeTest extends TreeTest<MutableTree<String>> {
   }
 
   @Theory
-  public void removeShouldReturnTrueOnModifyingTheTreeByRemovingANode(final MutableTree<String> mutableTree) {
+  public void removeShouldReturnTrueOnModifyingTheTreeByRemovingANode(MutableTree<String> mutableTree) {
     setupTreeTestData(mutableTree);
     assertTrue(mutableTree.remove("1"));
   }
 
   @Theory
-  public void removeShouldEmptyTheTreeOnRootNode(final MutableTree<String> mutableTree) {
+  public void removeShouldEmptyTheTreeOnRootNode(MutableTree<String> mutableTree) {
     setupTreeTestData(mutableTree);
 
     boolean changed = mutableTree.remove(mutableTree.getRoot());
@@ -203,28 +203,28 @@ public class MutableTreeTest extends TreeTest<MutableTree<String>> {
 
   @Override
   @SuppressWarnings("ParameterNameDiffersFromOverriddenParameter")
-  public MutableTree<String> withRoot(final MutableTree<String> mutableTree, final String root) {
+  public MutableTree<String> withRoot(MutableTree<String> mutableTree, String root) {
     mutableTree.setRoot(root);
     return mutableTree;
   }
 
   @Override
   @SuppressWarnings("ParameterNameDiffersFromOverriddenParameter")
-  public MutableTree<String> plus(final MutableTree<String> mutableTree, final String parent, final String child) {
+  public MutableTree<String> plus(MutableTree<String> mutableTree, String parent, String child) {
     mutableTree.add(parent, child);
     return mutableTree;
   }
 
   @Override
   @SuppressWarnings("ParameterNameDiffersFromOverriddenParameter")
-  public MutableTree<String> minus(final MutableTree<String> mutableTree, final String node) {
+  public MutableTree<String> minus(MutableTree<String> mutableTree, String node) {
     mutableTree.remove(node);
     return mutableTree;
   }
 
   @Override
   @SuppressWarnings("ParameterNameDiffersFromOverriddenParameter")
-  public MutableTree<String> setupTreeTestData(final MutableTree<String> mutableTree) {
+  public MutableTree<String> setupTreeTestData(MutableTree<String> mutableTree) {
     mutableTree.setRoot("R");
     mutableTree.add("R", "1");
     mutableTree.add("R", "2");

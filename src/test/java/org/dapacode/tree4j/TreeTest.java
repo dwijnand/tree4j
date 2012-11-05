@@ -180,7 +180,7 @@ public abstract class TreeTest<T extends Tree<String>> {
   public abstract T setupTreeTestData(T tree);
 
   protected static <T extends Tree<String>> void withoutModifying(T tree, Test<T> test) {
-    final long beforeHash = ObjectHashes.getCRCChecksum(tree);
+    long beforeHash = ObjectHashes.getCRCChecksum(tree);
     try {
       test.apply(tree);
     } finally {

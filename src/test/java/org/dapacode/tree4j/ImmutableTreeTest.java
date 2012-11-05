@@ -46,7 +46,7 @@ public class ImmutableTreeTest extends TreeTest<ImmutableTree<String>> {
         immutableTree = immutableTree.added("1", "b");
         immutableTree = immutableTree.added("2", "c");
 
-        final Collection<String> children = immutableTree.getChildren("1");
+        Collection<String> children = immutableTree.getChildren("1");
 
         assertEquals(2, children.size());
         assertThat(children, hasItems("a", "b"));
@@ -64,7 +64,7 @@ public class ImmutableTreeTest extends TreeTest<ImmutableTree<String>> {
         immutableTree = immutableTree.added("R", "2");
         immutableTree = immutableTree.added("1", "a");
 
-        final Tree<String> newTree = immutableTree.added("R", "1");
+        Tree<String> newTree = immutableTree.added("R", "1");
 
         assertSame(immutableTree, newTree);
         EqualsBuilder.reflectionEquals(immutableTree, newTree);
@@ -120,7 +120,7 @@ public class ImmutableTreeTest extends TreeTest<ImmutableTree<String>> {
         immutableTree = immutableTree.removed("1");
 
         assertFalse(immutableTree.contains("1"));
-        final Collection<String> rootChildren = immutableTree.getChildren("R");
+        Collection<String> rootChildren = immutableTree.getChildren("R");
         assertEquals(2, rootChildren.size());
         assertFalse(rootChildren.contains("1"));
         assertFalse(immutableTree.contains("a"));
@@ -162,19 +162,19 @@ public class ImmutableTreeTest extends TreeTest<ImmutableTree<String>> {
 
   @Override
   @SuppressWarnings("ParameterNameDiffersFromOverriddenParameter")
-  public ImmutableTree<String> withRoot(final ImmutableTree<String> immutableTree, final String root) {
+  public ImmutableTree<String> withRoot(ImmutableTree<String> immutableTree, String root) {
     return immutableTree.withRoot(root);
   }
 
   @Override
   @SuppressWarnings("ParameterNameDiffersFromOverriddenParameter")
-  public ImmutableTree<String> plus(final ImmutableTree<String> immutableTree, final String parent, final String child) {
+  public ImmutableTree<String> plus(ImmutableTree<String> immutableTree, String parent, String child) {
     return immutableTree.added(parent, child);
   }
 
   @Override
   @SuppressWarnings("ParameterNameDiffersFromOverriddenParameter")
-  public ImmutableTree<String> minus(final ImmutableTree<String> immutableTree, final String node) {
+  public ImmutableTree<String> minus(ImmutableTree<String> immutableTree, String node) {
     return immutableTree.removed(node);
   }
 
