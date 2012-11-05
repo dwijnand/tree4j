@@ -91,7 +91,12 @@ public final class MultimapTree<T> extends AbstractMultimapTree<T> implements Mu
     return multimapTree;
   }
 
-    @Override
+  @Override
+  public Collection<T> getChildren(final T node) {
+    return getChildren0(node);
+  }
+
+  @Override
   public T getRoot() {
     return root;
   }

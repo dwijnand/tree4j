@@ -1,5 +1,6 @@
 package org.dapacode.tree4j;
 
+import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.ImmutableSortedMap;
@@ -20,7 +21,6 @@ import static com.google.common.base.Preconditions.*;
  *
  * @param <T> the type of the nodes in the tree
  */
-// TODO see if it's possible to return ImmutableCollection on getChildren(T)
 public final class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> implements ImmutableTree<T> {
   // TODO document this class entirely
   public abstract static class ChildrenMaker<T> implements Factory<ImmutableSetMultimap.Builder<T, T>> {
@@ -183,6 +183,11 @@ public final class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> impl
 
       return immutableMultimapTree;
     }
+  }
+
+  @Override
+  public ImmutableCollection<T> getChildren(final T node) {
+    return (ImmutableCollection<T>) getChildren0(node);
   }
 
   @Override

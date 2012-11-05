@@ -33,8 +33,7 @@ public abstract class AbstractMultimapTree<T> implements Tree<T> {
     return parents.get(node);
   }
 
-  @Override
-  public final Collection<T> getChildren(final T node) {
+  protected final Collection<T> getChildren0(final T node) {
     checkNotNull(node);
     checkArgument(contains(node), "The tree doesn't contain the specified node: %s", node);
     return children.get(node);
