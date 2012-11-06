@@ -1,11 +1,17 @@
 package org.dapacode.tree4j;
 
+import com.google.common.collect.ImmutableList;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.dapacode.tree4j.testutils.ObjectHashes;
+import org.hamcrest.Matcher;
 import org.junit.Rule;
 import org.junit.experimental.theories.Theory;
+import org.junit.matchers.JUnitMatchers;
 import org.junit.rules.ExpectedException;
 
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 import static org.junit.matchers.JUnitMatchers.hasItems;
@@ -167,6 +173,25 @@ public abstract class TreeTest<T extends Tree<String>> {
       @Override
       public void apply(Tree<String> tree) {
         assertEquals("R", tree.getRoot());
+      }
+    });
+  }
+
+  @Theory
+  public void iteratorShouldReturnAllNodes(T tree) {
+    tree = setupTreeTestData(tree);
+    withoutModifying(tree, new Test<Tree<String>>() {
+      @Override
+      public void apply(Tree<String> tree) {
+        Iterator<Map.Entry<String, String>> iterator = tree.iterator();
+        @SuppressWarnings("unchecked")
+        Matcher<Iterable<Map.Entry<String, String>>> matcher = JUnitMatchers.<Map.Entry<String, String>>hasItems(
+            ImmutablePair.of("R", "1"),
+            ImmutablePair.of("R", "2"),
+            ImmutablePair.of("1", "a"),
+            ImmutablePair.of("1", "b"),
+            ImmutablePair.of("2", "c"));
+        assertThat(ImmutableList.copyOf(iterator), matcher);
       }
     });
   }
