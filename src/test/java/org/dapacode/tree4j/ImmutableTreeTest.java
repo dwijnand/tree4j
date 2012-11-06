@@ -110,22 +110,17 @@ public class ImmutableTreeTest extends TreeTest<ImmutableTree<String>> {
     withoutModifying(immutableTree, new Test<ImmutableTree<String>>() {
       @Override
       public void apply(ImmutableTree<String> immutableTree) {
-        immutableTree = immutableTree.withRoot("R");
-        immutableTree = immutableTree.added("R", "1");
-        immutableTree = immutableTree.added("R", "2");
-        immutableTree = immutableTree.added("R", "3");
-        immutableTree = immutableTree.added("1", "a");
-        immutableTree = immutableTree.added("1", "b");
-        immutableTree = immutableTree.added("2", "c");
+        immutableTree = setupTreeTestData(immutableTree);
 
-        immutableTree = immutableTree.removed("1");
+        immutableTree = immutableTree.removed("2");
 
-        assertFalse(immutableTree.contains("1"));
+        assertFalse(immutableTree.contains("2"));
         Collection<String> rootChildren = immutableTree.getChildren("R");
-        assertEquals(2, rootChildren.size());
-        assertFalse(rootChildren.contains("1"));
-        assertFalse(immutableTree.contains("a"));
-        assertFalse(immutableTree.contains("!"));
+        assertEquals(1, rootChildren.size());
+        assertFalse(rootChildren.contains("2"));
+        assertFalse(immutableTree.contains("c"));
+        assertTrue(immutableTree.contains("a"));
+        assertTrue(immutableTree.contains("!"));
       }
     });
   }
