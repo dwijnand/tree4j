@@ -8,7 +8,6 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.Map;
 
 import static com.google.common.base.Preconditions.*;
@@ -158,11 +157,8 @@ public final class MultimapTree<T> extends AbstractMultimapTree<T> implements Mu
 
   private void removeInternal(final T node) {
     final Collection<T> nodeChildren = children.get(node);
-    final Iterator<T> iter = nodeChildren.iterator();
-    while (iter.hasNext()) {
-      final T child = iter.next();
+    for (final T child : nodeChildren) {
       removeInternal(child);
-      iter.remove();
     }
 
     children.removeAll(node);
