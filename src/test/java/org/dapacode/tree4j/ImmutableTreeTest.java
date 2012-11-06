@@ -1,6 +1,7 @@
 package org.dapacode.tree4j;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.dapacode.tree4j.testutils.TreeHelper;
 import org.junit.experimental.theories.Theory;
 
 import java.util.Collection;
@@ -188,13 +189,6 @@ public class ImmutableTreeTest extends TreeTest<ImmutableTree<String>> {
   @Override
   @SuppressWarnings("ParameterNameDiffersFromOverriddenParameter")
   public ImmutableTree<String> setupTreeTestData(ImmutableTree<String> immutableTree) {
-    immutableTree = immutableTree.withRoot("R");
-    immutableTree = immutableTree.added("R", "1");
-    immutableTree = immutableTree.added("R", "2");
-    immutableTree = immutableTree.added("1", "a");
-    immutableTree = immutableTree.added("1", "b");
-    immutableTree = immutableTree.added("2", "c");
-    immutableTree = immutableTree.added("a", "!");
-    return immutableTree;
+    return TreeHelper.setupTreeTestData(immutableTree);
   }
 }

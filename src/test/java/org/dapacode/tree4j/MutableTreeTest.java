@@ -1,8 +1,9 @@
 package org.dapacode.tree4j;
 
+import org.dapacode.tree4j.testutils.TreeHelper;
 import org.junit.experimental.theories.Theory;
 
-import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 import static org.junit.matchers.JUnitMatchers.hasItem;
 
@@ -219,13 +220,6 @@ public class MutableTreeTest extends TreeTest<MutableTree<String>> {
   @Override
   @SuppressWarnings("ParameterNameDiffersFromOverriddenParameter")
   public MutableTree<String> setupTreeTestData(MutableTree<String> mutableTree) {
-    mutableTree.setRoot("R");
-    mutableTree.add("R", "1");
-    mutableTree.add("R", "2");
-    mutableTree.add("1", "a");
-    mutableTree.add("1", "b");
-    mutableTree.add("2", "c");
-    mutableTree.add("a", "!");
-    return mutableTree;
+    return TreeHelper.setupTreeTestData(mutableTree);
   }
 }
