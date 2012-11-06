@@ -1,6 +1,8 @@
 package org.dapacode.tree4j;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.LinkedHashMultimap;
+import com.google.common.collect.Maps;
 import com.google.common.collect.SetMultimap;
 import org.dapacode.tree4j.common.Factory;
 import org.junit.experimental.theories.DataPoints;
@@ -11,9 +13,6 @@ import org.junit.runner.RunWith;
 import java.util.Collection;
 import java.util.Map;
 
-import static org.dapacode.tree4j.testutils.Factories.HASH_MAP_FACTORY;
-import static org.dapacode.tree4j.testutils.Factories.LINKED_HASH_MAP_FACTORY;
-import static org.dapacode.tree4j.testutils.Factories.LINKED_HASH_MULTIMAP_FACTORY;
 import static org.junit.Assert.*;
 
 @RunWith(Theories.class)
@@ -21,14 +20,34 @@ import static org.junit.Assert.*;
 @SuppressWarnings({"InstanceMethodNamingConvention", "DesignForExtension", "LocalCanBeFinal"})
 // CSON: WhitespaceAroundCheck
 public class MultimapTreeTest extends MutableTreeTest {
-  private static final Collection<Factory<SetMultimap<String, String>>> MUTABLE_SETMULTIMAP_FACTORIES =
-      ImmutableList.of(LINKED_HASH_MULTIMAP_FACTORY);
-  private static final Collection<Factory<Map<String, String>>> MUTABLE_MAP_FACTORIES =
-      ImmutableList.of(HASH_MAP_FACTORY, LINKED_HASH_MAP_FACTORY);
+  private static final Collection<Factory<SetMultimap<String, String>>> MUTABLE_SET_MULTIMAP_FACTORIES =
+      ImmutableList.<Factory<SetMultimap<String, String>>>of(
+          new Factory<SetMultimap<String, String>>() {
+            @Override
+            public SetMultimap<String, String> get() {
+              return LinkedHashMultimap.create();
+            }
+          }
+      );
+
+  private static final Collection<Factory<Map<String, String>>> MUTABLE_MAP_FACTORIES = ImmutableList.of(
+      new Factory<Map<String, String>>() {
+        @Override
+        public Map<String, String> get() {
+          return Maps.newHashMap();
+        }
+      },
+      new Factory<Map<String, String>>() {
+        @Override
+        public Map<String, String> get() {
+          return Maps.newLinkedHashMap();
+        }
+      }
+  );
 
   @DataPoints
   public static MutableTree<?>[] data() {
-    int count = 2 + MUTABLE_SETMULTIMAP_FACTORIES.size() * MUTABLE_MAP_FACTORIES.size();
+    int count = 2 + MUTABLE_SET_MULTIMAP_FACTORIES.size() * MUTABLE_MAP_FACTORIES.size();
     MutableTree<?>[] data = new MutableTree<?>[count];
     int i = 0;
 
@@ -42,7 +61,7 @@ public class MultimapTreeTest extends MutableTreeTest {
       }
     };
 
-    for (Factory<SetMultimap<String, String>> mmapFactory : MUTABLE_SETMULTIMAP_FACTORIES) {
+    for (Factory<SetMultimap<String, String>> mmapFactory : MUTABLE_SET_MULTIMAP_FACTORIES) {
       for (Factory<Map<String, String>> mapFactory : MUTABLE_MAP_FACTORIES) {
         data[i++] = MultimapTree.create(mmapFactory.get(), mapFactory.get());
       }
