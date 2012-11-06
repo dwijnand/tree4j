@@ -68,4 +68,24 @@ public class ImmutableMultimapTreeTest extends ImmutableTreeTest {
       }
     });
   }
+
+  @Theory
+  public void copyOfADelegatorShouldReturnAnEqualButNotSameTree(ImmutableTree<String> immutableTree) {
+    final ImmutableTree<String> delegate = setupTreeTestData(immutableTree);
+    immutableTree = new DelegatingImmutableTree<String>() {
+      @Override
+      protected ImmutableTree<String> delegate() {
+        return delegate;
+      }
+    };
+
+    withoutModifying(immutableTree, new Test<ImmutableTree<String>>() {
+      @Override
+      public void apply(ImmutableTree<String> immutableTree) {
+        ImmutableMultimapTree<String> copyTree = ImmutableMultimapTree.copyOf(immutableTree);
+        assertThat(copyTree, is(not(sameInstance(immutableTree))));
+        assertThat(copyTree, is(equalTo(immutableTree)));
+      }
+    });
+  }
 }
