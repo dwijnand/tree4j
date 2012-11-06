@@ -181,7 +181,6 @@
     <module name="FinalParameters">
       <property name="tokens" value="METHOD_DEF, CTOR_DEF, LITERAL_CATCH"/>
     </module>
-    <module name="TodoComment"/>
     <module name="UpperEll"/>
   </module>
 </module>
