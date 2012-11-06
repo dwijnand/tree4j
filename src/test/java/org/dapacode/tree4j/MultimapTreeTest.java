@@ -5,18 +5,12 @@ import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.SetMultimap;
 import org.dapacode.tree4j.common.Factory;
-import org.dapacode.tree4j.testutils.TreeHelper.Test;
 import org.junit.experimental.theories.DataPoints;
 import org.junit.experimental.theories.Theories;
-import org.junit.experimental.theories.Theory;
 import org.junit.runner.RunWith;
 
 import java.util.Collection;
 import java.util.Map;
-
-import static org.dapacode.tree4j.testutils.TreeHelper.withoutModifying;
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
 
 @RunWith(Theories.class)
 // CSOFF: WhitespaceAroundCheck
@@ -71,19 +65,5 @@ public class MultimapTreeTest extends MutableTreeTest {
     }
 
     return data;
-  }
-
-  @Theory
-  public void copyOfShouldReturnAnEqualButNotSameTree(MutableTree<String> mutableTree) {
-    setupTreeTestData(mutableTree);
-
-    withoutModifying(mutableTree, new Test<MutableTree<String>>() {
-      @Override
-      public void apply(MutableTree<String> mutableTree) {
-        MutableTree<String> copyTree = MultimapTree.copyOf(mutableTree);
-        assertThat(copyTree, is(not(sameInstance(mutableTree))));
-        assertThat(copyTree, is(equalTo(mutableTree)));
-      }
-    });
   }
 }

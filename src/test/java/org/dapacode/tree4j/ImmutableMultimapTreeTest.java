@@ -2,17 +2,11 @@ package org.dapacode.tree4j;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Ordering;
-import org.dapacode.tree4j.testutils.TreeHelper.Test;
 import org.junit.experimental.theories.DataPoints;
 import org.junit.experimental.theories.Theories;
-import org.junit.experimental.theories.Theory;
 import org.junit.runner.RunWith;
 
 import java.util.Collection;
-
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-import static org.dapacode.tree4j.testutils.TreeHelper.withoutModifying;
 
 @RunWith(Theories.class)
 // CSOFF: WhitespaceAroundCheck
@@ -55,39 +49,5 @@ public class ImmutableMultimapTreeTest extends ImmutableTreeTest {
     }
 
     return data;
-  }
-
-  @Theory
-  public void copyOfShouldReturnAnEqualButNotSameTree(ImmutableTree<String> immutableTree) {
-    immutableTree = setupTreeTestData(immutableTree);
-
-    withoutModifying(immutableTree, new Test<ImmutableTree<String>>() {
-      @Override
-      public void apply(ImmutableTree<String> immutableTree) {
-        ImmutableMultimapTree<String> copyTree = ImmutableMultimapTree.copyOf(immutableTree);
-        assertThat(copyTree, is(not(sameInstance(immutableTree))));
-        assertThat(copyTree, is(equalTo(immutableTree)));
-      }
-    });
-  }
-
-  @Theory
-  public void copyOfADelegatorShouldReturnAnEqualButNotSameTree(ImmutableTree<String> immutableTree) {
-    final ImmutableTree<String> delegate = setupTreeTestData(immutableTree);
-    immutableTree = new DelegatingImmutableTree<String>() {
-      @Override
-      protected ImmutableTree<String> delegate() {
-        return delegate;
-      }
-    };
-
-    withoutModifying(immutableTree, new Test<ImmutableTree<String>>() {
-      @Override
-      public void apply(ImmutableTree<String> immutableTree) {
-        ImmutableMultimapTree<String> copyTree = ImmutableMultimapTree.copyOf(immutableTree);
-        assertThat(copyTree, is(not(sameInstance(immutableTree))));
-        assertThat(copyTree, is(equalTo(immutableTree)));
-      }
-    });
   }
 }

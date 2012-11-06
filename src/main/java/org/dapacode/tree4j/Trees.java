@@ -3,9 +3,8 @@ package org.dapacode.tree4j;
 import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Lists;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 
+import java.util.AbstractMap;
 import java.util.Collection;
 import java.util.List;
 import java.util.ListIterator;
@@ -35,8 +34,8 @@ public final class Trees {
   private static <T> FluentIterable<Map.Entry<T, T>> getAssociations(final Tree<T> tree, final T node) {
     return FluentIterable.from(tree.getChildren(node)).transform(new Function<T, Map.Entry<T, T>>() {
       @Override
-      public Pair<T, T> apply(final T child) {
-        return ImmutablePair.of(node, child);
+      public Map.Entry<T, T> apply(final T child) {
+        return new AbstractMap.SimpleEntry<T, T>(node, child);
       }
     });
   }

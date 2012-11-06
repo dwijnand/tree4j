@@ -5,9 +5,6 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.ImmutableSortedMap;
 import com.google.common.collect.Ordering;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.dapacode.tree4j.common.Factory;
 
 import java.util.Collection;
@@ -313,30 +310,5 @@ public final class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> impl
         addRecursivelyExcludingNode(child, excludeNode, childrenBuilder, parentsBuilder);
       }
     }
-  }
-
-  /**
-   * {@inheritDoc}
-   * <p/>
-   * This method uses reflection to determine whether the specified object is equal to this tree.
-   */
-  @Override
-  public boolean equals(final Object obj) {
-    return EqualsBuilder.reflectionEquals(this, obj);
-  }
-
-  /**
-   * {@inheritDoc}
-   * <p/>
-   * This method uses reflection to build the returned hash code.
-   */
-  @Override
-  public int hashCode() {
-    return HashCodeBuilder.reflectionHashCode(this);
-  }
-
-  @Override
-  public String toString() {
-    return ToStringBuilder.reflectionToString(this);
   }
 }

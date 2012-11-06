@@ -3,9 +3,6 @@ package org.dapacode.tree4j;
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.SetMultimap;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.Collection;
 import java.util.Map;
@@ -163,30 +160,5 @@ public final class MultimapTree<T> extends AbstractMultimapTree<T> implements Mu
 
     children.removeAll(node);
     parents.remove(node);
-  }
-
-  /**
-   * {@inheritDoc}
-   * <p/>
-   * This method uses reflection to determine whether the specified object is equal to this tree.
-   */
-  @Override
-  public boolean equals(final Object obj) {
-    return EqualsBuilder.reflectionEquals(this, obj);
-  }
-
-  /**
-   * {@inheritDoc}
-   * <p/>
-   * This method uses reflection to build the returned hash code.
-   */
-  @Override
-  public int hashCode() {
-    return HashCodeBuilder.reflectionHashCode(this);
-  }
-
-  @Override
-  public String toString() {
-    return ToStringBuilder.reflectionToString(this);
   }
 }
