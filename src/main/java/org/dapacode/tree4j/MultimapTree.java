@@ -120,7 +120,7 @@ public final class MultimapTree<T> extends AbstractMultimapTree<T> implements Mu
     checkNotNull(child);
     checkArgument(contains(parent), "The tree doesn't contain the specified parent node: %s", parent);
 
-    T childParent = parents.get(child);
+    final T childParent = parents.get(child);
     if (childParent == parent) {
       return false;
     }
