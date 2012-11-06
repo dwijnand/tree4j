@@ -1,7 +1,6 @@
 package org.dapacode.tree4j;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
 import org.junit.experimental.theories.DataPoints;
 import org.junit.experimental.theories.Theories;
@@ -18,25 +17,18 @@ import static org.junit.Assert.*;
 @SuppressWarnings({"InstanceMethodNamingConvention", "DesignForExtension", "LocalCanBeFinal"})
 // CSON: WhitespaceAroundCheck
 public class ImmutableMultimapTreeTest extends ImmutableTreeTest {
-  private static final Collection<ImmutableMultimapTree.ChildrenMaker<String>> CHILDREN_MAKERS;
-  private static final Collection<ImmutableMultimapTree.ParentsMaker<String>> PARENTS_MAKERS;
+  private static final Collection<ImmutableMultimapTree.ChildrenMaker<String>> CHILDREN_MAKERS =
+      ImmutableList.<ImmutableMultimapTree.ChildrenMaker<String>>builder()
+          .add(ImmutableMultimapTree.ChildrenMaker.<String>usingSetMultimap())
+          .build();
 
-  static {
-    Collection<ImmutableMultimapTree.ChildrenMaker<String>> cms = Lists.newArrayList();
-
-    cms.add(ImmutableMultimapTree.ChildrenMaker.<String>usingSetMultimap());
-
-    CHILDREN_MAKERS = ImmutableList.copyOf(cms);
-
-    Collection<ImmutableMultimapTree.ParentsMaker<String>> pms = Lists.newArrayList();
-
-    pms.add(ImmutableMultimapTree.ParentsMaker.<String>usingImmutableMap());
-    pms.add(ImmutableMultimapTree.ParentsMaker.<String>usingImmutableSortedMapInNaturalOrder());
-    pms.add(ImmutableMultimapTree.ParentsMaker.<String>usingImmutableSortedMapInReverseOrder());
-    pms.add(ImmutableMultimapTree.ParentsMaker.<String>usingImmutableSortedMapOrderedBy(Ordering.<String>natural()));
-
-    PARENTS_MAKERS = ImmutableList.copyOf(pms);
-  }
+  private static final Collection<ImmutableMultimapTree.ParentsMaker<String>> PARENTS_MAKERS =
+      ImmutableList.<ImmutableMultimapTree.ParentsMaker<String>>builder()
+          .add(ImmutableMultimapTree.ParentsMaker.<String>usingImmutableMap())
+          .add(ImmutableMultimapTree.ParentsMaker.<String>usingImmutableSortedMapInNaturalOrder())
+          .add(ImmutableMultimapTree.ParentsMaker.<String>usingImmutableSortedMapInReverseOrder())
+          .add(ImmutableMultimapTree.ParentsMaker.<String>usingImmutableSortedMapOrderedBy(Ordering.<String>natural()))
+          .build();
 
   @DataPoints
   public static ImmutableTree<?>[] data() {
