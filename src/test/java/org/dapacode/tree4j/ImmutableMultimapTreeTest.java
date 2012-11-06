@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 
 import java.util.Collection;
 
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
 @RunWith(Theories.class)
@@ -70,8 +71,8 @@ public class ImmutableMultimapTreeTest extends ImmutableTreeTest {
       @Override
       public void apply(ImmutableTree<String> immutableTree) {
         ImmutableMultimapTree<String> copyTree = ImmutableMultimapTree.copyOf(immutableTree);
-        assertNotSame(immutableTree, copyTree);
-        assertEquals(immutableTree, copyTree);
+        assertThat(copyTree, is(not(sameInstance(immutableTree))));
+        assertThat(copyTree, is(equalTo(immutableTree)));
       }
     });
   }

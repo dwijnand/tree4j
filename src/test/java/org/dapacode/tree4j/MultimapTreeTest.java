@@ -13,6 +13,7 @@ import org.junit.runner.RunWith;
 import java.util.Collection;
 import java.util.Map;
 
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
 @RunWith(Theories.class)
@@ -78,8 +79,8 @@ public class MultimapTreeTest extends MutableTreeTest {
       @Override
       public void apply(MutableTree<String> mutableTree) {
         MutableTree<String> copyTree = MultimapTree.copyOf(mutableTree);
-        assertNotSame(mutableTree, copyTree);
-        assertEquals(mutableTree, copyTree);
+        assertThat(copyTree, is(not(sameInstance(mutableTree))));
+        assertThat(copyTree, is(equalTo(mutableTree)));
       }
     });
   }

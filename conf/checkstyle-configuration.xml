@@ -101,7 +101,7 @@
     <!-- Checks for imports                              -->
     <!-- See http://checkstyle.sf.net/config_import.html -->
     <module name="AvoidStarImport">
-      <property name="excludes" value="com.google.common.base.Preconditions,org.junit.Assert"/>
+      <property name="excludes" value="com.google.common.base.Preconditions,org.hamcrest.CoreMatchers,org.junit.Assert"/>
     </module>
     <module name="IllegalImport"/>
     <!-- defaults to sun.* packages -->

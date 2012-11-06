@@ -177,9 +177,9 @@ public class MutableTreeTest extends TreeTest<MutableTree<String>> {
 
     mutableTree.remove("1");
 
+    assertThat(mutableTree.getChildren("R"), not(hasItem("1")));
     assertFalse(mutableTree.contains("1"));
     assertFalse(mutableTree.contains("a"));
-    assertThat(mutableTree.getChildren("R"), not(hasItem("1")));
   }
 
   @Theory

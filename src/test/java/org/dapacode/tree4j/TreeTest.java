@@ -13,6 +13,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 import static org.junit.matchers.JUnitMatchers.hasItems;
 
@@ -209,7 +210,7 @@ public abstract class TreeTest<T extends Tree<String>> {
     try {
       test.apply(tree);
     } finally {
-      assertEquals(beforeHash, ObjectHashes.getCRCChecksum(tree));
+      assertThat(ObjectHashes.getCRCChecksum(tree), is(equalTo(beforeHash)));
     }
   }
 
