@@ -180,6 +180,7 @@ public class MutableTreeTest extends TreeTest<MutableTree<String>> {
     assertThat(mutableTree.getChildren("R"), not(hasItem("1")));
     assertFalse(mutableTree.contains("1"));
     assertFalse(mutableTree.contains("a"));
+    assertFalse(mutableTree.contains("!"));
   }
 
   @Theory
@@ -231,6 +232,7 @@ public class MutableTreeTest extends TreeTest<MutableTree<String>> {
     mutableTree.add("1", "a");
     mutableTree.add("1", "b");
     mutableTree.add("2", "c");
+    mutableTree.add("a", "!");
     return mutableTree;
   }
 }

@@ -124,6 +124,7 @@ public class ImmutableTreeTest extends TreeTest<ImmutableTree<String>> {
         assertEquals(2, rootChildren.size());
         assertFalse(rootChildren.contains("1"));
         assertFalse(immutableTree.contains("a"));
+        assertFalse(immutableTree.contains("!"));
       }
     });
   }
@@ -156,6 +157,7 @@ public class ImmutableTreeTest extends TreeTest<ImmutableTree<String>> {
         assertFalse(immutableTree.contains("R"));
         assertFalse(immutableTree.contains("1"));
         assertFalse(immutableTree.contains("a"));
+        assertFalse(immutableTree.contains("!"));
       }
     });
   }
@@ -187,6 +189,7 @@ public class ImmutableTreeTest extends TreeTest<ImmutableTree<String>> {
     immutableTree = immutableTree.added("1", "a");
     immutableTree = immutableTree.added("1", "b");
     immutableTree = immutableTree.added("2", "c");
+    immutableTree = immutableTree.added("a", "!");
     return immutableTree;
   }
 }
