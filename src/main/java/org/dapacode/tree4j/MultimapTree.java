@@ -1,6 +1,5 @@
 package org.dapacode.tree4j;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.SetMultimap;
@@ -9,6 +8,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Map;
 
 import static com.google.common.base.Preconditions.*;
@@ -144,25 +144,29 @@ public final class MultimapTree<T> extends AbstractMultimapTree<T> implements Mu
   @Override
   public boolean remove(final T node) {
     checkNotNull(node);
-    checkArgument(contains(node), "The tree doesn't contain the specified node: %s", node);
 
     if (node == root) { // optimisation
       clear();
-      return true;
-    }
-
-    Collection<T> nodeChildren = children.get(node);
-    nodeChildren = ImmutableList.copyOf(nodeChildren); // Required to avoid a ConcurrentModificationException
-
-    children.removeAll(node);
-    children.get(getParent(node)).remove(node);
-    parents.remove(node);
-
-    for (final T child : nodeChildren) {
-      remove(child);
+    } else {
+      final T parent = getParent(node); // Handles throwing the IAE
+      children.get(parent).remove(node);
+      removeInternal(node);
     }
 
     return true;
+  }
+
+  private void removeInternal(final T node) {
+    final Collection<T> nodeChildren = children.get(node);
+    final Iterator<T> iter = nodeChildren.iterator();
+    while (iter.hasNext()) {
+      final T child = iter.next();
+      removeInternal(child);
+      iter.remove();
+    }
+
+    children.removeAll(node);
+    parents.remove(node);
   }
 
   /**
