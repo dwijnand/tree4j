@@ -81,10 +81,7 @@ public class ImmutableTreeTest extends TreeTest<ImmutableTree<String>> {
     withoutModifying(immutableTree, new Test<ImmutableTree<String>>() {
       @Override
       public void apply(ImmutableTree<String> immutableTree) {
-        immutableTree = immutableTree.withRoot("R");
-
         expectedException.expect(IllegalArgumentException.class);
-
         immutableTree.added("unknown parent", "node");
       }
     });
