@@ -218,13 +218,6 @@ public class MutableTreeTest extends TreeTest<MutableTree<String>> {
 
   @Override
   @SuppressWarnings("ParameterNameDiffersFromOverriddenParameter")
-  public MutableTree<String> minus(MutableTree<String> mutableTree, String node) {
-    mutableTree.remove(node);
-    return mutableTree;
-  }
-
-  @Override
-  @SuppressWarnings("ParameterNameDiffersFromOverriddenParameter")
   public MutableTree<String> setupTreeTestData(MutableTree<String> mutableTree) {
     mutableTree.setRoot("R");
     mutableTree.add("R", "1");

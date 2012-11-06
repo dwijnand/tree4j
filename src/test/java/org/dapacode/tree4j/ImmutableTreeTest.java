@@ -187,12 +187,6 @@ public class ImmutableTreeTest extends TreeTest<ImmutableTree<String>> {
 
   @Override
   @SuppressWarnings("ParameterNameDiffersFromOverriddenParameter")
-  public ImmutableTree<String> minus(ImmutableTree<String> immutableTree, String node) {
-    return immutableTree.removed(node);
-  }
-
-  @Override
-  @SuppressWarnings("ParameterNameDiffersFromOverriddenParameter")
   public ImmutableTree<String> setupTreeTestData(ImmutableTree<String> immutableTree) {
     immutableTree = immutableTree.withRoot("R");
     immutableTree = immutableTree.added("R", "1");

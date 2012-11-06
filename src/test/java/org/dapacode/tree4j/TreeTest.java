@@ -201,8 +201,6 @@ public abstract class TreeTest<T extends Tree<String>> {
 
   public abstract T plus(T tree, String parent, String child);
 
-  public abstract T minus(T tree, String node);
-
   public abstract T setupTreeTestData(T tree);
 
   protected static <T extends Tree<String>> void withoutModifying(T tree, Test<T> test) {
