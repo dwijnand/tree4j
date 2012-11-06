@@ -2,10 +2,27 @@ package org.dapacode.tree4j.testutils;
 
 import org.dapacode.tree4j.ImmutableTree;
 import org.dapacode.tree4j.MutableTree;
+import org.dapacode.tree4j.Tree;
+
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
 
 @SuppressWarnings("FeatureEnvy")
 public final class TreeHelper {
   private TreeHelper() {}
+
+  public static <T extends Tree<String>> void withoutModifying(final T tree, final Test<T> test) {
+    final long beforeHash = ObjectHashes.getCRCChecksum(tree);
+    try {
+      test.apply(tree);
+    } finally {
+      assertThat(ObjectHashes.getCRCChecksum(tree), is(equalTo(beforeHash)));
+    }
+  }
+
+  public interface Test<T extends Tree<String>> {
+    void apply(T tree);
+  }
 
   public static ImmutableTree<String> setupTreeTestData(final ImmutableTree<String> originalImmutableTree) {
     ImmutableTree<String> immutableTree = originalImmutableTree;

@@ -2,10 +2,12 @@ package org.dapacode.tree4j;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.dapacode.tree4j.testutils.TreeHelper;
+import org.dapacode.tree4j.testutils.TreeHelper.Test;
 import org.junit.experimental.theories.Theory;
 
 import java.util.Collection;
 
+import static org.dapacode.tree4j.testutils.TreeHelper.withoutModifying;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 import static org.junit.matchers.JUnitMatchers.hasItems;

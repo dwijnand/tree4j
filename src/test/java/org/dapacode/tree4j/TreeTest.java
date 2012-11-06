@@ -2,7 +2,7 @@ package org.dapacode.tree4j;
 
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.dapacode.tree4j.testutils.ObjectHashes;
+import org.dapacode.tree4j.testutils.TreeHelper.Test;
 import org.hamcrest.Matcher;
 import org.junit.Rule;
 import org.junit.experimental.theories.Theory;
@@ -13,7 +13,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.dapacode.tree4j.testutils.TreeHelper.withoutModifying;
 import static org.junit.Assert.*;
 import static org.junit.matchers.JUnitMatchers.hasItems;
 
@@ -202,17 +202,4 @@ public abstract class TreeTest<T extends Tree<String>> {
   public abstract T plus(T tree, String parent, String child);
 
   public abstract T setupTreeTestData(T tree);
-
-  protected static <T extends Tree<String>> void withoutModifying(T tree, Test<T> test) {
-    long beforeHash = ObjectHashes.getCRCChecksum(tree);
-    try {
-      test.apply(tree);
-    } finally {
-      assertThat(ObjectHashes.getCRCChecksum(tree), is(equalTo(beforeHash)));
-    }
-  }
-
-  protected interface Test<T extends Tree<String>> {
-    void apply(T tree);
-  }
 }

@@ -2,6 +2,7 @@ package org.dapacode.tree4j;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Ordering;
+import org.dapacode.tree4j.testutils.TreeHelper.Test;
 import org.junit.experimental.theories.DataPoints;
 import org.junit.experimental.theories.Theories;
 import org.junit.experimental.theories.Theory;
@@ -11,6 +12,7 @@ import java.util.Collection;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
+import static org.dapacode.tree4j.testutils.TreeHelper.withoutModifying;
 
 @RunWith(Theories.class)
 // CSOFF: WhitespaceAroundCheck
