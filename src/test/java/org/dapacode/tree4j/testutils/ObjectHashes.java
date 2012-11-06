@@ -14,7 +14,6 @@ public final class ObjectHashes {
   private ObjectHashes() { /* Utility Class */ }
 
   public static long getCRCChecksum(final Object o) {
-    long checksumValue = 0;
     InputStream in = null;
     try {
       final ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -28,15 +27,12 @@ public final class ObjectHashes {
         crc32.update(buf, 0, amt);
       }
 
-      checksumValue = crc32.getValue();
+      return crc32.getValue();
     } catch (final IOException e) {
-      final String message = "Failed to calculate the checksum value";
-      throw new RuntimeException(message, e);
+      throw new RuntimeException("Failed to calculate the checksum", e);
     } finally {
       close(in);
     }
-
-    return checksumValue;
   }
 
   private static void close(final InputStream in) {
@@ -44,8 +40,7 @@ public final class ObjectHashes {
       try {
         in.close();
       } catch (final IOException e) {
-        throw new RuntimeException(
-            "IOException thrown while closing InputStream", e);
+        throw new RuntimeException("IOException thrown while closing InputStream", e);
       }
     }
   }
