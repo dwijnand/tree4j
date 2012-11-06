@@ -177,7 +177,7 @@ public final class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> impl
       final T root = tree.getRoot();
       immutableMultimapTree = immutableMultimapTree.withRoot(root);
 
-      final Collection<Map.Entry<T, T>> associations = Trees.getAssociationsDepthFirst(immutableMultimapTree);
+      final Collection<Map.Entry<T, T>> associations = Trees.getAssociationsDepthFirst(tree);
       for (final Map.Entry<T, T> association : associations) {
         immutableMultimapTree = immutableMultimapTree.added(association.getKey(), association.getValue());
       }
