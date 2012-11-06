@@ -83,9 +83,9 @@ public final class MultimapTree<T> extends AbstractMultimapTree<T> implements Mu
     } else {
       multimapTree.setRoot(tree.getRoot());
 
-      Collection<Map.Entry<T, T>> entriesDepthFirst = Trees.getEntriesDepthFirst(tree);
-      for (Map.Entry<T, T> entry : entriesDepthFirst) {
-        multimapTree.add(entry.getKey(), entry.getValue());
+      final Collection<Map.Entry<T, T>> associations = Trees.getAssociationsDepthFirst(tree);
+      for (final Map.Entry<T, T> association : associations) {
+        multimapTree.add(association.getKey(), association.getValue());
       }
     }
 

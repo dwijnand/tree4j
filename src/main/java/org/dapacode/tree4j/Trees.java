@@ -6,7 +6,6 @@ import com.google.common.collect.Lists;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.ListIterator;
@@ -15,26 +14,30 @@ import java.util.Map;
 public final class Trees {
   private Trees() { /* Utility class */ }
 
-  public static <T> Collection<Map.Entry<T, T>> getEntriesDepthFirst(final Tree<T> tree) {
-    ArrayList<Map.Entry<T, T>> entries = getChildrenEntries(tree, tree.getRoot());
-    ListIterator<Map.Entry<T, T>> entryListIter = entries.listIterator();
-    while (entryListIter.hasNext()) {
-      Map.Entry<T, T> entry = entryListIter.next();
-      List<Map.Entry<T, T>> childrenEntries = getChildrenEntries(tree, entry.getValue());
-      for (Map.Entry<T, T> childEntry : childrenEntries) {
-        entryListIter.add(childEntry);
-      }
-    }
-    return entries;
+  public static <T> Collection<Map.Entry<T, T>> getAssociationsDepthFirst(final Tree<T> tree) {
+    return getAssociationsDepthFirst(tree, tree.getRoot());
   }
 
-  private static <T> ArrayList<Map.Entry<T, T>> getChildrenEntries(final Tree<T> tree, final T parent) {
-    return Lists.newArrayList(
-        FluentIterable.from(tree.getChildren(parent)).transform(new Function<T, Map.Entry<T, T>>() {
-          @Override
-          public Pair<T, T> apply(final T child) {
-            return ImmutablePair.of(parent, child);
-          }
-        }));
+  public static <T> Collection<Map.Entry<T, T>> getAssociationsDepthFirst(final Tree<T> tree, final T node) {
+    final List<Map.Entry<T, T>> associations = Lists.newArrayList(getAssociations(tree, node));
+    final ListIterator<Map.Entry<T, T>> listIter = associations.listIterator();
+    while (listIter.hasNext()) {
+      final Map.Entry<T, T> entry = listIter.next();
+      final T child = entry.getValue();
+      final Collection<Map.Entry<T, T>> childrenAssociations = getAssociationsDepthFirst(tree, child);
+      for (final Map.Entry<T, T> childAssociation : childrenAssociations) {
+        listIter.add(childAssociation);
+      }
+    }
+    return associations;
+  }
+
+  private static <T> FluentIterable<Map.Entry<T, T>> getAssociations(final Tree<T> tree, final T node) {
+    return FluentIterable.from(tree.getChildren(node)).transform(new Function<T, Map.Entry<T, T>>() {
+      @Override
+      public Pair<T, T> apply(final T child) {
+        return ImmutablePair.of(node, child);
+      }
+    });
   }
 }
