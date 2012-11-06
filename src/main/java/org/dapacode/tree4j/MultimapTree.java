@@ -6,6 +6,7 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.SetMultimap;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.Collection;
 import java.util.Map;
@@ -182,5 +183,10 @@ public final class MultimapTree<T> extends AbstractMultimapTree<T> implements Mu
   @Override
   public int hashCode() {
     return HashCodeBuilder.reflectionHashCode(this);
+  }
+
+  @Override
+  public String toString() {
+    return ToStringBuilder.reflectionToString(this);
   }
 }
