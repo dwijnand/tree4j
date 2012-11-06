@@ -35,6 +35,16 @@ public final class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> impl
         }
       };
     }
+
+    @Override
+    public final boolean equals(final Object obj) {
+      return obj instanceof ChildrenMaker;
+    }
+
+    @Override
+    public final int hashCode() {
+      return 0;
+    }
   }
 
   // TODO document this class entirely
@@ -75,6 +85,16 @@ public final class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> impl
           return new ImmutableSortedMap.Builder<T, T>(Ordering.natural().reverse());
         }
       };
+    }
+
+    @Override
+    public final boolean equals(final Object obj) {
+      return obj instanceof ParentsMaker;
+    }
+
+    @Override
+    public final int hashCode() {
+      return 0;
     }
   }
 
