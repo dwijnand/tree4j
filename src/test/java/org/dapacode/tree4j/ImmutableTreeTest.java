@@ -5,6 +5,7 @@ import org.junit.experimental.theories.Theory;
 
 import java.util.Collection;
 
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 import static org.junit.matchers.JUnitMatchers.hasItems;
 
@@ -154,6 +155,20 @@ public class ImmutableTreeTest extends TreeTest<ImmutableTree<String>> {
         assertFalse(immutableTree.contains("1"));
         assertFalse(immutableTree.contains("a"));
         assertFalse(immutableTree.contains("!"));
+      }
+    });
+  }
+
+  @Theory
+  public void removedShouldReturnTheSameTreeOnUnknownNode(ImmutableTree<String> immutableTree) {
+    withoutModifying(immutableTree, new Test<ImmutableTree<String>>() {
+      @Override
+      public void apply(ImmutableTree<String> immutableTree) {
+        immutableTree = setupTreeTestData(immutableTree);
+
+        ImmutableTree<String> newTree = immutableTree.removed("unknown node");
+
+        assertThat(newTree, is(sameInstance(immutableTree)));
       }
     });
   }
