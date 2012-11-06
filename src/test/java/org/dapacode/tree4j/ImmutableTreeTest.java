@@ -97,6 +97,7 @@ public class ImmutableTreeTest extends TreeTest<ImmutableTree<String>> {
         immutableTree = immutableTree.added("1", "a");
 
         expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("The child node (1) is already associated to another node");
 
         immutableTree.added("a", "1");
       }
