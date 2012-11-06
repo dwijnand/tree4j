@@ -2,7 +2,13 @@ package org.dapacode.tree4j;
 
 import java.util.Collection;
 
-// TODO document this class entirely
+/**
+ * An mutable tree which delegates all its method calls to another mutable tree. Subclasses should override one or more methods
+ * to modify the behavior of the backing mutable tree as desired per the
+ * <a href="http://en.wikipedia.org/wiki/Decorator_pattern">decorator pattern</a>.
+ *
+ * @param <T> the type of the nodes in the tree
+ */
 public abstract class DelegatingMutableTree<T> extends DelegatingTree<T> implements MutableTree<T> {
   protected DelegatingMutableTree() {}
 

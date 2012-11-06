@@ -21,7 +21,6 @@ import static org.junit.matchers.JUnitMatchers.hasItems;
  * This class defines the tests for compliance to the specifications defined in the {@link Tree} interface. It is used as the
  * base class for the test classes for the mutable and immutable extensions of this interface.
  */
-// TODO make methods final
 // CSOFF: WhitespaceAroundCheck
 @SuppressWarnings(
     {"InstanceMethodNamingConvention", "NonBooleanMethodNameMayNotStartWithQuestion", "DesignForExtension", "LocalCanBeFinal"})

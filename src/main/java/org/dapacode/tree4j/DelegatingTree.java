@@ -6,7 +6,13 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
-// TODO document this class entirely
+/**
+ * A tree which delegates all its method calls to another tree. Subclasses should override one or more methods to modify the
+ * behavior of the backing tree as desired per the <a href="http://en.wikipedia.org/wiki/Decorator_pattern">decorator
+ * pattern</a>.
+ *
+ * @param <T> the type of the nodes in the tree
+ */
 public abstract class DelegatingTree<T> extends ForwardingObject implements Tree<T> {
   protected DelegatingTree() {}
 

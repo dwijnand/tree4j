@@ -13,7 +13,6 @@ import static org.junit.matchers.JUnitMatchers.hasItem;
  * As MutableTree extends Tree, this class extends {@link TreeTest} adding tests for the methods defined in MutableTree. It,
  * therefore, passes MutableTree implementations to the tests in TreeTest and then to the tests defined here.
  */
-// TODO make methods final
 // CSOFF: WhitespaceAroundCheck
 @SuppressWarnings({"FeatureEnvy", "InstanceMethodNamingConvention", "DesignForExtension", "LocalCanBeFinal"})
 // CSON: WhitespaceAroundCheck

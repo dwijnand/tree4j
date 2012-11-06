@@ -20,10 +20,20 @@ import static com.google.common.base.Preconditions.*;
  * @param <T> the type of the nodes in the tree
  */
 public final class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> implements ImmutableTree<T> {
-  // TODO document this class entirely
+  /**
+   * A factory of immutable set multimap builders.
+   *
+   * @param <T> the type of the nodes in the tree
+   */
   public abstract static class ChildrenMaker<T> implements Factory<ImmutableSetMultimap.Builder<T, T>> {
     private ChildrenMaker() {}
 
+    /**
+     * Returns a children maker which creates immutable set multimap builders.
+     *
+     * @param <T> the type of the nodes in the tree
+     * @return a new children maker which creates immutable set multimap builders
+     */
     public static <T> ChildrenMaker<T> usingSetMultimap() {
       return new ChildrenMaker<T>() {
         @Override
@@ -33,18 +43,37 @@ public final class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> impl
       };
     }
 
+    /**
+     * {@inheritDoc}
+     * <p/>
+     * Implemented by simply checking if the object is an instance of ChildrenMaker, as it's a stateless builder.
+     *
+     * @param obj the reference object with which to compare
+     * @return true if this object is the same as the obj argument; false otherwise
+     */
     @Override
     public final boolean equals(final Object obj) {
       return obj instanceof ChildrenMaker;
     }
 
+    /**
+     * {@inheritDoc}
+     * <p/>
+     * Implemented to return a constant ({@code 0}), as there is no state.
+     *
+     * @return a hash code value for this object
+     */
     @Override
     public final int hashCode() {
       return 0;
     }
   }
 
-  // TODO document this class entirely
+  /**
+   * A factory of immutable map builders.
+   *
+   * @param <T> the type of the nodes in the tree
+   */
   public abstract static class ParentsMaker<T> implements Factory<ImmutableMap.Builder<T, T>> {
     private ParentsMaker() {}
 
@@ -57,6 +86,12 @@ public final class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> impl
       };
     }
 
+    /**
+     * Returns a parents maker which creates immutable sorted map builders.
+     *
+     * @param <T> the type of the nodes in the tree
+     * @return a new parents maker which creates immutable sorted map builders
+     */
     public static <T> ParentsMaker<T> usingImmutableSortedMapOrderedBy(final Comparator<T> comparator) {
       return new ParentsMaker<T>() {
         @Override
@@ -66,6 +101,12 @@ public final class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> impl
       };
     }
 
+    /**
+     * Returns a parents maker which creates immutable sorted map builders, with natural ordering.
+     *
+     * @param <T> the type of the nodes in the tree
+     * @return a new parents maker which creates immutable sorted map builders, with natural ordering
+     */
     public static <T extends Comparable<T>> ParentsMaker<T> usingImmutableSortedMapInNaturalOrder() {
       return new ParentsMaker<T>() {
         @Override
@@ -75,6 +116,12 @@ public final class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> impl
       };
     }
 
+    /**
+     * Returns a parents maker which creates immutable sorted map builders, with reverse natural ordering.
+     *
+     * @param <T> the type of the nodes in the tree
+     * @return a new parents maker which creates immutable sorted map builders, with reverse natural ordering
+     */
     public static <T extends Comparable<T>> ParentsMaker<T> usingImmutableSortedMapInReverseOrder() {
       return new ParentsMaker<T>() {
         @Override
@@ -84,11 +131,26 @@ public final class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> impl
       };
     }
 
+    /**
+     * {@inheritDoc}
+     * <p/>
+     * Implemented by simply checking if the object is an instance of ParentsMaker, as it's a stateless builder.
+     *
+     * @param obj the reference object with which to compare
+     * @return true if this object is the same as the obj argument; false otherwise
+     */
     @Override
     public final boolean equals(final Object obj) {
       return obj instanceof ParentsMaker;
     }
 
+    /**
+     * {@inheritDoc}
+     * <p/>
+     * Implemented to return a constant ({@code 0}), as there is no state.
+     *
+     * @return a hash code value for this object
+     */
     @Override
     public final int hashCode() {
       return 0;
@@ -170,7 +232,14 @@ public final class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> impl
     return new ImmutableMultimapTree<T>(childrenMaker, parentsMaker);
   }
 
-  // TODO add javadoc
+  /**
+   * Creates a copy of the specified tree, by creating a new tree with a copy of the associations in the specified tree and the
+   * same root node.
+   *
+   * @param <T> the type of the nodes in the trees
+   * @param tree a tree
+   * @return a new copy of the specified tree
+   */
   public static <T> ImmutableMultimapTree<T> copyOf(final Tree<T> tree) {
     checkNotNull(tree);
 

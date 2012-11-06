@@ -106,7 +106,6 @@ public class ImmutableTreeTest extends TreeTest<ImmutableTree<String>> {
   }
 
   @Theory
-  // TODO split this into smaller asserting tests
   public void removedShouldCascadeRemove(ImmutableTree<String> immutableTree) {
     withoutModifying(immutableTree, new Test<ImmutableTree<String>>() {
       @Override
