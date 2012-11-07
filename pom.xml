@@ -24,6 +24,13 @@
     </license>
   </licenses>
 
+  <developers>
+    <developer>
+      <name>Dale Wijnand</name>
+      <email>dale wijnand gmail com</email>
+    </developer>
+  </developers>
+
   <prerequisites>
     <maven>2.2.1</maven>
   </prerequisites>
