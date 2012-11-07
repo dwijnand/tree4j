@@ -95,8 +95,21 @@
     <pluginManagement>
       <plugins>
         <plugin>
+          <artifactId>maven-gpg-plugin</artifactId>
+          <version>1.4</version>
+        </plugin>
+        <plugin>
           <artifactId>maven-javadoc-plugin</artifactId>
           <version>2.9</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-release-plugin</artifactId>
+          <version>2.3.2</version>
+          <configuration>
+            <mavenExecutorId>forked-path</mavenExecutorId><!-- Allows Maven to prompt for the gpg paraphrase -->
+            <useReleaseProfile>false</useReleaseProfile><!-- Suggested in Sonatype's Guide/parent POM.. -->
+            <arguments>-Prelease</arguments>
+          </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-source-plugin</artifactId>
@@ -263,6 +276,16 @@
       <id>release</id>
       <build>
         <plugins>
+          <plugin>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
           <plugin>
             <artifactId>maven-javadoc-plugin</artifactId>
             <executions>
