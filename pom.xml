@@ -16,10 +16,10 @@
 
   <name>Tree4J</name>
   <description>A tree data structure for Java</description>
-  <url>http://dapacode.github.com/tree4j/</url>
+  <url>https://github.com/dapacode/tree4j</url>
   <inceptionYear>2010</inceptionYear>
   <organization>
-    <name>DapaCode</name>
+    <name>DaPaCode</name>
     <url>http://www.dapacode.org/</url>
   </organization>
   <licenses>
