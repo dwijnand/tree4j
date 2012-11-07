@@ -19,8 +19,14 @@ import java.util.Map;
  * @see MutableTree
  * @see <a href="http://en.wikipedia.org/wiki/Arborescence_(graph_theory)"> Arborescence (Wikipedia)</a>
  */
-// TODO: Add a size()
 public interface Tree<T> extends Iterable<Map.Entry<T, T>> {
+  /**
+   * Returns the number of nodes in the tree.
+   *
+   * @return the number of nodes in the tree
+   */
+  int size();
+
   /**
    * Tests whether the specified node is in the tree.
    *

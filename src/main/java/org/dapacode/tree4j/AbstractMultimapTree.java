@@ -21,6 +21,11 @@ public abstract class AbstractMultimapTree<T> implements Tree<T> {
   }
 
   @Override
+  public final int size() {
+    return getRoot() == null ? 0 : 1 + children.size();
+  }
+
+  @Override
   public final boolean contains(final T node) {
     checkNotNull(node);
     return node == getRoot() || parents.containsKey(node);

@@ -14,6 +14,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import static org.dapacode.tree4j.testutils.TreeHelper.withoutModifying;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 import static org.junit.matchers.JUnitMatchers.hasItems;
 
@@ -29,6 +30,17 @@ public abstract class TreeTest<T extends Tree<String>> {
   @Rule
   @SuppressWarnings("PublicField")
   public final ExpectedException expectedException = ExpectedException.none();
+
+  @Theory
+  public void sizeShouldBeSevenAfterSetup(T tree) {
+    tree = setupTreeTestData(tree);
+    withoutModifying(tree, new Test<T>() {
+      @Override
+      public void apply(T tree) {
+        assertEquals(7, tree.size());
+      }
+    });
+  }
 
   @Theory
   public void containsShouldReturnFalseWhenEmpty(final T tree) {

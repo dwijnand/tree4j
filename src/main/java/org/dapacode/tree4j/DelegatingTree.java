@@ -20,6 +20,11 @@ public abstract class DelegatingTree<T> extends ForwardingObject implements Tree
   protected abstract Tree<T> delegate();
 
   @Override
+  public int size() {
+    return delegate().size();
+  }
+
+  @Override
   public boolean contains(final T node) {
     return delegate().contains(node);
   }
