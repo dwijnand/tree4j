@@ -1,5 +1,8 @@
 package org.dapacode.tree4j;
 
+import com.google.common.base.Objects;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.SetMultimap;
 
 import java.util.Collection;
@@ -54,17 +57,30 @@ public abstract class AbstractMultimapTree<T> implements Tree<T> {
     if (this == obj) {
       return true;
     }
-    if (obj == null || !(obj instanceof AbstractMultimapTree)) {
+    if (obj == null || !(obj instanceof Tree)) {
       return false;
     }
 
-    final AbstractMultimapTree<?> that = (AbstractMultimapTree<?>) obj;
+    return deepEquals((Tree<?>) obj);
+  }
 
+  private <U> boolean deepEquals(final Tree<U> that) {
     final T thisRoot = getRoot();
-    final Object thatRoot = that.getRoot();
+    final U thatRoot = that.getRoot();
+    return Objects.equal(thisRoot, thatRoot) && deepEquals(that, thisRoot, thatRoot);
+  }
 
-    return (thisRoot == null ? thatRoot == null : thisRoot.equals(thatRoot))
-        && children.equals(that.children) && parents.equals(that.parents);
+  private <U> boolean deepEquals(final Tree<U> that, final T thisNode, final U thatNode) {
+    final Collection<T> thisChildren = getChildren(thisNode);
+    final Collection<U> thatChildren = that.getChildren(thatNode);
+    return Objects.equal(thisChildren, thatChildren) && !Iterables.tryFind(thisChildren, new Predicate<T>() {
+      final Iterator<U> thatIter = thatChildren.iterator();
+
+      @Override
+      public boolean apply(final T thisChild) {
+        return !deepEquals(that, thisChild, thatIter.next());
+      }
+    }).isPresent();
   }
 
   @Override
