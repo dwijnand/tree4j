@@ -38,7 +38,7 @@
   <scm>
     <connection>scm:git:git@github.com:dapacode/tree4j.git</connection>
     <developerConnection>scm:git:git@github.com:dapacode/tree4j.git</developerConnection>
-    <url>git@github.com:dapacode/tree4j.git</url>
+    <url>https://github.com/dapacode/tree4j</url>
   </scm>
   <distributionManagement>
     <snapshotRepository>
