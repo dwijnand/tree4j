@@ -3,10 +3,10 @@ package org.dapacode.tree4j;
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.dapacode.tree4j.testutils.TreeHelper.Test;
+import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matcher;
 import org.junit.Rule;
 import org.junit.experimental.theories.Theory;
-import org.junit.matchers.JUnitMatchers;
 import org.junit.rules.ExpectedException;
 
 import java.util.Collection;
@@ -16,7 +16,6 @@ import java.util.Map;
 import static org.dapacode.tree4j.testutils.TreeHelper.withoutModifying;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
-import static org.junit.matchers.JUnitMatchers.hasItems;
 
 /**
  * This class defines the tests for compliance to the specifications defined in the {@link Tree} interface. It is used as the
@@ -197,7 +196,7 @@ public abstract class TreeTest<T extends Tree<String>> {
       public void apply(Tree<String> tree) {
         Iterator<Map.Entry<String, String>> iterator = tree.iterator();
         @SuppressWarnings("unchecked")
-        Matcher<Iterable<Map.Entry<String, String>>> matcher = JUnitMatchers.<Map.Entry<String, String>>hasItems(
+        Matcher<Iterable<Map.Entry<String, String>>> matcher = CoreMatchers.<Map.Entry<String, String>>hasItems(
             ImmutablePair.of("R", "1"),
             ImmutablePair.of("R", "2"),
             ImmutablePair.of("1", "a"),

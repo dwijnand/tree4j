@@ -10,7 +10,6 @@ import java.util.Collection;
 import static org.dapacode.tree4j.testutils.TreeHelper.withoutModifying;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
-import static org.junit.matchers.JUnitMatchers.hasItems;
 
 /**
  * This class defines the tests for compliance to the specifications defined in the {@link ImmutableTree} interface.

@@ -5,7 +5,6 @@ import org.junit.experimental.theories.Theory;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
-import static org.junit.matchers.JUnitMatchers.hasItem;
 
 /**
  * This class defines the tests for compliance to the specifications defined in the {@link MutableTree} interface.
