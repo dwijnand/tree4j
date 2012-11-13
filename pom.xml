@@ -89,10 +89,9 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <!-- TODO: Switch back to 4.11-beta-1 once the PIT bug is fixed. -->
       <groupId>junit</groupId>
-      <artifactId>junit-dep</artifactId>
-      <version>4.10</version>
+      <artifactId>junit</artifactId>
+      <version>4.11-beta-1</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -245,7 +244,7 @@
       <plugin>
         <groupId>org.pitest</groupId>
         <artifactId>pitest-maven</artifactId>
-        <version>0.28</version>
+        <version>0.29</version>
         <configuration>
           <timestampedReports>false</timestampedReports>
         </configuration>
