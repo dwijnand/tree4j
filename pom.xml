@@ -106,6 +106,10 @@
     <pluginManagement>
       <plugins>
         <plugin>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>2.7</version>
+        </plugin>
+        <plugin>
           <artifactId>maven-gpg-plugin</artifactId>
           <version>1.4</version>
         </plugin>
@@ -178,10 +182,6 @@
             <phase>verify</phase>
           </execution>
         </executions>
-      </plugin>
-      <plugin>
-        <artifactId>maven-deploy-plugin</artifactId>
-        <version>2.7</version>
       </plugin>
       <plugin>
         <artifactId>maven-enforcer-plugin</artifactId>
@@ -295,6 +295,12 @@
       <id>release</id>
       <build>
         <plugins>
+          <plugin>
+            <artifactId>maven-deploy-plugin</artifactId>
+            <configuration>
+              <updateReleaseInfo>true</updateReleaseInfo>
+            </configuration>
+          </plugin>
           <plugin>
             <artifactId>maven-gpg-plugin</artifactId>
             <executions>
