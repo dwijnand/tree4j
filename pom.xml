@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.dapacode.tree4j</groupId>
@@ -39,6 +37,7 @@
     <connection>scm:git:git@github.com:dapacode/tree4j.git</connection>
     <developerConnection>scm:git:git@github.com:dapacode/tree4j.git</developerConnection>
     <url>https://github.com/dapacode/tree4j</url>
+    <tag>HEAD</tag>
   </scm>
   <distributionManagement>
     <snapshotRepository>
@@ -163,7 +162,7 @@
         <version>2.5.1</version>
         <configuration>
           <compilerArguments>
-            <Xlint/>
+            <Xlint />
           </compilerArguments>
         </configuration>
       </plugin>
@@ -198,7 +197,7 @@
                 <ignoreClass>org.xmlpull.v1.XmlPullParserException</ignoreClass>
               </ignoreClasses>
             </banDuplicateClasses>
-            <dependencyConvergence/>
+            <dependencyConvergence />
             <requireMavenVersion>
               <version>(,2.1.0),(2.1.0,2.2.0),(2.2.0,)</version>
               <message>Maven 2.1.0 and 2.2.0 produce incorrect GPG signatures and checksums respectively.</message>
