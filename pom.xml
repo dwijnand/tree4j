@@ -117,9 +117,13 @@
           <artifactId>maven-release-plugin</artifactId>
           <version>2.3.2</version>
           <configuration>
-            <mavenExecutorId>forked-path</mavenExecutorId><!-- Allows Maven to prompt for the gpg paraphrase -->
-            <useReleaseProfile>false</useReleaseProfile><!-- Suggested in Sonatype's Guide/parent POM.. -->
             <arguments>-Prelease</arguments>
+            <localCheckout>true</localCheckout>
+            <mavenExecutorId>forked-path</mavenExecutorId><!-- Allows Maven to prompt for the gpg paraphrase -->
+            <pushChanges>false</pushChanges>
+            <resume>false</resume>
+            <tagNameFormat>v@{project.version}</tagNameFormat>
+            <useReleaseProfile>false</useReleaseProfile><!-- Suggested in Sonatype's Guide/parent POM.. -->
           </configuration>
         </plugin>
         <plugin>
