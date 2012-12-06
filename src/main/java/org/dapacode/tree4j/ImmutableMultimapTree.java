@@ -181,7 +181,7 @@ public final class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> impl
    * @param childrenMaker an ImmutableSetMultimap builder factory
    * @param parentsMaker an ImmutableMap builder factory
    */
-  protected ImmutableMultimapTree(final ChildrenMaker<T> childrenMaker, final ParentsMaker<T> parentsMaker) {
+  private ImmutableMultimapTree(final ChildrenMaker<T> childrenMaker, final ParentsMaker<T> parentsMaker) {
     this(checkNotNull(childrenMaker), checkNotNull(parentsMaker),
         childrenMaker.get().build(), parentsMaker.get().build(), null);
   }

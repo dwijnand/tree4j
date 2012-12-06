@@ -26,7 +26,7 @@ public final class MultimapTree<T> extends AbstractMultimapTree<T> implements Mu
    * @param children the parent-children associations to be used
    * @param parents the child-parent associations to be used
    */
-  protected MultimapTree(final SetMultimap<T, T> children, final Map<T, T> parents) {
+  private MultimapTree(final SetMultimap<T, T> children, final Map<T, T> parents) {
     super(checkNotNull(children), checkNotNull(parents));
   }
 
