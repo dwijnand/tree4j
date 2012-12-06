@@ -54,14 +54,7 @@ public abstract class AbstractMultimapTree<T> implements Tree<T> {
 
   @Override
   public final boolean equals(final Object obj) {
-    if (this == obj) {
-      return true;
-    }
-    if (obj == null || !(obj instanceof Tree)) {
-      return false;
-    }
-
-    return deepEquals((Tree<?>) obj);
+    return this == obj || obj instanceof Tree && deepEquals((Tree<?>) obj);
   }
 
   private <U> boolean deepEquals(final Tree<U> that) {
