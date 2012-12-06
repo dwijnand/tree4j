@@ -9,6 +9,7 @@ import java.util.Collection;
  *
  * @param <T> the type of the nodes in the tree
  */
+@SuppressWarnings("DesignForExtension") // Methods are specifically designed to be overridden with their functionality ignored
 public abstract class DelegatingMutableTree<T> extends DelegatingTree<T> implements MutableTree<T> {
   protected DelegatingMutableTree() {}
 

@@ -13,6 +13,7 @@ import java.util.Map;
  *
  * @param <T> the type of the nodes in the tree
  */
+@SuppressWarnings("DesignForExtension") // Methods are specifically designed to be overridden with their functionality ignored
 public abstract class DelegatingTree<T> extends ForwardingObject implements Tree<T> {
   protected DelegatingTree() {}
 
