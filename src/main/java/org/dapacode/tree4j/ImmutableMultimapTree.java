@@ -111,7 +111,7 @@ public final class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> impl
       return new ParentsMaker<T>() {
         @Override
         public ImmutableSortedMap.Builder<T, T> get() {
-          return new ImmutableSortedMap.Builder<T, T>(Ordering.natural());
+          return new ImmutableSortedMap.Builder<T, T>(Ordering.<T>natural());
         }
       };
     }
@@ -126,7 +126,7 @@ public final class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> impl
       return new ParentsMaker<T>() {
         @Override
         public ImmutableSortedMap.Builder<T, T> get() {
-          return new ImmutableSortedMap.Builder<T, T>(Ordering.natural().reverse());
+          return new ImmutableSortedMap.Builder<T, T>(Ordering.<T>natural().reverse());
         }
       };
     }
