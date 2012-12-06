@@ -4,6 +4,7 @@ import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.SetMultimap;
 
+import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Map;
 
@@ -17,6 +18,7 @@ import static com.google.common.base.Preconditions.*;
  */
 public final class MultimapTree<T> extends AbstractMultimapTree<T> implements MutableTree<T> {
   /** The root of the tree. */
+  @Nullable
   private T root;
 
   /**
@@ -76,7 +78,10 @@ public final class MultimapTree<T> extends AbstractMultimapTree<T> implements Mu
       multimapTree.children.putAll(original.children);
       multimapTree.parents.putAll(original.parents);
     } else {
-      multimapTree.setRoot(tree.getRoot());
+      final T root = tree.getRoot();
+      if (root != null) {
+        multimapTree.setRoot(root);
+      }
 
       final Collection<Map.Entry<T, T>> associations = Trees.getAssociationsDepthFirst(tree);
       for (final Map.Entry<T, T> association : associations) {
@@ -93,6 +98,7 @@ public final class MultimapTree<T> extends AbstractMultimapTree<T> implements Mu
   }
 
   @Override
+  @Nullable
   public T getRoot() {
     return root;
   }

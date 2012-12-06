@@ -146,7 +146,9 @@ public class ImmutableTreeTest extends TreeTest<ImmutableTree<String>> {
       public void apply(ImmutableTree<String> immutableTree) {
         immutableTree = setupTreeTestData(immutableTree);
 
-        immutableTree = immutableTree.removed(immutableTree.getRoot());
+        String root = immutableTree.getRoot();
+        assert root != null;
+        immutableTree = immutableTree.removed(root);
 
         assertNull(immutableTree.getRoot());
         assertFalse(immutableTree.contains("R"));

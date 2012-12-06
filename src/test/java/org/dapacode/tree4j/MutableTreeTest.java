@@ -192,7 +192,9 @@ public class MutableTreeTest extends TreeTest<MutableTree<String>> {
   public void removeShouldEmptyTheTreeOnRootNode(MutableTree<String> mutableTree) {
     setupTreeTestData(mutableTree);
 
-    boolean changed = mutableTree.remove(mutableTree.getRoot());
+    String root = mutableTree.getRoot();
+    assert root != null;
+    boolean changed = mutableTree.remove(root);
 
     assertNull(mutableTree.getRoot());
     assertFalse(mutableTree.contains("R"));

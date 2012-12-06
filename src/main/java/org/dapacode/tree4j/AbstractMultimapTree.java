@@ -60,7 +60,7 @@ public abstract class AbstractMultimapTree<T> implements Tree<T> {
   private <U> boolean deepEquals(final Tree<U> that) {
     final T thisRoot = getRoot();
     final U thatRoot = that.getRoot();
-    return Objects.equal(thisRoot, thatRoot) && deepEquals(that, thisRoot, thatRoot);
+    return thisRoot == null ? thatRoot == null : thisRoot.equals(thatRoot) && deepEquals(that, thisRoot, thatRoot);
   }
 
   private <U> boolean deepEquals(final Tree<U> that, final T thisNode, final U thatNode) {

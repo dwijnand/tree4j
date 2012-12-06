@@ -1,5 +1,6 @@
 package org.dapacode.tree4j;
 
+import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Map;
 
@@ -59,5 +60,6 @@ public interface Tree<T> extends Iterable<Map.Entry<T, T>> {
    *
    * @return the root, or {@code null} if no root is set
    */
+  @Nullable
   T getRoot();
 }

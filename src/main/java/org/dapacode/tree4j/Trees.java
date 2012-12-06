@@ -2,6 +2,7 @@ package org.dapacode.tree4j;
 
 import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
 import java.util.AbstractMap;
@@ -10,14 +11,18 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 public final class Trees {
   private Trees() { /* Utility class */ }
 
   public static <T> Collection<Map.Entry<T, T>> getAssociationsDepthFirst(final Tree<T> tree) {
-    return getAssociationsDepthFirst(tree, tree.getRoot());
+    T root = tree.getRoot();
+    return root == null ? ImmutableList.<Map.Entry<T, T>>of() : getAssociationsDepthFirst(tree, root);
   }
 
   public static <T> Collection<Map.Entry<T, T>> getAssociationsDepthFirst(final Tree<T> tree, final T node) {
+    checkNotNull(node);
     final List<Map.Entry<T, T>> associations = Lists.newArrayList(getAssociations(tree, node));
     final ListIterator<Map.Entry<T, T>> listIter = associations.listIterator();
     while (listIter.hasNext()) {

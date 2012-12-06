@@ -2,6 +2,7 @@ package org.dapacode.tree4j.testutils;
 
 import com.thoughtworks.xstream.XStream;
 
+import javax.annotation.Nullable;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -35,7 +36,7 @@ public final class ObjectHashes {
     }
   }
 
-  private static void close(final InputStream in) {
+  private static void close(@Nullable final InputStream in) {
     if (in != null) {
       try {
         in.close();

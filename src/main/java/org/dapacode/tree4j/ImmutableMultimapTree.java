@@ -7,6 +7,7 @@ import com.google.common.collect.ImmutableSortedMap;
 import com.google.common.collect.Ordering;
 import org.dapacode.tree4j.common.Factory;
 
+import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Map;
@@ -200,7 +201,8 @@ public final class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> impl
    * @param root the root node
    */
   private ImmutableMultimapTree(final ChildrenMaker<T> childrenMaker, final ParentsMaker<T> parentsMaker,
-                                final ImmutableSetMultimap<T, T> children, final ImmutableMap<T, T> parents, final T root) {
+                                final ImmutableSetMultimap<T, T> children, final ImmutableMap<T, T> parents,
+                                @Nullable final T root) {
     super(children, parents);
     this.childrenMaker = childrenMaker;
     this.parentsMaker = parentsMaker;
@@ -261,7 +263,9 @@ public final class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> impl
       ImmutableMultimapTree<T> immutableMultimapTree = create();
 
       final T root = tree.getRoot();
-      immutableMultimapTree = immutableMultimapTree.withRoot(root);
+      if (root != null) {
+        immutableMultimapTree = immutableMultimapTree.withRoot(root);
+      }
 
       final Collection<Map.Entry<T, T>> associations = Trees.getAssociationsDepthFirst(tree);
       for (final Map.Entry<T, T> association : associations) {
