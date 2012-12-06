@@ -100,7 +100,7 @@ public final class MultimapTree<T> extends AbstractMultimapTree<T> implements Mu
   @Override
   public boolean setRoot(final T node) {
     checkNotNull(node);
-    if (root == node) {
+    if (node.equals(root)) {
       return false;
     } else {
       // clear first, then set the root, otherwise the root is cleared too
@@ -117,7 +117,7 @@ public final class MultimapTree<T> extends AbstractMultimapTree<T> implements Mu
     checkArgument(contains(parent), "The tree doesn't contain the specified parent node: %s", parent);
 
     final T childParent = parents.get(child);
-    if (childParent == parent) {
+    if (parent.equals(childParent)) {
       return false;
     }
 
@@ -140,7 +140,7 @@ public final class MultimapTree<T> extends AbstractMultimapTree<T> implements Mu
   public boolean remove(final T node) {
     checkNotNull(node);
 
-    if (node == root) { // optimisation
+    if (node.equals(root)) { // optimisation
       clear();
     } else {
       final T parent = getParent(node); // Handles throwing the IAE

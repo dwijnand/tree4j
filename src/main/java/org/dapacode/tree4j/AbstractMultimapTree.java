@@ -31,7 +31,7 @@ public abstract class AbstractMultimapTree<T> implements Tree<T> {
   @Override
   public final boolean contains(final T node) {
     checkNotNull(node);
-    return node == getRoot() || parents.containsKey(node);
+    return node.equals(getRoot()) || parents.containsKey(node);
   }
 
   @Override

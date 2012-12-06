@@ -299,7 +299,7 @@ public final class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> impl
     checkArgument(contains(parent), "The tree doesn't contain the specified parent node: %s", parent);
 
     final T childParent = parents.get(child);
-    if (childParent == parent) {
+    if (parent.equals(childParent)) {
       return this;
     }
 
@@ -337,7 +337,7 @@ public final class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> impl
   public ImmutableMultimapTree<T> removed(final T node) {
     checkNotNull(node);
 
-    if (node == root) { // optimisation
+    if (node.equals(root)) { // optimisation
       return create(childrenMaker, parentsMaker);
     }
 
@@ -374,7 +374,7 @@ public final class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> impl
                                            final ImmutableMap.Builder<T, T> parentsBuilder) {
     final Collection<T> nodeChildren = getChildren(node);
     for (final T child : nodeChildren) {
-      if (child != excludeNode) {
+      if (!child.equals(excludeNode)) {
         addInternal(node, child, childrenBuilder, parentsBuilder);
         addRecursivelyExcludingNode(child, excludeNode, childrenBuilder, parentsBuilder);
       }
