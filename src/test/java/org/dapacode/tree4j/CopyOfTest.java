@@ -53,6 +53,38 @@ public class CopyOfTest {
     });
   }
 
+  @org.junit.Test
+  public void multimapTreeCopyOfShouldReturnAnEqualButNotSameTreeOnEmptyImmutableMultimapTree() {
+    testMultimapTreeCopyOf(ImmutableMultimapTree.<String>create());
+  }
+
+  @org.junit.Test
+  public void immutableMultimapTreeCopyOfShouldReturnAnEqualButNotSameTreeOnEmptyMultimapTree() {
+    testImmutableMultimapTreeCopyOf(MultimapTree.<String>create());
+  }
+
+  @org.junit.Test
+  public void multimapTreeCopyOfShouldReturnAnEqualButNotSameTreeOnEmptyDelegatingImmutableMultimapTree() {
+    final ImmutableMultimapTree<String> delegate = ImmutableMultimapTree.create();
+    testMultimapTreeCopyOf(new DelegatingImmutableTree<String>() {
+      @Override
+      protected ImmutableTree<String> delegate() {
+        return delegate;
+      }
+    });
+  }
+
+  @org.junit.Test
+  public void immutableMultimapTreeCopyOfShouldReturnAnEqualButNotSameTreeOnEmptyDelegatingMultimapTree() {
+    final MultimapTree<String> delegate = MultimapTree.create();
+    testImmutableMultimapTreeCopyOf(new DelegatingMutableTree<String>() {
+      @Override
+      protected MutableTree<String> delegate() {
+        return delegate;
+      }
+    });
+  }
+
   private void testImmutableMultimapTreeCopyOf(Tree<String> tree) {
     withoutModifying(tree, new Test<Tree<String>>() {
       @Override
