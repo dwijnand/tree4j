@@ -207,6 +207,16 @@ public abstract class TreeTest<T extends Tree<String>> {
     });
   }
 
+  @Theory
+  public void equalsShouldReturnTrueForTwoEmptyTreesWithOneMutable(T tree) {
+    assertEquals(tree, MultimapTree.<String>create());
+  }
+
+  @Theory
+  public void equalsShouldReturnTrueForTwoEmptyTreesWithOneImmutable(T tree) {
+    assertEquals(tree, ImmutableMultimapTree.<String>create());
+  }
+
   public abstract T withRoot(T tree, String root);
 
   public abstract T plus(T tree, String parent, String child);
