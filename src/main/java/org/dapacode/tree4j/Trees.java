@@ -17,7 +17,7 @@ public final class Trees {
   private Trees() { /* Utility class */ }
 
   public static <T> Collection<Map.Entry<T, T>> getAssociationsDepthFirst(final Tree<T> tree) {
-    T root = tree.getRoot();
+    final T root = tree.getRoot();
     return root == null ? ImmutableList.<Map.Entry<T, T>>of() : getAssociationsDepthFirst(tree, root);
   }
 
