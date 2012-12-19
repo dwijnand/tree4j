@@ -1,5 +1,6 @@
 package org.dapacode.tree4j;
 
+import javax.annotation.Nullable;
 import java.util.Collection;
 
 /**
@@ -32,6 +33,7 @@ public abstract class DelegatingImmutableTree<T> extends DelegatingTree<T> imple
   }
 
   @Override
+  @Nullable
   public T getRoot() {
     return delegate().getRoot();
   }

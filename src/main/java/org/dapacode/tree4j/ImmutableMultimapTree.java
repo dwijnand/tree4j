@@ -171,6 +171,7 @@ public final class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> impl
   private final ParentsMaker<T> parentsMaker;
 
   /** The root of the tree. */
+  @Nullable
   private final T root;
 
   /**
@@ -282,6 +283,7 @@ public final class ImmutableMultimapTree<T> extends AbstractMultimapTree<T> impl
   }
 
   @Override
+  @Nullable
   public T getRoot() {
     return root;
   }

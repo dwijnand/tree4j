@@ -2,6 +2,7 @@ package org.dapacode.tree4j;
 
 import com.google.common.collect.ForwardingObject;
 
+import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
@@ -41,6 +42,7 @@ public abstract class DelegatingTree<T> extends ForwardingObject implements Tree
   }
 
   @Override
+  @Nullable
   public T getRoot() {
     return delegate().getRoot();
   }
