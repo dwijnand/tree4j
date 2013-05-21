@@ -54,11 +54,11 @@
     <maven.compiler.fork>true</maven.compiler.fork><!-- Required for -Xlint -->
     <maven.compiler.showDeprecation>true</maven.compiler.showDeprecation>
     <maven.compiler.showWarnings>true</maven.compiler.showWarnings>
-    <maven.compiler.source>1.6</maven.compiler.source>
-    <maven.compiler.target>1.6</maven.compiler.target>
+    <maven.compiler.source>1.7</maven.compiler.source>
+    <maven.compiler.target>1.7</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <targetJdk>1.6</targetJdk>
+    <targetJdk>1.7</targetJdk>
   </properties>
 
   <dependencies>
