@@ -155,10 +155,10 @@
         <artifactId>maven-checkstyle-plugin</artifactId>
         <version>2.12</version>
         <configuration>
-          <configLocation>conf/checkstyle-configuration.xml</configLocation>
+          <configLocation>src/conf/checkstyle/checkstyle-configuration.xml</configLocation>
           <includeTestSourceDirectory>true</includeTestSourceDirectory>
           <logViolationsToConsole>true</logViolationsToConsole>
-          <suppressionsLocation>conf/checkstyle-suppressions.xml</suppressionsLocation>
+          <suppressionsLocation>src/conf/checkstyle/checkstyle-suppressions.xml</suppressionsLocation>
         </configuration>
         <executions>
           <execution>
