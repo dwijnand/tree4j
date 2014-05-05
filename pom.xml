@@ -169,6 +169,7 @@
           <configuration>
             <includeTests>true</includeTests>
             <fork>false</fork>
+            <excludeFilterFile>src/conf/findbugs/findbugs-exclude.xml</excludeFilterFile>
             <plugins>
               <plugin>
                 <groupId>com.overstock.findbugs</groupId>
