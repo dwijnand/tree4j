@@ -169,6 +169,13 @@
           <configuration>
             <includeTests>true</includeTests>
             <fork>false</fork>
+            <plugins>
+              <plugin>
+                <groupId>com.overstock.findbugs</groupId>
+                <artifactId>library-detectors</artifactId>
+                <version>1.1</version>
+              </plugin>
+            </plugins>
           </configuration>
         </plugin>
         <plugin>
